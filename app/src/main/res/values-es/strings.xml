@@ -1,0 +1,78 @@
+<resources>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_camera">Cámara</string>
+    <string name="nav_gallery">Galería</string>
+    <string name="nav_history">Historial</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <string name="see_all">Ver todo</string>
+    <string name="frames">fotos</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_close">Cerrar</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_skip">Omitir</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_lets_go">Vamos</string>
+    <string name="action_import">Importar</string>
+    <string name="action_save">Guardar</string>
+
+    <string name="splash_tagline">Estudio de Alineación Estética</string>
+
+    <string name="onboard_title_1">Poses Perfectas Siempre</string>
+    <string name="onboard_title_2">Iguala la Pose en Vivo</string>
+    <string name="onboard_title_3">Captura como un Profesional</string>
+    <string name="onboard_desc_1">Obtén inspiración de poses para selfies, parejas, viajes y fotografía profesional.</string>
+    <string name="onboard_desc_2">Usa la superposición de cámara en vivo para alinearte perfectamente con poses de referencia.</string>
+    <string name="onboard_desc_3">Toma fotos impresionantes con controles de cámara profesionales.</string>
+
+    <string name="lang_choose_title">Elige Tu Idioma</string>
+    <string name="lang_choose_subtitle">Selecciona tu idioma preferido a continuación para personalizar tus etiquetas de asistencia fotográfica.</string>
+
+    <string name="home_brand">POSE MATCH</string>
+    <string name="home_brand_sub">Cámara Pro</string>
+    <string name="home_search_hint">Buscar selfie, viajes, calle…</string>
+    <string name="home_trending">Plantillas Populares</string>
+    <string name="home_hero_title">Minimalista Urbano</string>
+    <string name="home_hero_sub">Perfecto para fotografía urbana arquitectónica</string>
+    <string name="home_open_camera">Abrir Cámara</string>
+    <string name="home_ai_powered">CON IA</string>
+    <string name="browser_title">ELIGE REFERENCIA</string>
+    <string name="browser_sub">Elige una Plantilla</string>
+    <string name="home_no_blueprints">Ninguna plantilla coincide con tus filtros.</string>
+
+    <string name="history_title">Historial de Tomas</string>
+    <string name="history_subtitle">%1$d fotos • agrupadas por ubicación</string>
+    <string name="history_search_hint">Buscar ubicación, fecha, puntuación, nombre…</string>
+    <string name="history_empty">Aún no hay registros</string>
+    <string name="history_empty_sub">Captura una foto para empezar tu álbum.</string>
+    <string name="history_no_match">Ninguna foto coincide con \"%1$s\"</string>
+
+    <string name="detail_location">Ubicación</string>
+    <string name="detail_captured">Capturada</string>
+    <string name="detail_match_score">Puntuación</string>
+    <string name="detail_category">Categoría</string>
+
+    <string name="gallery_title">Álbum Estético</string>
+    <string name="gallery_subtitle">Sube bocetos de referencia para superposiciones.</string>
+    <string name="gallery_empty">Aún no hay referencias importadas</string>
+    <string name="gallery_empty_sub">Importa figuras estándar desde tu galería.</string>
+
+    <string name="settings_profile_name">Fotógrafo creativo</string>
+    <string name="settings_profile_sub">Preajustes guardados en el dispositivo.</string>
+    <string name="settings_section_config">Ajustes y Configuración</string>
+    <string name="settings_language">Idioma Activo</string>
+    <string name="settings_theme">Tema Visual de la App</string>
+    <string name="settings_retain_skeleton">Mantener Esqueleto Superpuesto</string>
+    <string name="settings_section_help">Ayuda y Detalles del Desarrollador</string>
+    <string name="settings_rate">Valorar la App</string>
+    <string name="settings_share">Compartir la App</string>
+    <string name="settings_about">Acerca del Marco de Alineación</string>
+    <string name="settings_select_language">Selecciona el Idioma</string>
+    <string name="settings_select_theme">Selecciona el Tema</string>
+
+    <string name="camera_filters">FILTROS</string>
+    <string name="camera_opacity">Opacidad de Pose</string>
+</resources>

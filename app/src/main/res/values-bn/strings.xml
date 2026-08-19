@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">Pose Match Camera</string>
+
+    <string name="nav_home">হোম</string>
+    <string name="nav_camera">ক্যামেরা</string>
+    <string name="nav_gallery">সংগ্রহ</string>
+    <string name="nav_history">ইতিহাস</string>
+    <string name="nav_settings">সেটিংস</string>
+
+    <string name="see_all">সব দেখুন</string>
+    <string name="frames">ছবি</string>
+    <string name="action_search">খুঁজুন</string>
+    <string name="action_cancel">বাতিল</string>
+    <string name="action_continue">চালিয়ে যান</string>
+    <string name="action_close">বন্ধ করুন</string>
+    <string name="action_share">শেয়ার</string>
+    <string name="action_delete">মুছুন</string>
+    <string name="action_skip">এড়িয়ে যান</string>
+    <string name="action_next">পরবর্তী</string>
+    <string name="action_lets_go">শুরু করা যাক</string>
+    <string name="action_import">ইমপোর্ট</string>
+    <string name="action_save">সংরক্ষণ</string>
+
+    <string name="splash_tagline">নান্দনিক অ্যালাইনমেন্ট স্টুডিও</string>
+
+    <string name="onboard_title_1">১. একটি পোজ বাছুন</string>
+    <string name="onboard_title_2">২. আউটলাইন মেলান</string>
+    <string name="onboard_title_3">৩. তুলুন &amp; সংরক্ষণ করুন</string>
+    <string name="onboard_desc_1">সেলফি, কাপল, ভ্রমণ, বিয়ে ও আরও অনেক কিছুর জন্য ১০০+ তৈরি পোজ ব্রাউজ করুন।</string>
+    <string name="onboard_desc_2">পোজটি আপনার লাইভ ক্যামেরায় দেখা যায়। আপনার শরীর আউটলাইন পূরণ না করা পর্যন্ত নড়াচড়া করুন এবং ম্যাচ স্কোর বাড়তে দেখুন।</string>
+    <string name="onboard_desc_3">আপনার ছবি তুলুন, সুন্দর ফিল্টার প্রয়োগ করুন এবং আপনার সংগ্রহে সংরক্ষণ করুন।</string>
+
+    <string name="lang_choose_title">আপনার ভাষা বাছুন</string>
+    <string name="lang_choose_subtitle">আপনার ফটোগ্রাফি সহায়ক ট্যাগ কাস্টমাইজ করতে নিচে আপনার পছন্দের ভাষা নির্বাচন করুন।</string>
+
+    <string name="home_brand">POSE MATCH</string>
+    <string name="home_brand_sub">Camera Pro</string>
+    <string name="home_search_hint">সেলফি, ভ্রমণ, স্ট্রিট খুঁজুন…</string>
+    <string name="home_trending">ট্রেন্ডিং টেমপ্লেট</string>
+    <string name="home_hero_title">আরবান মিনিমালিস্ট</string>
+    <string name="home_hero_sub">স্থাপত্য ও স্ট্রিট ফটোগ্রাফির জন্য উপযুক্ত</string>
+    <string name="home_open_camera">ক্যামেরা খুলুন</string>
+    <string name="home_ai_powered">এআই চালিত</string>
+    <string name="browser_title">রেফারেন্স বাছুন</string>
+    <string name="browser_sub">একটি টেমপ্লেট বাছুন</string>
+    <string name="home_no_blueprints">আপনার ফিল্টারের সাথে কোনো টেমপ্লেট মেলেনি।</string>
+    <string name="home_tap_hint">লাইভ ক্যামেরা গাইড খুলতে যেকোনো পোজে ট্যাপ করুন</string>
+
+    <string name="history_title">ছবি তোলার ইতিহাস</string>
+    <string name="history_subtitle">%1$d ছবি • অবস্থান অনুযায়ী</string>
+    <string name="history_search_hint">অবস্থান, তারিখ, স্কোর, নাম খুঁজুন…</string>
+    <string name="history_empty">এখনও কোনো ছবি নেই</string>
+    <string name="history_empty_sub">আপনার অ্যালবাম শুরু করতে একটি ছবি তুলুন।</string>
+    <string name="history_no_match">\"%1$s\" এর সাথে কোনো ছবি মেলেনি</string>
+
+    <string name="delete_title">ছবি মুছবেন?</string>
+    <string name="delete_message">এই ছবিটি আপনার সংগ্রহ থেকে স্থায়ীভাবে মুছে যাবে।</string>
+    <string name="detail_location">অবস্থান</string>
+    <string name="detail_captured">তোলা হয়েছে</string>
+    <string name="detail_match_score">ম্যাচ স্কোর</string>
+    <string name="detail_category">বিভাগ</string>
+
+    <string name="gallery_title">নান্দনিক অ্যালবাম</string>
+    <string name="gallery_subtitle">মিলিয়ে দেখার জন্য রেফারেন্স স্কেচ আপলোড করুন।</string>
+    <string name="gallery_empty">এখনও কোনো ইমপোর্ট করা রেফারেন্স নেই</string>
+    <string name="gallery_empty_sub">ডিভাইস গ্যালারি থেকে ফিগার ইমপোর্ট করুন।</string>
+
+    <string name="settings_profile_name">সৃজনশীল ফটোগ্রাফার</string>
+    <string name="settings_profile_sub">ডিভাইসে প্রিসেট ট্র্যাকার।</string>
+    <string name="settings_section_config">সেটিংস &amp; কনফিগারেশন</string>
+    <string name="settings_language">সক্রিয় ভাষা</string>
+    <string name="settings_theme">অ্যাপ থিম</string>
+    <string name="settings_retain_skeleton">ওভারলে স্কেলিটন রাখুন</string>
+    <string name="settings_section_help">সহায়তা &amp; ডেভেলপার তথ্য</string>
+    <string name="settings_rate">অ্যাপ রেট করুন</string>
+    <string name="settings_share">অ্যাপ শেয়ার করুন</string>
+    <string name="settings_privacy">গোপনীয়তা নীতি</string>
+    <string name="settings_about">অ্যালাইনমেন্ট ফ্রেমওয়ার্ক সম্পর্কে</string>
+    <string name="settings_select_language">ভাষা নির্বাচন করুন</string>
+    <string name="settings_select_theme">থিম নির্বাচন করুন</string>
+    <string name="action_apply">প্রয়োগ করুন</string>
+
+    <string name="perm_camera_title">ক্যামেরা অনুমতি প্রয়োজন</string>
+    <string name="perm_camera_desc">ছবি তুলতে এবং আপনার পোজ মেলাতে ক্যামেরা অ্যাক্সেসের অনুমতি দিন।</string>
+    <string name="perm_allow">অনুমতি দিন</string>
+
+    <string name="camera_filters">ফিল্টার</string>
+    <string name="camera_opacity">পোজ স্বচ্ছতা</string>
+    <string name="camera_sim_title">স্টুডিও সিমুলেশন মোড</string>
+    <string name="camera_sim_hint">নিচের বৃত্ত দিয়ে অ্যালাইনমেন্ট সরান</string>
+    <string name="camera_pro_title">প্রো স্টুডিও অ্যালাইনমেন্ট</string>
+    <string name="toast_reference_imported">রেফারেন্স ইমপোর্ট হয়েছে! মেলাতে ক্যামেরা খুলুন।</string>
+    <string name="toast_reference_failed">রেফারেন্স অ্যালাইনমেন্ট লোড ব্যর্থ হয়েছে</string>
+
+    <string name="action_exit">প্রস্থান</string>
+    <string name="action_done">সম্পন্ন</string>
+    <string name="action_reset">রিসেট</string>
+
+    <string name="home_title">Camera Pose Match</string>
+    <string name="hero_line1">তৈরি করুন আপনার</string>
+    <string name="hero_line2">নিখুঁত পোজ</string>
+    <string name="hero_cta">পোজ শুরু করুন</string>
+
+    <string name="exit_title">অ্যাপ বন্ধ করবেন?</string>
+    <string name="exit_message">আপনি কি সত্যিই Camera Pose Match বন্ধ করতে চান?</string>
+
+    <string name="title_edit">সম্পাদনা</string>
+    <string name="title_preview">প্রিভিউ</string>
+    <string name="tab_filters">ফিল্টার</string>
+    <string name="tab_adjust">অ্যাডজাস্ট</string>
+
+    <string name="share_frame">ছবি শেয়ার করুন</string>
+    <string name="toast_capture_failed">ছবি তোলা ব্যর্থ: %1$s</string>
+    <string name="toast_saved_location">গ্যালারিতে সংরক্ষিত • %1$s</string>
+    <string name="toast_theme_changed">থিম পরিবর্তিত হয়েছে: %1$s</string>
+</resources>

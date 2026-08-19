@@ -1,0 +1,6 @@
+{
+  "name": "Pose Match Camera",
+  "description": "A premium on-device pose matching camera app with pro photography controls, real-time feedback, and offline AI skeleton matching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

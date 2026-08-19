@@ -1,0 +1,78 @@
+<resources>
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_camera">الكاميرا</string>
+    <string name="nav_gallery">المعرض</string>
+    <string name="nav_history">السجل</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <string name="see_all">عرض الكل</string>
+    <string name="frames">صور</string>
+    <string name="action_search">بحث</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_continue">متابعة</string>
+    <string name="action_close">إغلاق</string>
+    <string name="action_share">مشاركة</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_skip">تخطي</string>
+    <string name="action_next">التالي</string>
+    <string name="action_lets_go">هيا بنا</string>
+    <string name="action_import">استيراد</string>
+    <string name="action_save">حفظ</string>
+
+    <string name="splash_tagline">استوديو المحاذاة الجمالية</string>
+
+    <string name="onboard_title_1">وضعيات مثالية في كل مرة</string>
+    <string name="onboard_title_2">طابق الوضعية مباشرة</string>
+    <string name="onboard_title_3">التقط كالمحترفين</string>
+    <string name="onboard_desc_1">احصل على إلهام للوضعيات للسيلفي والأزواج والسفر والتصوير الاحترافي.</string>
+    <string name="onboard_desc_2">استخدم تراكب الكاميرا المباشر لمحاذاة نفسك تمامًا مع الوضعيات المرجعية.</string>
+    <string name="onboard_desc_3">التقط صورًا مذهلة باستخدام أدوات تحكم الكاميرا الاحترافية.</string>
+
+    <string name="lang_choose_title">اختر لغتك</string>
+    <string name="lang_choose_subtitle">اختر لغتك المفضلة أدناه لتخصيص علامات المساعدة التصويرية.</string>
+
+    <string name="home_brand">POSE MATCH</string>
+    <string name="home_brand_sub">كاميرا برو</string>
+    <string name="home_search_hint">ابحث عن سيلفي، سفر، شارع…</string>
+    <string name="home_trending">المخططات الرائجة</string>
+    <string name="home_hero_title">البساطة الحضرية</string>
+    <string name="home_hero_sub">مثالي لتصوير الشوارع المعماري</string>
+    <string name="home_open_camera">افتح الكاميرا</string>
+    <string name="home_ai_powered">مدعوم بالذكاء الاصطناعي</string>
+    <string name="browser_title">اختر المرجع</string>
+    <string name="browser_sub">اختر مخططًا</string>
+    <string name="home_no_blueprints">لا توجد مخططات تطابق عوامل التصفية.</string>
+
+    <string name="history_title">سجل التصوير</string>
+    <string name="history_subtitle">%1$d صور • مجمعة حسب الموقع</string>
+    <string name="history_search_hint">ابحث عن موقع، تاريخ، نتيجة، اسم…</string>
+    <string name="history_empty">لا توجد سجلات بعد</string>
+    <string name="history_empty_sub">التقط صورة لبدء ألبومك.</string>
+    <string name="history_no_match">لا توجد صور تطابق \"%1$s\"</string>
+
+    <string name="detail_location">الموقع</string>
+    <string name="detail_captured">تم الالتقاط</string>
+    <string name="detail_match_score">نتيجة التطابق</string>
+    <string name="detail_category">الفئة</string>
+
+    <string name="gallery_title">ألبوم جمالي</string>
+    <string name="gallery_subtitle">ارفع رسومات مرجعية لمطابقة التراكبات.</string>
+    <string name="gallery_empty">لا توجد مراجع مستوردة بعد</string>
+    <string name="gallery_empty_sub">استورد أشكالًا قياسية من معرض الجهاز.</string>
+
+    <string name="settings_profile_name">مصور مبدع</string>
+    <string name="settings_profile_sub">متتبع الإعدادات المسبقة على الجهاز.</string>
+    <string name="settings_section_config">الإعدادات والتكوين</string>
+    <string name="settings_language">اللغة الحالية</string>
+    <string name="settings_theme">مظهر التطبيق</string>
+    <string name="settings_retain_skeleton">الاحتفاظ بالهيكل المتراكب</string>
+    <string name="settings_section_help">المساعدة وتفاصيل المطور</string>
+    <string name="settings_rate">قيّم التطبيق</string>
+    <string name="settings_share">شارك التطبيق</string>
+    <string name="settings_about">حول إطار المحاذاة</string>
+    <string name="settings_select_language">اختر لغة التطبيق</string>
+    <string name="settings_select_theme">اختر نمط المظهر</string>
+
+    <string name="camera_filters">الفلاتر</string>
+    <string name="camera_opacity">شفافية الوضعية</string>
+</resources>

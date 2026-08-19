@@ -1,0 +1,211 @@
+package com.aipose.camera.posematch.ui.screens
+
+import android.annotation.SuppressLint
+import android.os.Vibrator
+import android.os.VibrationEffect
+import android.os.Build
+import androidx.camera.core.ImageAnalysis
+import com.aipose.camera.posematch.domain.PoseDetectorProcessor
+import java.util.concurrent.Executors
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.LruCache
+import android.graphics.PointF
+import android.net.Uri
+import android.provider.MediaStore
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.aipose.camera.posematch.data.CapturedPhoto
+import com.aipose.camera.posematch.data.CustomPose
+import com.aipose.camera.posematch.data.PoseItem
+import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.math.atan2
+import kotlin.math.roundToInt
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Matrix
+import android.graphics.RenderEffect
+import android.media.ExifInterface
+import android.view.Surface
+import androidx.camera.core.ImageCaptureException
+import com.aipose.camera.posematch.domain.PhotoFilters
+import com.aipose.camera.posematch.domain.SubjectExtractor
+import com.aipose.camera.posematch.data.LocationUtils
+import com.aipose.camera.posematch.data.PlaceInfo
+import com.aipose.camera.posematch.data.LocaleHelper
+import com.aipose.camera.posematch.ui.theme.AppThemeState
+import com.aipose.camera.posematch.ui.viewmodel.formatHistoryDate
+import com.aipose.camera.posematch.R
+import androidx.activity.compose.BackHandler
+import androidx.compose.ui.res.stringResource
+import coil.imageLoader
+import coil.request.SuccessResult
+import androidx.core.graphics.drawable.toBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.concurrent.Executor
+
+// SECTION 1. SPLASH SCREEN
+@Composable
+fun SplashScreen(
+    viewModel: MainViewModel,
+    onNavigateNext: (String) -> Unit
+) {
+    val onboardingCompleted by viewModel.onboardingCompleted.collectAsState()
+    var appLogoVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(300)
+        appLogoVisible = true
+        delay(2200)
+        if (onboardingCompleted) {
+            onNavigateNext(Routes.MAIN_CONTAINER)
+        } else {
+            onNavigateNext(Routes.ONBOARDING)
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(StudioBackgroundGradient),
+        contentAlignment = Alignment.Center
+    ) {
+        AnimatedVisibility(
+            visible = appLogoVisible,
+            enter = fadeIn(animationSpec = tween(1500, easing = LinearOutSlowInEasing)) +
+                    scaleIn(
+                        initialScale = 0.85f,
+                        animationSpec = tween(1500, easing = LinearOutSlowInEasing)
+                    ),
+            exit = fadeOut(animationSpec = tween(500))
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // App launcher icon (mipmap) as the splash logo. Loaded as a bitmap because
+                // on API 26+ the launcher icon is an adaptive-icon XML, which painterResource
+                // cannot render (it supports only vectors/raster).
+                val context = LocalContext.current
+                val logoBitmap = remember {
+                    ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
+                        ?.toBitmap(216, 216)
+                        ?.asImageBitmap()
+                }
+                if (logoBitmap != null) {
+                    Image(
+                        bitmap = logoBitmap,
+                        contentDescription = "App Logo",
+                        modifier = Modifier
+                            .size(110.dp)
+                            .clip(RoundedCornerShape(28.dp))
+                            .border(1.5.dp, AccentCopper, RoundedCornerShape(28.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "POSE MATCH CAMERA",
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 3.sp,
+                        fontFamily = FontFamily.SansSerif
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = stringResource(R.string.splash_tagline),
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.Gray,
+                        letterSpacing = 1.sp
+                    )
+                )
+            }
+        }
+    }
+}
