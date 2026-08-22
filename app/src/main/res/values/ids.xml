@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Navigation destination ids are predeclared here so they land in the module's compile-time
+      R class. With android.nonTransitiveRClass=true the app's compile R is built from the local
+      resource parse, which does not extract inline @+id declarations from navigation graphs — so
+      nav_graph.xml references these with @id/ instead of declaring them via @+id/.
+    -->
+    <item name="splashFragment" type="id" />
+    <item name="onboardingFragment" type="id" />
+    <item name="languageFragment" type="id" />
+    <item name="mainFragment" type="id" />
+</resources>

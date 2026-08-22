@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Home tab (real XML — migration step 7). Reproduces HomeScreen: compact top bar (brand + gallery),
+  search box, then either a flat search-results grid or the browse view (hero card + guidance +
+  per-trend rows of 3 with "Show all"). The "Show all" album is a slide-in overlay. Dynamic content
+  is rebuilt in code; search-bar / hero / thumbnail styling is applied from the theme palette.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <!-- Top bar. -->
+            <LinearLayout
+                android:id="@+id/home_topbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:letterSpacing="-0.025"
+                    android:text="@string/home_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:id="@+id/home_gallery_icon"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/action_import"
+                        android:src="@drawable/ic_add_photo_alternate"
+                        android:tint="@android:color/white" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- Search bar. -->
+            <LinearLayout
+                android:id="@+id/home_search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/action_search"
+                    android:src="@drawable/ic_search"
+                    android:tint="#FF888888" />
+
+                <EditText
+                    android:id="@+id/home_search_input"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/home_search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#FF888888"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/home_search_clear"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:src="@drawable/ic_clear"
+                    android:tint="#FF888888"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Dynamic content (search results OR hero + trend rows), rebuilt in code. -->
+            <LinearLayout
+                android:id="@+id/home_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- "Show all" trend album overlay (populated on demand). -->
+    <FrameLayout
+        android:id="@+id/home_album_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</FrameLayout>

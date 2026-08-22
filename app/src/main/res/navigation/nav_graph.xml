@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@id/splashFragment"
+        android:name="com.aipose.camera.posematch.ui.fragments.SplashFragment"
+        android:label="Splash" />
+
+    <fragment
+        android:id="@id/onboardingFragment"
+        android:name="com.aipose.camera.posematch.ui.fragments.OnboardingFragment"
+        android:label="Onboarding" />
+
+    <fragment
+        android:id="@id/languageFragment"
+        android:name="com.aipose.camera.posematch.ui.fragments.LanguageFragment"
+        android:label="Language" />
+
+    <fragment
+        android:id="@id/mainFragment"
+        android:name="com.aipose.camera.posematch.ui.fragments.MainFragment"
+        android:label="Main" />
+</navigation>

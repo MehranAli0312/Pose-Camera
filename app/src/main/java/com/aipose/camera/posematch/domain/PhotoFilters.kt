@@ -5,21 +5,6 @@ import android.graphics.Canvas
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AcUnit
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.Contrast
-import androidx.compose.material.icons.filled.FilterBAndW
-import androidx.compose.material.icons.filled.FilterVintage
-import androidx.compose.material.icons.filled.Gradient
-import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material.icons.filled.WbSunny
-import androidx.compose.material.icons.filled.WbTwilight
-import androidx.compose.material.icons.filled.Brightness4
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import kotlin.math.max
 import kotlin.math.min
 
@@ -31,8 +16,6 @@ import kotlin.math.min
 data class PhotoFilter(
     val id: String,
     val label: String,
-    val icon: ImageVector,
-    val swatch: Color,
     val matrix: FloatArray?
 ) {
     override fun equals(other: Any?) = other is PhotoFilter && other.id == id
@@ -103,24 +86,24 @@ object PhotoFilters {
 
     /** Selectable looks after the runtime "Auto" + neutral "Original". */
     private val presets: List<PhotoFilter> = listOf(
-        PhotoFilter("vivid", "Vivid", Icons.Filled.Bolt, Color(0xFFFF5A5F), vivid),
-        PhotoFilter("golden", "Golden", Icons.Filled.WbSunny, Color(0xFFE0A45E), golden),
-        PhotoFilter("sunrise", "Sunrise", Icons.Filled.WbTwilight, Color(0xFFFFB27A), sunrise),
-        PhotoFilter("sunset", "Sunset", Icons.Filled.Brightness4, Color(0xFFE8703A), sunset),
-        PhotoFilter("teal", "Azure", Icons.Filled.AcUnit, Color(0xFF3FA7B5), teal),
-        PhotoFilter("cinematic", "Cinema", Icons.Filled.Movie, Color(0xFF2E6E7E), cinematic),
-        PhotoFilter("fade", "Fade", Icons.Filled.Gradient, Color(0xFFB8AEA0), fade),
-        PhotoFilter("noir", "Noir", Icons.Filled.Contrast, Color(0xFF111111), noir),
-        PhotoFilter("vintage", "Vintage", Icons.Filled.FilterVintage, Color(0xFF9B7B4E), vintage),
-        PhotoFilter("mono", "Mono", Icons.Filled.FilterBAndW, Color(0xFF808080), mono)
+        PhotoFilter("vivid", "Vivid", vivid),
+        PhotoFilter("golden", "Golden", golden),
+        PhotoFilter("sunrise", "Sunrise", sunrise),
+        PhotoFilter("sunset", "Sunset", sunset),
+        PhotoFilter("teal", "Azure", teal),
+        PhotoFilter("cinematic", "Cinema", cinematic),
+        PhotoFilter("fade", "Fade", fade),
+        PhotoFilter("noir", "Noir", noir),
+        PhotoFilter("vintage", "Vintage", vintage),
+        PhotoFilter("mono", "Mono", mono)
     )
 
     const val ID_AUTO = "auto"
     const val ID_ORIGINAL = "original"
 
     /** The runtime-extracted look (index 0) and the neutral pass-through (index 1). */
-    val autoFilter = PhotoFilter(ID_AUTO, "Auto", Icons.Filled.AutoAwesome, Color(0xFF6366F1), null)
-    val originalFilter = PhotoFilter(ID_ORIGINAL, "Original", Icons.Filled.RadioButtonUnchecked, Color(0xFF2E2E33), null)
+    val autoFilter = PhotoFilter(ID_AUTO, "Auto", null)
+    val originalFilter = PhotoFilter(ID_ORIGINAL, "Original", null)
 
     /** Full ordered strip: Auto (from overlay) first, then Original, then the presets. */
     val strip: List<PhotoFilter> = listOf(autoFilter, originalFilter) + presets
