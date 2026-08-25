@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Main container (real XML — migration step 5). Replaces MainScenicContainer's Scaffold/NavigationBar.
-  main_content hosts the active tab (Home/Collections as ComposeView, Settings as real XML); the
-  camera is pushed full-screen over everything via main_camera_container. The permission card sits
-  above a custom 3-item bottom nav. Gradient, card backgrounds and nav styling are set in code.
--->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_root"
     android:layout_width="match_parent"
@@ -89,7 +83,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Custom bottom navigation (3 tabs). -->
         <LinearLayout
             android:id="@+id/main_bottom_nav"
             android:layout_width="match_parent"

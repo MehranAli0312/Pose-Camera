@@ -24,7 +24,7 @@
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/ic_arrow_back"
-            android:tint="@android:color/white" />
+            android:tint="@color/text_primary" />
 
         <ImageView
             android:layout_width="20dp"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@android:color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                 android:id="@+id/album_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF888888"
+                android:textColor="@color/text_secondary"
                 android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>

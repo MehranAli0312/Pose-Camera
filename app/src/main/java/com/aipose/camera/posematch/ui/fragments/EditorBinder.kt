@@ -13,15 +13,20 @@ import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.SeekBar
 import android.widget.TextView
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.databinding.FragmentEditorBinding
+import com.aipose.camera.posematch.databinding.ItemAdjustToolBinding
+import com.aipose.camera.posematch.databinding.ItemFilterChipBinding
 import com.aipose.camera.posematch.domain.PhotoFilters
 import com.aipose.camera.posematch.ui.screens.AdjustTool
 import com.aipose.camera.posematch.ui.screens.EditResult
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.SELECTION_BLUE
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
+import com.aipose.camera.posematch.ui.widget.CenterSeekBar
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import java.io.File
 
@@ -40,11 +45,12 @@ class EditorBinder(
     private val onDiscard: () -> Unit,
     private val onDone: (EditResult) -> Unit
 ) {
+    private val binding = FragmentEditorBinding.bind(root)
     private val d = root.resources.displayMetrics.density
-    private val palette = paletteFor(viewModel.appTheme.value)
+    private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
-    private val gray = 0xFF888888.toInt()
+    private val gray = palette.textSecondary
     private val inflater = LayoutInflater.from(ctx)
 
     private var selectedFilterId = PhotoFilters.ID_AUTO
@@ -54,14 +60,17 @@ class EditorBinder(
     private var cropAspect: Float? = null
     private val adjustments = HashMap<AdjustTool, Float>()
 
-    private val preview get() = root.findViewById<ImageView>(R.id.editor_preview)
-    private val previewBox get() = root.findViewById<View>(R.id.editor_preview_box)
+    private val preview get() = binding.editorPreview
+    private val previewBox get() = binding.editorPreviewBox
 
     fun bind() {
+        // Full-screen overlay: inset the whole editor from the status + navigation bars.
+        root.applySystemBarInsets(top = true, bottom = true)
+
         // Static styling.
-        root.findViewById<TextView>(R.id.editor_save).background = rounded(accent, 10f)
-        root.findViewById<View>(R.id.editor_tabs).background = rounded(card, 10f)
-        root.findViewById<View>(R.id.editor_revert).background = GradientDrawable().apply {
+        binding.editorSave.background = rounded(accent, 10f)
+        binding.editorTabs.background = rounded(card, 10f)
+        binding.editorRevert.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL; setColor(card)
         }
         preview.clipToOutline = true
@@ -76,18 +85,18 @@ class EditorBinder(
             ImageRequest.Builder(ctx).data(File(photoPath)).crossfade(true).target(preview).build()
         )
 
-        root.findViewById<View>(R.id.editor_discard).setOnClickListener { onDiscard() }
-        root.findViewById<View>(R.id.editor_save).setOnClickListener {
+        binding.editorDiscard.setOnClickListener { onDiscard() }
+        binding.editorSave.setOnClickListener {
             onDone(EditResult(finalMatrix(), rotationDeg, cropAspect))
         }
-        root.findViewById<View>(R.id.editor_revert).setOnClickListener {
+        binding.editorRevert.setOnClickListener {
             selectedFilterId = PhotoFilters.ID_ORIGINAL
             adjustments.clear(); rotationDeg = 0; cropAspect = null
             restyleChips(); if (editMode == 1) { restyleRail(); buildToolControl() }
             updatePreview()
         }
-        root.findViewById<View>(R.id.editor_tab_filters).setOnClickListener { setMode(0) }
-        root.findViewById<View>(R.id.editor_tab_adjust).setOnClickListener { setMode(1) }
+        binding.editorTabFilters.setOnClickListener { setMode(0) }
+        binding.editorTabAdjust.setOnClickListener { setMode(1) }
 
         buildFilterStrip()
         setMode(0)
@@ -146,15 +155,15 @@ class EditorBinder(
 
     private fun setMode(mode: Int) {
         editMode = mode
-        root.findViewById<View>(R.id.editor_filter_scroll).visibility = if (mode == 0) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.editor_adjust_panel).visibility = if (mode == 1) View.VISIBLE else View.GONE
-        styleTab(R.id.editor_tab_filters, mode == 0)
-        styleTab(R.id.editor_tab_adjust, mode == 1)
+        binding.editorFilterScroll.visibility = if (mode == 0) View.VISIBLE else View.GONE
+        binding.editorAdjustPanel.visibility = if (mode == 1) View.VISIBLE else View.GONE
+        styleTab(binding.editorTabFilters, mode == 0)
+        styleTab(binding.editorTabAdjust, mode == 1)
         if (mode == 1) { buildToolRail(); restyleRail(); buildToolControl() }
     }
 
-    private fun styleTab(id: Int, selected: Boolean) {
-        root.findViewById<TextView>(id).apply {
+    private fun styleTab(tab: TextView, selected: Boolean) {
+        tab.apply {
             background = if (selected) rounded(accent, 10f) else null
             setTextColor(if (selected) Color.WHITE else gray)
             setTypeface(null, if (selected) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
@@ -163,16 +172,16 @@ class EditorBinder(
 
     // ---- Filter strip --------------------------------------------------------------------
 
-    private val chipViews = ArrayList<Pair<String, View>>()
+    private val chipViews = ArrayList<Pair<String, ItemFilterChipBinding>>()
 
     private fun buildFilterStrip() {
-        val strip = root.findViewById<LinearLayout>(R.id.editor_filter_strip)
+        val strip = binding.editorFilterStrip
         strip.removeAllViews(); chipViews.clear()
         val gap = (12f * d).toInt()
         PhotoFilters.strip.forEachIndexed { i, filter ->
-            val chip = inflater.inflate(R.layout.item_filter_chip, strip, false)
-            (chip.layoutParams as LinearLayout.LayoutParams).marginStart = if (i > 0) gap else 0
-            val img = chip.findViewById<ImageView>(R.id.chip_image)
+            val chip = ItemFilterChipBinding.inflate(inflater, strip, false)
+            (chip.root.layoutParams as LinearLayout.LayoutParams).marginStart = if (i > 0) gap else 0
+            val img = chip.chipImage
             img.clipToOutline = true
             img.outlineProvider = object : ViewOutlineProvider() {
                 override fun getOutline(v: View, outline: Outline) { outline.setRoundRect(0, 0, v.width, v.height, 10f * d) }
@@ -181,14 +190,14 @@ class EditorBinder(
             val chipMatrix = PhotoFilters.matrixFor(filter.id, autoFilterMatrix)
             img.colorFilter = chipMatrix?.let { ColorMatrixColorFilter(ColorMatrix(it.copyOf())) }
             if (filter.id == PhotoFilters.ID_AUTO) {
-                chip.findViewById<View>(R.id.chip_auto_dot).apply {
+                chip.chipAutoDot.apply {
                     visibility = View.VISIBLE
                     background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(0xFF10B981.toInt()) }
                 }
             }
-            chip.findViewById<TextView>(R.id.chip_label).text = filter.label
-            chip.setOnClickListener { selectedFilterId = filter.id; restyleChips(); updatePreview() }
-            strip.addView(chip)
+            chip.chipLabel.text = filter.label
+            chip.root.setOnClickListener { selectedFilterId = filter.id; restyleChips(); updatePreview() }
+            strip.addView(chip.root)
             chipViews.add(filter.id to chip)
         }
         restyleChips()
@@ -197,14 +206,15 @@ class EditorBinder(
     private fun restyleChips() {
         for ((id, chip) in chipViews) {
             val selected = id == selectedFilterId
-            chip.findViewById<View>(R.id.chip_box).background = GradientDrawable().apply {
+            // 1dp blue selection stroke drawn OVER the preview image (foreground), glass otherwise.
+            chip.chipBox.foreground = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 10f * d
-                setStroke(((if (selected) 2.5f else 1f) * d).toInt().coerceAtLeast(1),
-                    if (selected) accent else palette.glass)
+                setColor(Color.TRANSPARENT)
+                setStroke((1f * d).toInt().coerceAtLeast(1), if (selected) SELECTION_BLUE else palette.glass)
             }
-            chip.findViewById<TextView>(R.id.chip_label).apply {
-                setTextColor(if (selected) accent else gray)
+            chip.chipLabel.apply {
+                setTextColor(if (selected) SELECTION_BLUE else gray)
                 setTypeface(null, if (selected) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
             }
         }
@@ -212,19 +222,19 @@ class EditorBinder(
 
     // ---- Adjust rail + control -----------------------------------------------------------
 
-    private val toolViews = ArrayList<Pair<AdjustTool, View>>()
+    private val toolViews = ArrayList<Pair<AdjustTool, ItemAdjustToolBinding>>()
 
     private fun buildToolRail() {
-        val rail = root.findViewById<LinearLayout>(R.id.editor_tool_rail)
+        val rail = binding.editorToolRail
         rail.removeAllViews(); toolViews.clear()
         val gap = (4f * d).toInt()
         AdjustTool.entries.forEachIndexed { i, tool ->
-            val item = inflater.inflate(R.layout.item_adjust_tool, rail, false)
-            (item.layoutParams as LinearLayout.LayoutParams).marginStart = if (i > 0) gap else 0
-            item.findViewById<ImageView>(R.id.tool_icon).setImageResource(toolIcon(tool))
-            item.findViewById<TextView>(R.id.tool_label).text = tool.label
-            item.setOnClickListener { activeTool = tool; restyleRail(); buildToolControl() }
-            rail.addView(item)
+            val item = ItemAdjustToolBinding.inflate(inflater, rail, false)
+            (item.root.layoutParams as LinearLayout.LayoutParams).marginStart = if (i > 0) gap else 0
+            item.toolIcon.setImageResource(toolIcon(tool))
+            item.toolLabel.text = tool.label
+            item.root.setOnClickListener { activeTool = tool; restyleRail(); buildToolControl() }
+            rail.addView(item.root)
             toolViews.add(tool to item)
         }
     }
@@ -237,18 +247,17 @@ class EditorBinder(
                 AdjustTool.Crop -> cropAspect != null
                 else -> adj(tool) != 0f
             }
-            item.findViewById<View>(R.id.tool_root).background = if (active) GradientDrawable().apply {
+            item.toolRoot.background = if (active) GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 10f * d
                 setColor((accent and 0x00FFFFFF) or (38 shl 24))
             } else null
-            item.findViewById<ImageView>(R.id.tool_icon).imageTintList =
-                tint(if (active) accent else if (touched) Color.WHITE else gray)
-            item.findViewById<View>(R.id.tool_dot).apply {
+            item.toolIcon.imageTintList = tint(if (active) accent else if (touched) Color.WHITE else gray)
+            item.toolDot.apply {
                 visibility = if (touched) View.VISIBLE else View.GONE
                 background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(accent) }
             }
-            item.findViewById<TextView>(R.id.tool_label).apply {
+            item.toolLabel.apply {
                 setTextColor(if (active) accent else gray)
                 setTypeface(null, if (active) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
             }
@@ -256,7 +265,7 @@ class EditorBinder(
     }
 
     private fun buildToolControl() {
-        val holder = root.findViewById<FrameLayout>(R.id.editor_tool_control)
+        val holder = binding.editorToolControl
         holder.removeAllViews()
         when (activeTool) {
             AdjustTool.Rotate -> {
@@ -295,29 +304,23 @@ class EditorBinder(
                     gravity = Gravity.CENTER_VERTICAL
                     setPadding((16f * d).toInt(), (4f * d).toInt(), (16f * d).toInt(), 0)
                 }
-                val seek = SeekBar(ctx).apply {
-                    max = 200
-                    progress = ((adj(activeTool) + 1f) * 100f).toInt()
-                    progressTintList = tint(accent); thumbTintList = tint(accent)
-                }
-                val value = TextView(ctx).apply {
+                val valueText = TextView(ctx).apply {
                     setTextColor(Color.WHITE); textSize = 12f
                     gravity = Gravity.END
                     text = (adj(activeTool) * 100).toInt().toString()
                 }
-                seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
-                        if (!fromUser) return
-                        val v = progress / 100f - 1f
+                // Center-origin slider: middle = 0, right = +, left = − (fills from the centre).
+                val slider = CenterSeekBar(ctx).apply {
+                    accentColor = accent
+                    value = adj(activeTool)
+                    onValueChanged = { v ->
                         adjustments[activeTool] = v
-                        value.text = (v * 100).toInt().toString()
+                        valueText.text = (v * 100).toInt().toString()
                         restyleRail(); updatePreview()
                     }
-                    override fun onStartTrackingTouch(sb: SeekBar) {}
-                    override fun onStopTrackingTouch(sb: SeekBar) {}
-                })
-                row.addView(seek, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-                row.addView(value, LinearLayout.LayoutParams((36f * d).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
+                }
+                row.addView(slider, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                row.addView(valueText, LinearLayout.LayoutParams((36f * d).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT)
                     .apply { marginStart = (10f * d).toInt() })
                 holder.addView(row)
             }

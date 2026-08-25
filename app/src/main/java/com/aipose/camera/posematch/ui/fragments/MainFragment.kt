@@ -27,9 +27,6 @@ import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -37,8 +34,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aipose.camera.posematch.MainActivity
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.databinding.FragmentMainBinding
+import com.aipose.camera.posematch.databinding.ViewExitSheetBinding
 import com.aipose.camera.posematch.ui.screens.NavTab
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -47,15 +47,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * Main container — the old MainScenicContainer converted to a real-XML host (migration step 5).
- *
- * Owns the 3-tab bottom nav, the pushed full-screen camera, the camera-permission card (with its
- * bounce + Allow flow) and the exit bottom sheet. Home/Collections/Camera are still hosted as
- * themed ComposeViews inside this XML shell; Settings is real XML (see [SettingsBinder]). Behaviour
- * matches the original: back from a sub-tab returns to Home, back from Home asks to exit, opening
- * the camera without permission only bounces the card.
- */
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val viewModel: MainViewModel by activityViewModels { (requireActivity() as MainActivity).viewModelFactory() }
@@ -74,6 +65,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { /* optional; capture works regardless */ }
 
     private var accent = 0
+    private var navMuted = 0xFF888888.toInt()
     private var d = 1f
 
     private val camPermLauncher =
@@ -99,30 +91,28 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
+
     fun launchGalleryPicker() {
         galleryLauncher.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentMainBinding.bind(view)
         d = resources.displayMetrics.density
         cameraGranted = isCamGranted()
 
-        // Nav-bar bottom inset (windowInsetsPadding(navigationBars) in the original).
-        val bottomNav = view.findViewById<View>(R.id.main_bottom_nav)
-        val baseNavBottom = bottomNav.paddingBottom
-        ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            bottomNav.updatePadding(bottom = baseNavBottom + bars.bottom)
-            insets
-        }
+        // Nav-bar bottom inset on the bottom navigation (edge-to-edge safe on all versions).
+        binding.mainBottomNav.applySystemBarInsets(bottom = true)
 
-        view.findViewById<View>(R.id.nav_home).setOnClickListener { selectTab(NavTab.HOME) }
-        view.findViewById<View>(R.id.nav_collections).setOnClickListener { selectTab(NavTab.HISTORY) }
-        view.findViewById<View>(R.id.nav_settings).setOnClickListener { selectTab(NavTab.SETTINGS) }
-        view.findViewById<View>(R.id.perm_allow).setOnClickListener { onAllowClick() }
+        binding.navHome.setOnClickListener { selectTab(NavTab.HOME) }
+        binding.navCollections.setOnClickListener { selectTab(NavTab.HISTORY) }
+        binding.navSettings.setOnClickListener { selectTab(NavTab.SETTINGS) }
+        binding.permAllow.setOnClickListener { onAllowClick() }
 
-        stylePermissionCard(view)
+        stylePermissionCard()
         updatePermissionCard()
 
         // Back handling: camera -> tabs; sub-tab -> Home; Home -> exit sheet.
@@ -162,42 +152,44 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         cameraBinder?.unbind()
         cameraBinder = null
         contentBackHandler = null
+        _binding = null
         super.onDestroyView()
     }
 
     // ---- Palette / nav styling -----------------------------------------------------------
 
     private fun applyPalette() {
-        val palette = paletteFor(viewModel.appTheme.value)
+        val b = _binding ?: return
+        val palette = paletteFor(requireContext())
         accent = palette.accent
-        view?.findViewById<View>(R.id.main_tabs_root)?.background = GradientDrawable(
+        navMuted = palette.textSecondary
+        b.mainTabsRoot.background = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(palette.bgTop, palette.bgBottom)
         )
+        b.mainBottomNav.setBackgroundColor(palette.navBg)
         updateNavStyles()
     }
 
     private fun updateNavStyles() {
-        val gray = 0xFF888888.toInt()
+        val b = _binding ?: return
+        val gray = navMuted
         val accent15 = (accent and 0x00FFFFFF) or (38 shl 24)
-        data class Item(val root: Int, val pill: Int, val icon: Int, val label: Int, val tab: NavTab)
+        data class Item(val pill: View, val icon: ImageView, val label: TextView, val tab: NavTab)
         val items = listOf(
-            Item(R.id.nav_home, R.id.nav_home_pill, R.id.nav_home_icon, R.id.nav_home_label, NavTab.HOME),
-            Item(R.id.nav_collections, R.id.nav_collections_pill, R.id.nav_collections_icon, R.id.nav_collections_label, NavTab.HISTORY),
-            Item(R.id.nav_settings, R.id.nav_settings_pill, R.id.nav_settings_icon, R.id.nav_settings_label, NavTab.SETTINGS)
+            Item(b.navHomePill, b.navHomeIcon, b.navHomeLabel, NavTab.HOME),
+            Item(b.navCollectionsPill, b.navCollectionsIcon, b.navCollectionsLabel, NavTab.HISTORY),
+            Item(b.navSettingsPill, b.navSettingsIcon, b.navSettingsLabel, NavTab.SETTINGS)
         )
-        val v = view ?: return
         for (it in items) {
             val selected = it.tab == activeTab
-            val pill = v.findViewById<View>(it.pill)
-            pill.background = if (selected) GradientDrawable().apply {
+            it.pill.background = if (selected) GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 100f * d
                 setColor(accent15)
             } else null
-            v.findViewById<ImageView>(it.icon).imageTintList =
-                android.content.res.ColorStateList.valueOf(if (selected) accent else gray)
-            v.findViewById<TextView>(it.label).apply {
+            it.icon.imageTintList = android.content.res.ColorStateList.valueOf(if (selected) accent else gray)
+            it.label.apply {
                 setTextColor(if (selected) accent else gray)
                 setTypeface(null, if (selected) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
             }
@@ -215,7 +207,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         activeTab = tab
         applyPalette()
 
-        val content = view?.findViewById<FrameLayout>(R.id.main_content) ?: return
+        val content = binding.mainContent
         content.removeAllViews()
         val child: View = when (tab) {
             NavTab.HOME -> {
@@ -238,7 +230,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             NavTab.SETTINGS -> {
                 val v = layoutInflater.inflate(R.layout.fragment_settings, content, false)
-                settingsBinder = SettingsBinder(this, viewModel, v).also { it.bind() }
+                settingsBinder = SettingsBinder(this, viewModel, v, requireActivity()).also { it.bind() }
                 v
             }
         }
@@ -269,7 +261,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 )
             )
         }
-        val container = view?.findViewById<FrameLayout>(R.id.main_camera_container) ?: return
+        val container = binding.mainCameraContainer
         container.removeAllViews()
         val v = layoutInflater.inflate(R.layout.fragment_camera, container, false)
         cameraBinder = CameraBinder(
@@ -289,7 +281,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         if (!showCamera) return
         showCamera = false
         cameraBinder?.unbind(); cameraBinder = null
-        val container = view?.findViewById<FrameLayout>(R.id.main_camera_container) ?: return
+        val container = binding.mainCameraContainer
         val width = (view?.width ?: resources.displayMetrics.widthPixels).toFloat()
         container.animate().translationX(width).alpha(0f).setDuration(300).withEndAction {
             container.visibility = View.GONE
@@ -327,7 +319,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun updatePermissionCard() {
-        val card = view?.findViewById<View>(R.id.main_permission_card) ?: return
+        val card = _binding?.mainPermissionCard ?: return
         val shouldShow = !cameraGranted
         if (shouldShow && card.visibility != View.VISIBLE) {
             card.alpha = 0f
@@ -339,7 +331,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun bounceCard() {
-        val card = view?.findViewById<View>(R.id.main_permission_card) ?: return
+        val card = _binding?.mainPermissionCard ?: return
         // 1 -> 1.07 -> 0.96 -> 1, played twice (matches the Compose repeat(2)).
         val sx = PropertyValuesHolder.ofKeyframe(
             View.SCALE_X,
@@ -357,23 +349,22 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }.start()
     }
 
-    private fun stylePermissionCard(view: View) {
+    private fun stylePermissionCard() {
         val warn = 0xFFED8B4E.toInt()
-        val card = view.findViewById<View>(R.id.main_permission_card)
-        card.background = GradientDrawable(
+        binding.mainPermissionCard.background = GradientDrawable(
             GradientDrawable.Orientation.LEFT_RIGHT,
             intArrayOf(0xFF2A1A12.toInt(), 0xFF1B1B21.toInt())
         ).apply {
             cornerRadius = 16f * d
             setStroke((1f * d).toInt().coerceAtLeast(1), (warn and 0x00FFFFFF) or (128 shl 24))
         }
-        view.findViewById<View>(R.id.perm_icon_circle).background = GradientDrawable().apply {
+        binding.permIconCircle.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
             setColor((warn and 0x00FFFFFF) or (46 shl 24))
         }
-        (view.findViewById<FrameLayout>(R.id.perm_icon_circle).getChildAt(0) as? ImageView)
+        (binding.permIconCircle.getChildAt(0) as? ImageView)
             ?.imageTintList = android.content.res.ColorStateList.valueOf(warn)
-        view.findViewById<TextView>(R.id.perm_allow).apply {
+        binding.permAllow.apply {
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 10f * d
@@ -386,26 +377,26 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun showExitSheet() {
         val ctx = requireContext()
-        val palette = paletteFor(viewModel.appTheme.value)
+        val palette = paletteFor(requireContext())
         val accentC = palette.accent
         val glassC = palette.glass
-        val content = layoutInflater.inflate(R.layout.view_exit_sheet, null) as LinearLayout
+        val sheet = ViewExitSheetBinding.inflate(layoutInflater)
+        val content = sheet.root
         content.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadii = floatArrayOf(20f * d, 20f * d, 20f * d, 20f * d, 0f, 0f, 0f, 0f)
             setColor(0xFF161619.toInt())
         }
-        content.findViewById<View>(R.id.exit_drag_handle).background = GradientDrawable().apply {
+        sheet.exitDragHandle.background = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 2f * d
             setColor(0xFF555555.toInt())
         }
-        content.findViewById<View>(R.id.exit_icon_circle).background = GradientDrawable().apply {
+        sheet.exitIconCircle.background = GradientDrawable().apply {
             shape = GradientDrawable.OVAL
             setColor((accentC and 0x00FFFFFF) or (38 shl 24))
         }
-        content.findViewById<ImageView>(R.id.exit_icon).imageTintList =
-            android.content.res.ColorStateList.valueOf(accentC)
+        sheet.exitIcon.imageTintList = android.content.res.ColorStateList.valueOf(accentC)
 
         val dialog = Dialog(ctx).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -417,7 +408,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 setDimAmount(0.5f)
             }
         }
-        content.findViewById<TextView>(R.id.exit_cancel).apply {
+        sheet.exitCancel.apply {
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 14f * d
@@ -426,7 +417,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
             setOnClickListener { dialog.dismiss() }
         }
-        content.findViewById<TextView>(R.id.exit_confirm).apply {
+        sheet.exitConfirm.apply {
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 14f * d

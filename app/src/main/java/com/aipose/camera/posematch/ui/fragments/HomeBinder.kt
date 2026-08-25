@@ -12,14 +12,10 @@ import android.view.View
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -28,9 +24,15 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.data.PoseItem
+import com.aipose.camera.posematch.databinding.FragmentHomeBinding
+import com.aipose.camera.posematch.databinding.ItemCategoryHeaderBinding
+import com.aipose.camera.posematch.databinding.ItemPoseThumbBinding
+import com.aipose.camera.posematch.databinding.ViewCategoryAlbumBinding
+import com.aipose.camera.posematch.databinding.ViewHomeHeroBinding
 import com.aipose.camera.posematch.ui.screens.assetPathOf
 import com.aipose.camera.posematch.ui.screens.decodeAsset
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -59,10 +61,9 @@ private fun categoryIconRes(cat: String): Int = when (cat) {
 }
 
 /**
- * Binds the real-XML Home tab ([R.layout.fragment_home]) to the shared [MainViewModel], reproducing
- * HomeScreen: brand + gallery top bar, a search box, and either a flat search-results grid or the
- * browse view (hero card + guidance caption + per-trend rows of 3 with a "Show all" album overlay).
- * Bundled-asset images are decoded straight from AssetManager (via [decodeAsset]) as in the original.
+ * Binds the real-XML Home tab ([R.layout.fragment_home]) to the shared [MainViewModel] via View
+ * Binding: brand + gallery top bar, a search box, and either a flat search-results grid or the browse
+ * view (hero card + guidance caption + per-trend rows of 3 with a "Show all" album overlay).
  */
 class HomeBinder(
     private val host: Fragment,
@@ -71,29 +72,25 @@ class HomeBinder(
     private val onOpenCamera: () -> Unit,
     private val onLaunchGalleryPicker: () -> Unit
 ) {
+    private val binding = FragmentHomeBinding.bind(root)
     private val jobs = mutableListOf<Job>()
     private val d = root.resources.displayMetrics.density
-    private val palette = paletteFor(viewModel.appTheme.value)
+    private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
     private val glass = palette.glass
-    private val gray = 0xFF888888.toInt()
+    private val gray = palette.textSecondary
 
     private var showAllCategory: String? = null
+    private var albumBinding: ViewCategoryAlbumBinding? = null
 
-    private val dynamic get() = root.findViewById<LinearLayout>(R.id.home_dynamic)
-    private val albumOverlay get() = root.findViewById<FrameLayout>(R.id.home_album_overlay)
+    private val dynamic get() = binding.homeDynamic
 
     fun bind() {
-        val topbar = root.findViewById<View>(R.id.home_topbar)
-        val baseTop = topbar.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(topbar) { v, insets ->
-            v.updatePadding(top = baseTop + insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
-            insets
-        }
+        binding.homeTopbar.applySystemBarInsets(top = true)
 
-        root.findViewById<View>(R.id.home_search_bar).background = rounded(card, 14f)
-        root.findViewById<View>(R.id.home_gallery_icon).apply {
+        binding.homeSearchBar.background = rounded(card, 14f)
+        binding.homeGalleryIcon.apply {
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 14f * d
@@ -103,8 +100,7 @@ class HomeBinder(
             setOnClickListener { dismissKeyboard(); onLaunchGalleryPicker() }
         }
 
-        val input = root.findViewById<EditText>(R.id.home_search_input)
-        val clear = root.findViewById<ImageView>(R.id.home_search_clear)
+        val input = binding.homeSearchInput
         input.setText(viewModel.searchQuery.value)
         input.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
@@ -117,7 +113,7 @@ class HomeBinder(
         input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) { dismissKeyboard(); true } else false
         }
-        clear.setOnClickListener {
+        binding.homeSearchClear.setOnClickListener {
             input.setText("")
             viewModel.setSearchQuery("")
             dismissKeyboard()
@@ -146,8 +142,7 @@ class HomeBinder(
     private fun render() {
         val query = viewModel.searchQuery.value
         val allPoses = viewModel.defaultPoses.value
-        root.findViewById<View>(R.id.home_search_clear).visibility =
-            if (query.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.homeSearchClear.visibility = if (query.isNotEmpty()) View.VISIBLE else View.GONE
 
         val container = dynamic
         container.removeAllViews()
@@ -160,14 +155,15 @@ class HomeBinder(
                     pose.tags.any { it.contains(query, true) }
             }
             if (results.isEmpty()) {
-                val box = FrameLayout(host.requireContext()).apply {
+                val box = android.widget.FrameLayout(host.requireContext()).apply {
                     background = rounded(card, 16f)
                     val tv = TextView(context).apply {
                         text = host.getString(R.string.home_no_blueprints)
                         setTextColor(gray); textSize = 14f
                     }
-                    addView(tv, FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT
+                    addView(tv, android.widget.FrameLayout.LayoutParams(
+                        android.widget.FrameLayout.LayoutParams.WRAP_CONTENT,
+                        android.widget.FrameLayout.LayoutParams.WRAP_CONTENT
                     ).apply { gravity = android.view.Gravity.CENTER })
                 }
                 addSpaced(container, box, (140f * d).toInt())
@@ -186,32 +182,30 @@ class HomeBinder(
     private fun buildBrowse(container: LinearLayout, allPoses: List<PoseItem>) {
         // Hero card.
         val heroPose = allPoses.firstOrNull { it.category == "Couple" } ?: allPoses.firstOrNull()
-        val hero = LayoutInflater.from(host.requireContext()).inflate(R.layout.view_home_hero, container, false)
-        hero.clipToOutline = true
-        hero.outlineProvider = roundOutline(8f)
-        hero.background = GradientDrawable(
+        val hero = ViewHomeHeroBinding.inflate(LayoutInflater.from(host.requireContext()), container, false)
+        hero.root.clipToOutline = true
+        hero.root.outlineProvider = roundOutline(8f)
+        hero.root.background = GradientDrawable(
             GradientDrawable.Orientation.LEFT_RIGHT,
             intArrayOf(accent, (accent and 0x00FFFFFF) or (184 shl 24))
         )
-        val heroImage = hero.findViewById<ImageView>(R.id.hero_image)
-        val heroScrim = hero.findViewById<View>(R.id.hero_scrim)
         val heroAsset = heroPose?.image?.let(::assetPathOf)
         if (heroAsset != null) {
-            heroImage.visibility = View.VISIBLE
-            heroScrim.visibility = View.VISIBLE
-            heroScrim.background = GradientDrawable(
+            hero.heroImage.visibility = View.VISIBLE
+            hero.heroScrim.visibility = View.VISIBLE
+            hero.heroScrim.background = GradientDrawable(
                 GradientDrawable.Orientation.LEFT_RIGHT,
                 intArrayOf(accent, (accent and 0x00FFFFFF) or (217 shl 24), Color.TRANSPARENT)
             )
-            loadAsset(heroImage, heroAsset)
+            loadAsset(hero.heroImage, heroAsset)
         } else {
-            heroImage.visibility = View.GONE
-            heroScrim.visibility = View.GONE
+            hero.heroImage.visibility = View.GONE
+            hero.heroScrim.visibility = View.GONE
         }
-        hero.findViewById<ImageView>(R.id.hero_cta_icon).imageTintList = tint(accent)
-        hero.findViewById<TextView>(R.id.hero_cta_text).setTextColor(accent)
-        hero.findViewById<ImageView>(R.id.hero_cta_arrow).imageTintList = tint(accent)
-        hero.findViewById<View>(R.id.hero_cta).apply {
+        hero.heroCtaIcon.imageTintList = tint(accent)
+        hero.heroCtaText.setTextColor(accent)
+        hero.heroCtaArrow.imageTintList = tint(accent)
+        hero.heroCta.apply {
             background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
                 cornerRadius = 100f * d
@@ -223,7 +217,7 @@ class HomeBinder(
                 onOpenCamera()
             }
         }
-        addSpaced(container, hero)
+        addSpaced(container, hero.root)
 
         // Guidance caption.
         val hint = TextView(host.requireContext()).apply {
@@ -239,22 +233,20 @@ class HomeBinder(
         for (category in ordered) {
             val poses = grouped[category].orEmpty()
             if (poses.isEmpty()) continue
-            val header = LayoutInflater.from(host.requireContext())
-                .inflate(R.layout.item_category_header, container, false)
-            header.findViewById<ImageView>(R.id.cat_header_icon).apply {
+            val header = ItemCategoryHeaderBinding.inflate(LayoutInflater.from(host.requireContext()), container, false)
+            header.catHeaderIcon.apply {
                 setImageResource(categoryIconRes(category)); imageTintList = tint(accent)
             }
-            header.findViewById<TextView>(R.id.cat_header_name).text = category
-            val showAll = header.findViewById<LinearLayout>(R.id.cat_header_show_all)
+            header.catHeaderName.text = category
             if (poses.size > 3) {
-                showAll.visibility = View.VISIBLE
-                header.findViewById<TextView>(R.id.cat_header_show_all_text).setTextColor(accent)
-                header.findViewById<ImageView>(R.id.cat_header_show_all_arrow).imageTintList = tint(accent)
-                showAll.setOnClickListener { dismissKeyboard(); showAlbum(category) }
+                header.catHeaderShowAll.visibility = View.VISIBLE
+                header.catHeaderShowAllText.setTextColor(accent)
+                header.catHeaderShowAllArrow.imageTintList = tint(accent)
+                header.catHeaderShowAll.setOnClickListener { dismissKeyboard(); showAlbum(category) }
             } else {
-                showAll.visibility = View.GONE
+                header.catHeaderShowAll.visibility = View.GONE
             }
-            addSpaced(container, header)
+            addSpaced(container, header.root)
             addSpaced(container, buildRow(poses.take(3)))
         }
     }
@@ -265,12 +257,12 @@ class HomeBinder(
         val gap = (10f * d).toInt()
         val inflater = LayoutInflater.from(host.requireContext())
         poses.forEachIndexed { i, pose ->
-            val thumb = inflater.inflate(R.layout.item_pose_thumb, row, false)
+            val thumb = ItemPoseThumbBinding.inflate(inflater, row, false)
             val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             if (i > 0) lp.marginStart = gap
-            thumb.layoutParams = lp
+            thumb.root.layoutParams = lp
             bindThumb(thumb, pose)
-            row.addView(thumb)
+            row.addView(thumb.root)
         }
         repeat(3 - poses.size) { i ->
             val spacer = View(host.requireContext())
@@ -282,24 +274,24 @@ class HomeBinder(
         return row
     }
 
-    private fun bindThumb(thumb: View, pose: PoseItem) {
-        thumb.clipToOutline = true
-        thumb.outlineProvider = roundOutline(8f)
-        thumb.background = rounded(0xFF14141A.toInt(), 8f)
-        thumb.foreground = GradientDrawable().apply {
+    private fun bindThumb(thumb: ItemPoseThumbBinding, pose: PoseItem) {
+        thumb.root.clipToOutline = true
+        thumb.root.outlineProvider = roundOutline(8f)
+        thumb.root.background = rounded(0xFF14141A.toInt(), 8f)
+        thumb.root.foreground = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 8f * d
             setColor(Color.TRANSPARENT)
             setStroke((0.5f * d).toInt().coerceAtLeast(1), glass)
         }
-        loadPose(thumb.findViewById(R.id.pose_thumb_image), pose.image)
-        thumb.findViewById<TextView>(R.id.pose_thumb_title).apply {
+        loadPose(thumb.poseThumbImage, pose.image)
+        thumb.poseThumbTitle.apply {
             text = pose.title
             background = GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, 0xBF000000.toInt())
             )
         }
-        thumb.setOnClickListener { openPose(pose) }
+        thumb.root.setOnClickListener { openPose(pose) }
     }
 
     private fun openPose(pose: PoseItem) {
@@ -313,24 +305,21 @@ class HomeBinder(
 
     private fun showAlbum(category: String) {
         showAllCategory = category
-        val overlay = albumOverlay
+        val overlay = binding.homeAlbumOverlay
         overlay.removeAllViews()
-        val v = LayoutInflater.from(host.requireContext()).inflate(R.layout.view_category_album, overlay, false)
-        v.background = GradientDrawable(
+        val albumB = ViewCategoryAlbumBinding.inflate(LayoutInflater.from(host.requireContext()), overlay, false)
+        albumBinding = albumB
+        albumB.root.background = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(palette.bgTop, palette.bgBottom)
         )
-        val baseTop = v.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(v) { view, insets ->
-            view.updatePadding(top = baseTop + insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
-            insets
-        }
-        v.findViewById<TextView>(R.id.cat_album_title).text = category
-        v.findViewById<View>(R.id.cat_album_back).setOnClickListener { closeAlbum() }
-        overlay.addView(v)
+        albumB.root.applySystemBarInsets(top = true)
+        albumB.catAlbumTitle.text = category
+        albumB.catAlbumBack.setOnClickListener { closeAlbum() }
+        overlay.addView(albumB.root)
         overlay.visibility = View.VISIBLE
         rebuildAlbumGrid(viewModel.defaultPoses.value.filter { it.category == category })
-        ViewCompat.requestApplyInsets(v)
+        ViewCompat.requestApplyInsets(albumB.root)
 
         val width = (root.width.takeIf { it > 0 } ?: root.resources.displayMetrics.widthPixels).toFloat()
         overlay.translationX = width
@@ -338,7 +327,7 @@ class HomeBinder(
     }
 
     private fun rebuildAlbumGrid(poses: List<PoseItem>) {
-        val grid = albumOverlay.findViewById<LinearLayout>(R.id.cat_album_grid) ?: return
+        val grid = albumBinding?.catAlbumGrid ?: return
         grid.removeAllViews()
         poses.chunked(3).forEachIndexed { idx, rowPoses ->
             val row = buildRow(rowPoses)
@@ -351,12 +340,13 @@ class HomeBinder(
     }
 
     private fun closeAlbum() {
-        val overlay = albumOverlay
+        val overlay = binding.homeAlbumOverlay
         val width = (root.width.takeIf { it > 0 } ?: root.resources.displayMetrics.widthPixels).toFloat()
         overlay.animate().translationX(width).setDuration(300).withEndAction {
             overlay.visibility = View.GONE
             overlay.removeAllViews()
             overlay.translationX = 0f
+            albumBinding = null
         }.start()
         showAllCategory = null
     }
@@ -408,7 +398,7 @@ class HomeBinder(
     private fun dismissKeyboard() {
         val imm = host.requireContext().getSystemService(InputMethodManager::class.java)
         imm?.hideSoftInputFromWindow(root.windowToken, 0)
-        root.findViewById<EditText>(R.id.home_search_input)?.clearFocus()
+        binding.homeSearchInput.clearFocus()
     }
 
     private fun tint(color: Int) = android.content.res.ColorStateList.valueOf(color)

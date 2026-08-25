@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Pose-match camera (real XML — migration step 8). A cleaner, more compact take on the Compose
-  PoseCameraScreen: same logic (CameraX preview + ML Kit analysis, pinch/zoom/pan/rotate overlay,
-  live match badge, opacity, pro panel, reference strip, shutter/flip). The post-capture editor and
-  success screens are shown as ComposeView overlays (their own migration steps). Colours/insets in code.
--->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/camera_root"
@@ -17,7 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Top bar. -->
         <LinearLayout
             android:id="@+id/camera_topbar"
             android:layout_width="match_parent"
@@ -358,7 +351,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/black"
-            android:paddingVertical="6dp"
+            android:paddingVertical="8dp"
             android:scrollbars="none">
 
             <LinearLayout
@@ -369,19 +362,22 @@
                 android:paddingHorizontal="16dp" />
         </HorizontalScrollView>
 
-        <!-- Bottom dock: shutter + flip. -->
+        <!-- Bottom dock: shutter + flip. Height wraps so the shutter keeps even spacing above
+             the strip and below (the nav-bar inset is added on top of paddingBottom in code). -->
         <LinearLayout
             android:id="@+id/camera_dock"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/black"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="24dp">
+            android:paddingHorizontal="24dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
 
             <Space
-                android:layout_width="48dp"
-                android:layout_height="48dp" />
+                android:layout_width="44dp"
+                android:layout_height="44dp" />
 
             <Space
                 android:layout_width="0dp"
@@ -390,15 +386,15 @@
 
             <FrameLayout
                 android:id="@+id/camera_shutter"
-                android:layout_width="76dp"
-                android:layout_height="76dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:clickable="true"
                 android:focusable="true">
 
                 <View
                     android:id="@+id/camera_shutter_inner"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
                     android:layout_gravity="center" />
             </FrameLayout>
 
@@ -409,8 +405,8 @@
 
             <FrameLayout
                 android:id="@+id/camera_flip"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:clickable="true"
                 android:focusable="true">
 

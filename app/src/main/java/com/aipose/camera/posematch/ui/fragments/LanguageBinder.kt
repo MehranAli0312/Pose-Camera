@@ -18,7 +18,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.data.LocaleHelper
+import com.aipose.camera.posematch.databinding.FragmentLanguageBinding
+import com.aipose.camera.posematch.databinding.ItemLanguageBinding
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
@@ -38,11 +41,12 @@ class LanguageBinder(
         "Turkish", "Bangla", "French", "Portuguese", "Russian", "Filipino", "German"
     )
 
+    private val binding = FragmentLanguageBinding.bind(root)
     private val d = root.resources.displayMetrics.density
-    private val palette = paletteFor(viewModel.appTheme.value)
+    private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
-    private val gray = 0xFF888888.toInt()
+    private val gray = palette.textSecondary
     private val cornerPx = 14f * d
     private val strokePx = (1.5f * d).toInt().coerceAtLeast(1)
     private val selectedBg = (accent and 0x00FFFFFF) or (38 shl 24)
@@ -57,22 +61,16 @@ class LanguageBinder(
             intArrayOf(palette.bgTop, palette.bgBottom)
         )
 
-        val baseTop = root.paddingTop
-        val baseBottom = root.paddingBottom
-        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(top = baseTop + bars.top, bottom = baseBottom + bars.bottom)
-            insets
-        }
+        root.applySystemBarInsets(top = true, bottom = true)
 
-        val done = root.findViewById<View>(R.id.language_confirm_button)
+        val done = binding.languageConfirmButton
         done.background = GradientDrawable().apply { shape = GradientDrawable.OVAL; setColor(accent) }
         done.setOnClickListener {
             LocaleHelper.persistLanguage(host.requireContext(), viewModel.selectedLanguage.value)
             onDone()
         }
 
-        val list = root.findViewById<LinearLayout>(R.id.language_list)
+        val list = binding.languageList
         list.removeAllViews(); rows.clear()
         val inflater = LayoutInflater.from(host.requireContext())
         val radioTint = ColorStateList(
@@ -80,9 +78,10 @@ class LanguageBinder(
             intArrayOf(accent, gray)
         )
         languages.forEachIndexed { i, lang ->
-            val row = inflater.inflate(R.layout.item_language, list, false)
-            val name = row.findViewById<TextView>(R.id.lang_name)
-            val radio = row.findViewById<RadioButton>(R.id.lang_radio)
+            val rowBinding = ItemLanguageBinding.inflate(inflater, list, false)
+            val row = rowBinding.root
+            val name = rowBinding.langName
+            val radio = rowBinding.langRadio
             name.text = lang
             radio.buttonTintList = radioTint
             row.setOnClickListener { viewModel.setLanguage(lang) }

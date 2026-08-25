@@ -7,4 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--
+      App theme tokens — LIGHT (day) values. The matching DARK values live in
+      values-night/colors.xml and are selected automatically by the night-mode configuration that
+      MainActivity applies from the persisted Dark/Light choice.
+    -->
+    <color name="accent">#FF6366F1</color>
+    <color name="accent_secondary">#FF8B5CF6</color>
+    <color name="bg_top">#FFFFFFFF</color>
+    <color name="bg_bottom">#FFEDEFF3</color>
+    <color name="card">#FFF3F4F7</color>
+    <color name="glass">#1A000000</color>
+    <color name="text_primary">#FF14171C</color>
+    <color name="text_secondary">#FF667085</color>
+    <color name="icon_muted">#FF98A0AC</color>
+    <color name="nav_bg">#FFFFFFFF</color>
 </resources>

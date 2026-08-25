@@ -38,7 +38,7 @@
                     android:layout_weight="1"
                     android:letterSpacing="-0.025"
                     android:text="@string/home_title"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/action_import"
                         android:src="@drawable/ic_add_photo_alternate"
-                        android:tint="@android:color/white" />
+                        android:tint="@color/text_primary" />
                 </FrameLayout>
             </LinearLayout>
 
@@ -74,7 +74,7 @@
                     android:layout_height="20dp"
                     android:contentDescription="@string/action_search"
                     android:src="@drawable/ic_search"
-                    android:tint="#FF888888" />
+                    android:tint="@color/text_secondary" />
 
                 <EditText
                     android:id="@+id/home_search_input"
@@ -88,8 +88,8 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#FF888888"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -100,7 +100,7 @@
                     android:contentDescription="@null"
                     android:focusable="true"
                     android:src="@drawable/ic_clear"
-                    android:tint="#FF888888"
+                    android:tint="@color/text_secondary"
                     android:visibility="gone" />
             </LinearLayout>
 

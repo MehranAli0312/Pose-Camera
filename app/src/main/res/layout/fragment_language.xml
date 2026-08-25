@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/lang_choose_title"
-        android:textColor="@android:color/white"
+        android:textColor="@color/text_primary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="@string/lang_choose_subtitle"
-        android:textColor="#FF888888"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp" />
 
     <ScrollView

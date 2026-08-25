@@ -31,7 +31,15 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.data.CapturedPhoto
+import com.aipose.camera.posematch.databinding.DialogDeleteBinding
+import com.aipose.camera.posematch.databinding.FragmentCollectionsBinding
+import com.aipose.camera.posematch.databinding.ItemCollectionHeaderBinding
+import com.aipose.camera.posematch.databinding.ItemCollectionThumbBinding
+import com.aipose.camera.posematch.databinding.ItemDetailRowBinding
+import com.aipose.camera.posematch.databinding.ViewLocationAlbumBinding
+import com.aipose.camera.posematch.databinding.ViewPhotoDetailBinding
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import com.aipose.camera.posematch.ui.viewmodel.formatHistoryDate
 import kotlinx.coroutines.Job
@@ -52,13 +60,16 @@ class CollectionsBinder(
     private val viewModel: MainViewModel,
     private val root: View
 ) {
+    private val binding = FragmentCollectionsBinding.bind(root)
+    private var albumBinding: ViewLocationAlbumBinding? = null
+    private var detailBinding: ViewPhotoDetailBinding? = null
     private val jobs = mutableListOf<Job>()
     private val d = root.resources.displayMetrics.density
-    private val palette = paletteFor(viewModel.appTheme.value)
+    private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
     private val glass = palette.glass
-    private val gray = 0xFF888888.toInt()
+    private val gray = palette.textSecondary
     private val scoreGreen = 0xFF81C784.toInt()
     private val scoreOrange = 0xFFFFB74D.toInt()
 
@@ -66,26 +77,21 @@ class CollectionsBinder(
     private var selectedPhotoId: Long? = null
     private var deleteDialog: Dialog? = null
 
-    private val main get() = root.findViewById<View>(R.id.collections_main)
-    private val list get() = root.findViewById<LinearLayout>(R.id.collections_list)
-    private val scroll get() = root.findViewById<View>(R.id.collections_scroll)
-    private val empty get() = root.findViewById<View>(R.id.collections_empty)
-    private val albumOverlay get() = root.findViewById<FrameLayout>(R.id.collections_album_overlay)
-    private val detailOverlay get() = root.findViewById<FrameLayout>(R.id.collections_detail_overlay)
+    private val main get() = binding.collectionsMain
+    private val list get() = binding.collectionsList
+    private val scroll get() = binding.collectionsScroll
+    private val empty get() = binding.collectionsEmpty
+    private val albumOverlay get() = binding.collectionsAlbumOverlay
+    private val detailOverlay get() = binding.collectionsDetailOverlay
 
     fun bind() {
-        // statusBarsPadding on top of the content.
-        val baseTop = main.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(main) { v, insets ->
-            val top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            v.updatePadding(top = baseTop + top)
-            insets
-        }
+        // Status-bar inset on top of the content (edge-to-edge safe on all versions).
+        main.applySystemBarInsets(top = true)
 
-        root.findViewById<View>(R.id.collections_search_bar).background = rounded(card, 14f)
+        binding.collectionsSearchBar.background = rounded(card, 14f)
 
-        val input = root.findViewById<EditText>(R.id.collections_search_input)
-        val clear = root.findViewById<ImageView>(R.id.collections_search_clear)
+        val input = binding.collectionsSearchInput
+        val clear = binding.collectionsSearchClear
         input.setText(viewModel.historyQuery.value)
         input.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
@@ -136,20 +142,19 @@ class CollectionsBinder(
         val filtered = viewModel.filteredHistory.value
         val query = viewModel.historyQuery.value
 
-        root.findViewById<TextView>(R.id.collections_subtitle).text =
-            host.getString(R.string.history_subtitle, all.size)
-        root.findViewById<View>(R.id.collections_search_clear).visibility =
+        binding.collectionsSubtitle.text = host.getString(R.string.history_subtitle, all.size)
+        binding.collectionsSearchClear.visibility =
             if (query.isNotEmpty()) View.VISIBLE else View.GONE
 
         if (filtered.isEmpty()) {
             scroll.visibility = View.GONE
             empty.visibility = View.VISIBLE
-            root.findViewById<ImageView>(R.id.collections_empty_icon)
+            binding.collectionsEmptyIcon
                 .setImageResource(if (query.isEmpty()) R.drawable.ic_schedule else R.drawable.ic_search)
-            root.findViewById<TextView>(R.id.collections_empty_text).text =
+            binding.collectionsEmptyText.text =
                 if (query.isEmpty()) host.getString(R.string.history_empty)
                 else host.getString(R.string.history_no_match, query)
-            root.findViewById<View>(R.id.collections_empty_sub).visibility =
+            binding.collectionsEmptySub.visibility =
                 if (query.isEmpty()) View.VISIBLE else View.GONE
         } else {
             empty.visibility = View.GONE
@@ -172,25 +177,23 @@ class CollectionsBinder(
         val grouped = photos.groupBy { it.locationName }
         var first = true
         for ((location, groupPhotos) in grouped) {
-            val header = inflater.inflate(R.layout.item_collection_header, container, false)
-            header.findViewById<TextView>(R.id.header_location).text = location
-            header.findViewById<TextView>(R.id.header_count).apply {
+            val headerB = ItemCollectionHeaderBinding.inflate(inflater, container, false)
+            headerB.headerLocation.text = location
+            headerB.headerCount.apply {
                 text = groupPhotos.size.toString()
                 setTextColor(accent)
                 background = rounded((accent and 0x00FFFFFF) or (46 shl 24), 8f)
             }
-            val seeAll = header.findViewById<LinearLayout>(R.id.header_see_all)
             if (groupPhotos.size > 6) {
-                seeAll.visibility = View.VISIBLE
-                header.findViewById<TextView>(R.id.header_see_all_text).setTextColor(accent)
-                header.findViewById<ImageView>(R.id.header_see_all_arrow).imageTintList =
-                    android.content.res.ColorStateList.valueOf(accent)
-                seeAll.setOnClickListener { dismissKeyboard(); showAlbum(location) }
+                headerB.headerSeeAll.visibility = View.VISIBLE
+                headerB.headerSeeAllText.setTextColor(accent)
+                headerB.headerSeeAllArrow.imageTintList = android.content.res.ColorStateList.valueOf(accent)
+                headerB.headerSeeAll.setOnClickListener { dismissKeyboard(); showAlbum(location) }
             } else {
-                seeAll.visibility = View.GONE
+                headerB.headerSeeAll.visibility = View.GONE
             }
-            (header.layoutParams as LinearLayout.LayoutParams).topMargin = if (first) 0 else (18f * d).toInt()
-            container.addView(header)
+            (headerB.root.layoutParams as LinearLayout.LayoutParams).topMargin = if (first) 0 else (18f * d).toInt()
+            container.addView(headerB.root)
 
             val grid = LinearLayout(host.requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
@@ -221,12 +224,12 @@ class CollectionsBinder(
                 layoutParams = lp
             }
             rowPhotos.forEachIndexed { i, photo ->
-                val thumb = inflater.inflate(R.layout.item_collection_thumb, row, false)
+                val thumbB = ItemCollectionThumbBinding.inflate(inflater, row, false)
                 val lp = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
                 if (i > 0) lp.marginStart = gap
-                thumb.layoutParams = lp
-                bindThumb(thumb, photo)
-                row.addView(thumb)
+                thumbB.root.layoutParams = lp
+                bindThumb(thumbB, photo)
+                row.addView(thumbB.root)
             }
             // Fill the remaining columns so widths stay equal.
             repeat(3 - rowPhotos.size) { i ->
@@ -240,37 +243,35 @@ class CollectionsBinder(
         }
     }
 
-    private fun bindThumb(thumb: View, photo: CapturedPhoto) {
-        thumb.clipToOutline = true
-        thumb.outlineProvider = roundOutline(14f)
-        thumb.background = rounded(card, 14f)
-        thumb.foreground = GradientDrawable().apply {
+    private fun bindThumb(thumb: ItemCollectionThumbBinding, photo: CapturedPhoto) {
+        thumb.root.clipToOutline = true
+        thumb.root.outlineProvider = roundOutline(14f)
+        thumb.root.background = rounded(card, 14f)
+        thumb.root.foreground = GradientDrawable().apply {
             shape = GradientDrawable.RECTANGLE
             cornerRadius = 14f * d
             setColor(Color.TRANSPARENT)
             setStroke((0.5f * d).toInt().coerceAtLeast(1), glass)
         }
 
-        val image = thumb.findViewById<ImageView>(R.id.thumb_image)
-        val broken = thumb.findViewById<ImageView>(R.id.thumb_broken)
-        loadPhoto(image, broken, photo.imagePath)
+        loadPhoto(thumb.thumbImage, thumb.thumbBroken, photo.imagePath)
 
-        thumb.findViewById<TextView>(R.id.thumb_score).apply {
+        thumb.thumbScore.apply {
             text = "${photo.matchScore}%"
             setTextColor(if (photo.matchScore >= 80) scoreGreen else scoreOrange)
             background = rounded(0x8C000000.toInt(), 8f)
         }
-        thumb.findViewById<ImageView>(R.id.thumb_favorite).apply {
+        thumb.thumbFavorite.apply {
             visibility = if (photo.isFavorite) View.VISIBLE else View.GONE
             imageTintList = android.content.res.ColorStateList.valueOf(accent)
         }
-        thumb.findViewById<TextView>(R.id.thumb_date).apply {
+        thumb.thumbDate.apply {
             text = SimpleDateFormat("MMM dd • hh:mm a", Locale.getDefault()).format(Date(photo.dateTimestamp))
             background = GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, 0x99000000.toInt())
             )
         }
-        thumb.setOnClickListener { dismissKeyboard(); showDetail(photo) }
+        thumb.root.setOnClickListener { dismissKeyboard(); showDetail(photo) }
     }
 
     // ---- Album overlay -------------------------------------------------------------------
@@ -279,22 +280,19 @@ class CollectionsBinder(
         albumLocation = location
         val overlay = albumOverlay
         overlay.removeAllViews()
-        val v = LayoutInflater.from(host.requireContext()).inflate(R.layout.view_location_album, overlay, false)
-        v.background = GradientDrawable(
+        val albumB = ViewLocationAlbumBinding.inflate(LayoutInflater.from(host.requireContext()), overlay, false)
+        albumBinding = albumB
+        albumB.root.background = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(palette.bgTop, palette.bgBottom)
         )
-        val baseTop = v.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(v) { view, insets ->
-            view.updatePadding(top = baseTop + insets.getInsets(WindowInsetsCompat.Type.systemBars()).top)
-            insets
-        }
-        v.findViewById<TextView>(R.id.album_title).text = location
-        v.findViewById<View>(R.id.album_back).setOnClickListener { closeAlbum() }
-        overlay.addView(v)
+        albumB.root.applySystemBarInsets(top = true)
+        albumB.albumTitle.text = location
+        albumB.albumBack.setOnClickListener { closeAlbum() }
+        overlay.addView(albumB.root)
         overlay.visibility = View.VISIBLE
         rebuildAlbumGrid(viewModel.filteredHistory.value.filter { it.locationName == location })
-        ViewCompat.requestApplyInsets(v)
+        ViewCompat.requestApplyInsets(albumB.root)
 
         val width = (root.width.takeIf { it > 0 } ?: root.resources.displayMetrics.widthPixels).toFloat()
         overlay.translationX = width
@@ -302,11 +300,9 @@ class CollectionsBinder(
     }
 
     private fun rebuildAlbumGrid(photos: List<CapturedPhoto>) {
-        val overlay = albumOverlay
-        val grid = overlay.findViewById<LinearLayout>(R.id.album_grid) ?: return
-        overlay.findViewById<TextView>(R.id.album_count)?.text =
-            "${photos.size} ${host.getString(R.string.frames)}"
-        buildGrid(grid, photos)
+        val albumB = albumBinding ?: return
+        albumB.albumCount.text = "${photos.size} ${host.getString(R.string.frames)}"
+        buildGrid(albumB.albumGrid, photos)
     }
 
     private fun closeAlbum() {
@@ -316,6 +312,7 @@ class CollectionsBinder(
             overlay.visibility = View.GONE
             overlay.removeAllViews()
             overlay.translationX = 0f
+            albumBinding = null
         }.start()
         albumLocation = null
     }
@@ -326,25 +323,20 @@ class CollectionsBinder(
         selectedPhotoId = photo.id
         val overlay = detailOverlay
         overlay.removeAllViews()
-        val v = LayoutInflater.from(host.requireContext()).inflate(R.layout.view_photo_detail, overlay, false)
-        val baseTop = v.paddingTop
-        val baseBottom = v.paddingBottom
-        ViewCompat.setOnApplyWindowInsetsListener(v) { view, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = baseTop + bars.top, bottom = baseBottom + bars.bottom)
-            insets
-        }
-        v.findViewById<View>(R.id.detail_card).background = rounded(card, 16f)
-        v.findViewById<ImageView>(R.id.detail_image).apply {
+        val detailB = ViewPhotoDetailBinding.inflate(LayoutInflater.from(host.requireContext()), overlay, false)
+        detailBinding = detailB
+        detailB.root.applySystemBarInsets(top = true, bottom = true)
+        detailB.detailCard.background = rounded(card, 16f)
+        detailB.detailImage.apply {
             clipToOutline = true
             outlineProvider = roundOutline(16f)
         }
-        v.findViewById<View>(R.id.detail_share).background = rounded(accent, 12f)
-        v.findViewById<View>(R.id.detail_delete).background = outlined(12f)
-        v.findViewById<View>(R.id.detail_back).setOnClickListener { closeDetail() }
-        overlay.addView(v)
+        detailB.detailShare.background = rounded(accent, 12f)
+        detailB.detailDelete.background = outlined(12f)
+        detailB.detailBack.setOnClickListener { closeDetail() }
+        overlay.addView(detailB.root)
         overlay.visibility = View.VISIBLE
-        ViewCompat.requestApplyInsets(v)
+        ViewCompat.requestApplyInsets(detailB.root)
         bindDetail(photo)
 
         overlay.alpha = 0f
@@ -354,23 +346,18 @@ class CollectionsBinder(
     }
 
     private fun bindDetail(photo: CapturedPhoto) {
-        val v = detailOverlay.getChildAt(0) ?: return
-        v.findViewById<TextView>(R.id.detail_title).text = photo.title
-        loadPhoto(
-            v.findViewById(R.id.detail_image),
-            v.findViewById(R.id.detail_broken),
-            photo.imagePath
-        )
+        val detailB = detailBinding ?: return
+        detailB.detailTitle.text = photo.title
+        loadPhoto(detailB.detailImage, detailB.detailBroken, photo.imagePath)
 
-        val rows = v.findViewById<LinearLayout>(R.id.detail_rows)
-        rows.removeAllViews()
-        addDetailRow(rows, R.drawable.ic_location_on, host.getString(R.string.detail_location), photo.locationName, Color.WHITE)
-        addDetailRow(rows, R.drawable.ic_schedule, host.getString(R.string.detail_captured), formatHistoryDate(photo.dateTimestamp), Color.WHITE)
-        addDetailRow(rows, R.drawable.ic_analytics, host.getString(R.string.detail_match_score), "${photo.matchScore}%",
+        detailB.detailRows.removeAllViews()
+        addDetailRow(detailB.detailRows, R.drawable.ic_location_on, host.getString(R.string.detail_location), photo.locationName, Color.WHITE)
+        addDetailRow(detailB.detailRows, R.drawable.ic_schedule, host.getString(R.string.detail_captured), formatHistoryDate(photo.dateTimestamp), Color.WHITE)
+        addDetailRow(detailB.detailRows, R.drawable.ic_analytics, host.getString(R.string.detail_match_score), "${photo.matchScore}%",
             if (photo.matchScore >= 80) scoreGreen else scoreOrange)
-        addDetailRow(rows, R.drawable.ic_category, host.getString(R.string.detail_category), photo.category, Color.WHITE)
+        addDetailRow(detailB.detailRows, R.drawable.ic_category, host.getString(R.string.detail_category), photo.category, Color.WHITE)
 
-        v.findViewById<View>(R.id.detail_share).setOnClickListener {
+        detailB.detailShare.setOnClickListener {
             val share = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(
@@ -380,20 +367,20 @@ class CollectionsBinder(
             }
             host.startActivity(Intent.createChooser(share, host.getString(R.string.share_frame)))
         }
-        v.findViewById<View>(R.id.detail_delete).setOnClickListener { showDeleteDialog(photo) }
+        detailB.detailDelete.setOnClickListener { showDeleteDialog(photo) }
     }
 
     private fun addDetailRow(container: LinearLayout, iconRes: Int, label: String, value: String, valueColor: Int) {
-        val row = LayoutInflater.from(host.requireContext()).inflate(R.layout.item_detail_row, container, false)
-        row.findViewById<ImageView>(R.id.row_icon).setImageResource(iconRes)
-        row.findViewById<TextView>(R.id.row_label).text = label
-        row.findViewById<TextView>(R.id.row_value).apply {
+        val rowB = ItemDetailRowBinding.inflate(LayoutInflater.from(host.requireContext()), container, false)
+        rowB.rowIcon.setImageResource(iconRes)
+        rowB.rowLabel.text = label
+        rowB.rowValue.apply {
             text = value
             setTextColor(valueColor)
         }
-        (row.layoutParams as? LinearLayout.LayoutParams)?.topMargin =
+        (rowB.root.layoutParams as? LinearLayout.LayoutParams)?.topMargin =
             if (container.childCount > 0) (10f * d).toInt() else 0
-        container.addView(row)
+        container.addView(rowB.root)
     }
 
     private fun closeDetail() {
@@ -403,24 +390,25 @@ class CollectionsBinder(
             overlay.visibility = View.GONE
             overlay.removeAllViews()
             overlay.alpha = 1f; overlay.scaleX = 1f; overlay.scaleY = 1f
+            detailBinding = null
         }.start()
     }
 
     private fun showDeleteDialog(photo: CapturedPhoto) {
         val ctx = host.requireContext()
-        val content = host.layoutInflater.inflate(R.layout.dialog_delete, null) as LinearLayout
-        content.background = rounded(0xFF161619.toInt(), 16f)
-        content.findViewById<TextView>(R.id.delete_cancel).background = outlined(12f)
-        content.findViewById<TextView>(R.id.delete_confirm).background = rounded(0xFFEF5350.toInt(), 12f)
+        val deleteB = DialogDeleteBinding.inflate(host.layoutInflater)
+        deleteB.root.background = rounded(0xFF161619.toInt(), 16f)
+        deleteB.deleteCancel.background = outlined(12f)
+        deleteB.deleteConfirm.background = rounded(0xFFEF5350.toInt(), 12f)
         val dialog = Dialog(ctx).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(content)
+            setContentView(deleteB.root)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             window?.setDimAmount(0.6f)
         }
         deleteDialog = dialog
-        content.findViewById<TextView>(R.id.delete_cancel).setOnClickListener { dialog.dismiss() }
-        content.findViewById<TextView>(R.id.delete_confirm).setOnClickListener {
+        deleteB.deleteCancel.setOnClickListener { dialog.dismiss() }
+        deleteB.deleteConfirm.setOnClickListener {
             dialog.dismiss()
             viewModel.deletePhoto(photo)
             closeDetail()
@@ -447,7 +435,7 @@ class CollectionsBinder(
     private fun dismissKeyboard() {
         val imm = host.requireContext().getSystemService(InputMethodManager::class.java)
         imm?.hideSoftInputFromWindow(root.windowToken, 0)
-        root.findViewById<EditText>(R.id.collections_search_input)?.clearFocus()
+        binding.collectionsSearchInput.clearFocus()
     }
 
     private fun rounded(color: Int, radiusDp: Float) = GradientDrawable().apply {

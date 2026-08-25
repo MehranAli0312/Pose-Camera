@@ -2,84 +2,75 @@ package com.aipose.camera.posematch.ui.fragments
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.net.Uri
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import android.content.res.ColorStateList
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.databinding.FragmentSettingsBinding
+import com.aipose.camera.posematch.ui.theme.ThemePrefs
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
+import androidx.fragment.app.FragmentActivity
 
-/**
- * Binds the real-XML Settings tab ([R.layout.fragment_settings]) to the shared [MainViewModel],
- * reproducing the old Compose SettingsScreen: four cards (Language / Theme / Share / Privacy), a
- * full-screen Language dialog and an Apply/Cancel Theme picker. Colours come from the theme palette.
- */
 class SettingsBinder(
     private val host: Fragment,
     private val viewModel: MainViewModel,
-    private val root: View
+    private val root: View,
+    private val requireActivity: FragmentActivity
 ) {
     private val themes = listOf("Dark", "Light", "Sleek Charcoal", "Cyberpunk Violet")
     private val jobs = mutableListOf<Job>()
     private var themeDialog: Dialog? = null
     private var languageDialog: Dialog? = null
 
+    private val binding = FragmentSettingsBinding.bind(root)
     private val d = root.resources.displayMetrics.density
-    private val palette = paletteFor(viewModel.appTheme.value)
+    private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
     private val glass = palette.glass
 
     fun bind() {
-        // statusBarsPadding on top of the 16dp content padding.
-        val baseTop = root.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
-            val top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            v.updatePadding(top = baseTop + top)
-            insets
-        }
+        // Status-bar inset on top of the 16dp content padding (edge-to-edge safe on all versions).
+        root.applySystemBarInsets(top = true)
 
-        val cardIds = intArrayOf(R.id.settings_language, R.id.settings_theme, R.id.settings_share, R.id.settings_privacy)
-        for (id in cardIds) root.findViewById<View>(id).background = cardBackground()
+        listOf(binding.settingsLanguage, binding.settingsTheme, binding.settingsShare, binding.settingsPrivacy)
+            .forEach { it.background = cardBackground() }
 
-        val langValue = root.findViewById<TextView>(R.id.settings_language_value)
-        val themeValue = root.findViewById<TextView>(R.id.settings_theme_value)
+        val langValue = binding.settingsLanguageValue
         langValue.setTextColor(accent)
-        themeValue.setTextColor(accent)
 
         jobs += host.viewLifecycleOwner.lifecycleScope.launch {
             host.viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.selectedLanguage.collect { langValue.text = it }
             }
         }
-        jobs += host.viewLifecycleOwner.lifecycleScope.launch {
-            host.viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.appTheme.collect { themeValue.text = it }
-            }
-        }
 
-        root.findViewById<View>(R.id.settings_language).setOnClickListener { showLanguageDialog() }
-        root.findViewById<View>(R.id.settings_theme).setOnClickListener { showThemeDialog() }
-        root.findViewById<View>(R.id.settings_share).setOnClickListener { shareApp() }
-        root.findViewById<View>(R.id.settings_privacy).setOnClickListener { openPrivacy() }
+        // Theme: a single Dark/Light switch (on = dark). Toggling persists the choice and recreates
+        // the activity so every screen re-reads the day/night colour resources.
+        setupThemeSwitch()
+
+        binding.settingsLanguage.setOnClickListener { showLanguageDialog() }
+        binding.settingsShare.setOnClickListener { shareApp(requireActivity) }
+        binding.settingsPrivacy.setOnClickListener { openPrivacy() }
     }
 
     fun unbind() {
@@ -95,22 +86,47 @@ class SettingsBinder(
         setColor(card)
     }
 
-    private fun shareApp() {
-        val intent = Intent().apply {
-            action = Intent.ACTION_SEND
+    private fun setupThemeSwitch() {
+        val sw = binding.settingsThemeSwitch
+        val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
+        val off = palette.textSecondary
+        sw.thumbTintList = ColorStateList(states, intArrayOf(accent, off))
+        sw.trackTintList = ColorStateList(
+            states,
+            intArrayOf((accent and 0x00FFFFFF) or (0x80 shl 24), (off and 0x00FFFFFF) or (0x40 shl 24))
+        )
+        sw.isChecked = ThemePrefs.isDark(root.context)
+        sw.setOnCheckedChangeListener { _, dark ->
+            if (dark == ThemePrefs.isDark(root.context)) return@setOnCheckedChangeListener
+            ThemePrefs.setDark(root.context, dark)
+            viewModel.setTheme(if (dark) "Dark" else "Light")
+            requireActivity.recreate()
+        }
+        binding.settingsTheme.setOnClickListener { sw.toggle() }
+    }
+
+    fun shareApp(context: Context) {
+        val packageName = context.packageName
+        val appLink = "https://play.google.com/store/apps/details?id=$packageName"
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Download Pose Match Camera: achieve perfect posture alignment live on-device!"
+                "Download Pose Match Camera: achieve perfect posture alignment live on-device!:\n$appLink"
             )
         }
-        host.startActivity(Intent.createChooser(intent, "Share App"))
+
+        context.startActivity(
+            Intent.createChooser(shareIntent, "Share app")
+        )
     }
 
     private fun openPrivacy() {
         runCatching {
             host.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/posematchcamera/home"))
+                Intent(Intent.ACTION_VIEW,
+                    "https://sites.google.com/view/posematchcamera/home".toUri())
             )
         }
     }
