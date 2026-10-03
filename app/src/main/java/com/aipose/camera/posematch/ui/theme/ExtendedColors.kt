@@ -1,0 +1,92 @@
+package com.aipose.camera.posematch.ui.theme
+
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
+
+@Immutable
+data class ExtendedColors(
+    val mutedBackground: Color,
+    val softAccent: Color,
+    val onSoftAccent: Color,
+    val onSoftAccentMuted: Color,
+    val mediaPlaceholder: Color,
+    val stroke: Color,
+    val cardBorder: Color,
+    val checkboxUnchecked: Color,
+    val accentOrange: Color,
+    val onAccentOrange: Color,
+    val softAccentOrange: Color,
+    val onSoftAccentOrange: Color,
+    val accentGreen: Color,
+    val onAccentGreen: Color,
+    val softAccentGreen: Color,
+    val onSoftAccentGreen: Color,
+    val pedestalHighlight: Color,
+    val pedestalShade: Color,
+    val pedestalEdge: Color,
+    val pedestalEdgeHighlight: Color,
+    val glassSurface: Color,
+    val glassBorder: Color,
+    val contactShadow: Color,
+    val glowPrimary: Color,
+    val glowSecondary: Color,
+)
+
+val LightExtendedColors = ExtendedColors(
+    mutedBackground = GrayLightBG,
+    softAccent = SoftAccentLight,
+    onSoftAccent = OnSoftAccentLight,
+    onSoftAccentMuted = OnSoftAccentMutedLight,
+    mediaPlaceholder = MediaPlaceholderLight,
+    stroke = StrokeColor,
+    cardBorder = CardBorder,
+    checkboxUnchecked = CheckboxUncheckedLight,
+    accentOrange = Orange,
+    onAccentOrange = White,
+    softAccentOrange = SoftAccentOrangeLight,
+    onSoftAccentOrange = OnSoftAccentOrangeLight,
+    accentGreen = Green,
+    onAccentGreen = White,
+    softAccentGreen = SoftAccentGreenLight,
+    onSoftAccentGreen = OnSoftAccentGreenLight,
+    pedestalHighlight = PedestalHighlightLight,
+    pedestalShade = PedestalShadeLight,
+    pedestalEdge = PedestalEdgeLight,
+    pedestalEdgeHighlight = PedestalEdgeHighlightLight,
+    glassSurface = GlassSurfaceLight,
+    glassBorder = GlassBorderLight,
+    contactShadow = ContactShadowLight,
+    glowPrimary = AppMainColor.copy(alpha = 0.28f),
+    glowSecondary = AppSecondaryColor.copy(alpha = 0.22f),
+)
+
+val DarkExtendedColors = ExtendedColors(
+    mutedBackground = GrayDarkBG,
+    softAccent = SoftAccentDark,
+    onSoftAccent = OnSoftAccentDark,
+    onSoftAccentMuted = OnSoftAccentMutedDark,
+    mediaPlaceholder = MediaPlaceholderDark,
+    stroke = StrokeColorDark,
+    cardBorder = CardBorderDark,
+    checkboxUnchecked = CheckboxUncheckedDark,
+    accentOrange = Orange,
+    onAccentOrange = White,
+    softAccentOrange = SoftAccentOrangeDark,
+    onSoftAccentOrange = OnSoftAccentOrangeDark,
+    accentGreen = Green,
+    onAccentGreen = White,
+    softAccentGreen = SoftAccentGreenDark,
+    onSoftAccentGreen = OnSoftAccentGreenDark,
+    pedestalHighlight = PedestalHighlightDark,
+    pedestalShade = PedestalShadeDark,
+    pedestalEdge = PedestalEdgeDark,
+    pedestalEdgeHighlight = PedestalEdgeHighlightDark,
+    glassSurface = GlassSurfaceDark,
+    glassBorder = GlassBorderDark,
+    contactShadow = ContactShadowDark,
+    glowPrimary = AppMainColor.copy(alpha = 0.34f),
+    glowSecondary = AppSecondaryColor.copy(alpha = 0.30f),
+)
+
+val LocalExtendedColors = staticCompositionLocalOf { LightExtendedColors }

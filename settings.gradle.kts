@@ -25,3 +25,6 @@ dependencyResolutionManagement {
 rootProject.name = "AI Pose Match Camera"
 
 include(":app")
+include(":common")
+include(":ads")
+include(":billing")

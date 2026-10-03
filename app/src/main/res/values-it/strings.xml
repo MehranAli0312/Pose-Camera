@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Salta</string>
+    <string name="get_started">Inizia</string>
+    <string name="item_settings">Impostazioni</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_desc">Scegli la modalità chiara o scura</string>
+    <string name="splash_logo_content_description">Logo di App Cleaner</string>
+    <string name="close">Chiudi</string>
+    <string name="settings_language">Lingua</string>
+    <string name="settings_language_value">Italiano</string>
+    <string name="settings_more">Altro</string>
+    <string name="settings_rate_us">Valutaci</string>
+    <string name="settings_rate_us_desc">Il tuo feedback e la tua valutazione contano</string>
+    <string name="settings_privacy_policy">Informativa sulla privacy</string>
+    <string name="settings_privacy_policy_desc">Leggi i termini e le condizioni dell\'app</string>
+    <string name="settings_share_app">Condividi l\'app</string>
+    <string name="settings_share_app_desc">Condividi l\'app con i tuoi amici</string>
+    <string name="settings_exit">Esci</string>
+    <string name="settings_exit_desc">Tocca per uscire</string>
+    <string name="exitApp">Esci dall\'app</string>
+    <string name="exitAppDescription">Vuoi davvero uscire dall\'app</string>
+    <string name="no">No</string>
+    <string name="yes">Sì</string>
+    <string name="please_rate">Lascia una valutazione</string>
+    <string name="done">Fatto</string>
+    <string name="error_not_found">Non trovato</string>
+    <string name="pro_restore">Ripristina</string>
+    <string name="pro_feature_remove_ads">Rimuovi pubblicità</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Un\'esperienza 100% senza pubblicità</string>
+    <string name="pro_plan_yearly">Annuale</string>
+    <string name="pro_plan_monthly">Mensile</string>
+    <string name="pro_best_value">PIÙ CONVENIENTE</string>
+    <string name="pro_save_percent">RISPARMIA %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s fatturati ogni anno</string>
+    <string name="pro_billed_monthly">Fatturato ogni mese</string>
+    <string name="pro_per_month">al mese</string>
+    <string name="pro_trust_note">Annulla quando vuoi · Pagamento sicuro con Google Play</string>
+    <string name="pro_store_unavailable">Impossibile caricare i piani. Controlla la connessione e riprova.</string>
+    <string name="pro_retry">Riprova</string>
+    <string name="pro_upgrade_title">Passa a Pro</string>
+    <string name="pro_try_for_free">Prova gratis</string>
+    <string name="pro_no_payment_now">Nessun pagamento ora!</string>
+    <string name="pro_auto_renewal_note">Abbonamento con rinnovo automatico. Annulla quando vuoi</string>
+    <string name="pro_purchase_success">Acquisto completato</string>
+    <string name="pro_purchase_already_owned">Possiedi già questo piano</string>
+    <string name="pro_purchase_cancelled">Acquisto annullato</string>
+    <string name="pro_purchase_failed">Acquisto non riuscito. %1$s</string>
+    <string name="pro_plan_unavailable">Questo piano non è al momento disponibile</string>
+    <string name="onboard_continue">Continua</string>
+    <string name="pro_purchase_pending">Pagamento in sospeso. Pro verrà sbloccato dopo la conferma</string>
+    <string name="pro_restore_success">Acquisto ripristinato</string>
+    <string name="pro_restore_nothing_found">Nessun acquisto attivo trovato per questo account Google</string>
+    <string name="pro_restore_failed">Impossibile raggiungere Google Play. Riprova</string>
+</resources>

@@ -1,134 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Pose Match Camera</string>
-
-    <!-- Bottom navigation -->
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
+    <string name="item_settings">Settings</string>
+    <string name="settings_theme">App Visual Theme</string>
+    <string name="settings_theme_desc">Choose light or dark mode</string>
+    <string name="splash_logo_content_description">App Cleaner logo</string>
+    <string name="close">Close</string>
+    <string name="settings_language">Active Language</string>
+    <string name="settings_language_value">English</string>
+    <string name="settings_more">More</string>
+    <string name="settings_rate_us">Rate Us</string>
+    <string name="settings_rate_us_desc">Your feedback and rating matters</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_desc">Read the terms and conditions of app</string>
+    <string name="settings_share_app">Share App</string>
+    <string name="settings_share_app_desc">Share App with your friends</string>
+    <string name="settings_exit">Exit</string>
+    <string name="settings_exit_desc">Tap to exit</string>
+    <string name="exitApp">Exit App</string>
+    <string name="exitAppDescription">Do you really want to quit the app</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="please_rate">Please Rate</string>
+    <string name="rate_us_premium_title">Enjoying the app?</string>
+    <string name="rate_us_premium_subtitle">Tap a star to rate us. Your feedback keeps the app getting better.</string>
+    <string name="rate_us_premium_action">Rate Now</string>
+    <string name="rate_us_premium_dismiss">Maybe Later</string>
+    <plurals name="rate_us_premium_star">
+        <item quantity="one">%1$d star</item>
+        <item quantity="other">%1$d stars</item>
+    </plurals>
+    <string name="done">Done</string>
+    <string name="error_not_found">Not found</string>
+    <string name="pro_restore">Restore</string>
+    <string name="pro_title">Unlock Pose Pro</string>
+    <string name="pro_subtitle">Pose, match and capture with no ads in the way.</string>
+    <string name="pro_feature_remove_ads">Remove Ads</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">A 100% ad-free experience</string>
+    <string name="pro_plan_yearly">Yearly</string>
+    <string name="pro_plan_monthly">Monthly</string>
+    <string name="pro_best_value">BEST VALUE</string>
+    <string name="pro_save_percent">SAVE %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s billed yearly</string>
+    <string name="pro_billed_monthly">Billed every month</string>
+    <string name="pro_per_month">per month</string>
+    <plurals name="pro_trial_then_price">
+        <item quantity="one">%1$d day free, then %2$s</item>
+        <item quantity="other">%1$d days free, then %2$s</item>
+    </plurals>
+    <string name="pro_trust_note">Cancel anytime · Secure via Google Play</string>
+    <string name="pro_store_unavailable">Couldn\'t load plans. Check your connection and try again.</string>
+    <string name="pro_retry">Try Again</string>
+    <string name="pro_upgrade_title">Upgrade to Pro</string>
+    <string name="pro_try_for_free">Try for Free</string>
+    <string name="pro_no_payment_now">No payment now!</string>
+    <string name="pro_auto_renewal_note">Subscription with auto-renewal. Cancel Anytime</string>
+    <string name="pro_purchase_success">Purchase successful</string>
+    <string name="pro_purchase_already_owned">You already own this plan</string>
+    <string name="pro_purchase_cancelled">Purchase cancelled</string>
+    <string name="pro_purchase_failed">Purchase failed. %1$s</string>
+    <string name="pro_plan_unavailable">This plan is currently unavailable</string>
+    <string name="onboard_continue">Continue</string>
+    <string name="pro_purchase_pending">Payment is pending. Pro will unlock once it is confirmed</string>
+    <string name="pro_restore_success">Purchase restored</string>
+    <string name="pro_restore_nothing_found">No active purchase found for this Google account</string>
+    <string name="pro_restore_failed">Couldn\'t reach Google Play. Try again</string>
+    <string name="premium_feature_tag">PRO Feature</string>
+    <string name="premium_feature_title">Premium Feature</string>
+    <string name="premium_feature_message">Subscribe to premium feature or watch an ad</string>
+    <string name="premium_feature_free_access_title">Get Free Access</string>
+    <string name="premium_feature_free_access_subtitle">Watch a short ad</string>
+    <string name="premium_feature_free_access_loading">Loading ad…</string>
+    <string name="premium_feature_go_premium_title">Go Premium</string>
+    <string name="premium_feature_go_premium_subtitle">Unlock all features, no ads</string>
+    <string name="premium_feature_maybe_later">Maybe later</string>
     <string name="nav_home">Home</string>
-    <string name="nav_camera">Camera</string>
     <string name="nav_gallery">Collections</string>
-    <string name="nav_history">History</string>
     <string name="nav_settings">Settings</string>
-
-    <!-- Common actions -->
     <string name="see_all">See all</string>
-    <string name="frames">frames</string>
     <string name="action_search">Search</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_continue">Continue</string>
-    <string name="action_close">Close</string>
     <string name="action_share">Share</string>
     <string name="action_delete">Delete</string>
-    <string name="action_skip">Skip</string>
-    <string name="action_next">Next</string>
-    <string name="action_lets_go">Let\'s Go</string>
     <string name="action_import">Import</string>
     <string name="action_save">Save</string>
-
-    <!-- Splash -->
     <string name="splash_tagline">Aesthetic Alignment Studio</string>
-
-    <!-- Onboarding -->
     <string name="onboard_title_1">1. Pick a Pose</string>
     <string name="onboard_title_2">2. Match the Outline</string>
     <string name="onboard_title_3">3. Snap &amp; Save</string>
     <string name="onboard_desc_1">Browse 100+ ready-made poses for selfies, couples, travel, weddings and more.</string>
     <string name="onboard_desc_2">The pose appears on your live camera. Move until your body fills the outline and watch your match score rise.</string>
     <string name="onboard_desc_3">Capture your shot, apply beautiful filters, and save it to your Collections.</string>
-
-    <!-- Language selection -->
-    <string name="lang_choose_title">Choose Your Language</string>
-    <string name="lang_choose_subtitle">Select your preferred layout language below to customize your photography assist tags.</string>
-
-    <!-- Home / reference browser -->
-    <string name="home_brand">POSE MATCH</string>
-    <string name="home_brand_sub">Camera Pro</string>
     <string name="home_search_hint">Search selfie, travel, street…</string>
-    <string name="home_trending">Trending Blueprints</string>
-    <string name="home_hero_title">Urban Minimalist</string>
-    <string name="home_hero_sub">Perfect for architectural street photography</string>
-    <string name="home_open_camera">Open Camera</string>
-    <string name="home_ai_powered">AI POWERED</string>
-    <string name="browser_title">CHOOSE REFERENCE</string>
-    <string name="browser_sub">Pick a Blueprint</string>
     <string name="home_no_blueprints">No blueprints matched your filters.</string>
     <string name="home_tap_hint">Tap any pose to open the live camera guide</string>
-
-    <!-- History -->
     <string name="history_title">Shoot History</string>
     <string name="history_subtitle">%1$d frames • grouped by location</string>
     <string name="history_search_hint">Search location, date, score, name…</string>
     <string name="history_empty">No snapped records yet</string>
     <string name="history_empty_sub">Capture a frame to start your album.</string>
     <string name="history_no_match">No frames match \"%1$s\"</string>
-
-    <!-- Photo detail -->
     <string name="delete_title">Delete Photo?</string>
     <string name="delete_message">This photo will be permanently removed from your collection.</string>
     <string name="detail_location">Location</string>
     <string name="detail_captured">Captured</string>
     <string name="detail_match_score">Match Score</string>
     <string name="detail_category">Category</string>
-
-    <!-- Gallery -->
-    <string name="gallery_title">Aesthetic Album</string>
-    <string name="gallery_subtitle">Upload reference sketches to matching overlays.</string>
-    <string name="gallery_empty">No imported references found yet</string>
-    <string name="gallery_empty_sub">Import standard figures from device photo roll.</string>
-
-    <!-- Settings -->
-    <string name="settings_profile_name">Creative photographer</string>
-    <string name="settings_profile_sub">Vibe preset tracker on-device.</string>
-    <string name="settings_section_config">Settings &amp; Configurations</string>
-    <string name="settings_language">Active Language</string>
-    <string name="settings_theme">App Visual Theme</string>
-    <string name="settings_retain_skeleton">Retain Overlay Skeleton</string>
-    <string name="settings_section_help">Help &amp; Developer Details</string>
-    <string name="settings_rate">Rate App Overlay</string>
-    <string name="settings_share">Share App</string>
-    <string name="settings_privacy">Privacy Policy</string>
-    <string name="settings_about">About Alignment Framework</string>
-    <string name="settings_select_language">Select App Language</string>
-    <string name="settings_select_theme">Select Style Theme</string>
-    <string name="action_apply">Apply</string>
-
-    <!-- Camera permission card -->
-    <string name="perm_camera_title">Camera Permission Needed</string>
-    <string name="perm_camera_desc">Allow camera access to take pictures and match your poses.</string>
-    <string name="perm_allow">Allow</string>
-
-    <!-- Camera -->
-    <string name="camera_filters">FILTERS</string>
     <string name="camera_opacity">Pose Opacity</string>
     <string name="camera_sim_title">Studio Simulation Mode</string>
     <string name="camera_sim_hint">Move alignment using draggable circles below</string>
     <string name="camera_pro_title">Pro Studio Alignments</string>
-    <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
-    <string name="toast_reference_failed">Reference alignment loading failed</string>
-
-    <!-- Common actions (added) -->
-    <string name="action_exit">Exit</string>
-    <string name="action_done">Done</string>
     <string name="action_reset">Reset</string>
-
-    <!-- Home hero + title -->
     <string name="home_title">Camera Pose Match</string>
     <string name="hero_line1">Strike Your</string>
     <string name="hero_line2">Perfect Pose</string>
     <string name="hero_cta">START POSING</string>
-
-    <!-- Exit confirmation -->
-    <string name="exit_title">Exit App?</string>
-    <string name="exit_message">Are you sure you want to close Camera Pose Match?</string>
-
-    <!-- Photo editor -->
     <string name="title_edit">Edit</string>
-    <string name="title_preview">Preview</string>
     <string name="tab_filters">Filters</string>
     <string name="tab_adjust">Adjust</string>
-
-    <!-- Share / toasts -->
     <string name="share_frame">Share frame</string>
     <string name="success_saved">Saved to Collections</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_sleek_charcoal">Sleek Charcoal</string>
+    <string name="theme_cyberpunk_violet">Cyberpunk Violet</string>
+    <string name="action_clear">Clear</string>
+    <string name="imported_pose_title">Gallery Reference</string>
+    <string name="action_back">Back</string>
+    <string name="unknown_location">Unknown location</string>
+    <string name="score_percent">%1$d%%</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="capture_share_text">%1$s at %2$s with a %3$d%% pose match</string>
+    <string name="frames_count">%1$d frames</string>
+    <string name="camera_flash">Flash</string>
+    <string name="camera_controls">Camera controls</string>
+    <string name="camera_grid">Grid</string>
+    <string name="camera_timer">Timer</string>
+    <string name="camera_timer_seconds">Timer %1$ds</string>
+    <string name="camera_iso">ISO</string>
+    <string name="camera_ev">EV</string>
+    <string name="camera_switch">Switch camera</string>
+    <string name="camera_selected">Selected</string>
+    <string name="pose_overlay">Pose overlay</string>
+    <string name="match_badge">Pose Match %1$d%%</string>
+    <string name="match_status_perfect">Perfect pose \u2014 hold it!</string>
+    <string name="match_status_almost">Almost there\u2026</string>
+    <string name="match_status_adjust">Keep adjusting your pose</string>
+    <string name="match_status_raise">Match the pose to raise your score</string>
+    <string name="match_status_move">Move into frame to match</string>
+    <string name="great_match">Great match!</string>
+    <string name="coach_title">How Pose Match works</string>
+    <string name="coach_pick_title">Pick a pose</string>
+    <string name="coach_pick_description">Choose one from the strip at the bottom.</string>
+    <string name="coach_match_title">Match the outline</string>
+    <string name="coach_match_description">Move until your body fills the outline \u2014 your score rises.</string>
+    <string name="coach_snap_title">Snap &amp; save</string>
+    <string name="coach_snap_description">Tap the shutter, add a filter, and save it.</string>
+    <string name="coach_got_it">Got it</string>
+    <string name="action_discard">Discard</string>
+    <string name="captured_frame">Captured frame</string>
+    <string name="saved_photo">Saved photo</string>
+    <string name="filter_auto">Auto</string>
+    <string name="filter_original">Original</string>
+    <string name="filter_vivid">Vivid</string>
+    <string name="filter_golden">Golden</string>
+    <string name="filter_sunrise">Sunrise</string>
+    <string name="filter_sunset">Sunset</string>
+    <string name="filter_azure">Azure</string>
+    <string name="filter_cinema">Cinema</string>
+    <string name="filter_fade">Fade</string>
+    <string name="filter_noir">Noir</string>
+    <string name="filter_vintage">Vintage</string>
+    <string name="filter_mono">Mono</string>
+    <string name="adjust_exposure">Exposure</string>
+    <string name="adjust_brightness">Brightness</string>
+    <string name="adjust_contrast">Contrast</string>
+    <string name="adjust_saturation">Saturation</string>
+    <string name="adjust_warmth">Warmth</string>
+    <string name="adjust_tint">Tint</string>
+    <string name="adjust_hue">Hue</string>
+    <string name="adjust_fade">Fade</string>
+    <string name="adjust_rotate">Rotate</string>
+    <string name="adjust_crop">Crop</string>
+    <string name="rotate_left">90\u00b0 Left</string>
+    <string name="rotate_right">90\u00b0 Right</string>
+    <string name="crop_free">Free</string>
+    <string name="crop_square">1:1</string>
+    <string name="crop_four_by_five">4:5</string>
+    <string name="crop_sixteen_by_nine">16:9</string>
+    <string name="crop_nine_by_sixteen">9:16</string>
+    <string name="settings_section_camera">Camera</string>
+    <string name="settings_retain_skeleton">Keep skeleton overlay</string>
+    <string name="settings_retain_skeleton_desc">Show the pose skeleton while matching</string>
+    <string name="splash_brand_pose">Pose</string>
+    <string name="splash_brand_match">Match Camera</string>
+    <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
+    <string name="toast_reference_failed">Reference alignment loading failed</string>
     <string name="toast_capture_failed">Capture failed: %1$s</string>
-    <string name="toast_saved_location">Saved to gallery • %1$s</string>
-    <string name="toast_theme_changed">Theme changed to %1$s</string>
+    <string name="toast_saved_location">Saved to gallery \u2022 %1$s</string>
+    <string name="perm_camera_title">Camera Permission Needed</string>
+    <string name="perm_camera_desc">Allow camera access to take pictures and match your poses.</string>
+    <string name="perm_allow">Allow</string>
+    <string name="capture_untitled">Untitled frame</string>
 </resources>

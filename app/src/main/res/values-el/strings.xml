@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Παράλειψη</string>
+    <string name="get_started">Ξεκινήστε</string>
+    <string name="item_settings">Ρυθμίσεις</string>
+    <string name="settings_theme">Θέμα</string>
+    <string name="settings_theme_desc">Επιλέξτε φωτεινή ή σκοτεινή λειτουργία</string>
+    <string name="splash_logo_content_description">Λογότυπο App Cleaner</string>
+    <string name="close">Κλείσιμο</string>
+    <string name="settings_language">Γλώσσα</string>
+    <string name="settings_language_value">Ελληνικά</string>
+    <string name="settings_more">Περισσότερα</string>
+    <string name="settings_rate_us">Αξιολογήστε μας</string>
+    <string name="settings_rate_us_desc">Τα σχόλια και η βαθμολογία σας μας βοηθούν πολύ</string>
+    <string name="settings_privacy_policy">Πολιτική απορρήτου</string>
+    <string name="settings_privacy_policy_desc">Διαβάστε τους όρους χρήσης της εφαρμογής</string>
+    <string name="settings_share_app">Κοινοποίηση εφαρμογής</string>
+    <string name="settings_share_app_desc">Μοιραστείτε την εφαρμογή με τους φίλους σας</string>
+    <string name="settings_exit">Έξοδος</string>
+    <string name="settings_exit_desc">Πατήστε για έξοδο</string>
+    <string name="exitApp">Έξοδος από την εφαρμογή</string>
+    <string name="exitAppDescription">Θέλετε σίγουρα να βγείτε από την εφαρμογή</string>
+    <string name="no">Όχι</string>
+    <string name="yes">Ναι</string>
+    <string name="please_rate">Αξιολογήστε μας</string>
+    <string name="done">Τέλος</string>
+    <string name="error_not_found">Δεν βρέθηκε</string>
+    <string name="pro_restore">Επαναφορά</string>
+    <string name="pro_feature_remove_ads">Κατάργηση διαφημίσεων</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Εμπειρία 100% χωρίς διαφημίσεις</string>
+    <string name="pro_plan_yearly">Ετήσιο</string>
+    <string name="pro_plan_monthly">Μηνιαίο</string>
+    <string name="pro_best_value">ΚΑΛΥΤΕΡΗ ΑΞΙΑ</string>
+    <string name="pro_save_percent">ΕΚΠΤΩΣΗ %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s με ετήσια χρέωση</string>
+    <string name="pro_billed_monthly">Χρέωση κάθε μήνα</string>
+    <string name="pro_per_month">ανά μήνα</string>
+    <string name="pro_trust_note">Ακύρωση οποτεδήποτε · Ασφαλώς μέσω Google Play</string>
+    <string name="pro_store_unavailable">Δεν ήταν δυνατή η φόρτωση των πλάνων. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="pro_retry">Δοκιμάστε ξανά</string>
+    <string name="pro_upgrade_title">Αναβάθμιση σε Pro</string>
+    <string name="pro_try_for_free">Δοκιμάστε δωρεάν</string>
+    <string name="pro_no_payment_now">Καμία πληρωμή τώρα!</string>
+    <string name="pro_auto_renewal_note">Συνδρομή με αυτόματη ανανέωση. Ακύρωση οποτεδήποτε</string>
+    <string name="pro_purchase_success">Η αγορά ολοκληρώθηκε</string>
+    <string name="pro_purchase_already_owned">Έχετε ήδη αυτό το πλάνο</string>
+    <string name="pro_purchase_cancelled">Η αγορά ακυρώθηκε</string>
+    <string name="pro_purchase_failed">Η αγορά απέτυχε. %1$s</string>
+    <string name="pro_plan_unavailable">Αυτό το πλάνο δεν είναι διαθέσιμο αυτή τη στιγμή</string>
+    <string name="onboard_continue">Συνέχεια</string>
+    <string name="pro_purchase_pending">Η πληρωμή εκκρεμεί. Το Pro θα ξεκλειδωθεί μόλις επιβεβαιωθεί</string>
+    <string name="pro_restore_success">Η αγορά επαναφέρθηκε</string>
+    <string name="pro_restore_nothing_found">Δεν βρέθηκε ενεργή αγορά για αυτόν τον λογαριασμό Google</string>
+    <string name="pro_restore_failed">Δεν ήταν δυνατή η σύνδεση με το Google Play. Δοκιμάστε ξανά</string>
+</resources>

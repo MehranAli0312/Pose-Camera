@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Overslaan</string>
+    <string name="get_started">Aan de slag</string>
+    <string name="item_settings">Instellingen</string>
+    <string name="settings_theme">Thema</string>
+    <string name="settings_theme_desc">Kies de lichte of donkere modus</string>
+    <string name="splash_logo_content_description">App Cleaner-logo</string>
+    <string name="close">Sluiten</string>
+    <string name="settings_language">Taal</string>
+    <string name="settings_language_value">Nederlands</string>
+    <string name="settings_more">Meer</string>
+    <string name="settings_rate_us">Beoordeel ons</string>
+    <string name="settings_rate_us_desc">Je feedback en beoordeling helpen ons enorm</string>
+    <string name="settings_privacy_policy">Privacybeleid</string>
+    <string name="settings_privacy_policy_desc">Lees de gebruiksvoorwaarden van de app</string>
+    <string name="settings_share_app">App delen</string>
+    <string name="settings_share_app_desc">Deel de app met je vrienden</string>
+    <string name="settings_exit">Afsluiten</string>
+    <string name="settings_exit_desc">Tik om af te sluiten</string>
+    <string name="exitApp">App afsluiten</string>
+    <string name="exitAppDescription">Weet je zeker dat je de app wilt afsluiten</string>
+    <string name="no">Nee</string>
+    <string name="yes">Ja</string>
+    <string name="please_rate">Beoordeel ons</string>
+    <string name="done">Klaar</string>
+    <string name="error_not_found">Niet gevonden</string>
+    <string name="pro_restore">Herstellen</string>
+    <string name="pro_feature_remove_ads">Advertenties verwijderen</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Een 100% advertentievrije ervaring</string>
+    <string name="pro_plan_yearly">Jaarlijks</string>
+    <string name="pro_plan_monthly">Maandelijks</string>
+    <string name="pro_best_value">BESTE DEAL</string>
+    <string name="pro_save_percent">BESPAAR %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s per jaar gefactureerd</string>
+    <string name="pro_billed_monthly">Elke maand gefactureerd</string>
+    <string name="pro_per_month">per maand</string>
+    <string name="pro_trust_note">Altijd opzegbaar · Veilig via Google Play</string>
+    <string name="pro_store_unavailable">Kan abonnementen niet laden. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="pro_retry">Opnieuw proberen</string>
+    <string name="pro_upgrade_title">Upgrade naar Pro</string>
+    <string name="pro_try_for_free">Gratis proberen</string>
+    <string name="pro_no_payment_now">Nu niets betalen!</string>
+    <string name="pro_auto_renewal_note">Abonnement met automatische verlenging. Altijd opzegbaar</string>
+    <string name="pro_purchase_success">Aankoop gelukt</string>
+    <string name="pro_purchase_already_owned">Je hebt dit abonnement al</string>
+    <string name="pro_purchase_cancelled">Aankoop geannuleerd</string>
+    <string name="pro_purchase_failed">Aankoop mislukt. %1$s</string>
+    <string name="pro_plan_unavailable">Dit abonnement is momenteel niet beschikbaar</string>
+    <string name="onboard_continue">Doorgaan</string>
+    <string name="pro_purchase_pending">Betaling in behandeling. Pro wordt ontgrendeld zodra deze is bevestigd</string>
+    <string name="pro_restore_success">Aankoop hersteld</string>
+    <string name="pro_restore_nothing_found">Geen actieve aankoop gevonden voor dit Google-account</string>
+    <string name="pro_restore_failed">Kan Google Play niet bereiken. Probeer het opnieuw</string>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Lewati</string>
+    <string name="get_started">Mulai</string>
+    <string name="item_settings">Setelan</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_desc">Pilih mode terang atau gelap</string>
+    <string name="splash_logo_content_description">Logo App Cleaner</string>
+    <string name="close">Tutup</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_language_value">Bahasa Indonesia</string>
+    <string name="settings_more">Lainnya</string>
+    <string name="settings_rate_us">Beri Nilai</string>
+    <string name="settings_rate_us_desc">Masukan dan penilaian Anda sangat berarti</string>
+    <string name="settings_privacy_policy">Kebijakan Privasi</string>
+    <string name="settings_privacy_policy_desc">Baca ketentuan penggunaan aplikasi</string>
+    <string name="settings_share_app">Bagikan Aplikasi</string>
+    <string name="settings_share_app_desc">Bagikan aplikasi ke teman Anda</string>
+    <string name="settings_exit">Keluar</string>
+    <string name="settings_exit_desc">Ketuk untuk keluar</string>
+    <string name="exitApp">Keluar Aplikasi</string>
+    <string name="exitAppDescription">Yakin ingin keluar dari aplikasi</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
+    <string name="please_rate">Beri Nilai</string>
+    <string name="done">Selesai</string>
+    <string name="error_not_found">Tidak ditemukan</string>
+    <string name="pro_restore">Pulihkan</string>
+    <string name="pro_feature_remove_ads">Hapus Iklan</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Pengalaman 100% bebas iklan</string>
+    <string name="pro_plan_yearly">Tahunan</string>
+    <string name="pro_plan_monthly">Bulanan</string>
+    <string name="pro_best_value">PALING HEMAT</string>
+    <string name="pro_save_percent">HEMAT %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s ditagih per tahun</string>
+    <string name="pro_billed_monthly">Ditagih setiap bulan</string>
+    <string name="pro_per_month">per bulan</string>
+    <string name="pro_trust_note">Batalkan kapan saja · Aman melalui Google Play</string>
+    <string name="pro_store_unavailable">Tidak dapat memuat paket. Periksa koneksi Anda dan coba lagi.</string>
+    <string name="pro_retry">Coba Lagi</string>
+    <string name="pro_upgrade_title">Upgrade ke Pro</string>
+    <string name="pro_try_for_free">Coba Gratis</string>
+    <string name="pro_no_payment_now">Tanpa pembayaran sekarang!</string>
+    <string name="pro_auto_renewal_note">Langganan dengan perpanjangan otomatis. Batalkan kapan saja</string>
+    <string name="pro_purchase_success">Pembelian berhasil</string>
+    <string name="pro_purchase_already_owned">Anda sudah memiliki paket ini</string>
+    <string name="pro_purchase_cancelled">Pembelian dibatalkan</string>
+    <string name="pro_purchase_failed">Pembelian gagal. %1$s</string>
+    <string name="pro_plan_unavailable">Paket ini sedang tidak tersedia</string>
+    <string name="onboard_continue">Lanjutkan</string>
+    <string name="pro_purchase_pending">Pembayaran tertunda. Pro akan terbuka setelah dikonfirmasi</string>
+    <string name="pro_restore_success">Pembelian dipulihkan</string>
+    <string name="pro_restore_nothing_found">Tidak ada pembelian aktif untuk akun Google ini</string>
+    <string name="pro_restore_failed">Tidak dapat terhubung ke Google Play. Coba lagi</string>
+</resources>

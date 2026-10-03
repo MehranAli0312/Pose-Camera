@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">ข้าม</string>
+    <string name="get_started">เริ่มต้นใช้งาน</string>
+    <string name="item_settings">การตั้งค่า</string>
+    <string name="settings_theme">ธีม</string>
+    <string name="settings_theme_desc">เลือกโหมดสว่างหรือมืด</string>
+    <string name="splash_logo_content_description">โลโก้ App Cleaner</string>
+    <string name="close">ปิด</string>
+    <string name="settings_language">ภาษา</string>
+    <string name="settings_language_value">ไทย</string>
+    <string name="settings_more">เพิ่มเติม</string>
+    <string name="settings_rate_us">ให้คะแนนเรา</string>
+    <string name="settings_rate_us_desc">ความคิดเห็นและคะแนนของคุณมีความหมายมาก</string>
+    <string name="settings_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="settings_privacy_policy_desc">อ่านข้อกำหนดการใช้งานแอป</string>
+    <string name="settings_share_app">แชร์แอป</string>
+    <string name="settings_share_app_desc">แชร์แอปให้เพื่อนของคุณ</string>
+    <string name="settings_exit">ออก</string>
+    <string name="settings_exit_desc">แตะเพื่อออก</string>
+    <string name="exitApp">ออกจากแอป</string>
+    <string name="exitAppDescription">คุณแน่ใจหรือไม่ว่าต้องการออกจากแอป</string>
+    <string name="no">ไม่</string>
+    <string name="yes">ใช่</string>
+    <string name="please_rate">ให้คะแนนเรา</string>
+    <string name="done">เสร็จสิ้น</string>
+    <string name="error_not_found">ไม่พบ</string>
+    <string name="pro_restore">คืนค่า</string>
+    <string name="pro_feature_remove_ads">ลบโฆษณา</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">ไม่มีโฆษณา 100%</string>
+    <string name="pro_plan_yearly">รายปี</string>
+    <string name="pro_plan_monthly">รายเดือน</string>
+    <string name="pro_best_value">คุ้มที่สุด</string>
+    <string name="pro_save_percent">ประหยัด %1$d%%</string>
+    <string name="pro_billed_yearly">เรียกเก็บ %1$s ต่อปี</string>
+    <string name="pro_billed_monthly">เรียกเก็บทุกเดือน</string>
+    <string name="pro_per_month">ต่อเดือน</string>
+    <string name="pro_trust_note">ยกเลิกได้ทุกเมื่อ · ปลอดภัยผ่าน Google Play</string>
+    <string name="pro_store_unavailable">โหลดแพ็กเกจไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="pro_retry">ลองอีกครั้ง</string>
+    <string name="pro_upgrade_title">อัปเกรดเป็น Pro</string>
+    <string name="pro_try_for_free">ลองใช้ฟรี</string>
+    <string name="pro_no_payment_now">ยังไม่ต้องชำระตอนนี้!</string>
+    <string name="pro_auto_renewal_note">สมัครสมาชิกต่ออายุอัตโนมัติ ยกเลิกได้ทุกเมื่อ</string>
+    <string name="pro_purchase_success">ซื้อสำเร็จ</string>
+    <string name="pro_purchase_already_owned">คุณมีแผนนี้อยู่แล้ว</string>
+    <string name="pro_purchase_cancelled">ยกเลิกการซื้อแล้ว</string>
+    <string name="pro_purchase_failed">ซื้อไม่สำเร็จ %1$s</string>
+    <string name="pro_plan_unavailable">แผนนี้ยังไม่พร้อมใช้งาน</string>
+    <string name="onboard_continue">ดำเนินการต่อ</string>
+    <string name="pro_purchase_pending">การชำระเงินอยู่ระหว่างดำเนินการ Pro จะปลดล็อกเมื่อได้รับการยืนยัน</string>
+    <string name="pro_restore_success">กู้คืนการซื้อแล้ว</string>
+    <string name="pro_restore_nothing_found">ไม่พบการซื้อที่ใช้งานอยู่สำหรับบัญชี Google นี้</string>
+    <string name="pro_restore_failed">เชื่อมต่อ Google Play ไม่ได้ ลองอีกครั้ง</string>
+</resources>

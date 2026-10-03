@@ -1,116 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pose Match Camera</string>
-
-    <string name="nav_home">Início</string>
-    <string name="nav_camera">Câmera</string>
-    <string name="nav_gallery">Coleções</string>
-    <string name="nav_history">Histórico</string>
-    <string name="nav_settings">Configurações</string>
-
-    <string name="see_all">Ver tudo</string>
-    <string name="frames">fotos</string>
-    <string name="action_search">Pesquisar</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="action_continue">Continuar</string>
-    <string name="action_close">Fechar</string>
-    <string name="action_share">Compartilhar</string>
-    <string name="action_delete">Excluir</string>
-    <string name="action_skip">Pular</string>
-    <string name="action_next">Próximo</string>
-    <string name="action_lets_go">Vamos lá</string>
-    <string name="action_import">Importar</string>
-    <string name="action_save">Salvar</string>
-
-    <string name="splash_tagline">Estúdio de Alinhamento Estético</string>
-
-    <string name="onboard_title_1">1. Escolha uma pose</string>
-    <string name="onboard_title_2">2. Acerte o contorno</string>
-    <string name="onboard_title_3">3. Capture &amp; salve</string>
-    <string name="onboard_desc_1">Explore mais de 100 poses prontas para selfies, casais, viagens, casamentos e muito mais.</string>
-    <string name="onboard_desc_2">A pose aparece na sua câmera ao vivo. Mova-se até seu corpo preencher o contorno e veja sua pontuação de correspondência subir.</string>
-    <string name="onboard_desc_3">Capture sua foto, aplique belos filtros e salve nas suas Coleções.</string>
-
-    <string name="lang_choose_title">Escolha seu idioma</string>
-    <string name="lang_choose_subtitle">Selecione abaixo seu idioma preferido para personalizar suas dicas de foto.</string>
-
-    <string name="home_brand">POSE MATCH</string>
-    <string name="home_brand_sub">Camera Pro</string>
-    <string name="home_search_hint">Pesquisar selfie, viagem, rua…</string>
-    <string name="home_trending">Modelos em alta</string>
-    <string name="home_hero_title">Minimalista urbano</string>
-    <string name="home_hero_sub">Perfeito para fotografia de arquitetura e rua</string>
-    <string name="home_open_camera">Abrir câmera</string>
-    <string name="home_ai_powered">COM IA</string>
-    <string name="browser_title">ESCOLHER REFERÊNCIA</string>
-    <string name="browser_sub">Escolha um modelo</string>
-    <string name="home_no_blueprints">Nenhum modelo corresponde aos seus filtros.</string>
-    <string name="home_tap_hint">Toque em qualquer pose para abrir o guia de câmera ao vivo</string>
-
-    <string name="history_title">Histórico de fotos</string>
-    <string name="history_subtitle">%1$d fotos • agrupadas por local</string>
-    <string name="history_search_hint">Pesquisar local, data, pontuação, nome…</string>
-    <string name="history_empty">Nenhuma foto registrada ainda</string>
-    <string name="history_empty_sub">Capture uma foto para começar seu álbum.</string>
-    <string name="history_no_match">Nenhuma foto corresponde a \"%1$s\"</string>
-
-    <string name="delete_title">Excluir foto?</string>
-    <string name="delete_message">Esta foto será removida permanentemente da sua coleção.</string>
-    <string name="detail_location">Local</string>
-    <string name="detail_captured">Capturada</string>
-    <string name="detail_match_score">Pontuação de correspondência</string>
-    <string name="detail_category">Categoria</string>
-
-    <string name="gallery_title">Álbum estético</string>
-    <string name="gallery_subtitle">Envie esboços de referência para sobreposições correspondentes.</string>
-    <string name="gallery_empty">Nenhuma referência importada ainda</string>
-    <string name="gallery_empty_sub">Importe figuras da galeria do dispositivo.</string>
-
-    <string name="settings_profile_name">Fotógrafo criativo</string>
-    <string name="settings_profile_sub">Rastreador de predefinições no dispositivo.</string>
-    <string name="settings_section_config">Ajustes &amp; configurações</string>
-    <string name="settings_language">Idioma ativo</string>
-    <string name="settings_theme">Tema do aplicativo</string>
-    <string name="settings_retain_skeleton">Manter esqueleto da sobreposição</string>
-    <string name="settings_section_help">Ajuda &amp; detalhes do desenvolvedor</string>
-    <string name="settings_rate">Avaliar aplicativo</string>
-    <string name="settings_share">Compartilhar aplicativo</string>
-    <string name="settings_privacy">Política de privacidade</string>
-    <string name="settings_about">Sobre o framework de alinhamento</string>
-    <string name="settings_select_language">Selecionar idioma</string>
-    <string name="settings_select_theme">Selecionar tema</string>
-    <string name="action_apply">Aplicar</string>
-
-    <string name="perm_camera_title">Permissão de câmera necessária</string>
-    <string name="perm_camera_desc">Permita o acesso à câmera para tirar fotos e combinar suas poses.</string>
-    <string name="perm_allow">Permitir</string>
-
-    <string name="camera_filters">FILTROS</string>
-    <string name="camera_opacity">Opacidade da pose</string>
-    <string name="camera_sim_title">Modo de simulação de estúdio</string>
-    <string name="camera_sim_hint">Mova o alinhamento usando os círculos abaixo</string>
-    <string name="camera_pro_title">Alinhamentos de estúdio pro</string>
-    <string name="toast_reference_imported">Referência importada! Abra a câmera para combinar.</string>
-    <string name="toast_reference_failed">Falha ao carregar o alinhamento de referência</string>
-
-    <string name="action_exit">Sair</string>
-    <string name="action_done">Concluído</string>
-    <string name="action_reset">Redefinir</string>
-
-    <string name="home_title">Camera Pose Match</string>
-    <string name="hero_line1">Faça sua</string>
-    <string name="hero_line2">Pose perfeita</string>
-    <string name="hero_cta">COMEÇAR A POSAR</string>
-
-    <string name="exit_title">Sair do aplicativo?</string>
-    <string name="exit_message">Tem certeza de que deseja fechar o Camera Pose Match?</string>
-
-    <string name="title_edit">Editar</string>
-    <string name="title_preview">Prévia</string>
-    <string name="tab_filters">Filtros</string>
-    <string name="tab_adjust">Ajustar</string>
-
-    <string name="share_frame">Compartilhar foto</string>
-    <string name="toast_capture_failed">Falha na captura: %1$s</string>
-    <string name="toast_saved_location">Salvo na galeria • %1$s</string>
-    <string name="toast_theme_changed">Tema alterado para %1$s</string>
+    <string name="skip">Ignorar</string>
+    <string name="get_started">Começar</string>
+    <string name="item_settings">Definições</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_desc">Escolha o modo claro ou escuro</string>
+    <string name="splash_logo_content_description">Logótipo do App Cleaner</string>
+    <string name="close">Fechar</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_value">Português</string>
+    <string name="settings_more">Mais</string>
+    <string name="settings_rate_us">Avalie-nos</string>
+    <string name="settings_rate_us_desc">A sua opinião e avaliação são importantes</string>
+    <string name="settings_privacy_policy">Política de privacidade</string>
+    <string name="settings_privacy_policy_desc">Leia os termos e condições da app</string>
+    <string name="settings_share_app">Partilhar app</string>
+    <string name="settings_share_app_desc">Partilhe a app com os seus amigos</string>
+    <string name="settings_exit">Sair</string>
+    <string name="settings_exit_desc">Toque para sair</string>
+    <string name="exitApp">Sair da app</string>
+    <string name="exitAppDescription">Quer mesmo sair da app</string>
+    <string name="no">Não</string>
+    <string name="yes">Sim</string>
+    <string name="please_rate">Avalie, por favor</string>
+    <string name="done">Concluído</string>
+    <string name="error_not_found">Não encontrado</string>
+    <string name="pro_restore">Restaurar</string>
+    <string name="pro_feature_remove_ads">Remover anúncios</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Uma experiência 100% sem anúncios</string>
+    <string name="pro_plan_yearly">Anual</string>
+    <string name="pro_plan_monthly">Mensal</string>
+    <string name="pro_best_value">MELHOR VALOR</string>
+    <string name="pro_save_percent">ECONOMIZE %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s cobrado anualmente</string>
+    <string name="pro_billed_monthly">Cobrado todo mês</string>
+    <string name="pro_per_month">por mês</string>
+    <string name="pro_trust_note">Cancele quando quiser · Seguro pelo Google Play</string>
+    <string name="pro_store_unavailable">Não foi possível carregar os planos. Verifique sua conexão e tente novamente.</string>
+    <string name="pro_retry">Tentar novamente</string>
+    <string name="pro_upgrade_title">Atualizar para Pro</string>
+    <string name="pro_try_for_free">Experimentar grátis</string>
+    <string name="pro_no_payment_now">Sem pagamento agora!</string>
+    <string name="pro_auto_renewal_note">Subscrição com renovação automática. Cancele a qualquer momento</string>
+    <string name="pro_purchase_success">Compra concluída</string>
+    <string name="pro_purchase_already_owned">Já tem este plano</string>
+    <string name="pro_purchase_cancelled">Compra cancelada</string>
+    <string name="pro_purchase_failed">A compra falhou. %1$s</string>
+    <string name="pro_plan_unavailable">Este plano não está disponível de momento</string>
+    <string name="onboard_continue">Continuar</string>
+    <string name="pro_purchase_pending">Pagamento pendente. O Pro será desbloqueado após a confirmação</string>
+    <string name="pro_restore_success">Compra restaurada</string>
+    <string name="pro_restore_nothing_found">Nenhuma compra ativa encontrada para esta conta do Google</string>
+    <string name="pro_restore_failed">Não foi possível conectar ao Google Play. Tente novamente</string>
 </resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Пропустити</string>
+    <string name="get_started">Почати</string>
+    <string name="item_settings">Налаштування</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_desc">Виберіть світлий або темний режим</string>
+    <string name="splash_logo_content_description">Логотип App Cleaner</string>
+    <string name="close">Закрити</string>
+    <string name="settings_language">Мова</string>
+    <string name="settings_language_value">Українська</string>
+    <string name="settings_more">Більше</string>
+    <string name="settings_rate_us">Оцініть нас</string>
+    <string name="settings_rate_us_desc">Ваш відгук і оцінка дуже допомагають</string>
+    <string name="settings_privacy_policy">Політика конфіденційності</string>
+    <string name="settings_privacy_policy_desc">Ознайомтеся з умовами використання додатка</string>
+    <string name="settings_share_app">Поділитися додатком</string>
+    <string name="settings_share_app_desc">Поділіться додатком із друзями</string>
+    <string name="settings_exit">Вихід</string>
+    <string name="settings_exit_desc">Торкніться, щоб вийти</string>
+    <string name="exitApp">Вийти з додатка</string>
+    <string name="exitAppDescription">Ви впевнені, що хочете вийти з додатка</string>
+    <string name="no">Ні</string>
+    <string name="yes">Так</string>
+    <string name="please_rate">Оцініть нас</string>
+    <string name="done">Готово</string>
+    <string name="error_not_found">Не знайдено</string>
+    <string name="pro_restore">Відновити</string>
+    <string name="pro_feature_remove_ads">Вимкнути рекламу</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">100% без реклами</string>
+    <string name="pro_plan_yearly">Річний</string>
+    <string name="pro_plan_monthly">Місячний</string>
+    <string name="pro_best_value">НАЙВИГІДНІШЕ</string>
+    <string name="pro_save_percent">ЗНИЖКА %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s з оплатою раз на рік</string>
+    <string name="pro_billed_monthly">Оплата щомісяця</string>
+    <string name="pro_per_month">на місяць</string>
+    <string name="pro_trust_note">Скасування будь-коли · Безпечно через Google Play</string>
+    <string name="pro_store_unavailable">Не вдалося завантажити тарифи. Перевірте з’єднання та спробуйте ще раз.</string>
+    <string name="pro_retry">Спробувати ще раз</string>
+    <string name="pro_upgrade_title">Перейти на Pro</string>
+    <string name="pro_try_for_free">Спробувати безкоштовно</string>
+    <string name="pro_no_payment_now">Зараз платити не потрібно!</string>
+    <string name="pro_auto_renewal_note">Підписка з автопродовженням. Скасуйте будь-коли</string>
+    <string name="pro_purchase_success">Покупку виконано</string>
+    <string name="pro_purchase_already_owned">Цей план уже ваш</string>
+    <string name="pro_purchase_cancelled">Покупку скасовано</string>
+    <string name="pro_purchase_failed">Покупка не вдалася. %1$s</string>
+    <string name="pro_plan_unavailable">Цей план зараз недоступний</string>
+    <string name="onboard_continue">Продовжити</string>
+    <string name="pro_purchase_pending">Платіж очікує підтвердження. Pro відкриється після підтвердження</string>
+    <string name="pro_restore_success">Покупку відновлено</string>
+    <string name="pro_restore_nothing_found">Для цього облікового запису Google не знайдено активних покупок</string>
+    <string name="pro_restore_failed">Не вдалося підключитися до Google Play. Спробуйте ще раз</string>
+</resources>

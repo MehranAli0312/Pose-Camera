@@ -1,78 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="nav_home">الرئيسية</string>
-    <string name="nav_camera">الكاميرا</string>
-    <string name="nav_gallery">المعرض</string>
-    <string name="nav_history">السجل</string>
-    <string name="nav_settings">الإعدادات</string>
-
-    <string name="see_all">عرض الكل</string>
-    <string name="frames">صور</string>
-    <string name="action_search">بحث</string>
-    <string name="action_cancel">إلغاء</string>
-    <string name="action_continue">متابعة</string>
-    <string name="action_close">إغلاق</string>
-    <string name="action_share">مشاركة</string>
-    <string name="action_delete">حذف</string>
-    <string name="action_skip">تخطي</string>
-    <string name="action_next">التالي</string>
-    <string name="action_lets_go">هيا بنا</string>
-    <string name="action_import">استيراد</string>
-    <string name="action_save">حفظ</string>
-
-    <string name="splash_tagline">استوديو المحاذاة الجمالية</string>
-
-    <string name="onboard_title_1">وضعيات مثالية في كل مرة</string>
-    <string name="onboard_title_2">طابق الوضعية مباشرة</string>
-    <string name="onboard_title_3">التقط كالمحترفين</string>
-    <string name="onboard_desc_1">احصل على إلهام للوضعيات للسيلفي والأزواج والسفر والتصوير الاحترافي.</string>
-    <string name="onboard_desc_2">استخدم تراكب الكاميرا المباشر لمحاذاة نفسك تمامًا مع الوضعيات المرجعية.</string>
-    <string name="onboard_desc_3">التقط صورًا مذهلة باستخدام أدوات تحكم الكاميرا الاحترافية.</string>
-
-    <string name="lang_choose_title">اختر لغتك</string>
-    <string name="lang_choose_subtitle">اختر لغتك المفضلة أدناه لتخصيص علامات المساعدة التصويرية.</string>
-
-    <string name="home_brand">POSE MATCH</string>
-    <string name="home_brand_sub">كاميرا برو</string>
-    <string name="home_search_hint">ابحث عن سيلفي، سفر، شارع…</string>
-    <string name="home_trending">المخططات الرائجة</string>
-    <string name="home_hero_title">البساطة الحضرية</string>
-    <string name="home_hero_sub">مثالي لتصوير الشوارع المعماري</string>
-    <string name="home_open_camera">افتح الكاميرا</string>
-    <string name="home_ai_powered">مدعوم بالذكاء الاصطناعي</string>
-    <string name="browser_title">اختر المرجع</string>
-    <string name="browser_sub">اختر مخططًا</string>
-    <string name="home_no_blueprints">لا توجد مخططات تطابق عوامل التصفية.</string>
-
-    <string name="history_title">سجل التصوير</string>
-    <string name="history_subtitle">%1$d صور • مجمعة حسب الموقع</string>
-    <string name="history_search_hint">ابحث عن موقع، تاريخ، نتيجة، اسم…</string>
-    <string name="history_empty">لا توجد سجلات بعد</string>
-    <string name="history_empty_sub">التقط صورة لبدء ألبومك.</string>
-    <string name="history_no_match">لا توجد صور تطابق \"%1$s\"</string>
-
-    <string name="detail_location">الموقع</string>
-    <string name="detail_captured">تم الالتقاط</string>
-    <string name="detail_match_score">نتيجة التطابق</string>
-    <string name="detail_category">الفئة</string>
-
-    <string name="gallery_title">ألبوم جمالي</string>
-    <string name="gallery_subtitle">ارفع رسومات مرجعية لمطابقة التراكبات.</string>
-    <string name="gallery_empty">لا توجد مراجع مستوردة بعد</string>
-    <string name="gallery_empty_sub">استورد أشكالًا قياسية من معرض الجهاز.</string>
-
-    <string name="settings_profile_name">مصور مبدع</string>
-    <string name="settings_profile_sub">متتبع الإعدادات المسبقة على الجهاز.</string>
-    <string name="settings_section_config">الإعدادات والتكوين</string>
-    <string name="settings_language">اللغة الحالية</string>
-    <string name="settings_theme">مظهر التطبيق</string>
-    <string name="settings_retain_skeleton">الاحتفاظ بالهيكل المتراكب</string>
-    <string name="settings_section_help">المساعدة وتفاصيل المطور</string>
-    <string name="settings_rate">قيّم التطبيق</string>
-    <string name="settings_share">شارك التطبيق</string>
-    <string name="settings_about">حول إطار المحاذاة</string>
-    <string name="settings_select_language">اختر لغة التطبيق</string>
-    <string name="settings_select_theme">اختر نمط المظهر</string>
-
-    <string name="camera_filters">الفلاتر</string>
-    <string name="camera_opacity">شفافية الوضعية</string>
+    <string name="skip">تخطي</string>
+    <string name="get_started">ابدأ الآن</string>
+    <string name="item_settings">الإعدادات</string>
+    <string name="settings_theme">السمة</string>
+    <string name="settings_theme_desc">اختر الوضع الفاتح أو الداكن</string>
+    <string name="splash_logo_content_description">شعار تطبيق المنظف</string>
+    <string name="close">إغلاق</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_language_value">العربية</string>
+    <string name="settings_more">المزيد</string>
+    <string name="settings_rate_us">قيّمنا</string>
+    <string name="settings_rate_us_desc">رأيك وتقييمك يهمّنا</string>
+    <string name="settings_privacy_policy">سياسة الخصوصية</string>
+    <string name="settings_privacy_policy_desc">اقرأ شروط وأحكام التطبيق</string>
+    <string name="settings_share_app">مشاركة التطبيق</string>
+    <string name="settings_share_app_desc">شارك التطبيق مع أصدقائك</string>
+    <string name="settings_exit">خروج</string>
+    <string name="settings_exit_desc">اضغط للخروج</string>
+    <string name="exitApp">إغلاق التطبيق</string>
+    <string name="exitAppDescription">هل تريد فعلاً إغلاق التطبيق؟</string>
+    <string name="no">لا</string>
+    <string name="yes">نعم</string>
+    <string name="please_rate">يرجى التقييم</string>
+    <string name="done">تم</string>
+    <string name="error_not_found">غير موجود</string>
+    <string name="pro_restore">استعادة</string>
+    <string name="pro_feature_remove_ads">إزالة الإعلانات</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">تجربة خالية من الإعلانات 100%</string>
+    <string name="pro_plan_yearly">سنوي</string>
+    <string name="pro_plan_monthly">شهري</string>
+    <string name="pro_best_value">أفضل قيمة</string>
+    <string name="pro_save_percent">وفّر %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s تُدفع سنويًا</string>
+    <string name="pro_billed_monthly">يُدفع كل شهر</string>
+    <string name="pro_per_month">شهريًا</string>
+    <string name="pro_trust_note">يمكنك الإلغاء في أي وقت · دفع آمن عبر Google Play</string>
+    <string name="pro_store_unavailable">تعذّر تحميل الخطط. تحقق من اتصالك وحاول مرة أخرى.</string>
+    <string name="pro_retry">حاول مرة أخرى</string>
+    <string name="pro_upgrade_title">الترقية إلى Pro</string>
+    <string name="pro_try_for_free">جرّب مجاناً</string>
+    <string name="pro_no_payment_now">لا دفع الآن!</string>
+    <string name="pro_auto_renewal_note">اشتراك يتجدد تلقائياً. يمكنك الإلغاء في أي وقت</string>
+    <string name="pro_purchase_success">تم الشراء بنجاح</string>
+    <string name="pro_purchase_already_owned">أنت تملك هذه الخطة بالفعل</string>
+    <string name="pro_purchase_cancelled">تم إلغاء الشراء</string>
+    <string name="pro_purchase_failed">فشل الشراء. %1$s</string>
+    <string name="pro_plan_unavailable">هذه الخطة غير متاحة حالياً</string>
+    <string name="onboard_continue">متابعة</string>
+    <string name="pro_purchase_pending">الدفع قيد الانتظار. سيتم تفعيل Pro بعد تأكيده</string>
+    <string name="pro_restore_success">تمت استعادة الشراء</string>
+    <string name="pro_restore_nothing_found">لم يتم العثور على عملية شراء نشطة لحساب Google هذا</string>
+    <string name="pro_restore_failed">تعذر الاتصال بـ Google Play. حاول مرة أخرى</string>
 </resources>

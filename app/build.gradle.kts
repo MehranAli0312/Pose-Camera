@@ -1,52 +1,33 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.devtools.ksp)
-    alias(libs.plugins.roborazzi)
-    alias(libs.plugins.secrets)
+}
+
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    apply(plugin = "com.google.firebase.crashlytics")
 }
 
 android {
     namespace = "com.aipose.camera.posematch"
-    android {
-        compileSdk = 36
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.aipose.camera.posematch"
-        minSdk = 26
-        targetSdk = 36
-        versionCode = 4
-        versionName = "0.0.4"
+        minSdk = 24
+        targetSdk = 37
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        versionCode = 5
+        versionName = "0.0.5"
     }
-
-/*    signingConfigs {
-        create("release") {
-            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-            storeFile = file(keystorePath)
-            storePassword = System.getenv("STORE_PASSWORD")
-            keyAlias = "upload"
-            keyPassword = System.getenv("KEY_PASSWORD")
-        }
-        create("debugConfig") {
-            storeFile = file("${rootDir}/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
-    }*/
 
     buildTypes {
         release {
-            isCrunchPngs = true
-            // R8 code shrinking/obfuscation + resource shrinking to cut release size.
             isMinifyEnabled = true
             isShrinkResources = true
-            // Ship only real-phone ABIs (drop emulator-only x86/x86_64) — saves ~22 MB of
-            // native libraries. Debug stays universal so x86 emulators still work.
             ndk {
                 abiFilters.clear()
                 abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a"))
@@ -55,87 +36,79 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-         //   signingConfig = signingConfigs.getByName("release")
         }
-    /*    debug {
-            signingConfig = signingConfigs.getByName("debugConfig")
-        }*/
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "21"
-    }
+
     buildFeatures {
-        compose = true
         buildConfig = true
     }
-    testOptions { unitTests { isIncludeAndroidResources = true } }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 }
 
-// Configure the Secrets Gradle Plugin to use .env and .env.example files
-// to match the convention used in Web projects.
-secrets {
-    propertiesFileName = ".env"
-    defaultPropertiesFileName = ".env.example"
-}
-
-// Some unused dependencies are commented out below instead of being removed.
-// This makes it easy to add them back in the future if needed.
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(platform(libs.firebase.bom))
-    // implementation(libs.accompanist.permissions)
+    api(project(":common"))
+    api(project(":ads"))
+    api(project(":billing"))
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.process)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.material)
+
+    implementation(libs.koin)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    implementation(libs.androidx.navigation)
+
     implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.compose.material.icons.core)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.coil.compose)
-    implementation(libs.converter.moshi)
-    implementation(libs.firebase.ai)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.logging.interceptor)
+
     implementation(libs.mlkit.pose)
-    // On-device selfie/person segmentation (model bundled — no network) for overlay bg removal.
-    implementation("com.google.mlkit:segmentation-selfie:16.0.0-beta6")
-    implementation(libs.moshi.kotlin)
-    implementation(libs.okhttp)
-    // implementation(libs.play.services.location)
-    implementation(libs.retrofit)
-    testImplementation(libs.androidx.compose.ui.test.junit4)
-    testImplementation(libs.androidx.core)
-    testImplementation(libs.androidx.junit)
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.robolectric)
-    testImplementation(libs.roborazzi)
-    testImplementation(libs.roborazzi.compose)
-    testImplementation(libs.roborazzi.junit.rule)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.runner)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.mlkit.segmentation.selfie)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     "ksp"(libs.androidx.room.compiler)
-    "ksp"(libs.moshi.kotlin.codegen)
+
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.core)
+
+    implementation(libs.shimmer.compose)
+    implementation(libs.androidx.lottie)
+    implementation(libs.coil.compose)
+    implementation(libs.okhttp)
+    implementation(libs.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.config)
 }

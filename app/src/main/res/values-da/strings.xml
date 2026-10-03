@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Spring over</string>
+    <string name="get_started">Kom i gang</string>
+    <string name="item_settings">Indstillinger</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_desc">Vælg lys eller mørk tilstand</string>
+    <string name="splash_logo_content_description">App Cleaner-logo</string>
+    <string name="close">Luk</string>
+    <string name="settings_language">Sprog</string>
+    <string name="settings_language_value">Dansk</string>
+    <string name="settings_more">Mere</string>
+    <string name="settings_rate_us">Bedøm os</string>
+    <string name="settings_rate_us_desc">Din feedback og bedømmelse betyder noget</string>
+    <string name="settings_privacy_policy">Privatlivspolitik</string>
+    <string name="settings_privacy_policy_desc">Læs appens vilkår og betingelser</string>
+    <string name="settings_share_app">Del appen</string>
+    <string name="settings_share_app_desc">Del appen med dine venner</string>
+    <string name="settings_exit">Afslut</string>
+    <string name="settings_exit_desc">Tryk for at afslutte</string>
+    <string name="exitApp">Afslut app</string>
+    <string name="exitAppDescription">Vil du virkelig lukke appen</string>
+    <string name="no">Nej</string>
+    <string name="yes">Ja</string>
+    <string name="please_rate">Bedøm venligst</string>
+    <string name="done">Færdig</string>
+    <string name="error_not_found">Ikke fundet</string>
+    <string name="pro_restore">Gendan</string>
+    <string name="pro_feature_remove_ads">Fjern reklamer</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">En 100% reklamefri oplevelse</string>
+    <string name="pro_plan_yearly">Årligt</string>
+    <string name="pro_plan_monthly">Månedligt</string>
+    <string name="pro_best_value">BEDSTE VÆRDI</string>
+    <string name="pro_save_percent">SPAR %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s faktureres årligt</string>
+    <string name="pro_billed_monthly">Faktureres hver måned</string>
+    <string name="pro_per_month">pr. måned</string>
+    <string name="pro_trust_note">Opsig når som helst · Sikker betaling via Google Play</string>
+    <string name="pro_store_unavailable">Kunne ikke indlæse abonnementer. Tjek din forbindelse, og prøv igen.</string>
+    <string name="pro_retry">Prøv igen</string>
+    <string name="pro_upgrade_title">Opgrader til Pro</string>
+    <string name="pro_try_for_free">Prøv gratis</string>
+    <string name="pro_no_payment_now">Ingen betaling nu!</string>
+    <string name="pro_auto_renewal_note">Abonnement med automatisk fornyelse. Opsig når som helst</string>
+    <string name="pro_purchase_success">Købet er gennemført</string>
+    <string name="pro_purchase_already_owned">Du har allerede dette abonnement</string>
+    <string name="pro_purchase_cancelled">Købet blev annulleret</string>
+    <string name="pro_purchase_failed">Købet mislykkedes. %1$s</string>
+    <string name="pro_plan_unavailable">Dette abonnement er ikke tilgængeligt i øjeblikket</string>
+    <string name="onboard_continue">Fortsæt</string>
+    <string name="pro_purchase_pending">Betalingen afventer. Pro låses op, når den er bekræftet</string>
+    <string name="pro_restore_success">Købet er gendannet</string>
+    <string name="pro_restore_nothing_found">Der blev ikke fundet noget aktivt køb for denne Google-konto</string>
+    <string name="pro_restore_failed">Kunne ikke oprette forbindelse til Google Play. Prøv igen</string>
+</resources>

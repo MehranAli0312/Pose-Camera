@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">スキップ</string>
+    <string name="get_started">はじめる</string>
+    <string name="item_settings">設定</string>
+    <string name="settings_theme">テーマ</string>
+    <string name="settings_theme_desc">ライトモードまたはダークモードを選択</string>
+    <string name="splash_logo_content_description">App Cleaner のロゴ</string>
+    <string name="close">閉じる</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_language_value">日本語</string>
+    <string name="settings_more">その他</string>
+    <string name="settings_rate_us">評価する</string>
+    <string name="settings_rate_us_desc">ご意見と評価をお寄せください</string>
+    <string name="settings_privacy_policy">プライバシーポリシー</string>
+    <string name="settings_privacy_policy_desc">アプリの利用規約を読む</string>
+    <string name="settings_share_app">アプリを共有</string>
+    <string name="settings_share_app_desc">友だちにアプリを共有しましょう</string>
+    <string name="settings_exit">終了</string>
+    <string name="settings_exit_desc">タップして終了</string>
+    <string name="exitApp">アプリを終了</string>
+    <string name="exitAppDescription">本当にアプリを終了しますか</string>
+    <string name="no">いいえ</string>
+    <string name="yes">はい</string>
+    <string name="please_rate">評価をお願いします</string>
+    <string name="done">完了</string>
+    <string name="error_not_found">見つかりません</string>
+    <string name="pro_restore">復元</string>
+    <string name="pro_feature_remove_ads">広告を削除</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">100%広告なしの快適な体験</string>
+    <string name="pro_plan_yearly">年間</string>
+    <string name="pro_plan_monthly">月間</string>
+    <string name="pro_best_value">一番お得</string>
+    <string name="pro_save_percent">%1$d%%オフ</string>
+    <string name="pro_billed_yearly">年額 %1$s</string>
+    <string name="pro_billed_monthly">毎月請求</string>
+    <string name="pro_per_month">月あたり</string>
+    <string name="pro_trust_note">いつでも解約可能 · Google Playで安全に決済</string>
+    <string name="pro_store_unavailable">プランを読み込めませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="pro_retry">再試行</string>
+    <string name="pro_upgrade_title">Pro にアップグレード</string>
+    <string name="pro_try_for_free">無料で試す</string>
+    <string name="pro_no_payment_now">今はお支払い不要！</string>
+    <string name="pro_auto_renewal_note">自動更新のサブスクリプションです。いつでも解約できます</string>
+    <string name="pro_purchase_success">購入が完了しました</string>
+    <string name="pro_purchase_already_owned">このプランはすでに購入済みです</string>
+    <string name="pro_purchase_cancelled">購入がキャンセルされました</string>
+    <string name="pro_purchase_failed">購入に失敗しました。%1$s</string>
+    <string name="pro_plan_unavailable">このプランは現在ご利用いただけません</string>
+    <string name="onboard_continue">続ける</string>
+    <string name="pro_purchase_pending">支払いは保留中です。確認後に Pro が有効になります</string>
+    <string name="pro_restore_success">購入を復元しました</string>
+    <string name="pro_restore_nothing_found">この Google アカウントで有効な購入が見つかりません</string>
+    <string name="pro_restore_failed">Google Play に接続できませんでした。もう一度お試しください</string>
+</resources>

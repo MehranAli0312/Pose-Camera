@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "495986967528",
+    "project_id": "ai-pose-match-camera",
+    "storage_bucket": "ai-pose-match-camera.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495986967528:android:960cc087de25e0a07d9a5d",
+        "android_client_info": {
+          "package_name": "com.aipose.camera.posematch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASt6SXhdLZezE_uH6hYHjmcOvq_gxekD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

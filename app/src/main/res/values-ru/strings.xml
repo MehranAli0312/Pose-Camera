@@ -1,116 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pose Match Camera</string>
-
-    <string name="nav_home">Главная</string>
-    <string name="nav_camera">Камера</string>
-    <string name="nav_gallery">Коллекции</string>
-    <string name="nav_history">История</string>
-    <string name="nav_settings">Настройки</string>
-
-    <string name="see_all">Смотреть все</string>
-    <string name="frames">кадры</string>
-    <string name="action_search">Поиск</string>
-    <string name="action_cancel">Отмена</string>
-    <string name="action_continue">Продолжить</string>
-    <string name="action_close">Закрыть</string>
-    <string name="action_share">Поделиться</string>
-    <string name="action_delete">Удалить</string>
-    <string name="action_skip">Пропустить</string>
-    <string name="action_next">Далее</string>
-    <string name="action_lets_go">Начать</string>
-    <string name="action_import">Импорт</string>
-    <string name="action_save">Сохранить</string>
-
-    <string name="splash_tagline">Студия эстетического выравнивания</string>
-
-    <string name="onboard_title_1">1. Выберите позу</string>
-    <string name="onboard_title_2">2. Совместите контур</string>
-    <string name="onboard_title_3">3. Снимите &amp; сохраните</string>
-    <string name="onboard_desc_1">Более 100 готовых поз для селфи, пар, путешествий, свадеб и не только.</string>
-    <string name="onboard_desc_2">Поза появляется на живой камере. Двигайтесь, пока ваше тело не заполнит контур, и следите за ростом оценки совпадения.</string>
-    <string name="onboard_desc_3">Сделайте снимок, примените красивые фильтры и сохраните его в Коллекции.</string>
-
-    <string name="lang_choose_title">Выберите язык</string>
-    <string name="lang_choose_subtitle">Выберите ниже предпочитаемый язык, чтобы настроить подсказки для съёмки.</string>
-
-    <string name="home_brand">POSE MATCH</string>
-    <string name="home_brand_sub">Camera Pro</string>
-    <string name="home_search_hint">Поиск: селфи, путешествия, улица…</string>
-    <string name="home_trending">Популярные шаблоны</string>
-    <string name="home_hero_title">Городской минимализм</string>
-    <string name="home_hero_sub">Идеально для архитектурной и уличной съёмки</string>
-    <string name="home_open_camera">Открыть камеру</string>
-    <string name="home_ai_powered">НА БАЗЕ ИИ</string>
-    <string name="browser_title">ВЫБРАТЬ РЕФЕРЕНС</string>
-    <string name="browser_sub">Выберите шаблон</string>
-    <string name="home_no_blueprints">Нет шаблонов по вашим фильтрам.</string>
-    <string name="home_tap_hint">Коснитесь любой позы, чтобы открыть подсказку камеры</string>
-
-    <string name="history_title">История съёмок</string>
-    <string name="history_subtitle">%1$d кадров • по местоположению</string>
-    <string name="history_search_hint">Поиск по месту, дате, оценке, имени…</string>
-    <string name="history_empty">Пока нет снимков</string>
-    <string name="history_empty_sub">Сделайте кадр, чтобы начать альбом.</string>
-    <string name="history_no_match">Нет кадров по запросу \"%1$s\"</string>
-
-    <string name="delete_title">Удалить фото?</string>
-    <string name="delete_message">Это фото будет безвозвратно удалено из вашей коллекции.</string>
-    <string name="detail_location">Место</string>
-    <string name="detail_captured">Снято</string>
-    <string name="detail_match_score">Оценка совпадения</string>
-    <string name="detail_category">Категория</string>
-
-    <string name="gallery_title">Эстетический альбом</string>
-    <string name="gallery_subtitle">Загрузите эскизы-референсы для наложений.</string>
-    <string name="gallery_empty">Импортированных референсов пока нет</string>
-    <string name="gallery_empty_sub">Импортируйте фигуры из галереи устройства.</string>
-
-    <string name="settings_profile_name">Творческий фотограф</string>
-    <string name="settings_profile_sub">Локальный трекер пресетов.</string>
-    <string name="settings_section_config">Настройки &amp; конфигурация</string>
-    <string name="settings_language">Активный язык</string>
-    <string name="settings_theme">Тема приложения</string>
-    <string name="settings_retain_skeleton">Сохранять скелет наложения</string>
-    <string name="settings_section_help">Помощь &amp; о разработчике</string>
-    <string name="settings_rate">Оценить приложение</string>
-    <string name="settings_share">Поделиться приложением</string>
-    <string name="settings_privacy">Политика конфиденциальности</string>
-    <string name="settings_about">О системе выравнивания</string>
-    <string name="settings_select_language">Выбрать язык</string>
-    <string name="settings_select_theme">Выбрать тему</string>
-    <string name="action_apply">Применить</string>
-
-    <string name="perm_camera_title">Требуется доступ к камере</string>
-    <string name="perm_camera_desc">Разрешите доступ к камере, чтобы снимать фото и сопоставлять позы.</string>
-    <string name="perm_allow">Разрешить</string>
-
-    <string name="camera_filters">ФИЛЬТРЫ</string>
-    <string name="camera_opacity">Прозрачность позы</string>
-    <string name="camera_sim_title">Режим симуляции студии</string>
-    <string name="camera_sim_hint">Двигайте выравнивание кругами ниже</string>
-    <string name="camera_pro_title">Профессиональное выравнивание</string>
-    <string name="toast_reference_imported">Референс импортирован! Откройте камеру для сопоставления.</string>
-    <string name="toast_reference_failed">Не удалось загрузить выравнивание референса</string>
-
-    <string name="action_exit">Выйти</string>
-    <string name="action_done">Готово</string>
-    <string name="action_reset">Сбросить</string>
-
-    <string name="home_title">Camera Pose Match</string>
-    <string name="hero_line1">Примите свою</string>
-    <string name="hero_line2">Идеальную позу</string>
-    <string name="hero_cta">НАЧАТЬ ПОЗИРОВАТЬ</string>
-
-    <string name="exit_title">Выйти из приложения?</string>
-    <string name="exit_message">Вы действительно хотите закрыть Camera Pose Match?</string>
-
-    <string name="title_edit">Изменить</string>
-    <string name="title_preview">Просмотр</string>
-    <string name="tab_filters">Фильтры</string>
-    <string name="tab_adjust">Настройка</string>
-
-    <string name="share_frame">Поделиться кадром</string>
-    <string name="toast_capture_failed">Ошибка съёмки: %1$s</string>
-    <string name="toast_saved_location">Сохранено в галерее • %1$s</string>
-    <string name="toast_theme_changed">Тема изменена на %1$s</string>
+    <string name="skip">Пропустить</string>
+    <string name="get_started">Начать</string>
+    <string name="item_settings">Настройки</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_desc">Выберите светлый или тёмный режим</string>
+    <string name="splash_logo_content_description">Логотип App Cleaner</string>
+    <string name="close">Закрыть</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_value">Русский</string>
+    <string name="settings_more">Ещё</string>
+    <string name="settings_rate_us">Оценить приложение</string>
+    <string name="settings_rate_us_desc">Ваш отзыв и оценка важны для нас</string>
+    <string name="settings_privacy_policy">Политика конфиденциальности</string>
+    <string name="settings_privacy_policy_desc">Читать условия использования приложения</string>
+    <string name="settings_share_app">Поделиться приложением</string>
+    <string name="settings_share_app_desc">Поделитесь приложением с друзьями</string>
+    <string name="settings_exit">Выход</string>
+    <string name="settings_exit_desc">Нажмите, чтобы выйти</string>
+    <string name="exitApp">Выйти из приложения</string>
+    <string name="exitAppDescription">Вы действительно хотите выйти из приложения</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="please_rate">Пожалуйста, оцените</string>
+    <string name="done">Готово</string>
+    <string name="error_not_found">Не найдено</string>
+    <string name="pro_restore">Восстановить</string>
+    <string name="pro_feature_remove_ads">Отключить рекламу</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">100% без рекламы</string>
+    <string name="pro_plan_yearly">Годовой</string>
+    <string name="pro_plan_monthly">Месячный</string>
+    <string name="pro_best_value">ЛУЧШАЯ ЦЕНА</string>
+    <string name="pro_save_percent">СКИДКА %1$d%%</string>
+    <string name="pro_billed_yearly">%1$s с оплатой раз в год</string>
+    <string name="pro_billed_monthly">Оплата каждый месяц</string>
+    <string name="pro_per_month">в месяц</string>
+    <string name="pro_trust_note">Отмена в любое время · Безопасно через Google Play</string>
+    <string name="pro_store_unavailable">Не удалось загрузить тарифы. Проверьте подключение и повторите попытку.</string>
+    <string name="pro_retry">Повторить</string>
+    <string name="pro_upgrade_title">Перейти на Pro</string>
+    <string name="pro_try_for_free">Попробовать бесплатно</string>
+    <string name="pro_no_payment_now">Сейчас платить не нужно!</string>
+    <string name="pro_auto_renewal_note">Подписка с автопродлением. Отмена в любой момент</string>
+    <string name="pro_purchase_success">Покупка успешна</string>
+    <string name="pro_purchase_already_owned">Этот план уже ваш</string>
+    <string name="pro_purchase_cancelled">Покупка отменена</string>
+    <string name="pro_purchase_failed">Покупка не удалась. %1$s</string>
+    <string name="pro_plan_unavailable">Этот план сейчас недоступен</string>
+    <string name="onboard_continue">Продолжить</string>
+    <string name="pro_purchase_pending">Платёж ожидает подтверждения. Pro откроется после подтверждения</string>
+    <string name="pro_restore_success">Покупка восстановлена</string>
+    <string name="pro_restore_nothing_found">Активные покупки для этого аккаунта Google не найдены</string>
+    <string name="pro_restore_failed">Не удалось подключиться к Google Play. Повторите попытку</string>
 </resources>

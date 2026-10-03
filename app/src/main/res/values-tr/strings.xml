@@ -1,116 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pose Match Camera</string>
-
-    <string name="nav_home">Ana Sayfa</string>
-    <string name="nav_camera">Kamera</string>
-    <string name="nav_gallery">Koleksiyonlar</string>
-    <string name="nav_history">Geçmiş</string>
-    <string name="nav_settings">Ayarlar</string>
-
-    <string name="see_all">Tümünü gör</string>
-    <string name="frames">kare</string>
-    <string name="action_search">Ara</string>
-    <string name="action_cancel">İptal</string>
-    <string name="action_continue">Devam</string>
-    <string name="action_close">Kapat</string>
-    <string name="action_share">Paylaş</string>
-    <string name="action_delete">Sil</string>
-    <string name="action_skip">Atla</string>
-    <string name="action_next">İleri</string>
-    <string name="action_lets_go">Başlayalım</string>
-    <string name="action_import">İçe aktar</string>
-    <string name="action_save">Kaydet</string>
-
-    <string name="splash_tagline">Estetik Hizalama Stüdyosu</string>
-
-    <string name="onboard_title_1">1. Bir poz seç</string>
-    <string name="onboard_title_2">2. Çerçeveyi yakala</string>
-    <string name="onboard_title_3">3. Çek &amp; kaydet</string>
-    <string name="onboard_desc_1">Selfie, çift, seyahat, düğün ve daha fazlası için 100\'den fazla hazır poza göz atın.</string>
-    <string name="onboard_desc_2">Poz canlı kameranızda belirir. Bedeniniz çerçeveyi dolduruncaya kadar hareket edin ve eşleşme puanınızın yükselişini izleyin.</string>
-    <string name="onboard_desc_3">Fotoğrafınızı çekin, güzel filtreler uygulayın ve Koleksiyonlarınıza kaydedin.</string>
-
-    <string name="lang_choose_title">Dilinizi seçin</string>
-    <string name="lang_choose_subtitle">Fotoğraf yardımcı ipuçlarınızı özelleştirmek için aşağıdan tercih ettiğiniz dili seçin.</string>
-
-    <string name="home_brand">POSE MATCH</string>
-    <string name="home_brand_sub">Camera Pro</string>
-    <string name="home_search_hint">Selfie, seyahat, sokak ara…</string>
-    <string name="home_trending">Popüler şablonlar</string>
-    <string name="home_hero_title">Kentsel Minimalist</string>
-    <string name="home_hero_sub">Mimari ve sokak fotoğrafçılığı için ideal</string>
-    <string name="home_open_camera">Kamerayı aç</string>
-    <string name="home_ai_powered">YAPAY ZEKÂ DESTEKLİ</string>
-    <string name="browser_title">REFERANS SEÇ</string>
-    <string name="browser_sub">Bir şablon seç</string>
-    <string name="home_no_blueprints">Filtrelerinize uygun şablon bulunamadı.</string>
-    <string name="home_tap_hint">Canlı kamera kılavuzunu açmak için herhangi bir poza dokunun</string>
-
-    <string name="history_title">Çekim geçmişi</string>
-    <string name="history_subtitle">%1$d kare • konuma göre gruplandı</string>
-    <string name="history_search_hint">Konum, tarih, puan, ad ara…</string>
-    <string name="history_empty">Henüz kayıt yok</string>
-    <string name="history_empty_sub">Albümünüzü başlatmak için bir kare çekin.</string>
-    <string name="history_no_match">\"%1$s\" ile eşleşen kare yok</string>
-
-    <string name="delete_title">Fotoğraf silinsin mi?</string>
-    <string name="delete_message">Bu fotoğraf koleksiyonunuzdan kalıcı olarak silinecek.</string>
-    <string name="detail_location">Konum</string>
-    <string name="detail_captured">Çekildi</string>
-    <string name="detail_match_score">Eşleşme puanı</string>
-    <string name="detail_category">Kategori</string>
-
-    <string name="gallery_title">Estetik albüm</string>
-    <string name="gallery_subtitle">Eşleşen katmanlar için referans eskizleri yükleyin.</string>
-    <string name="gallery_empty">Henüz içe aktarılmış referans yok</string>
-    <string name="gallery_empty_sub">Cihaz galerisinden standart figürler içe aktarın.</string>
-
-    <string name="settings_profile_name">Yaratıcı fotoğrafçı</string>
-    <string name="settings_profile_sub">Cihazda ön ayar takibi.</string>
-    <string name="settings_section_config">Ayarlar &amp; yapılandırma</string>
-    <string name="settings_language">Aktif dil</string>
-    <string name="settings_theme">Uygulama teması</string>
-    <string name="settings_retain_skeleton">Katman iskeletini koru</string>
-    <string name="settings_section_help">Yardım &amp; geliştirici bilgileri</string>
-    <string name="settings_rate">Uygulamayı değerlendir</string>
-    <string name="settings_share">Uygulamayı paylaş</string>
-    <string name="settings_privacy">Gizlilik politikası</string>
-    <string name="settings_about">Hizalama çerçevesi hakkında</string>
-    <string name="settings_select_language">Dil seç</string>
-    <string name="settings_select_theme">Tema seç</string>
-    <string name="action_apply">Uygula</string>
-
-    <string name="perm_camera_title">Kamera izni gerekli</string>
-    <string name="perm_camera_desc">Fotoğraf çekmek ve pozlarınızı eşleştirmek için kamera erişimine izin verin.</string>
-    <string name="perm_allow">İzin ver</string>
-
-    <string name="camera_filters">FİLTRELER</string>
-    <string name="camera_opacity">Poz saydamlığı</string>
-    <string name="camera_sim_title">Stüdyo simülasyon modu</string>
-    <string name="camera_sim_hint">Aşağıdaki dairelerle hizalamayı taşıyın</string>
-    <string name="camera_pro_title">Pro stüdyo hizalamaları</string>
-    <string name="toast_reference_imported">Referans içe aktarıldı! Eşleştirmek için kamerayı açın.</string>
-    <string name="toast_reference_failed">Referans hizalaması yüklenemedi</string>
-
-    <string name="action_exit">Çıkış</string>
-    <string name="action_done">Tamam</string>
-    <string name="action_reset">Sıfırla</string>
-
-    <string name="home_title">Camera Pose Match</string>
-    <string name="hero_line1">Yakalayın</string>
-    <string name="hero_line2">Mükemmel Pozu</string>
-    <string name="hero_cta">POZ VERMEYE BAŞLA</string>
-
-    <string name="exit_title">Uygulamadan çıkılsın mı?</string>
-    <string name="exit_message">Camera Pose Match\'i kapatmak istediğinize emin misiniz?</string>
-
-    <string name="title_edit">Düzenle</string>
-    <string name="title_preview">Önizleme</string>
-    <string name="tab_filters">Filtreler</string>
-    <string name="tab_adjust">Ayarla</string>
-
-    <string name="share_frame">Kareyi paylaş</string>
-    <string name="toast_capture_failed">Çekim başarısız: %1$s</string>
-    <string name="toast_saved_location">Galeriye kaydedildi • %1$s</string>
-    <string name="toast_theme_changed">Tema değiştirildi: %1$s</string>
+    <string name="skip">Atla</string>
+    <string name="get_started">Başla</string>
+    <string name="item_settings">Ayarlar</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_desc">Açık veya koyu modu seçin</string>
+    <string name="splash_logo_content_description">App Cleaner logosu</string>
+    <string name="close">Kapat</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_language_value">Türkçe</string>
+    <string name="settings_more">Daha Fazla</string>
+    <string name="settings_rate_us">Bizi Değerlendirin</string>
+    <string name="settings_rate_us_desc">Geri bildiriminiz ve puanınız bizim için çok değerli</string>
+    <string name="settings_privacy_policy">Gizlilik Politikası</string>
+    <string name="settings_privacy_policy_desc">Uygulama kullanım koşullarını okuyun</string>
+    <string name="settings_share_app">Uygulamayı Paylaş</string>
+    <string name="settings_share_app_desc">Uygulamayı arkadaşlarınızla paylaşın</string>
+    <string name="settings_exit">Çıkış</string>
+    <string name="settings_exit_desc">Çıkmak için dokunun</string>
+    <string name="exitApp">Uygulamadan Çık</string>
+    <string name="exitAppDescription">Uygulamadan çıkmak istediğinizden emin misiniz</string>
+    <string name="no">Hayır</string>
+    <string name="yes">Evet</string>
+    <string name="please_rate">Bizi Değerlendirin</string>
+    <string name="done">Bitti</string>
+    <string name="error_not_found">Bulunamadı</string>
+    <string name="pro_restore">Geri yükle</string>
+    <string name="pro_feature_remove_ads">Reklamları Kaldır</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Tamamen reklamsız deneyim</string>
+    <string name="pro_plan_yearly">Yıllık</string>
+    <string name="pro_plan_monthly">Aylık</string>
+    <string name="pro_best_value">EN İYİ FİYAT</string>
+    <string name="pro_save_percent">%%%1$d TASARRUF</string>
+    <string name="pro_billed_yearly">Yıllık %1$s faturalandırılır</string>
+    <string name="pro_billed_monthly">Her ay faturalandırılır</string>
+    <string name="pro_per_month">aylık</string>
+    <string name="pro_trust_note">İstediğiniz zaman iptal edin · Google Play ile güvenli</string>
+    <string name="pro_store_unavailable">Planlar yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="pro_retry">Tekrar Dene</string>
+    <string name="pro_upgrade_title">Pro’ya yükselt</string>
+    <string name="pro_try_for_free">Ücretsiz dene</string>
+    <string name="pro_no_payment_now">Şimdi ödeme yok!</string>
+    <string name="pro_auto_renewal_note">Otomatik yenilenen abonelik. İstediğiniz zaman iptal edin</string>
+    <string name="pro_purchase_success">Satın alma başarılı</string>
+    <string name="pro_purchase_already_owned">Bu plana zaten sahipsiniz</string>
+    <string name="pro_purchase_cancelled">Satın alma iptal edildi</string>
+    <string name="pro_purchase_failed">Satın alma başarısız. %1$s</string>
+    <string name="pro_plan_unavailable">Bu plan şu anda kullanılamıyor</string>
+    <string name="onboard_continue">Devam</string>
+    <string name="pro_purchase_pending">Ödeme beklemede. Onaylandığında Pro kilidi açılacak</string>
+    <string name="pro_restore_success">Satın alma geri yüklendi</string>
+    <string name="pro_restore_nothing_found">Bu Google hesabı için etkin satın alma bulunamadı</string>
+    <string name="pro_restore_failed">Google Play\'e ulaşılamadı. Tekrar deneyin</string>
 </resources>

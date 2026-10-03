@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="skip">Bỏ qua</string>
+    <string name="get_started">Bắt đầu</string>
+    <string name="item_settings">Cài đặt</string>
+    <string name="settings_theme">Giao diện</string>
+    <string name="settings_theme_desc">Chọn chế độ sáng hoặc tối</string>
+    <string name="splash_logo_content_description">Logo App Cleaner</string>
+    <string name="close">Đóng</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_language_value">Tiếng Việt</string>
+    <string name="settings_more">Thêm</string>
+    <string name="settings_rate_us">Đánh giá</string>
+    <string name="settings_rate_us_desc">Phản hồi và đánh giá của bạn rất có ý nghĩa</string>
+    <string name="settings_privacy_policy">Chính sách quyền riêng tư</string>
+    <string name="settings_privacy_policy_desc">Đọc điều khoản sử dụng ứng dụng</string>
+    <string name="settings_share_app">Chia sẻ ứng dụng</string>
+    <string name="settings_share_app_desc">Chia sẻ ứng dụng với bạn bè</string>
+    <string name="settings_exit">Thoát</string>
+    <string name="settings_exit_desc">Nhấn để thoát</string>
+    <string name="exitApp">Thoát ứng dụng</string>
+    <string name="exitAppDescription">Bạn có chắc muốn thoát ứng dụng không</string>
+    <string name="no">Không</string>
+    <string name="yes">Có</string>
+    <string name="please_rate">Đánh giá</string>
+    <string name="done">Xong</string>
+    <string name="error_not_found">Không tìm thấy</string>
+    <string name="pro_restore">Khôi phục</string>
+    <string name="pro_feature_remove_ads">Xóa quảng cáo</string>
+    <string name="pro_feature_remove_ads_desc" formatted="false">Trải nghiệm 100% không quảng cáo</string>
+    <string name="pro_plan_yearly">Hằng năm</string>
+    <string name="pro_plan_monthly">Hằng tháng</string>
+    <string name="pro_best_value">ĐÁNG GIÁ NHẤT</string>
+    <string name="pro_save_percent">TIẾT KIỆM %1$d%%</string>
+    <string name="pro_billed_yearly">Thanh toán %1$s mỗi năm</string>
+    <string name="pro_billed_monthly">Thanh toán mỗi tháng</string>
+    <string name="pro_per_month">mỗi tháng</string>
+    <string name="pro_trust_note">Hủy bất cứ lúc nào · Bảo mật qua Google Play</string>
+    <string name="pro_store_unavailable">Không thể tải các gói. Hãy kiểm tra kết nối và thử lại.</string>
+    <string name="pro_retry">Thử lại</string>
+    <string name="pro_upgrade_title">Nâng cấp lên Pro</string>
+    <string name="pro_try_for_free">Dùng thử miễn phí</string>
+    <string name="pro_no_payment_now">Không thanh toán ngay!</string>
+    <string name="pro_auto_renewal_note">Gói đăng ký tự gia hạn. Hủy bất cứ lúc nào</string>
+    <string name="pro_purchase_success">Mua thành công</string>
+    <string name="pro_purchase_already_owned">Bạn đã sở hữu gói này</string>
+    <string name="pro_purchase_cancelled">Đã hủy mua</string>
+    <string name="pro_purchase_failed">Mua không thành công. %1$s</string>
+    <string name="pro_plan_unavailable">Gói này hiện không khả dụng</string>
+    <string name="onboard_continue">Tiếp tục</string>
+    <string name="pro_purchase_pending">Thanh toán đang chờ xử lý. Pro sẽ được mở khóa sau khi xác nhận</string>
+    <string name="pro_restore_success">Đã khôi phục giao dịch mua</string>
+    <string name="pro_restore_nothing_found">Không tìm thấy giao dịch mua nào đang hoạt động cho tài khoản Google này</string>
+    <string name="pro_restore_failed">Không thể kết nối với Google Play. Hãy thử lại</string>
+</resources>
