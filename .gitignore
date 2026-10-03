@@ -1,18 +1,19 @@
+# Gradle
+.gradle/
+
+# Build folders - ALL modules
+**/build/
+build/
+
+# Android Studio
+.idea/
 *.iml
-.gradle
-.kotlin
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+
+# Local config
 local.properties
-.env
-debug.keystore
+
+# Native build
+.externalNativeBuild/
+.cxx/
+
+app/release/
