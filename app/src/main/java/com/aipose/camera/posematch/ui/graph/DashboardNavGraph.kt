@@ -205,11 +205,11 @@ private fun addPhotoSuccessScreen(
 ) {
     navGraphBuilder.addScreenWithTransitions(
         route = NavRoute.PhotoSuccessScreenRoute.route,
-        arguments = listOf(navArgument(NavArgs.PHOTO_PATH) { type = NavType.StringType }),
+        arguments = listOf(navArgument(NavArgs.CAPTURE_ID) { type = NavType.LongType }),
     ) { backStackEntry ->
         PhotoSuccessScreen(
             navController = navController,
-            photoPath = backStackEntry.arguments?.getString(NavArgs.PHOTO_PATH).orEmpty(),
+            captureId = backStackEntry.arguments?.getLong(NavArgs.CAPTURE_ID) ?: 0L,
         )
     }
 }

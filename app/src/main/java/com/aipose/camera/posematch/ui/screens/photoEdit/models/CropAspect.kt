@@ -8,5 +8,9 @@ enum class CropAspect(@StringRes val labelRes: Int, val ratio: Float?) {
     Square(R.string.crop_square, 1f),
     FourByFive(R.string.crop_four_by_five, 0.8f),
     ThreeByFour(R.string.crop_three_by_four, 0.75f),
-    SixteenByNine(R.string.crop_sixteen_by_nine, 16f / 9f)
+    SixteenByNine(R.string.crop_sixteen_by_nine, 16f / 9f);
+
+    companion object {
+        fun forRatio(ratio: Float?): CropAspect = entries.firstOrNull { it.ratio == ratio } ?: Free
+    }
 }

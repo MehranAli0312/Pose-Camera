@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -60,7 +62,8 @@ import com.aipose.camera.posematch.util.bidiIsolate
 
 private val CardCorner = 26.dp
 private val CardHeight = 172.dp
-private val PhotoWidth = 164.dp
+private const val PHOTO_WIDTH_FRACTION = 164f / 350f
+private const val CONTENT_WIDTH_FRACTION = 1f - PHOTO_WIDTH_FRACTION
 private val PlaySize = 20.dp
 private val TrackWidth = 140.dp
 private val TrackHeight = 6.dp
@@ -92,10 +95,10 @@ internal fun HomeHeroCard(
     modifier: Modifier = Modifier,
 ) {
     val palette = LocalAppPalette.current
-    Row(
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(CardHeight)
+            .heightIn(min = CardHeight)
             .poseRaisedCard(
                 cornerRadius = CardCorner,
                 brush = Brush.linearGradient(
@@ -108,49 +111,63 @@ internal fun HomeHeroCard(
                 borderColor = Color.White.copy(alpha = CARD_BORDER_ALPHA),
             ),
     ) {
+        Box(
+            modifier = Modifier.matchParentSize(),
+            contentAlignment = Alignment.CenterEnd,
+        ) {
+            HeroPhoto(
+                imagePath = hero.pose.imagePath,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(PHOTO_WIDTH_FRACTION),
+            )
+        }
         Column(
             modifier = Modifier
-                .weight(1f)
-                .padding(start = 16.dp, top = 16.dp, bottom = 12.dp),
+                .fillMaxWidth(CONTENT_WIDTH_FRACTION)
+                .heightIn(min = CardHeight)
+                .padding(start = 16.dp, top = 16.dp, bottom = 12.dp, end = 4.dp),
+            verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(7.dp),
-            ) {
-                PlayBadge()
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(7.dp),
+                ) {
+                    PlayBadge()
+                    Text(
+                        text = stringResource(R.string.home_hero_eyebrow),
+                        style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseIndigoLight),
+                    )
+                }
+                Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = stringResource(R.string.home_hero_eyebrow),
-                    style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseIndigoLight),
+                    text = hero.pose.title,
+                    style = poseTextStyle(19.sp, FontWeight.Bold, Color.White),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
+                Spacer(modifier = Modifier.height(3.dp))
+                Text(
+                    text = pluralStringResource(
+                        R.plurals.home_hero_meta,
+                        hero.categoryCount,
+                        hero.pose.category,
+                        hero.pose.difficulty,
+                        hero.categoryCount,
+                    ),
+                    style = poseTextStyle(10.5.sp, FontWeight.Normal, palette.textMuted),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (hero.bestMatch != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    BestMatchMeter(percent = hero.bestMatch)
+                }
             }
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                text = hero.pose.title,
-                style = poseTextStyle(19.sp, FontWeight.Bold, Color.White),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Spacer(modifier = Modifier.height(3.dp))
-            Text(
-                text = pluralStringResource(
-                    R.plurals.home_hero_meta,
-                    hero.categoryCount,
-                    hero.pose.category,
-                    hero.pose.difficulty,
-                    hero.categoryCount,
-                ),
-                style = poseTextStyle(10.5.sp, FontWeight.Normal, palette.textMuted),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-            if (hero.bestMatch != null) {
-                Spacer(modifier = Modifier.height(8.dp))
-                BestMatchMeter(percent = hero.bestMatch)
-            }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(12.dp))
             StartPosingButton(onClick = onStartPosing)
         }
-        HeroPhoto(imagePath = hero.pose.imagePath)
     }
 }
 
@@ -174,7 +191,7 @@ private fun PlayBadge(modifier: Modifier = Modifier) {
 
 @Composable
 private fun BestMatchMeter(percent: Int, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.width(TrackWidth)) {
+    Column(modifier = modifier.widthIn(max = TrackWidth).fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -217,7 +234,8 @@ private fun StartPosingButton(onClick: () -> Unit, modifier: Modifier = Modifier
     val palette = GlossyBadgePalette.HeroCta
     Row(
         modifier = modifier
-            .width(CtaWidth)
+            .widthIn(max = CtaWidth)
+            .fillMaxWidth()
             .height(CtaHeight)
             .drawBehind {
                 drawRoundRect(
@@ -276,8 +294,6 @@ private fun HeroPhoto(imagePath: String, modifier: Modifier = Modifier) {
     val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     Box(
         modifier = modifier
-            .width(PhotoWidth)
-            .fillMaxHeight(),
     ) {
         PoseImage(
             imagePath = imagePath,

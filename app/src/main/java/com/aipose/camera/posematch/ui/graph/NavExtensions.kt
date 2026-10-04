@@ -23,3 +23,12 @@ fun NavController.navigateOnClick(route: String, builder: NavOptionsBuilder.() -
 fun NavController.popBackStackOnClick() {
     if (acceptNavigationClick()) popBackStack()
 }
+
+fun NavController.navigateToTab(route: String) {
+    if (!acceptNavigationClick()) return
+    navigate(route) {
+        popUpTo(graph.id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+}

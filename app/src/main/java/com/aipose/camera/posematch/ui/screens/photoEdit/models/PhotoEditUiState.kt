@@ -12,6 +12,7 @@ data class PhotoEditUiState(
     val selectedTab: PhotoEditTab = PhotoEditTab.Filters,
     val selectedFilter: PhotoFilterId = PhotoFilterId.Auto,
     val filterIntensity: Float = DEFAULT_INTENSITY,
+    val activeTool: AdjustTool = AdjustTool.Exposure,
     val adjustments: PhotoAdjustments = PhotoAdjustments(),
     val geometry: PhotoGeometry = PhotoGeometry(),
     val autoGrade: ColorGrade? = null,
@@ -27,10 +28,21 @@ data class PhotoEditUiState(
             .rotatedBy(geometry.rotationDegrees)
             .croppedTo(geometry.cropAspect)
 
+    val rotatedSourceSize: PhotoSize
+        get() = sourceSize.rotatedBy(geometry.rotationDegrees)
+
     val previewGrade: ColorGrade?
         get() = if (isComparing) null else activeGrade
 
+    val cropAspect: CropAspect
+        get() = CropAspect.forRatio(geometry.cropAspect)
+
+    val activeToolValue: Float get() = adjustments.valueOf(activeTool)
+
     val isAdjusted: Boolean get() = !adjustments.isNeutral
+
+    val matchScore: Int?
+        get() = draft?.takeIf { it.poseId != null && it.matchScore > 0 }?.matchScore
 
     fun isToolTouched(tool: AdjustTool): Boolean = adjustments.valueOf(tool) != 0f
 

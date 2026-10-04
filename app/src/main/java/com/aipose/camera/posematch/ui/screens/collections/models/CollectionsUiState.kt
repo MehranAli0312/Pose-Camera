@@ -6,7 +6,12 @@ sealed interface CollectionsUiState {
 
     data class Content(
         val totalCount: Int,
-        val albums: List<CaptureAlbum>
+        val stats: CollectionsStats,
+        val albums: List<CaptureAlbum>,
+        val filter: CollectionsFilter,
+        val sort: CollectionsSort,
+        val recentPerfectShots: Int,
+        val isSortSheetVisible: Boolean
     ) : CollectionsUiState {
         val isEmpty: Boolean get() = albums.isEmpty()
     }

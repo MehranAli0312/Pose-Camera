@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -44,9 +44,12 @@ import com.aipose.camera.posematch.ui.theme.PoseTextChevron
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val BarShape = RoundedCornerShape(22.dp)
-private val BarHeight = 68.dp
+private val BarMinHeight = 68.dp
 private val SlotIconSize = 24.dp
 private val ShuffleSize = 46.dp
+private val ShuffleClearance = 13.dp
+private val ChevronWidth = 10.dp
+private val ChevronHeight = 6.dp
 
 @Composable
 internal fun HomeFilterBar(
@@ -60,9 +63,9 @@ internal fun HomeFilterBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(BarHeight)
+                .heightIn(min = BarMinHeight)
                 .poseCard(BarShape)
-                .padding(horizontal = 18.dp),
+                .padding(start = 18.dp, end = 20.dp, top = 12.dp, bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             FilterSlot(
@@ -73,7 +76,7 @@ internal fun HomeFilterBar(
                 options = filter.categories,
                 onSelect = onSelectCategory,
             )
-            Spacer(modifier = Modifier.width(ShuffleSize))
+            Spacer(modifier = Modifier.width(ShuffleSize + ShuffleClearance * 2))
             FilterSlot(
                 iconRes = R.drawable.ic_pose_bolt,
                 palette = GlossyBadgePalette.Emerald,
@@ -104,33 +107,37 @@ private fun RowScope.FilterSlot(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(modifier = Modifier.weight(1f)) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .click(enabled = options.isNotEmpty()) { expanded = true },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
-            GlossyIconBadge(iconRes = iconRes, palette = palette, size = SlotIconSize)
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = stringResource(labelRes),
-                    style = poseTextStyle(8.5.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
-                )
-                Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = stringResource(labelRes),
+                style = poseTextStyle(8.5.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                GlossyIconBadge(iconRes = iconRes, palette = palette, size = SlotIconSize)
                 Text(
                     text = value.orEmpty(),
                     style = poseTextStyle(15.sp, FontWeight.Bold, Color.White),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_pose_chevron_down),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(PoseTextChevron),
+                    modifier = Modifier.size(width = ChevronWidth, height = ChevronHeight),
                 )
             }
-            Image(
-                painter = painterResource(R.drawable.ic_pose_chevron_down),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(PoseTextChevron),
-                modifier = Modifier.size(width = 12.dp, height = 8.dp),
-            )
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->

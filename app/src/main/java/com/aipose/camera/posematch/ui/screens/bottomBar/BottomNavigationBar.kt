@@ -35,8 +35,8 @@ import com.aipose.camera.posematch.ui.common.CaptureFab
 import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
+import com.aipose.camera.posematch.ui.graph.navigateToTab
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.Violet
@@ -133,17 +133,7 @@ private fun RowScope.NavTab(
     Column(
         modifier = Modifier
             .weight(1f)
-            .click {
-                if (navController.acceptNavigationClick()) {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            },
+            .click { navController.navigateToTab(item.route) },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(12.dp))

@@ -2,7 +2,11 @@ package com.aipose.camera.posematch.ui.screens.photoSuccess.models
 
 import com.aipose.camera.posematch.domain.models.Capture
 
-data class PhotoSuccessUiState(
-    val capture: Capture? = null,
-    val isPersonalBest: Boolean = false
-)
+sealed interface PhotoSuccessUiState {
+    data object Loading : PhotoSuccessUiState
+
+    data class Content(
+        val capture: Capture,
+        val isPersonalBest: Boolean
+    ) : PhotoSuccessUiState
+}

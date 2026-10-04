@@ -17,11 +17,44 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
+import com.aipose.camera.posematch.ui.theme.PoseRaisedBottom
+import com.aipose.camera.posematch.ui.theme.PoseRaisedTop
 
 private val BorderWidth = 1.dp
 private val RaisedShadowInsetX = 2.dp
 private val RaisedShadowOffsetY = 6.dp
 private val RaisedShadowShrinkY = 2.dp
+
+private val SurfaceGlossInset = 8.dp
+private val SurfaceGlossTop = 4.dp
+private val SurfaceGlossHeight = 26.dp
+private const val RAISED_SURFACE_BORDER_ALPHA = 0.09f
+
+fun Modifier.poseRaisedSurface(
+    shape: Shape,
+    borderAlpha: Float = RAISED_SURFACE_BORDER_ALPHA,
+    glossAlpha: Float = 0f,
+): Modifier = this
+    .clip(shape)
+    .background(Brush.verticalGradient(listOf(PoseRaisedTop, PoseRaisedBottom)))
+    .drawBehind {
+        if (glossAlpha <= 0f) return@drawBehind
+        val inset = SurfaceGlossInset.toPx()
+        val top = SurfaceGlossTop.toPx()
+        val height = SurfaceGlossHeight.toPx()
+        drawRoundRect(
+            brush = Brush.verticalGradient(
+                colors = listOf(Color.White.copy(alpha = GLOSS_ALPHA), Color.Transparent),
+                startY = top,
+                endY = top + height,
+            ),
+            topLeft = Offset(inset, top),
+            size = Size(size.width - inset * 2f, height),
+            cornerRadius = CornerRadius(height / 2f),
+            alpha = glossAlpha,
+        )
+    }
+    .border(BorderWidth, Color.White.copy(alpha = borderAlpha), shape)
 
 @Composable
 fun Modifier.poseCard(shape: Shape): Modifier {

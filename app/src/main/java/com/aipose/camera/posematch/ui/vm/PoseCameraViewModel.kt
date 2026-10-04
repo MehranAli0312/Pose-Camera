@@ -14,6 +14,8 @@ import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
+import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
+import com.aipose.camera.posematch.ui.screens.camera.models.CaptureTimer
 import com.aipose.camera.posematch.ui.screens.camera.models.PoseCameraUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -38,6 +40,7 @@ class PoseCameraViewModel(
     private var referenceJob: Job? = null
     private var countdownJob: Job? = null
     private var greatMatchJob: Job? = null
+    private var bestScoreJob: Job? = null
     private var requestedPoseId: Int? = null
 
     val frameAnalyzer: ImageAnalysis.Analyzer = poseFrameAnalyzer
@@ -47,6 +50,7 @@ class PoseCameraViewModel(
         observePoses()
         observeSkeletonPreference()
         observeCoachVisibility()
+        observeGalleryCount()
     }
 
     fun onPoseRequested(poseId: Int) {
@@ -56,10 +60,15 @@ class PoseCameraViewModel(
     }
 
     fun selectPose(pose: Pose) {
-        if (_uiState.value.selectedPose?.id == pose.id) return
+        if (_uiState.value.selectedPose?.id == pose.id) {
+            hidePosePicker()
+            return
+        }
         _uiState.update { state ->
             state.copy(
                 selectedPose = pose,
+                isPosePickerVisible = false,
+                bestScore = 0,
                 overlay = state.overlay.withGestures(
                     scale = OVERLAY_RESET_SCALE,
                     offsetX = 0f,
@@ -73,6 +82,43 @@ class PoseCameraViewModel(
             )
         }
         loadReference(pose)
+        observeBestScore(pose.id)
+    }
+
+    fun showPosePicker() {
+        _uiState.update { state -> state.copy(isPosePickerVisible = true) }
+    }
+
+    fun hidePosePicker() {
+        _uiState.update { state -> state.copy(isPosePickerVisible = false) }
+    }
+
+    fun importPose(title: String, sourceUri: String) {
+        if (_uiState.value.isImporting) return
+        _uiState.update { state -> state.copy(isImporting = true) }
+        viewModelScope.launch {
+            val imported = poseLibraryUseCase.importPose(title, sourceUri)
+            _uiState.update { state ->
+                state.copy(isImporting = false, isImportFailed = imported == null)
+            }
+            if (imported != null) {
+                requestedPoseId = imported.id
+                selectPose(imported)
+            }
+        }
+    }
+
+    fun onImportFailureHandled() {
+        _uiState.update { state -> state.copy(isImportFailed = false) }
+    }
+
+    fun onToolClicked(tool: CameraTool) {
+        when (tool) {
+            CameraTool.Grid -> toggleGrid()
+            CameraTool.Timer -> showTimerSheet()
+            CameraTool.Skeleton -> setSkeletonVisible(!_uiState.value.isSkeletonVisible)
+            CameraTool.Pro -> toggleProControls()
+        }
     }
 
     fun updateOverlayOpacity(opacity: Float) {
@@ -99,6 +145,18 @@ class PoseCameraViewModel(
 
     fun toggleProControls() {
         _uiState.update { state -> state.copy(areProControlsVisible = !state.areProControlsVisible) }
+    }
+
+    fun showTimerSheet() {
+        _uiState.update { state -> state.copy(isTimerSheetVisible = true) }
+    }
+
+    fun hideTimerSheet() {
+        _uiState.update { state -> state.copy(isTimerSheetVisible = false) }
+    }
+
+    fun setTimer(timer: CaptureTimer) {
+        _uiState.update { state -> state.copy(timer = timer, isTimerSheetVisible = false) }
     }
 
     fun cycleTimer() {
@@ -232,6 +290,25 @@ class PoseCameraViewModel(
         viewModelScope.launch {
             cameraSettingsUseCase.getRetainSkeleton().collect { retain ->
                 _uiState.update { state -> state.copy(isSkeletonVisible = retain) }
+            }
+        }
+    }
+
+    private fun observeGalleryCount() {
+        viewModelScope.launch {
+            captureUseCase.observeCaptureCount().collect { count ->
+                _uiState.update { state -> state.copy(galleryCount = count) }
+            }
+        }
+    }
+
+    private fun observeBestScore(poseId: Int) {
+        bestScoreJob?.cancel()
+        bestScoreJob = viewModelScope.launch {
+            captureUseCase.observeBestScore(poseId).collect { best ->
+                _uiState.update { state ->
+                    if (state.selectedPose?.id == poseId) state.copy(bestScore = best) else state
+                }
             }
         }
     }

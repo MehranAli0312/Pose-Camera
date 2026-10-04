@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,7 +22,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
@@ -39,9 +42,9 @@ import com.aipose.camera.posematch.ui.theme.PoseTextSoft
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val HeaderHeight = 72.dp
 private val LogoSize = 44.dp
 private val TrophySize = 40.dp
+private val StreakMinHeight = 40.dp
 private val StreakShape = RoundedCornerShape(20.dp)
 private const val STREAK_BORDER_ALPHA = 0.35f
 
@@ -54,7 +57,7 @@ internal fun HomeHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(HeaderHeight),
+            .padding(end = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GlossyIconBadge(
@@ -63,23 +66,30 @@ internal fun HomeHeader(
             size = LogoSize,
         )
         Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Row {
-                Text(
-                    text = stringResource(R.string.home_title_pose),
-                    style = poseTextStyle(21.sp, FontWeight.Bold, Color.White),
-                )
-                Text(
-                    text = stringResource(R.string.home_title_ai),
-                    style = poseTextStyle(21.sp, FontWeight.Bold, PoseVioletLight),
-                )
-            }
-            Spacer(modifier = Modifier.height(2.dp))
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp),
+        ) {
+            val titleStyle = poseTextStyle(21.sp, FontWeight.Bold, Color.White)
+            Text(
+                text = buildAnnotatedString {
+                    append(stringResource(R.string.home_title_pose))
+                    withStyle(titleStyle.toSpanStyle().copy(color = PoseVioletLight)) {
+                        append(stringResource(R.string.home_title_ai))
+                    }
+                },
+                style = titleStyle,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
             Text(
                 text = stringResource(R.string.home_tagline),
                 style = poseTextStyle(9.5.sp, FontWeight.Normal, LocalAppPalette.current.textMuted),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
+        Spacer(modifier = Modifier.width(8.dp))
         StreakPill(streakDays = streakDays)
         if (!isProUser()) {
             Spacer(modifier = Modifier.width(14.dp))
@@ -98,11 +108,11 @@ internal fun HomeHeader(
 private fun StreakPill(streakDays: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .height(40.dp)
+            .heightIn(min = StreakMinHeight)
             .clip(StreakShape)
             .background(Brush.verticalGradient(listOf(PoseStreakTop, PoseStreakBottom)))
             .border(1.dp, PoseAmber.copy(alpha = STREAK_BORDER_ALPHA), StreakShape)
-            .padding(start = 14.dp, end = 16.dp),
+            .padding(start = 14.dp, end = 16.dp, top = 4.dp, bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(9.dp),
     ) {
@@ -115,10 +125,12 @@ private fun StreakPill(streakDays: Int, modifier: Modifier = Modifier) {
             Text(
                 text = streakDays.toString(),
                 style = poseTextStyle(14.sp, FontWeight.Bold, Color.White),
+                maxLines = 1,
             )
             Text(
                 text = stringResource(R.string.home_day_streak),
                 style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseTextSoft),
+                maxLines = 1,
             )
         }
     }

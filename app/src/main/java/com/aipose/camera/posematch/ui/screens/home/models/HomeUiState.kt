@@ -12,7 +12,6 @@ sealed interface HomeUiState {
         val hero: HomeHero?,
         val quickActions: List<HomeQuickAction>,
         val progress: CaptureProgress,
-        val poseOfTheDay: Pose?,
-        val searchResults: List<Pose>?
+        val poseOfTheDay: Pose?
     ) : HomeUiState
 }

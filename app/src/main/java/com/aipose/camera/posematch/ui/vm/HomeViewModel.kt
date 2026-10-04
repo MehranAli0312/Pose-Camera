@@ -6,7 +6,6 @@ import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
-import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.ui.models.PoseCategories
 import com.aipose.camera.posematch.ui.screens.home.models.HomeFilter
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -31,22 +29,8 @@ private data class FilterSelection(
 class HomeViewModel(
     private val poseLibraryUseCase: PoseLibraryUseCase,
     private val captureUseCase: CaptureUseCase,
-    private val captureProgressUseCase: CaptureProgressUseCase,
-    private val favoritePoseUseCase: FavoritePoseUseCase
+    private val captureProgressUseCase: CaptureProgressUseCase
 ) : ViewModel() {
-
-    val savedPoseIds: StateFlow<Set<Int>> = favoritePoseUseCase.observeFavorites()
-        .map { favorites -> favorites.keys }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), emptySet())
-
-    fun toggleSavedPose(pose: Pose) {
-        viewModelScope.launch {
-            favoritePoseUseCase.setFavorite(pose.id, pose.id !in savedPoseIds.value)
-        }
-    }
-
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery = _searchQuery.asStateFlow()
 
     private val _importedPose = MutableStateFlow<Pose?>(null)
     val importedPose = _importedPose.asStateFlow()
@@ -59,23 +43,14 @@ class HomeViewModel(
     val uiState: StateFlow<HomeUiState> = combine(
         poseLibraryUseCase.observePoses(),
         captureUseCase.observeCaptures(),
-        _searchQuery,
         filterSelection
-    ) { poses, captures, query, selection ->
-        contentOf(poses, captures, query, selection)
+    ) { poses, captures, selection ->
+        contentOf(poses, captures, selection)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT),
         HomeUiState.Loading
     )
-
-    fun setSearchQuery(query: String) {
-        _searchQuery.value = query
-    }
-
-    fun clearSearch() {
-        _searchQuery.value = ""
-    }
 
     fun selectCategory(category: String) {
         filterSelection.value = filterSelection.value.copy(category = category)
@@ -109,7 +84,6 @@ class HomeViewModel(
     private fun contentOf(
         poses: List<Pose>,
         captures: List<Capture>,
-        query: String,
         selection: FilterSelection
     ): HomeUiState.Content {
         val categories = poses.orderedCategories()
@@ -138,8 +112,7 @@ class HomeViewModel(
                 HomeQuickAction(id = id, count = poses.countFor(id))
             },
             progress = captureProgressUseCase.progressOf(captures),
-            poseOfTheDay = poseLibraryUseCase.poseOfTheDay(poses),
-            searchResults = if (query.isBlank()) null else poses.filter { it.matches(query) }
+            poseOfTheDay = poseLibraryUseCase.poseOfTheDay(poses)
         )
     }
 
@@ -153,15 +126,6 @@ class HomeViewModel(
         val present = map { it.category }.distinct()
         return PoseCategories.displayOrder.filter { it in present } +
             present.filter { it !in PoseCategories.displayOrder }
-    }
-
-    private fun Pose.matches(query: String): Boolean {
-        val normalized = query.trim()
-        if (normalized.isEmpty()) return true
-        return title.contains(normalized, ignoreCase = true) ||
-            description.contains(normalized, ignoreCase = true) ||
-            category.contains(normalized, ignoreCase = true) ||
-            tags.any { tag -> tag.contains(normalized, ignoreCase = true) }
     }
 
     private companion object {

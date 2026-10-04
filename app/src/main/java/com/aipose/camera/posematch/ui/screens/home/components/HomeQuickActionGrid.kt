@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -31,7 +32,7 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private const val TILES_PER_ROW = 4
 private val TileShape = RoundedCornerShape(22.dp)
-private val TileHeight = 102.dp
+private val TileMinHeight = 102.dp
 private val TileGap = 10.dp
 private val RowGap = 10.dp
 private val BadgeSize = 44.dp
@@ -64,10 +65,10 @@ private fun RowScope.QuickActionTile(
     Column(
         modifier = Modifier
             .weight(1f)
-            .height(TileHeight)
+            .heightIn(min = TileMinHeight)
             .poseCard(TileShape)
             .bounceClick(onClick = onClick)
-            .padding(horizontal = 6.dp, vertical = 14.dp),
+            .padding(start = 4.dp, end = 4.dp, top = 14.dp, bottom = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         GlossyIconBadge(
@@ -75,10 +76,10 @@ private fun RowScope.QuickActionTile(
             palette = action.id.palette,
             size = BadgeSize,
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         Text(
             text = stringResource(action.id.titleRes),
-            style = poseTextStyle(11.5.sp, FontWeight.Bold, Color.White),
+            style = poseTextStyle(10.5.sp, FontWeight.Bold, Color.White),
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

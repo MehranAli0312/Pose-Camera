@@ -23,6 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -36,15 +42,20 @@ import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.theme.PoseTextLavender
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
+import com.aipose.camera.posematch.ui.theme.PoseVioletPale
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val ItemShape = RoundedCornerShape(16.dp)
+private val ItemCorner = 16.dp
+private val ItemShape = RoundedCornerShape(ItemCorner)
+private val DashStroke = 1.dp
+private val DashLength = 4.dp
 private val ItemWidth = 56.dp
 private val ItemHeight = 72.dp
 private val BadgeSize = 18.dp
 private val BadgeGlyphSize = 9.dp
 private val ImportGlyphSize = 20.dp
-private const val SCRIM_ALPHA = 0.45f
+private const val IMPORT_FILL_ALPHA = 0.1f
+private const val IMPORT_BORDER_ALPHA = 0.24f
 private const val BORDER_ALPHA = 0.14f
 
 @Composable
@@ -57,7 +68,7 @@ internal fun PoseStrip(
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 34.dp),
+        contentPadding = PaddingValues(horizontal = 36.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -83,22 +94,37 @@ private fun ImportTile(
         modifier = modifier
             .size(width = ItemWidth, height = ItemHeight)
             .clip(ItemShape)
-            .background(Color.Black.copy(alpha = SCRIM_ALPHA))
-            .border(1.dp, Color.White.copy(alpha = BORDER_ALPHA), ItemShape)
+            .background(Color.White.copy(alpha = IMPORT_FILL_ALPHA))
+            .drawBehind {
+                val inset = DashStroke.toPx() / 2f
+                drawRoundRect(
+                    color = Color.White.copy(alpha = IMPORT_BORDER_ALPHA),
+                    topLeft = Offset(inset, inset),
+                    size = Size(size.width - inset * 2f, size.height - inset * 2f),
+                    cornerRadius = CornerRadius(ItemCorner.toPx()),
+                    style = Stroke(
+                        width = DashStroke.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(
+                            floatArrayOf(DashLength.toPx(), DashLength.toPx()),
+                        ),
+                    ),
+                )
+            }
             .bounceClick(onClick = onClick),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_pose_import),
+            painter = painterResource(R.drawable.ic_plus),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(Color.White),
+            colorFilter = ColorFilter.tint(PoseVioletPale),
             modifier = Modifier.size(ImportGlyphSize),
         )
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(R.string.action_import),
-            style = poseTextStyle(8.sp, FontWeight.Bold, PoseTextLavender),
+            style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseTextLavender),
+            maxLines = 1,
         )
     }
 }

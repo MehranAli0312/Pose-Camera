@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -44,7 +45,7 @@ import com.aipose.camera.posematch.ui.theme.PoseShadow
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val CardCorner = 24.dp
-private val CardHeight = 112.dp
+private val CardMinHeight = 112.dp
 private val BulbSize = 34.dp
 private val ThumbSize = 28.dp
 private val ThumbShape = RoundedCornerShape(10.dp)
@@ -69,7 +70,7 @@ internal fun HomePoseOfTheDayCard(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(CardHeight)
+            .heightIn(min = CardMinHeight)
             .poseRaisedCard(
                 cornerRadius = CardCorner,
                 brush = Brush.linearGradient(
@@ -85,7 +86,7 @@ internal fun HomePoseOfTheDayCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 16.dp, top = 14.dp, end = 110.dp),
+                .padding(start = 16.dp, top = 14.dp, end = 110.dp, bottom = 14.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

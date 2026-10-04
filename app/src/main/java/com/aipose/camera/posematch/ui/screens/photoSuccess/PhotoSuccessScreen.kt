@@ -1,94 +1,89 @@
 package com.aipose.camera.posematch.ui.screens.photoSuccess
 
-import android.content.Intent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.imageModelOf
+import com.aipose.camera.posematch.ui.common.PoseGlowBackground
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.shareImageFile
+import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessAction
-import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessBanner
-import java.io.File
-
-private const val IMAGE_MIME_TYPE = "image/*"
-private const val FILE_PROVIDER_SUFFIX = ".fileprovider"
+import com.aipose.camera.posematch.ui.graph.navigateToTab
+import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
+import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessActions
+import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessHeader
+import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessShot
+import com.aipose.camera.posematch.ui.screens.photoSuccess.models.PhotoSuccessUiState
+import com.aipose.camera.posematch.ui.vm.PhotoSuccessViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PhotoSuccessScreen(
     navController: NavHostController,
-    photoPath: String,
+    captureId: Long,
+    viewModel: PhotoSuccessViewModel = koinViewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val shareChooserTitle = stringResource(R.string.share_frame)
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-    ) {
-        AsyncImage(
-            model = imageModelOf(photoPath),
-            contentDescription = stringResource(R.string.saved_photo),
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit,
-        )
+    LaunchedEffect(captureId) { viewModel.onCaptureRequested(captureId) }
 
-        PhotoSuccessBanner(modifier = Modifier.align(Alignment.TopCenter))
+    val content = uiState as? PhotoSuccessUiState.Content
 
-        Row(
+    PoseGlowBackground(glows = PoseGlows.CaptureSaved) {
+        if (content == null) return@PoseGlowBackground
+        val capture = content.capture
+        val title = capture.title.ifBlank { stringResource(R.string.camera_no_pose) }
+        val place = capture.location.name ?: stringResource(R.string.unknown_location)
+        Column(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .fillMaxHeight()
+                .adaptiveWidth()
+                .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(bottom = 26.dp),
-            horizontalArrangement = Arrangement.spacedBy(36.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            PhotoSuccessAction(
-                icon = Icons.Default.Home,
-                label = stringResource(R.string.nav_home),
-                onClick = {
-                    navController.navigateOnClick(NavRoute.HomeScreenRoute.route)
+            Spacer(modifier = Modifier.height(62.dp))
+            PhotoSuccessHeader(
+                subtitle = if (content.isPersonalBest) {
+                    stringResource(R.string.saved_subtitle_best, title)
+                } else {
+                    stringResource(R.string.saved_subtitle, title)
                 },
             )
-            PhotoSuccessAction(
-                icon = Icons.Default.Share,
-                label = stringResource(R.string.action_share),
-                onClick = {
-                    runCatching {
-                        val uri = FileProvider.getUriForFile(
-                            context,
-                            context.packageName + FILE_PROVIDER_SUFFIX,
-                            File(photoPath),
-                        )
-                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                            type = IMAGE_MIME_TYPE
-                            putExtra(Intent.EXTRA_STREAM, uri)
-                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        }
-                        context.startActivity(Intent.createChooser(shareIntent, shareChooserTitle))
-                    }
+            Spacer(modifier = Modifier.height(28.dp))
+            PhotoSuccessShot(
+                imagePath = capture.imagePath,
+                matchScore = capture.matchScore.takeIf { capture.poseId != null && it > 0 },
+                placeLabel = stringResource(R.string.saved_place_now, place),
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+            PhotoSuccessActions(
+                onShare = { context.shareImageFile(capture.imagePath, shareChooserTitle) },
+                onShootAgain = navController::popBackStackOnClick,
+                onViewCollections = {
+                    navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
                 },
             )
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

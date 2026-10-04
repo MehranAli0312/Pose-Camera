@@ -2,7 +2,7 @@ package com.aipose.camera.posematch.data.repoImpl
 
 import com.aipose.camera.posematch.data.pose.CaptureProcessor
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
-import com.aipose.camera.posematch.data.source.PoseImageDataSource
+import com.aipose.camera.posematch.data.local.PoseImageDataSource
 import com.aipose.camera.posematch.domain.models.ColorGrade
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
 import com.aipose.camera.posematch.domain.models.PhotoFilterId

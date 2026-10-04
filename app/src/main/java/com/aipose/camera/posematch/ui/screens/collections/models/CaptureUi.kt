@@ -5,7 +5,7 @@ import com.aipose.camera.posematch.domain.models.Capture
 data class CaptureUi(
     val capture: Capture,
     val formattedDate: String,
-    val formattedShortDate: String,
+    val capturedLabel: String,
     val locationLabel: String,
     val titleLabel: String
 ) {

@@ -1,10 +1,8 @@
 package com.aipose.camera.posematch.ui.screens.photoEdit
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -13,39 +11,23 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseGlowBackground
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.AdjustSliderRow
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.AdjustToolRail
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.CropAspectChips
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditPreview
+import com.aipose.camera.posematch.ui.screens.photoEdit.components.AdjustPanel
+import com.aipose.camera.posematch.ui.screens.photoEdit.components.CropPanel
+import com.aipose.camera.posematch.ui.screens.photoEdit.components.FiltersPanel
 import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditTabRow
 import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditTopBar
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoFilterStrip
-import com.aipose.camera.posematch.ui.screens.photoEdit.components.RotateControls
-import com.aipose.camera.posematch.ui.screens.photoEdit.models.AdjustTool
+import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditWorkspace
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
-import com.aipose.camera.posematch.ui.screens.photoEdit.models.valueOf
-import com.aipose.camera.posematch.ui.screens.photoEdit.models.withValue
-import com.aipose.camera.posematch.ui.theme.ReviewBackground
 import com.aipose.camera.posematch.ui.vm.PhotoEditViewModel
-import com.example.common.showToast
 import org.koin.androidx.compose.koinViewModel
-
-private const val ROTATE_LEFT_DEGREES = 3
-private const val ROTATE_RIGHT_DEGREES = 1
 
 @Composable
 fun PhotoEditScreen(
@@ -53,95 +35,80 @@ fun PhotoEditScreen(
     viewModel: PhotoEditViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var activeTool by remember { mutableStateOf(AdjustTool.Exposure) }
-    val context = LocalContext.current
-    val savedTemplate = stringResource(R.string.toast_saved_location)
-    val unknownLocation = stringResource(R.string.unknown_location)
 
-    LaunchedEffect(uiState.savedPath) {
-        val savedPath = uiState.savedPath ?: return@LaunchedEffect
-        val locationName = uiState.savedLocationName ?: unknownLocation
-        viewModel.onSavedPathHandled()
-        context.showToast(savedTemplate.format(locationName))
-        navController.navigateOnClick(NavRoute.PhotoSuccessScreenRoute.routeFor(savedPath))
+    LaunchedEffect(uiState.savedCaptureId) {
+        val captureId = uiState.savedCaptureId ?: return@LaunchedEffect
+        viewModel.onSavedCaptureHandled()
+        navController.navigate(NavRoute.PhotoSuccessScreenRoute.routeFor(captureId)) {
+            popUpTo(NavRoute.PhotoEditScreenRoute.route) { inclusive = true }
+        }
     }
 
     val draft = uiState.draft ?: return
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(ReviewBackground)
-            .statusBarsPadding()
-            .navigationBarsPadding()
-    ) {
-        PhotoEditTopBar(
-            isSaving = uiState.isSaving,
-            onDiscard = {
-                viewModel.discard()
-                navController.popBackStack()
-            },
-            onSave = viewModel::save,
-        )
+    PoseGlowBackground(glows = PoseGlows.PhotoEdit) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .adaptiveWidth()
+                .statusBarsPadding()
+                .navigationBarsPadding()
+        ) {
+            PhotoEditTopBar(
+                isSaving = uiState.isSaving,
+                onDiscard = {
+                    viewModel.discard()
+                    navController.popBackStack()
+                },
+                onReset = viewModel::reset,
+                onSave = viewModel::save,
+            )
 
-        PhotoEditPreview(
-            imagePath = draft.imagePath,
-            colorFilter = uiState.activeGrade?.let { grade ->
-                ColorFilter.colorMatrix(ColorMatrix(grade.values.toFloatArray()))
-            },
-            rotationDegrees = uiState.rotationDegrees,
-            cropAspect = uiState.cropAspect,
-            modifier = Modifier.weight(1f),
-        )
+            PhotoEditWorkspace(
+                uiState = uiState,
+                imagePath = draft.imagePath,
+                onCompareChange = viewModel::setComparing,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 20.dp),
+            )
 
-        PhotoEditTabRow(
-            selectedTab = uiState.selectedTab,
-            onTabSelected = viewModel::selectTab,
-            onReset = viewModel::reset,
-        )
+            PhotoEditTabRow(
+                selectedTab = uiState.selectedTab,
+                onTabSelected = viewModel::selectTab,
+                modifier = Modifier.padding(horizontal = 20.dp),
+            )
 
-        Box(modifier = Modifier.fillMaxWidth()) {
+            Spacer(modifier = Modifier.height(16.dp))
+
             when (uiState.selectedTab) {
-                PhotoEditTab.Filters -> PhotoFilterStrip(
-                    imagePath = draft.imagePath,
+                PhotoEditTab.Filters -> FiltersPanel(
                     selectedFilter = uiState.selectedFilter,
-                    gradeFor = { filterId -> viewModel.previewGrade(filterId) },
+                    intensity = uiState.filterIntensity,
                     onFilterSelected = viewModel::selectFilter,
+                    onIntensityChange = viewModel::setFilterIntensity,
                 )
 
-                PhotoEditTab.Adjust -> Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 6.dp)
-                ) {
-                    AdjustToolRail(
-                        activeTool = activeTool,
-                        isToolTouched = { tool -> uiState.isToolTouched(tool) },
-                        onToolSelected = { tool -> activeTool = tool },
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    when (activeTool) {
-                        AdjustTool.Rotate -> RotateControls(
-                            onRotateLeft = { repeat(ROTATE_LEFT_DEGREES) { viewModel.rotate() } },
-                            onRotateRight = { repeat(ROTATE_RIGHT_DEGREES) { viewModel.rotate() } },
-                        )
+                PhotoEditTab.Adjust -> AdjustPanel(
+                    activeTool = uiState.activeTool,
+                    value = uiState.activeToolValue,
+                    isToolTouched = uiState::isToolTouched,
+                    onToolSelected = viewModel::selectTool,
+                    onValueChange = viewModel::setActiveToolValue,
+                    onResetAdjustments = viewModel::resetAdjustments,
+                )
 
-                        AdjustTool.Crop -> CropAspectChips(
-                            selectedRatio = uiState.cropAspect,
-                            onAspectSelected = viewModel::setCropAspect,
-                        )
-
-                        else -> AdjustSliderRow(
-                            value = uiState.adjustments.valueOf(activeTool),
-                            onValueChange = { value ->
-                                viewModel.updateAdjustments(
-                                    uiState.adjustments.withValue(activeTool, value)
-                                )
-                            },
-                        )
-                    }
-                }
+                PhotoEditTab.Crop -> CropPanel(
+                    selectedAspect = uiState.cropAspect,
+                    straightenDegrees = uiState.geometry.straightenDegrees,
+                    onAspectSelected = { aspect -> viewModel.setCropAspect(aspect.ratio) },
+                    onTransform = viewModel::applyTransform,
+                    onStraightenChange = viewModel::setStraighten,
+                )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

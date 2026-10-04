@@ -17,6 +17,7 @@ data class PoseCameraUiState(
     val isGridVisible: Boolean = false,
     val areProControlsVisible: Boolean = false,
     val isPosePickerVisible: Boolean = false,
+    val isTimerSheetVisible: Boolean = false,
     val manualIso: Int = DEFAULT_ISO,
     val manualExposure: Float = 0f,
     val selectedFilter: PhotoFilterId = PhotoFilterId.Auto,
@@ -30,6 +31,7 @@ data class PoseCameraUiState(
     val isCoachVisible: Boolean = false,
     val isGreatMatchVisible: Boolean = false,
     val isImporting: Boolean = false,
+    val isImportFailed: Boolean = false,
     val isCapturing: Boolean = false,
     val pendingCaptureTarget: String? = null,
     val capturedPath: String? = null
@@ -37,6 +39,8 @@ data class PoseCameraUiState(
     val isCountdownRunning: Boolean get() = countdownSeconds > 0
 
     val feedback: MatchFeedback get() = MatchFeedback.forScore(match.score)
+
+    val overlayImagePath: String? get() = overlayCutoutPath ?: selectedPose?.imagePath
 
     fun isToolActive(tool: CameraTool): Boolean = when (tool) {
         CameraTool.Grid -> isGridVisible

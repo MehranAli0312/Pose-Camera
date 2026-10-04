@@ -55,11 +55,15 @@ internal fun ProControlsPanel(
     onExposureChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val palette = LocalAppPalette.current
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(palette.card)
+            .padding(horizontal = 20.dp)
+            .cameraGlass(
+                shape = RoundedCornerShape(22.dp),
+                scrimAlpha = CAMERA_CARD_SCRIM_ALPHA,
+                borderColor = Color.White.copy(alpha = CAMERA_CARD_BORDER_ALPHA),
+            )
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {

@@ -28,7 +28,6 @@ object NavArgs {
     const val CATEGORY = "category"
     const val LOCATION_LABEL = "locationLabel"
     const val CAPTURE_ID = "captureId"
-    const val PHOTO_PATH = "photoPath"
 }
 
 sealed class NavRoute(val route: String) {
@@ -78,8 +77,7 @@ sealed class NavRoute(val route: String) {
     }
 
     data object PhotoSuccessScreenRoute :
-        NavRoute(Routes.PHOTO_SUCCESS_SCREEN + "/{" + NavArgs.PHOTO_PATH + "}") {
-        fun routeFor(photoPath: String): String =
-            Routes.PHOTO_SUCCESS_SCREEN + "/" + Uri.encode(photoPath)
+        NavRoute(Routes.PHOTO_SUCCESS_SCREEN + "/{" + NavArgs.CAPTURE_ID + "}") {
+        fun routeFor(captureId: Long): String = Routes.PHOTO_SUCCESS_SCREEN + "/" + captureId
     }
 }

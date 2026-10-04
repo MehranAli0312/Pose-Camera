@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,9 +51,9 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.aipose.camera.posematch.util.bidiIsolate
 
 private val CardShape = RoundedCornerShape(24.dp)
-private val CardHeight = 140.dp
+private val CardMinHeight = 140.dp
 private val StatsShape = RoundedCornerShape(18.dp)
-private val StatsHeight = 76.dp
+private val StatsMinHeight = 76.dp
 private val HeaderBadgeSize = 26.dp
 private val StatBadgeSize = 28.dp
 private val RingSize = 41.dp
@@ -76,9 +77,9 @@ internal fun HomeProgressCard(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(CardHeight)
+            .heightIn(min = CardMinHeight)
             .poseCard(CardShape)
-            .padding(horizontal = 14.dp),
+            .padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
     ) {
         Spacer(modifier = Modifier.height(14.dp))
         ProgressHeader(onViewAll = onViewAll)
@@ -131,7 +132,7 @@ private fun StatsRow(progress: CaptureProgress, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(StatsHeight)
+            .heightIn(min = StatsMinHeight)
             .clip(StatsShape)
             .background(Color.White.copy(alpha = STATS_FILL_ALPHA))
             .drawBehind {

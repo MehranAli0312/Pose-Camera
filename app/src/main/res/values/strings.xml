@@ -91,8 +91,6 @@
     <string name="onboard_desc_1">Browse %1$d ready-made poses for selfies, couples, travel, weddings and more.</string>
     <string name="onboard_desc_2">The pose appears on your live camera. Move until your body fills the outline and watch your match score climb.</string>
     <string name="onboard_desc_3">Capture your shot, apply beautiful filters, and save it to your Collections.</string>
-    <string name="home_search_hint">Search selfie, travel, street…</string>
-    <string name="home_no_blueprints">No blueprints matched your filters.</string>
     <string name="home_tap_hint">Tap any pose to open the live camera guide</string>
     <string name="history_title">Shoot History</string>
     <string name="history_subtitle">%1$d frames • grouped by location</string>
@@ -339,6 +337,54 @@
     <string name="settings_capture_timer">Capture timer</string>
     <string name="settings_capture_timer_off">Off</string>
     <string name="settings_capture_timer_seconds">%1$d sec</string>
+    <string name="timer_sheet_subtitle">Give yourself time to get into the pose</string>
+    <string name="timer_sheet_hint">Shutter fires %1$ds after you tap</string>
+    <string name="timer_sheet_hint_off">Shutter fires the moment you tap</string>
+    <string name="timer_sheet_apply">Set timer</string>
+    <string name="collections_search_hint">Search by place, pose or score</string>
+    <string name="collections_stat_shots">SHOTS</string>
+    <string name="collections_stat_places">PLACES</string>
+    <string name="collections_stat_average">AVG MATCH</string>
+    <string name="collections_filter_all">All</string>
+    <string name="collections_filter_favorites">Favorites</string>
+    <string name="collections_filter_top_match">Top Match</string>
+    <string name="collections_filter_recent">Recent</string>
+    <string name="collections_sort_title">Sort shots</string>
+    <string name="detail_saved_in">Saved in Collections · %1$s</string>
+    <string name="detail_today">Today %1$s</string>
+    <string name="detail_yesterday">Yesterday %1$s</string>
+    <string name="detail_date_time">%1$s, %2$s</string>
+    <string name="detail_reshoot">Re-shoot</string>
+    <plurals name="album_shot_count">
+        <item quantity="one">%1$d shot</item>
+        <item quantity="other">%1$d shots</item>
+    </plurals>
+    <string name="album_summary">%1$s · %2$s average · last shot %3$s</string>
+    <string name="album_last_today">today</string>
+    <string name="album_last_yesterday">yesterday</string>
+    <plurals name="album_last_days_ago">
+        <item quantity="one">%1$d day ago</item>
+        <item quantity="other">%1$d days ago</item>
+    </plurals>
+    <string name="album_filter_all">All %1$d</string>
+    <string name="album_this_place">This place</string>
+    <string name="album_stat_average">AVERAGE</string>
+    <string name="album_stat_best">BEST</string>
+    <string name="album_shoot_again">Shoot here again</string>
+    <string name="album_remove_all">Remove all shots from this place</string>
+    <string name="album_remove_title">Remove all shots?</string>
+    <plurals name="album_remove_message">
+        <item quantity="one">%1$d shot from %2$s will be permanently removed from your collection.</item>
+        <item quantity="other">%1$d shots from %2$s will be permanently removed from your collection.</item>
+    </plurals>
+    <plurals name="collections_perfect_title">
+        <item quantity="one">%1$d perfect shot</item>
+        <item quantity="other">%1$d perfect shots</item>
+    </plurals>
+    <plurals name="collections_perfect_subtitle">
+        <item quantity="one">You scored %1$d%%+ on %2$d pose this week</item>
+        <item quantity="other">You scored %1$d%%+ on %2$d poses this week</item>
+    </plurals>
     <string name="settings_footer">PoseAI %1$s · On-device AI · No uploads</string>
     <string name="settings_streak_subtitle">%1$d shots · %2$d%% average match</string>
     <plurals name="settings_streak_title">

@@ -1,15 +1,14 @@
 package com.aipose.camera.posematch.ui.screens.collections
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -21,18 +20,26 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseGlowBackground
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.StudioSearchField
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.screens.collections.components.CaptureAlbumHeader
-import com.aipose.camera.posematch.ui.screens.collections.components.CaptureGrid
+import com.aipose.camera.posematch.ui.screens.collections.components.CaptureAlbumSection
 import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsEmptyState
+import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsFilterChips
 import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsHeader
+import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsSortSheet
+import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsStatsCard
+import com.aipose.camera.posematch.ui.screens.collections.components.PerfectShotsCard
+import com.aipose.camera.posematch.ui.screens.collections.models.AlbumAccent
+import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilter
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsUiState
 import com.aipose.camera.posematch.ui.vm.CollectionsViewModel
 import org.koin.androidx.compose.koinViewModel
 
-private const val ALBUM_PREVIEW_SIZE = 6
+private val EmptyStateHeight = 320.dp
 
 @Composable
 fun CollectionsScreen(
@@ -41,7 +48,6 @@ fun CollectionsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val query by viewModel.query.collectAsStateWithLifecycle()
-
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
@@ -54,67 +60,97 @@ fun CollectionsScreen(
         onDispose { viewModel.clearQuery() }
     }
 
-    val content = uiState as? CollectionsUiState.Content
+    val content = uiState as? CollectionsUiState.Content ?: return
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .padding(horizontal = 16.dp)
-    ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        CollectionsHeader(totalCount = content?.totalCount ?: 0)
-        Spacer(modifier = Modifier.height(12.dp))
-        StudioSearchField(
-            query = query,
-            hint = stringResource(R.string.history_search_hint),
-            onQueryChange = viewModel::setQuery,
-            onSearchSubmitted = { dismissKeyboard() },
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-
-        if (content == null || content.isEmpty) {
-            CollectionsEmptyState(
-                query = query,
-                modifier = Modifier.weight(1f),
-            )
-            return@Column
-        }
-
+    PoseGlowBackground(glows = PoseGlows.Collections) {
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(18.dp),
-            contentPadding = PaddingValues(bottom = 24.dp),
+            modifier = Modifier
+                .fillMaxHeight()
+                .adaptiveWidth()
+                .statusBarsPadding(),
+            contentPadding = PaddingValues(top = 22.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            content.albums.forEach { album ->
-                item(key = ALBUM_HEADER_KEY + album.locationLabel) {
-                    CaptureAlbumHeader(
-                        locationLabel = album.locationLabel,
-                        count = album.count,
-                        showAll = album.count > ALBUM_PREVIEW_SIZE,
-                        onShowAll = {
-                            dismissKeyboard()
-                            navController.navigateOnClick(
-                                NavRoute.CaptureAlbumScreenRoute.routeFor(album.locationLabel)
-                            )
-                        },
+            item(key = HEADER_KEY) {
+                CollectionsHeader(
+                    onOpenSort = viewModel::showSortSheet,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                )
+            }
+            item(key = SEARCH_KEY) {
+                StudioSearchField(
+                    query = query,
+                    hint = stringResource(R.string.collections_search_hint),
+                    onQueryChange = viewModel::setQuery,
+                    onSearchSubmitted = { dismissKeyboard() },
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                )
+            }
+            item(key = STATS_KEY) {
+                CollectionsStatsCard(
+                    stats = content.stats,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                )
+            }
+            item(key = FILTERS_KEY) {
+                CollectionsFilterChips(
+                    selected = content.filter,
+                    onSelect = viewModel::selectFilter,
+                )
+            }
+            if (content.isEmpty) {
+                item(key = EMPTY_KEY) {
+                    CollectionsEmptyState(
+                        query = query,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(EmptyStateHeight),
                     )
                 }
-                item(key = ALBUM_GRID_KEY + album.locationLabel) {
-                    CaptureGrid(
-                        captures = album.captures.take(ALBUM_PREVIEW_SIZE),
-                        onCaptureClick = { captureUi ->
-                            dismissKeyboard()
-                            navController.navigateOnClick(
-                                NavRoute.CaptureDetailScreenRoute.routeFor(captureUi.id)
-                            )
-                        },
+            }
+            items(content.albums, key = { album -> ALBUM_KEY + album.locationLabel }) { album ->
+                CaptureAlbumSection(
+                    album = album,
+                    accent = AlbumAccent.forLabel(album.locationLabel),
+                    onShowAll = {
+                        dismissKeyboard()
+                        navController.navigateOnClick(
+                            NavRoute.CaptureAlbumScreenRoute.routeFor(album.locationLabel)
+                        )
+                    },
+                    onCaptureClick = { captureUi ->
+                        dismissKeyboard()
+                        navController.navigateOnClick(
+                            NavRoute.CaptureDetailScreenRoute.routeFor(captureUi.id)
+                        )
+                    },
+                )
+            }
+            if (content.recentPerfectShots > 0) {
+                item(key = PERFECT_KEY) {
+                    PerfectShotsCard(
+                        count = content.recentPerfectShots,
+                        onClick = { viewModel.selectFilter(CollectionsFilter.TopMatch) },
+                        modifier = Modifier.padding(horizontal = 20.dp),
                     )
                 }
             }
         }
     }
+
+    if (content.isSortSheetVisible) {
+        CollectionsSortSheet(
+            selected = content.sort,
+            onSelect = viewModel::selectSort,
+            onDismiss = viewModel::dismissSortSheet,
+        )
+    }
 }
 
-private const val ALBUM_HEADER_KEY = "capture_album_header_"
-private const val ALBUM_GRID_KEY = "capture_album_grid_"
+private const val HEADER_KEY = "collections_header"
+private const val SEARCH_KEY = "collections_search"
+private const val STATS_KEY = "collections_stats"
+private const val FILTERS_KEY = "collections_filters"
+private const val EMPTY_KEY = "collections_empty"
+private const val PERFECT_KEY = "collections_perfect"
+private const val ALBUM_KEY = "collections_album_"

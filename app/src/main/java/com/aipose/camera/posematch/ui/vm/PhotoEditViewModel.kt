@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.CaptureDraft
-import com.aipose.camera.posematch.domain.models.ColorGrade
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
+import com.aipose.camera.posematch.domain.models.PhotoGeometry
 import com.aipose.camera.posematch.domain.usecase.CaptureLocationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
+import com.aipose.camera.posematch.ui.screens.photoEdit.models.AdjustTool
+import com.aipose.camera.posematch.ui.screens.photoEdit.models.CropTransform
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditUiState
+import com.aipose.camera.posematch.ui.screens.photoEdit.models.withValue
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -31,47 +34,63 @@ class PhotoEditViewModel(
     }
 
     fun selectTab(tab: PhotoEditTab) {
-        _uiState.update { state -> state.copy(selectedTab = tab) }
+        _uiState.update { state -> state.copy(selectedTab = tab, isComparing = false) }
     }
 
     fun selectFilter(filterId: PhotoFilterId) {
+        _uiState.update { state -> state.withGrade(selectedFilter = filterId) }
+    }
+
+    fun setFilterIntensity(intensity: Float) {
+        _uiState.update { state -> state.withGrade(filterIntensity = intensity.coerceIn(0f, 1f)) }
+    }
+
+    fun selectTool(tool: AdjustTool) {
+        _uiState.update { state -> state.copy(activeTool = tool) }
+    }
+
+    fun setActiveToolValue(value: Float) {
         _uiState.update { state ->
-            state.copy(
-                selectedFilter = filterId,
-                activeGrade = effectiveGrade(filterId, state.autoGrade, state.adjustments)
-            )
+            state.withGrade(adjustments = state.adjustments.withValue(state.activeTool, value))
         }
     }
 
-    fun updateAdjustments(adjustments: PhotoAdjustments) {
-        _uiState.update { state ->
-            state.copy(
-                adjustments = adjustments,
-                activeGrade = effectiveGrade(state.selectedFilter, state.autoGrade, adjustments)
-            )
-        }
-    }
-
-    fun rotate() {
-        _uiState.update { state ->
-            state.copy(rotationDegrees = (state.rotationDegrees + QUARTER_TURN) % FULL_TURN)
-        }
+    fun resetAdjustments() {
+        _uiState.update { state -> state.withGrade(adjustments = PhotoAdjustments()) }
     }
 
     fun setCropAspect(aspect: Float?) {
+        _uiState.update { state -> state.copy(geometry = state.geometry.withCropAspect(aspect)) }
+    }
+
+    fun applyTransform(transform: CropTransform) {
         _uiState.update { state ->
-            state.copy(cropAspect = if (state.cropAspect == aspect) null else aspect)
+            val geometry = state.geometry
+            state.copy(
+                geometry = when (transform) {
+                    CropTransform.RotateLeft -> geometry.rotatedBack()
+                    CropTransform.RotateRight -> geometry.rotated()
+                    CropTransform.FlipHorizontal -> geometry.flippedHorizontally()
+                    CropTransform.FlipVertical -> geometry.flippedVertically()
+                }
+            )
         }
+    }
+
+    fun setStraighten(degrees: Float) {
+        _uiState.update { state -> state.copy(geometry = state.geometry.withStraighten(degrees)) }
+    }
+
+    fun setComparing(isComparing: Boolean) {
+        _uiState.update { state -> state.copy(isComparing = isComparing) }
     }
 
     fun reset() {
         _uiState.update { state ->
-            state.copy(
+            state.copy(geometry = PhotoGeometry()).withGrade(
                 selectedFilter = PhotoFilterId.Original,
+                filterIntensity = PhotoEditUiState.DEFAULT_INTENSITY,
                 adjustments = PhotoAdjustments(),
-                activeGrade = null,
-                rotationDegrees = 0,
-                cropAspect = null
             )
         }
     }
@@ -86,13 +105,12 @@ class PhotoEditViewModel(
         val state = _uiState.value
         val draft = state.draft ?: return
         if (state.isSaving) return
-        _uiState.update { current -> current.copy(isSaving = true) }
+        _uiState.update { current -> current.copy(isSaving = true, isComparing = false) }
         viewModelScope.launch {
             photoEditUseCase.writeEditedCopy(
                 sourcePath = draft.imagePath,
                 grade = state.activeGrade,
-                rotationDegrees = state.rotationDegrees,
-                cropAspect = state.cropAspect
+                geometry = state.geometry,
             )
             val location = captureLocationUseCase.resolveCurrentPlace()
             val capture = Capture(
@@ -107,21 +125,12 @@ class PhotoEditViewModel(
             val id = captureUseCase.save(capture)
             captureUseCase.exportToGallery(capture.copy(id = id))
             captureUseCase.clearDraft()
-            _uiState.update { current ->
-                current.copy(
-                    isSaving = false,
-                    savedPath = draft.imagePath,
-                    savedLocationName = location.name,
-                )
-            }
+            _uiState.update { current -> current.copy(isSaving = false, savedCaptureId = id) }
         }
     }
 
-    fun previewGrade(filterId: PhotoFilterId): ColorGrade? =
-        photoEditUseCase.gradeFor(filterId, _uiState.value.autoGrade)
-
-    fun onSavedPathHandled() {
-        _uiState.update { state -> state.copy(savedPath = null) }
+    fun onSavedCaptureHandled() {
+        _uiState.update { state -> state.copy(savedCaptureId = null) }
     }
 
     private fun observeDraft() {
@@ -136,25 +145,31 @@ class PhotoEditViewModel(
     private suspend fun onDraftReady(draft: CaptureDraft) {
         if (_uiState.value.draft?.imagePath == draft.imagePath) return
         _uiState.value = PhotoEditUiState(draft = draft)
+        val sourceSize = photoEditUseCase.readSize(draft.imagePath)
         val referencePath = draft.referenceImagePath ?: draft.imagePath
         val look = photoEditUseCase.extractReferenceLook(referencePath)
         _uiState.update { state ->
             state.copy(
+                sourceSize = sourceSize,
                 autoGrade = look?.grade,
                 autoSwatchColor = look?.dominantColor,
-                activeGrade = effectiveGrade(state.selectedFilter, look?.grade, state.adjustments)
-            )
+            ).withGrade()
         }
     }
 
-    private fun effectiveGrade(
-        filterId: PhotoFilterId,
-        autoGrade: ColorGrade?,
-        adjustments: PhotoAdjustments
-    ): ColorGrade? = photoEditUseCase.effectiveGrade(filterId, autoGrade, adjustments)
-
-    private companion object {
-        const val QUARTER_TURN = 90
-        const val FULL_TURN = 360
-    }
+    private fun PhotoEditUiState.withGrade(
+        selectedFilter: PhotoFilterId = this.selectedFilter,
+        filterIntensity: Float = this.filterIntensity,
+        adjustments: PhotoAdjustments = this.adjustments,
+    ): PhotoEditUiState = copy(
+        selectedFilter = selectedFilter,
+        filterIntensity = filterIntensity,
+        adjustments = adjustments,
+        activeGrade = photoEditUseCase.effectiveGrade(
+            filterId = selectedFilter,
+            autoGrade = autoGrade,
+            intensity = filterIntensity,
+            adjustments = adjustments,
+        ),
+    )
 }

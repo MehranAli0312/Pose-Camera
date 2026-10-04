@@ -1,4 +1,4 @@
-package com.aipose.camera.posematch.ui.screens.captureDetail.components
+package com.aipose.camera.posematch.ui.common
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -20,7 +20,9 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.theme.DangerRed
 
 @Composable
-internal fun CaptureDeleteDialog(
+fun PoseDeleteDialog(
+    title: String,
+    message: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -36,14 +38,14 @@ internal fun CaptureDeleteDialog(
         },
         title = {
             Text(
-                text = stringResource(R.string.delete_title),
+                text = title,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
             )
         },
         text = {
             Text(
-                text = stringResource(R.string.delete_message),
+                text = message,
                 color = Color.Gray,
                 fontSize = 13.sp,
             )
