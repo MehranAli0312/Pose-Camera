@@ -14,4 +14,6 @@ interface PoseRepository {
     suspend fun importPose(title: String, sourceUri: String): Pose?
 
     suspend fun cutoutPath(pose: Pose): String?
+
+    suspend fun shareableImagePath(pose: Pose): String?
 }

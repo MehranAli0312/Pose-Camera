@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="11dp"
+    android:height="11dp"
+    android:viewportWidth="10.8"
+    android:viewportHeight="10.8">
+    <group android:translateX="-324.6" android:translateY="-729.4">
+        <path
+            android:pathData="M330 740C330 740 324.6 736.5 324.6 732.6C324.627 731.986 324.824 731.393 325.169 730.885C325.515 730.378 325.996 729.977 326.557 729.727C327.118 729.478 327.737 729.39 328.346 729.474C328.954 729.557 329.527 729.809 330 730.2C330.473 729.809 331.046 729.557 331.654 729.474C332.263 729.39 332.882 729.478 333.443 729.727C334.004 729.977 334.485 730.378 334.83 730.885C335.176 731.393 335.373 731.986 335.4 732.6C335.4 736.5 330 740 330 740Z"
+            android:fillColor="#FFFFFF" />
+    </group>
+</vector>

@@ -4,6 +4,7 @@ import com.aipose.camera.posematch.domain.models.NormalizedPoint
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseJoint
 import com.aipose.camera.posematch.domain.repo.PoseRepository
+import com.aipose.camera.posematch.domain.time.localDayIndex
 import kotlinx.coroutines.flow.Flow
 
 class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
@@ -17,4 +18,13 @@ class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
         poseRepository.importPose(title, sourceUri)
 
     suspend fun cutoutPath(pose: Pose): String? = poseRepository.cutoutPath(pose)
+
+    suspend fun shareableImagePath(pose: Pose): String? =
+        poseRepository.shareableImagePath(pose)
+
+    fun poseOfTheDay(poses: List<Pose>): Pose? {
+        if (poses.isEmpty()) return null
+        val index = localDayIndex(System.currentTimeMillis()).mod(poses.size)
+        return poses[index]
+    }
 }

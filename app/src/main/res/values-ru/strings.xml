@@ -5,7 +5,6 @@
     <string name="item_settings">Настройки</string>
     <string name="settings_theme">Тема</string>
     <string name="settings_theme_desc">Выберите светлый или тёмный режим</string>
-    <string name="splash_logo_content_description">Логотип App Cleaner</string>
     <string name="close">Закрыть</string>
     <string name="settings_language">Язык</string>
     <string name="settings_language_value">Русский</string>

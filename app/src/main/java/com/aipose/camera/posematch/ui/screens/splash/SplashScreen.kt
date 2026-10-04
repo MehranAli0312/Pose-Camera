@@ -5,32 +5,21 @@ import android.os.SystemClock
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ads.AdPlacement
 import com.example.ads.AdsManager
@@ -44,10 +33,13 @@ import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
-import com.aipose.camera.posematch.ui.common.AppLogoImage
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashAmbientBackground
+import com.aipose.camera.posematch.ui.screens.splash.components.SplashBrandMark
+import com.aipose.camera.posematch.ui.screens.splash.components.SplashPrivacyPill
+import com.aipose.camera.posematch.ui.screens.splash.components.SplashProgressBar
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashTagline
+import com.aipose.camera.posematch.ui.screens.splash.components.SplashWordmark
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -57,13 +49,21 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import kotlin.time.Duration.Companion.milliseconds
 
+private val WatermarkWidth = 200.dp
+private val WatermarkHeight = 330.dp
+private val WatermarkOffsetY = (-87).dp
+private val ContentOffsetY = (-22).dp
+private val BrandMarkToWordmark = 20.dp
+private val WordmarkToTagline = 13.dp
+private val TaglineToProgress = 48.dp
+private val PillBottomPadding = 24.dp
+
 @SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
 fun SplashScreen(
     viewModel: SplashViewModel = koinViewModel(), navParentController: NavHostController
 ) {
     val progress = remember { Animatable(0f) }
-    val colorScheme = MaterialTheme.colorScheme
     val ads = rememberScreenAds()
     val appFirebaseRemote: AppFirebaseRemote = koinInject()
     val network: NetworkConnectivityChecker = koinInject()
@@ -112,68 +112,37 @@ fun SplashScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        SplashAmbientBackground(modifier = Modifier.fillMaxSize())
+    SplashAmbientBackground {
+        Image(
+            painter = painterResource(R.drawable.ic_splash_pose_watermark),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .offset(y = WatermarkOffsetY)
+                .size(width = WatermarkWidth, height = WatermarkHeight),
+        )
 
-        Box(
-            modifier = Modifier.fillMaxSize()
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .offset(y = ContentOffsetY),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val logoSize = 200.dp
-            val logoToTextSpacing = 80.dp
-            val logoVerticalOffset = (-100).dp
-
-            AppLogoImage(
-                size = logoSize,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .offset(y = logoVerticalOffset)
-            )
-
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .offset(y = logoSize / 2 + logoToTextSpacing + logoVerticalOffset)
-                    .padding(horizontal = 32.dp), horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            SpanStyle(
-                                color = colorScheme.onBackground,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        ) {
-                            append(stringResource(R.string.splash_brand_pose))
-                        }
-                        append(" ")
-                        withStyle(
-                            SpanStyle(
-                                color = colorScheme.primary,
-                                fontWeight = FontWeight.Bold,
-                            )
-                        ) {
-                            append(stringResource(R.string.splash_brand_match))
-                        }
-                    },
-                    style = MaterialTheme.typography.headlineSmall.copy(fontSize = 32.sp),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                SplashTagline(mutedColor = colorScheme.onSurfaceVariant)
-            }
-
-            LinearProgressIndicator(
-                progress = { progress.value },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(vertical = 40.dp, horizontal = 30.dp),
-                color = colorScheme.primary,
-                trackColor = colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
-            )
+            SplashBrandMark()
+            Spacer(modifier = Modifier.height(BrandMarkToWordmark))
+            SplashWordmark()
+            Spacer(modifier = Modifier.height(WordmarkToTagline))
+            SplashTagline()
+            Spacer(modifier = Modifier.height(TaglineToProgress))
+            SplashProgressBar(progress = progress.value)
         }
+
+        SplashPrivacyPill(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(bottom = PillBottomPadding),
+        )
     }
 }
 

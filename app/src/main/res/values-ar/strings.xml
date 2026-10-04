@@ -5,7 +5,6 @@
     <string name="item_settings">الإعدادات</string>
     <string name="settings_theme">السمة</string>
     <string name="settings_theme_desc">اختر الوضع الفاتح أو الداكن</string>
-    <string name="splash_logo_content_description">شعار تطبيق المنظف</string>
     <string name="close">إغلاق</string>
     <string name="settings_language">اللغة</string>
     <string name="settings_language_value">العربية</string>

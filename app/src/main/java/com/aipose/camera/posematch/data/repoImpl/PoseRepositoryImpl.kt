@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import com.aipose.camera.posematch.data.local.ImportedPoseFileDataSource
 import com.aipose.camera.posematch.data.local.PoseAssetDataSource
 import com.aipose.camera.posematch.data.local.PoseImageDataSource
+import com.aipose.camera.posematch.data.local.PoseShareDataSource
 import com.aipose.camera.posematch.data.local.dao.CustomPoseDao
 import com.aipose.camera.posematch.data.local.entity.CustomPoseEntity
 import com.aipose.camera.posematch.data.local.mapper.toDomain
@@ -30,6 +31,7 @@ class PoseRepositoryImpl(
     private val assetDataSource: PoseAssetDataSource,
     private val importedFileDataSource: ImportedPoseFileDataSource,
     private val imageDataSource: PoseImageDataSource,
+    private val shareDataSource: PoseShareDataSource,
     private val customPoseDao: CustomPoseDao,
     private val poseDetector: MlKitPoseDetector,
     private val cutoutDataSource: SubjectCutoutDataSource
@@ -64,6 +66,9 @@ class PoseRepositoryImpl(
         val id = customPoseDao.insert(entity)
         return entity.copy(id = id).toDomain(flatLandmarks)
     }
+
+    override suspend fun shareableImagePath(pose: Pose): String? =
+        shareDataSource.shareableFile(pose.imagePath)?.absolutePath
 
     override suspend fun cutoutPath(pose: Pose): String? = withContext(Dispatchers.IO) {
         val cached = File(cutoutDirectory(), cutoutFileName(pose))

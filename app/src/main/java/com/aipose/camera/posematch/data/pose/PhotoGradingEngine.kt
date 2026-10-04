@@ -63,6 +63,18 @@ class PhotoGradingEngine {
         return ColorGrade(matrix.array.toList())
     }
 
+    fun scale(grade: ColorGrade?, intensity: Float): ColorGrade? {
+        if (grade == null) return null
+        val amount = intensity.coerceIn(0f, 1f)
+        if (amount >= 1f) return grade
+        if (amount <= 0f) return null
+        val blended = grade.values.mapIndexed { index, value ->
+            val identity = IDENTITY_MATRIX[index]
+            identity + (value - identity) * amount
+        }
+        return ColorGrade(blended)
+    }
+
     fun compose(base: ColorGrade?, overlay: ColorGrade?): ColorGrade? {
         if (base == null) return overlay
         if (overlay == null) return base
@@ -250,6 +262,13 @@ class PhotoGradingEngine {
     )
 
     private companion object {
+        val IDENTITY_MATRIX = floatArrayOf(
+            1f, 0f, 0f, 0f, 0f,
+            0f, 1f, 0f, 0f, 0f,
+            0f, 0f, 1f, 0f, 0f,
+            0f, 0f, 0f, 1f, 0f
+        )
+
         const val MID_GRAY = 128f
         const val HALF = 0.5f
         const val CHANNEL_COUNT = 3f

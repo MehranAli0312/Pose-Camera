@@ -12,9 +12,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.POSE_ROW_SIZE
 import com.aipose.camera.posematch.ui.common.PoseThumbRow
 import com.aipose.camera.posematch.ui.common.StudioTopBar
@@ -30,9 +32,15 @@ fun PoseAlbumScreen(
     viewModel: PoseAlbumViewModel = koinViewModel(),
 ) {
     val poses by viewModel.posesFor(category).collectAsStateWithLifecycle()
+    val savedPoseIds by viewModel.savedPoseIds.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        StudioTopBar(title = category, onBack = { navController.popBackStack() })
+        val title = if (category == NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES) {
+            stringResource(R.string.home_action_explore)
+        } else {
+            category
+        }
+        StudioTopBar(title = title, onBack = { navController.popBackStack() })
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(
             modifier = Modifier
@@ -47,9 +55,11 @@ fun PoseAlbumScreen(
                         poses = rowPoses,
                         onPoseClick = { pose ->
                             navController.navigateOnClick(
-                                NavRoute.CameraScreenRoute.routeFor(pose.id)
+                                NavRoute.PoseDetailScreenRoute.routeFor(pose.id)
                             )
                         },
+                        savedPoseIds = savedPoseIds,
+                        onToggleSaved = viewModel::toggleSaved,
                     )
                 }
             }

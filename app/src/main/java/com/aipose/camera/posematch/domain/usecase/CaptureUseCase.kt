@@ -4,6 +4,7 @@ import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.CaptureDraft
 import com.aipose.camera.posematch.domain.repo.CaptureRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.StateFlow
 
 class CaptureUseCase(private val captureRepository: CaptureRepository) {
@@ -11,6 +12,20 @@ class CaptureUseCase(private val captureRepository: CaptureRepository) {
     val draft: StateFlow<CaptureDraft?> = captureRepository.draft
 
     fun observeCaptures(): Flow<List<Capture>> = captureRepository.observeCaptures()
+
+    fun observeCaptureCount(): Flow<Int> =
+        captureRepository.observeCaptures().map { captures -> captures.size }
+
+    fun observeCapture(id: Long): Flow<Capture?> =
+        captureRepository.observeCaptures().map { captures ->
+            captures.firstOrNull { capture -> capture.id == id }
+        }
+
+    fun observeBestScore(poseId: Int?): Flow<Int> =
+        captureRepository.observeCaptures().map { captures ->
+            captures.filter { capture -> poseId == null || capture.poseId == poseId }
+                .maxOfOrNull { capture -> capture.matchScore } ?: 0
+        }
 
     suspend fun save(capture: Capture): Long = captureRepository.save(capture)
 

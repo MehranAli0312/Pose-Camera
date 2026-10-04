@@ -4,6 +4,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 
 internal object AppPreferencesKeys {
     val IS_ON_SPLASH_FIRST_RUN = booleanPreferencesKey("IS_ON_SPLASH_FIRST_RUN")
@@ -19,4 +20,5 @@ internal object AppPreferencesKeys {
     val RETAIN_SKELETON = booleanPreferencesKey("retain_skeleton_overlay")
     val CAMERA_COACH_SEEN = booleanPreferencesKey("camera_coach_seen")
     val LEGACY_PREFERENCES_IMPORTED = booleanPreferencesKey("legacy_preferences_imported")
+    val FAVORITE_POSES = stringSetPreferencesKey("favorite_poses")
 }

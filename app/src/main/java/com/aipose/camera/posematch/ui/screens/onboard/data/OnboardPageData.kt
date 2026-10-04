@@ -1,22 +1,40 @@
 package com.aipose.camera.posematch.ui.screens.onboard.data
 
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardSlide
+import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardStage
+import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardStep
+import com.aipose.camera.posematch.ui.theme.PoseCyan
+import com.aipose.camera.posematch.ui.theme.PosePink
 
-internal val onboardSlides = listOf(
-    OnboardSlide(
+internal const val ONBOARD_POSE_COUNT = 139
+internal const val ONBOARD_EXTRA_CATEGORY_COUNT = 7
+internal const val ONBOARD_OVERLAY_PERCENT = 45
+internal const val ONBOARD_LIVE_MATCH_PERCENT = 87
+internal const val ONBOARD_SAVED_MATCH_PERCENT = 92
+
+internal val onboardSteps = listOf(
+    OnboardStep(
+        stage = OnboardStage.PickPose,
         titleRes = R.string.onboard_title_1,
         descriptionRes = R.string.onboard_desc_1,
-        imageRes = R.drawable.pose_guide_onboard1_1781797560457,
+        ctaRes = R.string.onboard_next,
+        ambientAccent = PosePink,
+        ambientAccentAlpha = 0.20f,
     ),
-    OnboardSlide(
+    OnboardStep(
+        stage = OnboardStage.MatchOutline,
         titleRes = R.string.onboard_title_2,
         descriptionRes = R.string.onboard_desc_2,
-        imageRes = R.drawable.pose_guide_onboard2_1781797579198,
+        ctaRes = R.string.onboard_next,
+        ambientAccent = PoseCyan,
+        ambientAccentAlpha = 0.20f,
     ),
-    OnboardSlide(
+    OnboardStep(
+        stage = OnboardStage.SnapSave,
         titleRes = R.string.onboard_title_3,
         descriptionRes = R.string.onboard_desc_3,
-        imageRes = R.drawable.pose_guide_onboard3_1781797601454,
+        ctaRes = R.string.onboard_lets_go,
+        ambientAccent = PosePink,
+        ambientAccentAlpha = 0.22f,
     ),
 )

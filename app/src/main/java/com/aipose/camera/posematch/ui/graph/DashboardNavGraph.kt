@@ -18,7 +18,9 @@ import com.aipose.camera.posematch.ui.screens.language.LocalizeScreen
 import com.aipose.camera.posematch.ui.screens.photoEdit.PhotoEditScreen
 import com.aipose.camera.posematch.ui.screens.photoSuccess.PhotoSuccessScreen
 import com.aipose.camera.posematch.ui.screens.poseAlbum.PoseAlbumScreen
+import com.aipose.camera.posematch.ui.screens.poseDetail.PoseDetailScreen
 import com.aipose.camera.posematch.ui.screens.pro.ProScreen
+import com.aipose.camera.posematch.ui.screens.saved.SavedScreen
 import com.aipose.camera.posematch.ui.screens.settings.SettingScreen
 
 @Composable
@@ -32,11 +34,13 @@ fun DashboardNavGraph(
     ) {
         addHomeScreen(navController, this)
         addCollectionsScreen(navController, this)
+        addSavedScreen(navController, this)
         addSettingScreen(navController, this)
         addLanguageScreen(navController, this)
         addProScreen(navController, this)
         addCameraScreen(navController, this)
         addPoseAlbumScreen(navController, this)
+        addPoseDetailScreen(navController, this)
         addCaptureAlbumScreen(navController, this)
         addCaptureDetailScreen(navController, this)
         addPhotoEditScreen(navController, this)
@@ -64,6 +68,18 @@ private fun addCollectionsScreen(
     ) { backStackEntry ->
         InScreenBottomBarHost(destination = backStackEntry.destination) {
             CollectionsScreen(navController = navController)
+        }
+    }
+}
+
+private fun addSavedScreen(
+    navController: NavHostController, navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.addScreenWithTransitions(
+        route = NavRoute.SavedScreenRoute.route,
+    ) { backStackEntry ->
+        InScreenBottomBarHost(destination = backStackEntry.destination) {
+            SavedScreen(navController = navController)
         }
     }
 }
@@ -112,7 +128,8 @@ private fun addCameraScreen(
     ) { backStackEntry ->
         PoseCameraScreen(
             navController = navController,
-            poseId = backStackEntry.arguments?.getInt(NavArgs.POSE_ID),
+            poseId = backStackEntry.arguments?.getInt(NavArgs.POSE_ID)
+                ?.takeIf { it != NavRoute.CameraScreenRoute.NO_POSE_ID },
         )
     }
 }
@@ -127,6 +144,20 @@ private fun addPoseAlbumScreen(
         PoseAlbumScreen(
             navController = navController,
             category = backStackEntry.arguments?.getString(NavArgs.CATEGORY).orEmpty(),
+        )
+    }
+}
+
+private fun addPoseDetailScreen(
+    navController: NavHostController, navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.addScreenWithTransitions(
+        route = NavRoute.PoseDetailScreenRoute.route,
+        arguments = listOf(navArgument(NavArgs.POSE_ID) { type = NavType.IntType }),
+    ) { backStackEntry ->
+        PoseDetailScreen(
+            navController = navController,
+            poseId = backStackEntry.arguments?.getInt(NavArgs.POSE_ID) ?: 0,
         )
     }
 }
@@ -187,5 +218,6 @@ val bottomBarRoutes =
     setOf(
         NavRoute.HomeScreenRoute.route,
         NavRoute.CollectionsScreenRoute.route,
+        NavRoute.SavedScreenRoute.route,
         NavRoute.SettingScreenRoute.route,
     )

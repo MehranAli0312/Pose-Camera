@@ -130,8 +130,33 @@ class AppDataStore(private val context: Context) {
         }
     }
 
+    fun getFavoritePoses() = preferences.data.map { stored ->
+        stored[AppPreferencesKeys.FAVORITE_POSES].orEmpty().mapNotNull { it.toFavoriteEntry() }.toMap()
+    }
+
+    suspend fun setFavoritePose(poseId: Int, isFavorite: Boolean) {
+        preferences.edit { stored ->
+            val current = stored[AppPreferencesKeys.FAVORITE_POSES].orEmpty()
+                .filterNot { it.toFavoriteEntry()?.first == poseId }
+            stored[AppPreferencesKeys.FAVORITE_POSES] = if (isFavorite) {
+                current.toSet() + "$poseId$FAVORITE_SEPARATOR${System.currentTimeMillis()}"
+            } else {
+                current.toSet()
+            }
+        }
+    }
+
+    private fun String.toFavoriteEntry(): Pair<Int, Long>? {
+        val parts = split(FAVORITE_SEPARATOR)
+        if (parts.size != 2) return null
+        val poseId = parts[0].toIntOrNull() ?: return null
+        val savedAtMillis = parts[1].toLongOrNull() ?: return null
+        return poseId to savedAtMillis
+    }
+
     private companion object {
         const val PREFERENCES_NAME = "pose_match_prefs"
         const val DEFAULT_LANGUAGE_CODE = "en"
+        const val FAVORITE_SEPARATOR = ":"
     }
 }

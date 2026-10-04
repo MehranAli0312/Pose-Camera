@@ -3,6 +3,8 @@ package com.aipose.camera.posematch.domain.usecase
 import com.aipose.camera.posematch.domain.models.ColorGrade
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
+import com.aipose.camera.posematch.domain.models.PhotoGeometry
+import com.aipose.camera.posematch.domain.models.PhotoSize
 import com.aipose.camera.posematch.domain.models.ReferenceLook
 import com.aipose.camera.posematch.domain.repo.PhotoGradingRepository
 
@@ -14,26 +16,31 @@ class PhotoEditUseCase(private val photoGradingRepository: PhotoGradingRepositor
     fun effectiveGrade(
         filterId: PhotoFilterId,
         autoGrade: ColorGrade?,
+        intensity: Float,
         adjustments: PhotoAdjustments
     ): ColorGrade? = photoGradingRepository.compose(
-        photoGradingRepository.gradeFor(filterId, autoGrade),
-        photoGradingRepository.gradeFor(adjustments)
+        photoGradingRepository.scale(
+            photoGradingRepository.gradeFor(filterId, autoGrade),
+            intensity,
+        ),
+        photoGradingRepository.gradeFor(adjustments),
     )
 
     suspend fun extractReferenceLook(imagePath: String): ReferenceLook? =
         photoGradingRepository.extractReferenceLook(imagePath)
 
+    suspend fun readSize(imagePath: String): PhotoSize =
+        photoGradingRepository.readSize(imagePath)
+
     suspend fun writeEditedCopy(
         sourcePath: String,
         grade: ColorGrade?,
-        rotationDegrees: Int,
-        cropAspect: Float?,
+        geometry: PhotoGeometry,
         targetPath: String = sourcePath
     ): Boolean = photoGradingRepository.writeEditedCopy(
         sourcePath = sourcePath,
         grade = grade,
-        rotationDegrees = rotationDegrees,
-        cropAspect = cropAspect,
-        targetPath = targetPath
+        geometry = geometry,
+        targetPath = targetPath,
     )
 }

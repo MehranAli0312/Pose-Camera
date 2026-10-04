@@ -10,11 +10,13 @@ private object Routes {
     const val ONBOARD_SCREEN = "ONBOARD_SCREEN"
     const val HOME_SCREEN = "HOME_SCREEN"
     const val COLLECTIONS_SCREEN = "COLLECTIONS_SCREEN"
+    const val SAVED_SCREEN = "SAVED_SCREEN"
     const val SETTING_SCREEN = "SETTING_SCREEN"
     const val PRO_SCREEN = "UPGRADE_SCREEN"
     const val SPLASH_PRO_SCREEN = "SPLASH_UPGRADE_SCREEN"
     const val CAMERA_SCREEN = "CAMERA_SCREEN"
     const val POSE_ALBUM_SCREEN = "POSE_ALBUM_SCREEN"
+    const val POSE_DETAIL_SCREEN = "POSE_DETAIL_SCREEN"
     const val CAPTURE_ALBUM_SCREEN = "CAPTURE_ALBUM_SCREEN"
     const val CAPTURE_DETAIL_SCREEN = "CAPTURE_DETAIL_SCREEN"
     const val PHOTO_EDIT_SCREEN = "PHOTO_EDIT_SCREEN"
@@ -36,6 +38,7 @@ sealed class NavRoute(val route: String) {
     data object OnboardScreenRoute : NavRoute(Routes.ONBOARD_SCREEN)
     data object HomeScreenRoute : NavRoute(Routes.HOME_SCREEN)
     data object CollectionsScreenRoute : NavRoute(Routes.COLLECTIONS_SCREEN)
+    data object SavedScreenRoute : NavRoute(Routes.SAVED_SCREEN)
     data object SettingScreenRoute : NavRoute(Routes.SETTING_SCREEN)
     data object ProScreenRoute : NavRoute(Routes.PRO_SCREEN)
     data object SplashProScreenRoute : NavRoute(Routes.SPLASH_PRO_SCREEN)
@@ -43,11 +46,22 @@ sealed class NavRoute(val route: String) {
 
     data object CameraScreenRoute :
         NavRoute(Routes.CAMERA_SCREEN + "/{" + NavArgs.POSE_ID + "}") {
+        const val NO_POSE_ID = 0
+
         fun routeFor(poseId: Int): String = Routes.CAMERA_SCREEN + "/" + poseId
+
+        fun routeWithoutPose(): String = routeFor(NO_POSE_ID)
+    }
+
+    data object PoseDetailScreenRoute :
+        NavRoute(Routes.POSE_DETAIL_SCREEN + "/{" + NavArgs.POSE_ID + "}") {
+        fun routeFor(poseId: Int): String = Routes.POSE_DETAIL_SCREEN + "/" + poseId
     }
 
     data object PoseAlbumScreenRoute :
         NavRoute(Routes.POSE_ALBUM_SCREEN + "/{" + NavArgs.CATEGORY + "}") {
+        const val ALL_CATEGORIES = "__all__"
+
         fun routeFor(category: String): String =
             Routes.POSE_ALBUM_SCREEN + "/" + Uri.encode(category)
     }

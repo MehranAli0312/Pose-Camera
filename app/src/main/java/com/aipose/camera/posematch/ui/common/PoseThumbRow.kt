@@ -16,6 +16,8 @@ fun PoseThumbRow(
     poses: List<Pose>,
     onPoseClick: (Pose) -> Unit,
     modifier: Modifier = Modifier,
+    savedPoseIds: Set<Int> = emptySet(),
+    onToggleSaved: ((Pose) -> Unit)? = null,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -26,6 +28,8 @@ fun PoseThumbRow(
                 pose = pose,
                 onClick = { onPoseClick(pose) },
                 modifier = Modifier.weight(1f),
+                isSaved = pose.id in savedPoseIds,
+                onToggleSaved = onToggleSaved?.let { toggle -> { toggle(pose) } },
             )
         }
         repeat(POSE_ROW_SIZE - poses.size) { Spacer(modifier = Modifier.weight(1f)) }

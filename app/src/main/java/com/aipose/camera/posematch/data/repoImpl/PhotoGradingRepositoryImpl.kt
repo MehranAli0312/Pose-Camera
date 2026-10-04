@@ -1,11 +1,13 @@
 package com.aipose.camera.posematch.data.repoImpl
 
-import com.aipose.camera.posematch.data.local.PoseImageDataSource
 import com.aipose.camera.posematch.data.pose.CaptureProcessor
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
+import com.aipose.camera.posematch.data.source.PoseImageDataSource
 import com.aipose.camera.posematch.domain.models.ColorGrade
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
+import com.aipose.camera.posematch.domain.models.PhotoGeometry
+import com.aipose.camera.posematch.domain.models.PhotoSize
 import com.aipose.camera.posematch.domain.models.ReferenceLook
 import com.aipose.camera.posematch.domain.repo.PhotoGradingRepository
 
@@ -21,6 +23,9 @@ class PhotoGradingRepositoryImpl(
     override fun gradeFor(adjustments: PhotoAdjustments): ColorGrade? =
         gradingEngine.adjustmentGrade(adjustments)
 
+    override fun scale(grade: ColorGrade?, intensity: Float): ColorGrade? =
+        gradingEngine.scale(grade, intensity)
+
     override fun compose(base: ColorGrade?, overlay: ColorGrade?): ColorGrade? =
         gradingEngine.compose(base, overlay)
 
@@ -29,17 +34,18 @@ class PhotoGradingRepositoryImpl(
         return gradingEngine.extractLook(bitmap)
     }
 
+    override suspend fun readSize(imagePath: String): PhotoSize =
+        captureProcessor.readSize(imagePath)
+
     override suspend fun writeEditedCopy(
         sourcePath: String,
         grade: ColorGrade?,
-        rotationDegrees: Int,
-        cropAspect: Float?,
+        geometry: PhotoGeometry,
         targetPath: String
     ): Boolean = captureProcessor.writeEditedCopy(
         sourcePath = sourcePath,
         grade = grade,
-        rotationDegrees = rotationDegrees,
-        cropAspect = cropAspect,
-        targetPath = targetPath
+        geometry = geometry,
+        targetPath = targetPath,
     )
 }

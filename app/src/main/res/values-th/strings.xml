@@ -5,7 +5,6 @@
     <string name="item_settings">การตั้งค่า</string>
     <string name="settings_theme">ธีม</string>
     <string name="settings_theme_desc">เลือกโหมดสว่างหรือมืด</string>
-    <string name="splash_logo_content_description">โลโก้ App Cleaner</string>
     <string name="close">ปิด</string>
     <string name="settings_language">ภาษา</string>
     <string name="settings_language_value">ไทย</string>

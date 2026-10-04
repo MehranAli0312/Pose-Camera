@@ -12,6 +12,7 @@ import com.aipose.camera.posematch.data.local.ImportedPoseFileDataSource
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.data.local.PoseAssetDataSource
 import com.aipose.camera.posematch.data.local.PoseImageDataSource
+import com.aipose.camera.posematch.data.local.PoseShareDataSource
 import com.aipose.camera.posematch.data.pose.CaptureProcessor
 import com.aipose.camera.posematch.data.pose.MlKitPoseDetector
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
@@ -39,6 +40,7 @@ val localModule = module {
     single { PoseAssetDataSource(androidContext()) }
     single { ImportedPoseFileDataSource(androidContext()) }
     single { PoseImageDataSource(androidContext()) }
+    single { PoseShareDataSource(androidContext()) }
     single { CaptureGalleryDataSource(androidContext()) }
     single { CaptureFileDataSource(androidContext()) }
     single { CaptureDraftStore() }

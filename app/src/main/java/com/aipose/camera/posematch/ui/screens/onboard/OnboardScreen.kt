@@ -1,8 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.onboard
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -23,28 +20,34 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseCtaButton
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBackdrop
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBottomAction
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardContentPage
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardPagerIndicator
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardSkipPill
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardSlideText
-import com.aipose.camera.posematch.ui.screens.onboard.data.onboardSlides
+import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardTopBar
+import com.aipose.camera.posematch.ui.screens.onboard.data.onboardSteps
 import com.aipose.camera.posematch.ui.screens.splash.goToHome
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+
+private val ScreenPadding = 20.dp
+private val TopBarTop = 40.dp
+private val IndicatorTop = 44.dp
+private val IndicatorToCta = 30.dp
+private val CtaBottom = 36.dp
 
 @Composable
 fun OnboardScreen(
     navController: NavHostController,
     splashViewModel: SplashViewModel = koinViewModel(),
 ) {
-    val pages = remember { onboardSlides }
-    val pagerState = rememberPagerState(pageCount = { pages.size })
+    val steps = remember { onboardSteps }
+    val pagerState = rememberPagerState(pageCount = { steps.size })
     val scope = rememberCoroutineScope()
     val currentPage = pagerState.currentPage
-    val isLastPage = currentPage == pages.lastIndex
+    val currentStep = steps[currentPage]
+    val isLastPage = currentPage == steps.lastIndex
 
     fun finishOnboarding() {
         scope.launch {
@@ -53,58 +56,59 @@ fun OnboardScreen(
         }
     }
 
-    BackHandler {
-        if (currentPage > 0) {
-            scope.launch { pagerState.animateScrollToPage(currentPage - 1) }
-        }
+    fun goToPage(page: Int) {
+        scope.launch { pagerState.animateScrollToPage(page) }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+    BackHandler(enabled = currentPage > 0) {
+        goToPage(currentPage - 1)
+    }
+
+    OnboardBackdrop(
+        accent = currentStep.ambientAccent,
+        accentAlpha = currentStep.ambientAccentAlpha,
     ) {
-        OnboardBackdrop(modifier = Modifier.fillMaxSize())
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .statusBarsPadding()
-                .navigationBarsPadding(),
+                .navigationBarsPadding()
+                .padding(horizontal = ScreenPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            OnboardSkipPill(onSkip = ::finishOnboarding)
+            Spacer(modifier = Modifier.height(TopBarTop))
+            OnboardTopBar(
+                showBack = currentPage > 0,
+                showSkip = !isLastPage,
+                onBack = { goToPage(currentPage - 1) },
+                onSkip = ::finishOnboarding,
+            )
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth(),
             ) { page ->
-                OnboardContentPage(slide = pages[page])
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            OnboardPagerIndicator(
-                totalPages = pages.size,
-                currentPage = currentPage,
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            OnboardSlideText(slide = pages.getOrNull(currentPage))
-            Spacer(modifier = Modifier.height(28.dp))
-            Box(modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 20.dp)) {
-                OnboardBottomAction(
-                    isLastPage = isLastPage,
-                    buttonText = if (isLastPage) {
-                        stringResource(R.string.get_started)
-                    } else {
-                        stringResource(R.string.onboard_continue)
-                    },
-                    onFinish = ::finishOnboarding,
-                    onNext = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(currentPage + 1)
-                        }
-                    },
+                OnboardContentPage(
+                    step = steps[page],
+                    stepNumber = page + 1,
+                    totalSteps = steps.size,
                 )
             }
+            Spacer(modifier = Modifier.height(IndicatorTop))
+            OnboardPagerIndicator(
+                totalPages = steps.size,
+                currentPage = currentPage,
+            )
+            Spacer(modifier = Modifier.height(IndicatorToCta))
+            PoseCtaButton(
+                text = stringResource(currentStep.ctaRes),
+                onClick = {
+                    if (isLastPage) finishOnboarding() else goToPage(currentPage + 1)
+                },
+                trailingIconRes = R.drawable.ic_pose_chevron_cta,
+            )
+            Spacer(modifier = Modifier.height(CtaBottom))
         }
     }
 }

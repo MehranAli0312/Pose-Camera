@@ -41,3 +41,30 @@ val MatchMedium = Color(0xFFE0A900)
 val MatchLow = Color(0xFFC62828)
 
 val ReviewBackground = Color(0xFF060608)
+
+val StudioBackgroundMidLight = Color(0xFF1F1F27)
+val StudioTextMutedLight = Color(0xFFA0A0B0)
+val StudioTextFaintLight = Color(0xFF7A7A8A)
+
+val CharcoalBackgroundMid = Color(0xFF100E0C)
+val CharcoalTextMuted = Color(0xFFA79A8A)
+val CharcoalTextFaint = Color(0xFF7C7165)
+
+val CyberpunkBackgroundMid = Color(0xFF100718)
+val CyberpunkTextMuted = Color(0xFFB49BC8)
+val CyberpunkTextFaint = Color(0xFF806A94)
+
+val StudioNavSurfaceLight = Color(0xFF1A1A22)
+val StudioNavShadowLight = Color(0xFF0A0A0E)
+val StudioNavActiveLight = Color(0xFF9AA0FF)
+val StudioNavInactiveLight = Color(0xFF6E6E80)
+
+val CharcoalNavSurface = Color(0xFF15120E)
+val CharcoalNavShadow = Color(0xFF070605)
+val CharcoalNavActive = Color(0xFFD9A978)
+val CharcoalNavInactive = Color(0xFF6B6154)
+
+val CyberpunkNavSurface = Color(0xFF180E24)
+val CyberpunkNavShadow = Color(0xFF08040C)
+val CyberpunkNavActive = Color(0xFFE879F9)
+val CyberpunkNavInactive = Color(0xFF6E5A80)

@@ -1,5 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.onboard.components
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,12 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.aipose.camera.posematch.ui.theme.AppMainColor
-import com.aipose.camera.posematch.ui.theme.brandGradientBackground
+import com.aipose.camera.posematch.ui.theme.Violet
 
 private val DotSize = 8.dp
-private val ActiveDotWidth = 36.dp
+private val ActiveDotWidth = 22.dp
+private val DotSpacing = 7.dp
+private const val INACTIVE_ALPHA = 0.22f
+private const val INDICATOR_LABEL = "onboardIndicator"
 
 @Composable
 internal fun OnboardPagerIndicator(
@@ -28,25 +32,25 @@ internal fun OnboardPagerIndicator(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(DotSpacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         repeat(totalPages) { index ->
             val selected = index == currentPage
             val width by animateDpAsState(
                 targetValue = if (selected) ActiveDotWidth else DotSize,
-                label = "onboardIndicatorWidth",
+                label = INDICATOR_LABEL,
             )
-            val dotModifier = Modifier
-                .height(DotSize)
-                .width(width)
-                .clip(CircleShape)
+            val color by animateColorAsState(
+                targetValue = if (selected) Violet else Color.White.copy(alpha = INACTIVE_ALPHA),
+                label = INDICATOR_LABEL,
+            )
             Box(
-                modifier = if (selected) {
-                    dotModifier.brandGradientBackground(CircleShape)
-                } else {
-                    dotModifier.background(AppMainColor.copy(alpha = 0.2f))
-                },
+                modifier = Modifier
+                    .height(DotSize)
+                    .width(width)
+                    .clip(CircleShape)
+                    .background(color),
             )
         }
     }
