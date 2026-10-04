@@ -11,4 +11,9 @@
     <color name="text_secondary">#FF888888</color>
     <color name="icon_muted">#FFCCCCCC</color>
     <color name="nav_bg">#FF0C0C0F</color>
+
+    <color name="ads_bg">#333333</color>
+    <color name="template_red">#D32F2F</color>
+    <color name="transparent_10">#1AFFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

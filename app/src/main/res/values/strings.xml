@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Pose Match Camera</string>
 
+    <!-- NOTE: every AdMob id (admob_app_id, AppOpenResume, InterHome, InterSplash, NativeSplash,
+         NativeAll, BannerSplash, Banner_Ad) is generated per build type from app/build.gradle.kts
+         via resValue.
+         Debug = Google test ids, release = the real ids. Do NOT declare them here as well — a
+         duplicate name here would collide with the generated resource and fail the build. -->
+
     <!-- Bottom navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_camera">Camera</string>
@@ -26,17 +32,19 @@
     <!-- Splash -->
     <string name="splash_tagline">Aesthetic Alignment Studio</string>
 
-    <!-- Onboarding -->
-    <string name="onboard_title_1">1. Pick a Pose</string>
-    <string name="onboard_title_2">2. Match the Outline</string>
-    <string name="onboard_title_3">3. Snap &amp; Save</string>
-    <string name="onboard_desc_1">Browse 100+ ready-made poses for selfies, couples, travel, weddings and more.</string>
-    <string name="onboard_desc_2">The pose appears on your live camera. Move until your body fills the outline and watch your match score rise.</string>
-    <string name="onboard_desc_3">Capture your shot, apply beautiful filters, and save it to your Collections.</string>
+    <!-- Ads -->
+    <string name="loading_ad">Loading ad…</string>
+    <string name="ad_badge">Ad</string>
+    <string name="splash_progress_percent">%1$d%%</string>
 
-    <!-- Language selection -->
-    <string name="lang_choose_title">Choose Your Language</string>
-    <string name="lang_choose_subtitle">Select your preferred layout language below to customize your photography assist tags.</string>
+    <!-- Onboarding -->
+    <string name="onboard_title_1">Choose Any Photo\nas Pose Guide</string>
+    <string name="onboard_title_2">Live Pose Matching\nin Real Time</string>
+    <string name="onboard_title_3">Adjust &amp; Capture\nLike a Pro</string>
+    <string name="onboard_desc_1">Pick from our collection or your gallery.\nTurn any photo into your personal pose guide.</string>
+    <string name="onboard_desc_2">Our advanced AI analyzes your pose\nand shows real-time match percentage.</string>
+    <string name="onboard_desc_3">Adjust opacity, zoom, position and match\nperfectly to get your desired shot.</string>
+    <string name="action_get_started">Get Started</string>
 
     <!-- Home / reference browser -->
     <string name="home_brand">POSE MATCH</string>
@@ -75,20 +83,26 @@
     <string name="gallery_empty_sub">Import standard figures from device photo roll.</string>
 
     <!-- Settings -->
-    <string name="settings_profile_name">Creative photographer</string>
-    <string name="settings_profile_sub">Vibe preset tracker on-device.</string>
-    <string name="settings_section_config">Settings &amp; Configurations</string>
-    <string name="settings_language">Active Language</string>
-    <string name="settings_theme">App Visual Theme</string>
-    <string name="settings_retain_skeleton">Retain Overlay Skeleton</string>
-    <string name="settings_section_help">Help &amp; Developer Details</string>
-    <string name="settings_rate">Rate App Overlay</string>
-    <string name="settings_share">Share App</string>
-    <string name="settings_privacy">Privacy Policy</string>
-    <string name="settings_about">About Alignment Framework</string>
-    <string name="settings_select_language">Select App Language</string>
-    <string name="settings_select_theme">Select Style Theme</string>
-    <string name="action_apply">Apply</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_theme_subtitle">Choose light or dark mode</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_more">More</string>
+
+    <string name="settings_version">App Version</string>
+    <string name="settings_rate_us">Rate Us</string>
+    <string name="settings_rate_us_sub">Your feedback and rating matters</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_sub">Read the terms and conditions of app</string>
+    <string name="settings_share_app">Share App</string>
+    <string name="settings_share_app_sub">Share App with your friends</string>
+    <string name="settings_exit">Exit</string>
+    <string name="settings_exit_sub">Tap to exit</string>
+
+    <string name="exit_title">Exit App?</string>
+    <string name="exit_message">Are you sure you want to exit?</string>
 
     <!-- Camera permission card -->
     <string name="perm_camera_title">Camera Permission Needed</string>
@@ -114,10 +128,6 @@
     <string name="hero_line1">Strike Your</string>
     <string name="hero_line2">Perfect Pose</string>
     <string name="hero_cta">START POSING</string>
-
-    <!-- Exit confirmation -->
-    <string name="exit_title">Exit App?</string>
-    <string name="exit_message">Are you sure you want to close Camera Pose Match?</string>
 
     <!-- Photo editor -->
     <string name="title_edit">Edit</string>

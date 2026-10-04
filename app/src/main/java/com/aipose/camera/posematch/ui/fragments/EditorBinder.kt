@@ -29,6 +29,7 @@ import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.widget.CenterSeekBar
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import java.io.File
+import com.aipose.camera.posematch.analytics.Analytics
 
 /**
  * Drives the real-XML post-capture editor ([R.layout.fragment_editor]) — a faithful port of
@@ -64,6 +65,7 @@ class EditorBinder(
     private val previewBox get() = binding.editorPreviewBox
 
     fun bind() {
+        Analytics.screen(Analytics.Screen.EDITOR)
         // Full-screen overlay: inset the whole editor from the status + navigation bars.
         root.applySystemBarInsets(top = true, bottom = true)
 
@@ -85,8 +87,9 @@ class EditorBinder(
             ImageRequest.Builder(ctx).data(File(photoPath)).crossfade(true).target(preview).build()
         )
 
-        binding.editorDiscard.setOnClickListener { onDiscard() }
+        binding.editorDiscard.setOnClickListener { Analytics.click("editor_discard", Analytics.Screen.EDITOR); onDiscard() }
         binding.editorSave.setOnClickListener {
+            Analytics.click("editor_save", Analytics.Screen.EDITOR)
             onDone(EditResult(finalMatrix(), rotationDeg, cropAspect))
         }
         binding.editorRevert.setOnClickListener {

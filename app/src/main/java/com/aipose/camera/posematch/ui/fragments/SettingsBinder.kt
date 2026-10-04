@@ -1,83 +1,68 @@
 package com.aipose.camera.posematch.ui.fragments
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
-import android.content.res.ColorStateList
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.fragment.app.FragmentActivity
+import com.aipose.camera.posematch.BuildConfig
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.admob_ads.skipNextAppOpen
 import com.aipose.camera.posematch.databinding.FragmentSettingsBinding
 import com.aipose.camera.posematch.ui.theme.ThemePrefs
 import com.aipose.camera.posematch.ui.theme.paletteFor
 import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
+import androidx.core.graphics.drawable.toDrawable
+import com.aipose.camera.posematch.analytics.Analytics
 
 class SettingsBinder(
     private val host: Fragment,
     private val viewModel: MainViewModel,
     private val root: View,
-    private val requireActivity: FragmentActivity
+    private val requireActivity: FragmentActivity,
+    private val onExitRequest: () -> Unit
 ) {
-    private val themes = listOf("Dark", "Light", "Sleek Charcoal", "Cyberpunk Violet")
     private val jobs = mutableListOf<Job>()
-    private var themeDialog: Dialog? = null
-    private var languageDialog: Dialog? = null
 
     private val binding = FragmentSettingsBinding.bind(root)
     private val d = root.resources.displayMetrics.density
     private val palette = paletteFor(root.context)
     private val accent = palette.accent
     private val card = palette.card
-    private val glass = palette.glass
+    private val textPrimary = palette.textPrimary
 
     fun bind() {
-        // Status-bar inset on top of the 16dp content padding (edge-to-edge safe on all versions).
+        Analytics.screen(Analytics.Screen.SETTINGS)
         root.applySystemBarInsets(top = true)
 
-        listOf(binding.settingsLanguage, binding.settingsTheme, binding.settingsShare, binding.settingsPrivacy)
-            .forEach { it.background = cardBackground() }
-
-        val langValue = binding.settingsLanguageValue
-        langValue.setTextColor(accent)
-
-        jobs += host.viewLifecycleOwner.lifecycleScope.launch {
-            host.viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.selectedLanguage.collect { langValue.text = it }
-            }
+        binding.settingsBack.setOnClickListener {
+            requireActivity.onBackPressedDispatcher.onBackPressed()
         }
 
-        // Theme: a single Dark/Light switch (on = dark). Toggling persists the choice and recreates
-        // the activity so every screen re-reads the day/night colour resources.
-        setupThemeSwitch()
+        setupThemeButtons()
+        setupVersion()
+        setupClickListeners()
 
-        binding.settingsLanguage.setOnClickListener { showLanguageDialog() }
-        binding.settingsShare.setOnClickListener { shareApp(requireActivity) }
-        binding.settingsPrivacy.setOnClickListener { openPrivacy() }
+        // Apply card backgrounds
+        binding.cardTheme.background = cardBackground()
+        binding.cardMore.background = cardBackground()
     }
 
     fun unbind() {
         jobs.forEach { it.cancel() }
         jobs.clear()
-        themeDialog?.dismiss(); themeDialog = null
-        languageDialog?.dismiss(); languageDialog = null
     }
 
     private fun cardBackground() = GradientDrawable().apply {
@@ -86,141 +71,198 @@ class SettingsBinder(
         setColor(card)
     }
 
-    private fun setupThemeSwitch() {
-        val sw = binding.settingsThemeSwitch
-        val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
-        val off = palette.textSecondary
-        sw.thumbTintList = ColorStateList(states, intArrayOf(accent, off))
-        sw.trackTintList = ColorStateList(
-            states,
-            intArrayOf((accent and 0x00FFFFFF) or (0x80 shl 24), (off and 0x00FFFFFF) or (0x40 shl 24))
-        )
-        sw.isChecked = ThemePrefs.isDark(root.context)
-        sw.setOnCheckedChangeListener { _, dark ->
-            if (dark == ThemePrefs.isDark(root.context)) return@setOnCheckedChangeListener
-            ThemePrefs.setDark(root.context, dark)
-            viewModel.setTheme(if (dark) "Dark" else "Light")
-            requireActivity.recreate()
+    private fun setupThemeButtons() {
+        val isDark = ThemePrefs.isDark(root.context)
+        updateThemeButtonStates(isDark)
+
+        binding.btnThemeLight.setOnClickListener {
+            if (ThemePrefs.isDark(root.context)) {
+                applyTheme(false)
+            }
         }
-        binding.settingsTheme.setOnClickListener { sw.toggle() }
+        binding.btnThemeDark.setOnClickListener {
+            if (!ThemePrefs.isDark(root.context)) {
+                applyTheme(true)
+            }
+        }
     }
 
-    fun shareApp(context: Context) {
-        val packageName = context.packageName
-        val appLink = "https://play.google.com/store/apps/details?id=$packageName"
+    private fun applyTheme(dark: Boolean) {
+        ThemePrefs.setDark(root.context, dark)
+        viewModel.setTheme(if (dark) "Dark" else "Light")
+        requireActivity.recreate()
+    }
 
-        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Download Pose Match Camera: achieve perfect posture alignment live on-device!:\n$appLink"
-            )
+    private fun updateThemeButtonStates(isDark: Boolean) {
+        val radius = 8f * d
+        
+        // Light button
+        binding.btnThemeLight.background = GradientDrawable().apply {
+            cornerRadius = radius
+            if (!isDark) {
+                setColor(accent)
+            } else {
+                setColor(0xFF2A2A2E.toInt())
+            }
+        }
+        binding.btnThemeLight.setTextColor(if (!isDark) Color.WHITE else textPrimary)
+
+        // Dark button
+        binding.btnThemeDark.background = GradientDrawable().apply {
+            cornerRadius = radius
+            if (isDark) {
+                setColor(accent)
+            } else {
+                setColor(0xFFE8E9ED.toInt())
+            }
+        }
+        binding.btnThemeDark.setTextColor(if (isDark) Color.WHITE else textPrimary)
+    }
+
+    private fun setupVersion() {
+        binding.tvVersionValue.text = BuildConfig.VERSION_NAME
+    }
+
+    private fun setupClickListeners() {
+        binding.itemRate.setOnClickListener { Analytics.click("rate_us", Analytics.Screen.SETTINGS); showRateUsDialog() }
+        binding.itemPrivacy.setOnClickListener { Analytics.click("privacy_policy", Analytics.Screen.SETTINGS); openPrivacy() }
+        binding.itemShare.setOnClickListener { Analytics.click("share_app", Analytics.Screen.SETTINGS); shareApp(requireActivity) }
+        binding.itemExit.setOnClickListener { Analytics.click("exit_app", Analytics.Screen.SETTINGS); onExitRequest() }
+    }
+
+    private fun showRateUsDialog() {
+        val dialog = Dialog(requireActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_rate_us)
+        
+        dialog.window?.apply {
+            setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(android.view.Gravity.CENTER)
+            addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setDimAmount(0.5f)
+        }
+        
+        val stars = listOf(
+            dialog.findViewById(R.id.star1),
+            dialog.findViewById(R.id.star2),
+            dialog.findViewById(R.id.star3),
+            dialog.findViewById(R.id.star4),
+            dialog.findViewById<ImageView>(R.id.star5)
+        )
+        val submitBtn = dialog.findViewById<TextView>(R.id.btn_rate_submit)
+        val closeBtn = dialog.findViewById<ImageView>(R.id.rate_close)
+        val illustration = dialog.findViewById<ImageView>(R.id.rate_illustration)
+        val starsContainer = dialog.findViewById<View>(R.id.stars_container)
+        
+        // Use mipmap launcher icon
+        illustration.setImageResource(R.drawable.il_rate_us)
+        
+        // Ensure visibility by setting tint explicitly
+        closeBtn.setColorFilter(palette.textSecondary)
+        
+        var selectedRating = 0
+
+        // Reset to border state initially
+        stars.forEach { star ->
+            star.setImageResource(R.drawable.ic_star_border)
+            star.setColorFilter(palette.iconMuted)
         }
 
-        context.startActivity(
-            Intent.createChooser(shareIntent, "Share app")
-        )
+        stars.forEachIndexed { index, star ->
+            star.setOnClickListener {
+                selectedRating = index + 1
+                updateStars(stars, selectedRating)
+                
+                star.animate().scaleX(1.3f).scaleY(1.3f).setDuration(150)
+                    .withEndAction {
+                        star.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start()
+                    }.start()
+            }
+        }
+
+        closeBtn.setOnClickListener { dialog.dismiss() }
+
+        submitBtn.setOnClickListener {
+            if (selectedRating == 0) {
+                // Add a small shake animation to indicate rating is needed
+                starsContainer.animate().translationX(15f).setDuration(50).withEndAction {
+                    starsContainer.animate().translationX(-15f).setDuration(50).withEndAction {
+                        starsContainer.animate().translationX(0f).setDuration(50).start()
+                    }.start()
+                }.start()
+                return@setOnClickListener
+            }
+            
+            dialog.dismiss()
+            if (selectedRating <= 3) {
+                sendFeedbackEmail()
+            } else {
+                openPlayStore()
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun updateStars(stars: List<ImageView>, rating: Int) {
+        val gold = 0xFFFFD700.toInt() // Premium Gold
+        val muted = palette.iconMuted
+        
+        stars.forEachIndexed { index, star ->
+            if (index < rating) {
+                star.setImageResource(R.drawable.ic_star)
+                star.setColorFilter(gold)
+            } else {
+                star.setImageResource(R.drawable.ic_star_border)
+                star.setColorFilter(muted)
+            }
+        }
+    }
+
+    private fun sendFeedbackEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("slife0667@gmail.com"))
+            putExtra(Intent.EXTRA_SUBJECT, "App Feedback: Pose Match Camera")
+        }
+        runCatching {
+            skipNextAppOpen = true   // user is leaving the app -> don't show App Open on return
+            requireActivity.startActivity(intent)
+        }
+    }
+
+    private fun openPlayStore() {
+        val packageName = requireActivity.packageName
+        val uri = "market://details?id=$packageName".toUri()
+        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        runCatching {
+            skipNextAppOpen = true   // leaving the app -> don't show App Open on return
+            requireActivity.startActivity(goToMarket)
+        }.onFailure {
+            skipNextAppOpen = true
+            requireActivity.startActivity(Intent(Intent.ACTION_VIEW,
+                "http://play.google.com/store/apps/details?id=$packageName".toUri()))
+        }
+    }
+
+    private fun shareApp(context: Context) {
+        val appLink = "https://play.google.com/store/apps/details?id=${context.packageName}"
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, "Download Pose Match Camera: achieve perfect posture alignment live on-device!:\n$appLink")
+        }
+        skipNextAppOpen = true   // share sheet leaves the app -> don't show App Open on return
+        context.startActivity(Intent.createChooser(shareIntent, "Share app"))
     }
 
     private fun openPrivacy() {
         runCatching {
-            host.startActivity(
-                Intent(Intent.ACTION_VIEW,
-                    "https://sites.google.com/view/posematchcamera/home".toUri())
-            )
+            skipNextAppOpen = true   // browser leaves the app -> don't show App Open on return
+            host.startActivity(Intent(Intent.ACTION_VIEW, "https://sites.google.com/view/posematchcamera/home".toUri()))
         }
-    }
-
-    // Language: reuse the XML language screen inside a full-screen dialog covering the bottom nav.
-    private fun showLanguageDialog() {
-        val ctx = host.requireContext()
-        val v = host.layoutInflater.inflate(R.layout.fragment_language, null)
-        val dialog = Dialog(ctx, android.R.style.Theme_Black_NoTitleBar_Fullscreen).apply {
-            setContentView(v)
-            setCancelable(false)
-        }
-        languageDialog = dialog
-        LanguageBinder(host, viewModel, v) {
-            dialog.dismiss()
-            (host.activity as? Activity)?.recreate()
-        }.bind()
-        dialog.show()
-    }
-
-    // Theme picker — choose then Apply/Cancel (no instant commit).
-    private fun showThemeDialog() {
-        val ctx = host.requireContext()
-        var pending = viewModel.appTheme.value
-        val content = host.layoutInflater.inflate(R.layout.dialog_theme, null) as LinearLayout
-        content.background = GradientDrawable().apply {
-            shape = GradientDrawable.RECTANGLE
-            cornerRadius = 16f * d
-            setColor(card)
-        }
-
-        val list = content.findViewById<LinearLayout>(R.id.theme_list)
-        val rowViews = HashMap<String, View>()
-        val accent20 = (accent and 0x00FFFFFF) or (51 shl 24)
-
-        fun restyle() {
-            for (t in themes) {
-                val row = rowViews[t] ?: continue
-                val sel = t == pending
-                row.background = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    cornerRadius = 8f * d
-                    setColor(if (sel) accent20 else Color.TRANSPARENT)
-                }
-                row.findViewById<ImageView>(R.id.theme_check).apply {
-                    visibility = if (sel) View.VISIBLE else View.INVISIBLE
-                    imageTintList = ColorStateList.valueOf(accent)
-                }
-            }
-        }
-
-        themes.forEachIndexed { i, t ->
-            val row = host.layoutInflater.inflate(R.layout.item_theme, list, false)
-            row.findViewById<TextView>(R.id.theme_name).text = t
-            row.setOnClickListener { pending = t; restyle() }
-            val lp = row.layoutParams as LinearLayout.LayoutParams
-            if (i < themes.lastIndex) lp.bottomMargin = (8f * d).toInt()
-            row.layoutParams = lp
-            list.addView(row)
-            rowViews[t] = row
-        }
-        restyle()
-
-        val cancel = content.findViewById<TextView>(R.id.theme_cancel)
-        val apply = content.findViewById<TextView>(R.id.theme_apply)
-        cancel.background = outlinedBg(8f)
-        apply.background = solidBg(accent, 8f)
-
-        val dialog = Dialog(ctx).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            setContentView(content)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window?.setDimAmount(0.75f)
-        }
-        themeDialog = dialog
-        cancel.setOnClickListener { dialog.dismiss() }
-        apply.setOnClickListener {
-            viewModel.setTheme(pending)
-            dialog.dismiss()
-            Toast.makeText(ctx, ctx.getString(R.string.toast_theme_changed, pending), Toast.LENGTH_SHORT).show()
-        }
-        dialog.show()
-    }
-
-    private fun outlinedBg(radiusDp: Float) = GradientDrawable().apply {
-        shape = GradientDrawable.RECTANGLE
-        cornerRadius = radiusDp * d
-        setColor(Color.TRANSPARENT)
-        setStroke((1f * d).toInt().coerceAtLeast(1), glass)
-    }
-
-    private fun solidBg(color: Int, radiusDp: Float) = GradientDrawable().apply {
-        shape = GradientDrawable.RECTANGLE
-        cornerRadius = radiusDp * d
-        setColor(color)
     }
 }

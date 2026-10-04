@@ -34,10 +34,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.aipose.camera.posematch.MainActivity
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.admob_ads.ScreenBottomAd
+import com.aipose.camera.posematch.admob_ads.canShowAds
+import com.aipose.camera.posematch.admob_ads.skipNextAppOpen
+import com.aipose.camera.posematch.admob_ads.inter.loadSimpleInterstitialAd
+import com.aipose.camera.posematch.admob_ads.backInter
+import com.aipose.camera.posematch.admob_ads.forwardInter
+import com.aipose.camera.posematch.admob_ads.showInterThen
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_COLLECTION
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_MAIN_BOTTOM
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_SETTINGS
+import com.aipose.camera.posematch.admob_ads.remote.RemoteConfig
 import com.aipose.camera.posematch.databinding.FragmentMainBinding
 import com.aipose.camera.posematch.databinding.ViewExitSheetBinding
 import com.aipose.camera.posematch.ui.screens.NavTab
 import com.aipose.camera.posematch.ui.theme.paletteFor
+import com.aipose.camera.posematch.ui.util.NotificationPermission
 import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
@@ -46,6 +58,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.aipose.camera.posematch.analytics.Analytics
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
@@ -54,15 +67,26 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var activeTab = NavTab.HOME
     private var showCamera = false
     private var cameraGranted = false
+
+    private companion object {
+        const val KEY_ACTIVE_TAB = "main_active_tab"
+
+        // Process-level: the click-interstitial is preloaded once on the first Home view.
+        var homeInterPreloaded = false
+    }
     private var askedOnce = false
     private var settingsBinder: SettingsBinder? = null
     private var collectionsBinder: CollectionsBinder? = null
     private var homeBinder: HomeBinder? = null
+    private var screenAdSlot: ScreenBottomAd.Slot? = null
     private var cameraBinder: CameraBinder? = null
     private var contentBackHandler: (() -> Boolean)? = null
 
     private val locationPermLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { /* optional; capture works regardless */ }
+
+    /** POST_NOTIFICATIONS (Android 13+). Registered here so it exists before STARTED. */
+    private val notificationPermLauncher = NotificationPermission.register(this)
 
     private var accent = 0
     private var navMuted = 0xFF888888.toInt()
@@ -84,6 +108,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     if (path != null) {
                         viewModel.importPoseFromPath("Gallery Reference", path)
                         Toast.makeText(requireContext(), getString(R.string.toast_reference_imported), Toast.LENGTH_LONG).show()
+                        // Picking a reference is only ever done to shoot with it, so go straight to
+                        // the camera. The overlay follows selectedPose, which importPoseFromPath
+                        // sets, so it lands even though that runs asynchronously.
+                        openCameraGated()
                     } else {
                         Toast.makeText(requireContext(), getString(R.string.toast_reference_failed), Toast.LENGTH_SHORT).show()
                     }
@@ -95,6 +123,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val binding get() = _binding!!
 
     fun launchGalleryPicker() {
+        // The system picker is another app, so coming back is a background->foreground event. That
+        // is not a real "app open" — suppress the App Open ad once, same as the Settings actions
+        // that leave the app.
+        Analytics.click("gallery_import", Analytics.Screen.HOME)
+        skipNextAppOpen = true
         galleryLauncher.launch(Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI))
     }
 
@@ -107,20 +140,40 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         // Nav-bar bottom inset on the bottom navigation (edge-to-edge safe on all versions).
         binding.mainBottomNav.applySystemBarInsets(bottom = true)
 
-        binding.navHome.setOnClickListener { selectTab(NavTab.HOME) }
-        binding.navCollections.setOnClickListener { selectTab(NavTab.HISTORY) }
-        binding.navSettings.setOnClickListener { selectTab(NavTab.SETTINGS) }
-        binding.permAllow.setOnClickListener { onAllowClick() }
+        binding.navHome.setOnClickListener { Analytics.click("nav_home", Analytics.Screen.HOME); selectTab(NavTab.HOME) }
+        // Forward (click) interstitials — each screen has its own Remote Config key, gated by enableInter.
+        binding.navCollections.setOnClickListener {
+            Analytics.click("nav_collections", Analytics.Screen.HOME)
+            showInterThen(forwardInter(RemoteConfig.interCollectionClick)) { selectTab(NavTab.HISTORY) }
+        }
+        binding.navSettings.setOnClickListener {
+            Analytics.click("nav_settings", Analytics.Screen.HOME)
+            showInterThen(forwardInter(RemoteConfig.interSettingClick)) { selectTab(NavTab.SETTINGS) }
+        }
+        binding.permAllow.setOnClickListener { Analytics.click("camera_permission_allow", Analytics.Screen.HOME); onAllowClick() }
 
         stylePermissionCard()
+
+        // Ask for notification permission here rather than at cold start: the user has
+        // reached the main screen, so the prompt has context. Self-suppresses on <API 33,
+        // when already granted, or once asked (a 2nd denial locks the dialog out for good).
+        NotificationPermission.requestIfNeeded(this, notificationPermLauncher)
         updatePermissionCard()
 
         // Back handling: camera -> tabs; sub-tab -> Home; Home -> exit sheet.
+        // Back-press interstitials — each screen has its own RC key, gated by enableInterBack.
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             when {
-                showCamera -> { if (cameraBinder?.onBack() != true) closeCamera() }
+                showCamera -> {
+                    if (cameraBinder?.onBack() != true) {
+                        showInterThen(backInter(RemoteConfig.interCameraBack)) { closeCamera() }
+                    }
+                }
                 contentBackHandler?.invoke() == true -> {}
-                activeTab != NavTab.HOME -> selectTab(NavTab.HOME)
+                activeTab == NavTab.HISTORY ->
+                    showInterThen(backInter(RemoteConfig.interCollectionBack)) { selectTab(NavTab.HOME) }
+                activeTab == NavTab.SETTINGS ->
+                    showInterThen(backInter(RemoteConfig.interSettingBack)) { selectTab(NavTab.HOME) }
                 else -> showExitSheet()
             }
         }
@@ -132,7 +185,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
         }
 
-        selectTab(NavTab.HOME)
+        // Restore the tab that was open before an Activity recreate (e.g. a theme change),
+        // so toggling the theme in Settings keeps us on Settings instead of jumping to Home.
+        val startTab = savedInstanceState?.getInt(KEY_ACTIVE_TAB, NavTab.HOME.ordinal)
+            ?.let { NavTab.entries.getOrElse(it) { NavTab.HOME } }
+            ?: NavTab.HOME
+        selectTab(startTab)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_ACTIVE_TAB, activeTab.ordinal)
     }
 
     override fun onResume() {
@@ -149,6 +212,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         collectionsBinder = null
         homeBinder?.unbind()
         homeBinder = null
+        screenAdSlot?.release()
+        screenAdSlot = null
         cameraBinder?.unbind()
         cameraBinder = null
         contentBackHandler = null
@@ -198,6 +263,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     // ---- Tab content ---------------------------------------------------------------------
 
+
+    /**
+     * Any in-app interstitial placement currently reachable → worth preloading InterHome.
+     *
+     * Delegates to RemoteConfig so the preload and the load itself agree. This used to test only
+     * the master switches, which meant `enableInter = true` with every placement off still fired a
+     * request on every launch.
+     */
+    private fun anyInAppInterEnabled(): Boolean = RemoteConfig.anyInAppInterEnabled()
+
     private fun selectTab(tab: NavTab) {
         // Tear down any per-tab bindings before swapping content.
         settingsBinder?.unbind(); settingsBinder = null
@@ -214,23 +289,42 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 val v = layoutInflater.inflate(R.layout.fragment_home, content, false)
                 val binder = HomeBinder(
                     this, viewModel, v,
-                    onOpenCamera = { tryOpenCamera() },
-                    onLaunchGalleryPicker = { launchGalleryPicker() }
+                    onOpenCamera = { openCameraGated() },
+                    onLaunchGalleryPicker = { launchGalleryPicker() },
+                    // Hide the bottom nav while the full-screen "Show all" album is open.
+                    onAlbumOpenChanged = { open ->
+                        binding.mainBottomNav.visibility = if (open) View.GONE else View.VISIBLE
+                    }
                 ).also { it.bind() }
                 homeBinder = binder
                 contentBackHandler = { binder.onBack() }
+                // Preload the shared in-app interstitial (InterHome) once, the first time Home is
+                // shown (only if any in-app placement is enabled). It self-reloads after each show.
+                if (!homeInterPreloaded && anyInAppInterEnabled()) {
+                    homeInterPreloaded = true
+                    requireActivity().loadSimpleInterstitialAd(getString(R.string.InterHome))
+                }
                 v
             }
             NavTab.HISTORY -> {
                 val v = layoutInflater.inflate(R.layout.fragment_collections, content, false)
-                val binder = CollectionsBinder(this, viewModel, v).also { it.bind() }
+                val binder = CollectionsBinder(
+                    this, viewModel, v,
+                    // Hide the bottom nav while the full-screen photo preview is open.
+                    onDetailOpenChanged = { open ->
+                        binding.mainBottomNav.visibility = if (open) View.GONE else View.VISIBLE
+                    }
+                ).also { it.bind() }
                 collectionsBinder = binder
                 contentBackHandler = { binder.onBack() }
                 v
             }
             NavTab.SETTINGS -> {
                 val v = layoutInflater.inflate(R.layout.fragment_settings, content, false)
-                settingsBinder = SettingsBinder(this, viewModel, v, requireActivity()).also { it.bind() }
+                settingsBinder = SettingsBinder(
+                    this, viewModel, v, requireActivity(),
+                    onExitRequest = { showExitSheet() }
+                ).also { it.bind() }
                 v
             }
         }
@@ -238,9 +332,55 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         // Gentle fade-in (the original crossfaded between tabs).
         child.alpha = 0f
         child.animate().alpha(1f).setDuration(220).start()
+
+        renderTabBottomAd(tab)
+    }
+
+    /** Bottom native/banner ad for the active tab — mode + layout chosen from Remote Config. */
+    private fun renderTabBottomAd(tab: NavTab) {
+        val holder = binding.mainAdHolder
+        val label = binding.mainAdText
+        // Swap out the previous tab's native helper cleanly, and clear the slot.
+        screenAdSlot?.release()
+        screenAdSlot = null
+        holder.removeAllViews()
+        holder.visibility = View.GONE
+        label.visibility = View.GONE
+
+        if (!requireContext().canShowAds(true)) return
+
+        val (mode, placement) = when (tab) {
+            NavTab.HOME -> RemoteConfig.nativeHome to NATIVE_MAIN_BOTTOM
+            NavTab.HISTORY -> RemoteConfig.nativeCollection to NATIVE_COLLECTION
+            NavTab.SETTINGS -> RemoteConfig.nativeSetting to NATIVE_SETTINGS
+        }
+        screenAdSlot = ScreenBottomAd.render(
+            activity = requireActivity(),
+            owner = viewLifecycleOwner,
+            holder = holder,
+            label = label,
+            mode = mode,
+            placement = placement,
+            nativeId = getString(R.string.NativeAll),
+            bannerId = getString(R.string.Banner_Ad),
+            tag = "ScreenNative-$tab"
+        )
     }
 
     // ---- Camera push ---------------------------------------------------------------------
+
+    /**
+     * Shared camera-open path (Home CTA + gallery import). Camera-open interstitial (forward click)
+     * only gates the open when the camera will actually appear — permission already granted —
+     * never in front of the permission prompt.
+     */
+    private fun openCameraGated() {
+        if (cameraGranted) {
+            showInterThen(forwardInter(RemoteConfig.interCameraClick)) { tryOpenCamera() }
+        } else {
+            tryOpenCamera()
+        }
+    }
 
     private fun tryOpenCamera() {
         if (cameraGranted) openCamera() else bounceCard()

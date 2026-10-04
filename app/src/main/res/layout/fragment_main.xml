@@ -83,6 +83,31 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Per-tab bottom ad (native or banner, decided by Remote Config). Populated in code. -->
+        <LinearLayout
+            android:id="@+id/main_ad_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:id="@+id/main_ad_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:text="@string/ad_badge"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/main_ad_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/main_bottom_nav"
             android:layout_width="match_parent"

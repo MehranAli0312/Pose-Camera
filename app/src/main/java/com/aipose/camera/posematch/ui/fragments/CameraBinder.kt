@@ -56,6 +56,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.Executors
+import com.aipose.camera.posematch.analytics.Analytics
+import com.aipose.camera.posematch.admob_ads.ScreenBottomAd
+import com.aipose.camera.posematch.admob_ads.backInter
+import com.aipose.camera.posematch.admob_ads.canShowAds
+import com.aipose.camera.posematch.admob_ads.forwardInter
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_CAMERA
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_EDITOR
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_SUCCESS
+import com.aipose.camera.posematch.admob_ads.remote.RemoteConfig
+import com.aipose.camera.posematch.admob_ads.showInterThen
+
 class CameraBinder(
     private val host: Fragment,
     private val viewModel: MainViewModel,
@@ -92,6 +103,19 @@ class CameraBinder(
 
     private val refItems = HashMap<Int, ItemRefPoseBinding>()
 
+    // Bottom ad slots for the camera and for the two overlays it hosts. Each is released when its
+    // screen goes away so a native ad never keeps refreshing behind a view the user has left.
+    private var cameraAdSlot: ScreenBottomAd.Slot? = null
+    private var editorAdSlot: ScreenBottomAd.Slot? = null
+    private var successAdSlot: ScreenBottomAd.Slot? = null
+
+    // Success screen: the action row's bottom margin is the nav-bar inset PLUS the ad box height,
+    // recomputed whenever either changes so the ad can never sit under the Home / Share buttons.
+    private var successBarsBottom = 0
+    private var successAdHeight = 0
+    private var successActionsBaseMargin = 0
+    private var successBinding: FragmentSuccessBinding? = null
+
     private val uiPrefs = ctx.getSharedPreferences("posematch_ui", Context.MODE_PRIVATE)
 
     private val transform = TransformGestureDetector { panX, panY, zoom, rotation ->
@@ -107,6 +131,7 @@ class CameraBinder(
     }
 
     fun bind() {
+        Analytics.screen(Analytics.Screen.CAMERA)
         // Insets: status bar on the top bar, nav bar on the shutter dock.
         binding.cameraTopbar.applySystemBarInsets(top = true)
         binding.cameraDock.applySystemBarInsets(bottom = true)
@@ -123,6 +148,7 @@ class CameraBinder(
         startCameraIfPermitted()
         observeFlows()
         maybeShowCoach()
+        renderCameraAd()
     }
 
     fun unbind() {
@@ -131,16 +157,59 @@ class CameraBinder(
         poseImageJob?.cancel(); timerJob?.cancel(); greatFlashJob?.cancel()
         try { cameraProvider?.unbindAll() } catch (_: Exception) {}
         cameraExecutor.shutdown()
+        cameraAdSlot?.release(); cameraAdSlot = null
+        editorAdSlot?.release(); editorAdSlot = null
+        successAdSlot?.release(); successAdSlot = null
+        successBinding = null
     }
 
     /** @return true if a back press was consumed (an overlay was open). */
     fun onBack(): Boolean = when {
-        savedPhotoPath != null -> { savedPhotoPath = null; hideOverlay(binding.cameraSuccessOverlay); onGoHome(); true }
+        savedPhotoPath != null -> {
+            savedPhotoPath = null
+            host.showInterThen(backInter(RemoteConfig.interSuccessHome)) {
+                hideOverlay(binding.cameraSuccessOverlay)
+                onGoHome()
+            }
+            true
+        }
         reviewPhotoPath != null -> {
             reviewPhotoPath?.let { runCatching { File(it).delete() } }
-            reviewPhotoPath = null; hideOverlay(binding.cameraEditorOverlay); true
+            reviewPhotoPath = null
+            host.showInterThen(backInter(RemoteConfig.interEditorBack)) {
+                hideOverlay(binding.cameraEditorOverlay)
+            }
+            true
         }
         else -> false
+    }
+
+    // ---- Bottom ad slots -----------------------------------------------------------------
+
+    /**
+     * Camera viewfinder bottom ad. Off by default (`nativeCamera`) — see RemoteConfig for why.
+     * The slot sits above the reference strip, two rows clear of the shutter.
+     */
+    private fun renderCameraAd() {
+        cameraAdSlot?.release()
+        cameraAdSlot = null
+        val holder = binding.cameraAdHolder
+        holder.removeAllViews()
+        holder.visibility = View.GONE
+        binding.cameraAdText.visibility = View.GONE
+        if (!ctx.canShowAds(true)) return
+
+        cameraAdSlot = ScreenBottomAd.render(
+            activity = host.requireActivity(),
+            owner = host.viewLifecycleOwner,
+            holder = holder,
+            label = binding.cameraAdText,
+            mode = RemoteConfig.nativeCamera,
+            placement = NATIVE_CAMERA,
+            nativeId = ctx.getString(R.string.NativeAll),
+            bannerId = ctx.getString(R.string.Banner_Ad),
+            tag = "ScreenNative-Camera"
+        )
     }
 
     // ---- Static chrome styling -----------------------------------------------------------
@@ -174,7 +243,7 @@ class CameraBinder(
             updateTuneTint()
         }
         binding.cameraShutter.setOnClickListener { triggerCapture() }
-        binding.cameraFlip.setOnClickListener { viewModel.toggleCameraFacing() }
+        binding.cameraFlip.setOnClickListener { Analytics.click("camera_flip", Analytics.Screen.CAMERA); viewModel.toggleCameraFacing() }
         binding.cameraGridToggle.setOnClickListener { viewModel.toggleGridVisible() }
         binding.cameraTimerToggle.setOnClickListener {
             viewModel.setTimer(when (viewModel.cameraTimer.value) { 0 -> 3; 3 -> 5; else -> 0 })
@@ -251,8 +320,10 @@ class CameraBinder(
     }
 
     private fun capture() {
+        // Dispatched on the main executor by takePhotoToFile, so touching views / the Activity here
+        // is safe. Capture -> editor is gated by its own RC key, which defaults to OFF.
         takePhotoToFile(ctx, imageCapture, cameraExecutor, viewModel.cameraFlashMode.value) { path ->
-            showEditor(path)
+            host.showInterThen(forwardInter(RemoteConfig.interCameraCapture)) { showEditor(path) }
         }
     }
 
@@ -275,38 +346,84 @@ class CameraBinder(
             onDiscard = {
                 runCatching { File(path).delete() }
                 reviewPhotoPath = null
-                hideOverlay(binding.cameraEditorOverlay)
+                host.showInterThen(backInter(RemoteConfig.interEditorBack)) {
+                    hideOverlay(binding.cameraEditorOverlay)
+                }
             },
             onDone = { result ->
+                // Save FIRST, then show the ad, then reveal success: the user's photo is never at
+                // the mercy of whether an ad loaded, and the write is done before the ad covers it.
                 savePhoto(
                     ctx, File(path), result.matrix,
                     viewModel.selectedPose.value?.title ?: "Pose Frame", viewModel,
                     result.rotationDeg, result.cropAspect
                 )
                 reviewPhotoPath = null
-                hideOverlay(binding.cameraEditorOverlay)
-                showSuccess(path)
+                host.showInterThen(forwardInter(RemoteConfig.interEditorSave)) {
+                    hideOverlay(binding.cameraEditorOverlay)
+                    showSuccess(path)
+                }
             }
         ).bind()
         overlay.addView(editorView)
         showOverlay(overlay)
+        renderEditorAd(editorView)
+    }
+
+    /** Editor bottom ad — banner by default (`nativeEditor`); the editor's own panels are dense. */
+    private fun renderEditorAd(editorView: View) {
+        editorAdSlot?.release()
+        editorAdSlot = null
+        val holder = editorView.findViewById<android.widget.FrameLayout>(R.id.editor_ad_holder)
+        val label = editorView.findViewById<TextView>(R.id.editor_ad_text)
+        holder.removeAllViews()
+        holder.visibility = View.GONE
+        label.visibility = View.GONE
+        if (!ctx.canShowAds(true)) return
+
+        editorAdSlot = ScreenBottomAd.render(
+            activity = host.requireActivity(),
+            owner = host.viewLifecycleOwner,
+            holder = holder,
+            label = label,
+            mode = RemoteConfig.nativeEditor,
+            placement = NATIVE_EDITOR,
+            nativeId = ctx.getString(R.string.NativeAll),
+            bannerId = ctx.getString(R.string.Banner_Ad),
+            tag = "ScreenNative-Editor"
+        )
     }
 
     private fun showSuccess(path: String) {
+        Analytics.screen(Analytics.Screen.SUCCESS)
         savedPhotoPath = path
         val overlay = binding.cameraSuccessOverlay
         overlay.removeAllViews()
         val s = FragmentSuccessBinding.inflate(LayoutInflater.from(ctx), overlay, false)
 
-        // Insets on the banner (status bar) and the action row (nav bar).
+        // Insets on the banner (status bar) and the action row (nav bar + the ad box height).
+        successBinding = s
         val bannerTop = (s.successBanner.layoutParams as android.widget.FrameLayout.LayoutParams).topMargin
-        val actionsBottom = (s.successActions.layoutParams as android.widget.FrameLayout.LayoutParams).bottomMargin
+        successActionsBaseMargin =
+            (s.successActions.layoutParams as android.widget.FrameLayout.LayoutParams).bottomMargin
+        successBarsBottom = 0
+        successAdHeight = 0
         ViewCompat.setOnApplyWindowInsetsListener(s.root) { _, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             (s.successBanner.layoutParams as android.widget.FrameLayout.LayoutParams).topMargin = bannerTop + bars.top
-            (s.successActions.layoutParams as android.widget.FrameLayout.LayoutParams).bottomMargin = actionsBottom + bars.bottom
-            s.successBanner.requestLayout(); s.successActions.requestLayout()
+            s.successBanner.requestLayout()
+            successBarsBottom = bars.bottom
+            s.successAdBox.updatePadding(bottom = bars.bottom + (4f * d).toInt())
+            applySuccessActionsMargin()
             insets
+        }
+        // The ad box is bottom-anchored, so whatever height it settles at has to be added to the
+        // action row's margin — otherwise Home / Share would sit on top of the ad.
+        s.successAdBox.addOnLayoutChangeListener { v, _, top, _, bottom, _, oldTop, _, oldBottom ->
+            if (bottom - top != oldBottom - oldTop) {
+                successAdHeight = if (v.visibility == View.VISIBLE) bottom - top else 0
+                applySuccessActionsMargin()
+            }
         }
 
         s.successBanner.background = rounded((0xFF2E7D32.toInt() and 0x00FFFFFF) or (235 shl 24), 10f)
@@ -318,9 +435,12 @@ class CameraBinder(
         )
 
         s.successHome.setOnClickListener {
+            Analytics.click("success_home", Analytics.Screen.SUCCESS)
             savedPhotoPath = null
-            hideOverlay(binding.cameraSuccessOverlay)
-            onGoHome()
+            host.showInterThen(forwardInter(RemoteConfig.interSuccessHome)) {
+                hideOverlay(binding.cameraSuccessOverlay)
+                onGoHome()
+            }
         }
         s.successShare.setOnClickListener {
             runCatching {
@@ -338,6 +458,43 @@ class CameraBinder(
         overlay.addView(s.root)
         ViewCompat.requestApplyInsets(s.root)
         showOverlay(overlay)
+        renderSuccessAd(s)
+    }
+
+    /**
+     * Action-row bottom margin = its designed margin, plus whichever is taller: the ad box (which
+     * already carries the nav-bar inset as padding) or the bare nav-bar inset when no ad filled.
+     */
+    private fun applySuccessActionsMargin() {
+        val s = successBinding ?: return
+        val lp = s.successActions.layoutParams as android.widget.FrameLayout.LayoutParams
+        val target = successActionsBaseMargin + maxOf(successAdHeight, successBarsBottom)
+        if (lp.bottomMargin != target) {
+            lp.bottomMargin = target
+            s.successActions.requestLayout()
+        }
+    }
+
+    /** Success screen bottom ad — a natural end-of-flow stop, so native by default. */
+    private fun renderSuccessAd(s: FragmentSuccessBinding) {
+        successAdSlot?.release()
+        successAdSlot = null
+        s.successAdHolder.removeAllViews()
+        s.successAdHolder.visibility = View.GONE
+        s.successAdText.visibility = View.GONE
+        if (!ctx.canShowAds(true)) return
+
+        successAdSlot = ScreenBottomAd.render(
+            activity = host.requireActivity(),
+            owner = host.viewLifecycleOwner,
+            holder = s.successAdHolder,
+            label = s.successAdText,
+            mode = RemoteConfig.nativeSuccess,
+            placement = NATIVE_SUCCESS,
+            nativeId = ctx.getString(R.string.NativeAll),
+            bannerId = ctx.getString(R.string.Banner_Ad),
+            tag = "ScreenNative-Success"
+        )
     }
 
     private fun glassCircle() = GradientDrawable().apply {
@@ -354,6 +511,16 @@ class CameraBinder(
     }
 
     private fun hideOverlay(overlay: android.widget.FrameLayout) {
+        // Release that overlay's ad slot up front: the views are about to be detached, and a native
+        // ad left running would keep refreshing against a container the user can no longer see.
+        when (overlay.id) {
+            R.id.camera_editor_overlay -> { editorAdSlot?.release(); editorAdSlot = null }
+            R.id.camera_success_overlay -> {
+                successAdSlot?.release(); successAdSlot = null
+                successBinding = null
+                successAdHeight = 0
+            }
+        }
         overlay.animate().alpha(0f).setDuration(180).withEndAction {
             overlay.visibility = View.GONE
             overlay.removeAllViews()

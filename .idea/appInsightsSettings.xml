@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.aipose.camera.posematch" />
+                  <option name="mobileSdkAppId" value="1:495986967528:android:960cc087de25e0a07d9a5d" />
+                  <option name="projectId" value="ai-pose-match-camera" />
+                  <option name="projectNumber" value="495986967528" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

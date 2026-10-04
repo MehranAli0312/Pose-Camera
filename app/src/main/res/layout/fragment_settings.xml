@@ -8,163 +8,259 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="12dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nav_settings"
-        android:textColor="@color/text_primary"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="18dp" />
-
-    <!-- Language -->
+    <!-- Header -->
     <LinearLayout
-        android:id="@+id/settings_language"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginBottom="10dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_height="56dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/settings_language"
-            android:src="@drawable/ic_language"
-            app:tint="@color/icon_muted" />
+            android:id="@+id/settings_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/text_primary" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:text="@string/settings_language"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/settings_language_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:layout_marginStart="12dp"
+            android:text="@string/settings_title"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Theme -->
-    <LinearLayout
-        android:id="@+id/settings_theme"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginBottom="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/settings_theme"
-            android:src="@drawable/ic_palette"
-            android:tint="@color/icon_muted" />
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:text="@string/settings_theme"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
-        <Switch
-            android:id="@+id/settings_theme_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </LinearLayout>
+            <!-- Appearance Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/settings_appearance"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <!-- Share -->
-    <LinearLayout
-        android:id="@+id/settings_share"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginBottom="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
+            <LinearLayout
+                android:id="@+id/card_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/settings_share"
-            android:src="@drawable/ic_share"
-            android:tint="@color/icon_muted" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_theme_title"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:text="@string/settings_share"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/settings_theme_subtitle"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_chevron_right"
-            android:tint="@color/text_secondary" />
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
-    <!-- Privacy -->
-    <LinearLayout
-        android:id="@+id/settings_privacy"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
+                    <TextView
+                        android:id="@+id/btn_theme_light"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/settings_theme_light"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@string/settings_privacy"
-            android:src="@drawable/ic_privacy_tip"
-            android:tint="@color/icon_muted" />
+                    <TextView
+                        android:id="@+id/btn_theme_dark"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/settings_theme_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:text="@string/settings_privacy"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp" />
+            <!-- More Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/settings_more"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_chevron_right"
-            android:tint="@color/text_secondary" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/card_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- App Version -->
+                <LinearLayout
+                    android:id="@+id/item_version"
+                    style="@style/SettingsItemStyle">
+
+                    <ImageView
+                        style="@style/SettingsIconStyle"
+                        android:src="@drawable/ic_info" />
+
+                    <LinearLayout
+                        style="@style/SettingsTextStyle">
+
+                        <TextView
+                            style="@style/SettingsTitleStyle"
+                            android:text="@string/settings_version" />
+
+                        <TextView
+                            android:id="@+id/tv_version_value"
+                            style="@style/SettingsSubtitleStyle"
+                            tools:text="1.0" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/SettingsDividerStyle" />
+
+                <!-- Rate Us -->
+                <LinearLayout
+                    android:id="@+id/item_rate"
+                    style="@style/SettingsItemStyle">
+
+                    <ImageView
+                        style="@style/SettingsIconStyle"
+                        android:src="@drawable/ic_star" />
+
+                    <LinearLayout
+                        style="@style/SettingsTextStyle">
+
+                        <TextView
+                            style="@style/SettingsTitleStyle"
+                            android:text="@string/settings_rate_us" />
+
+                        <TextView
+                            style="@style/SettingsSubtitleStyle"
+                            android:text="@string/settings_rate_us_sub" />
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/SettingsChevronStyle" />
+                </LinearLayout>
+
+                <View style="@style/SettingsDividerStyle" />
+
+                <!-- Privacy Policy -->
+                <LinearLayout
+                    android:id="@+id/item_privacy"
+                    style="@style/SettingsItemStyle">
+
+                    <ImageView
+                        style="@style/SettingsIconStyle"
+                        android:src="@drawable/ic_privacy_tip" />
+
+                    <LinearLayout
+                        style="@style/SettingsTextStyle">
+
+                        <TextView
+                            style="@style/SettingsTitleStyle"
+                            android:text="@string/settings_privacy_policy" />
+
+                        <TextView
+                            style="@style/SettingsSubtitleStyle"
+                            android:text="@string/settings_privacy_policy_sub" />
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/SettingsChevronStyle" />
+                </LinearLayout>
+
+                <View style="@style/SettingsDividerStyle" />
+
+                <!-- Share App -->
+                <LinearLayout
+                    android:id="@+id/item_share"
+                    style="@style/SettingsItemStyle">
+
+                    <ImageView
+                        style="@style/SettingsIconStyle"
+                        android:src="@drawable/ic_share" />
+
+                    <LinearLayout
+                        style="@style/SettingsTextStyle">
+
+                        <TextView
+                            style="@style/SettingsTitleStyle"
+                            android:text="@string/settings_share_app" />
+
+                        <TextView
+                            style="@style/SettingsSubtitleStyle"
+                            android:text="@string/settings_share_app_sub" />
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/SettingsChevronStyle" />
+                </LinearLayout>
+
+                <View style="@style/SettingsDividerStyle" />
+
+                <!-- Exit -->
+                <LinearLayout
+                    android:id="@+id/item_exit"
+                    style="@style/SettingsItemStyle">
+
+                    <ImageView
+                        style="@style/SettingsIconStyle"
+                        android:src="@drawable/ic_exit" />
+
+                    <LinearLayout
+                        style="@style/SettingsTextStyle">
+
+                        <TextView
+                            style="@style/SettingsTitleStyle"
+                            android:text="@string/settings_exit" />
+
+                        <TextView
+                            style="@style/SettingsSubtitleStyle"
+                            android:text="@string/settings_exit_sub" />
+                    </LinearLayout>
+
+                    <ImageView
+                        style="@style/SettingsChevronStyle" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

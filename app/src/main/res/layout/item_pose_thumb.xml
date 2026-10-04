@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Blueprint thumbnail (portrait 0.8 ratio): image + title overlay. Bg/clip set in code. -->
 <com.aipose.camera.posematch.ui.widget.PoseThumbLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pose_thumb_root"
     android:layout_width="match_parent"
@@ -14,16 +13,4 @@
         android:contentDescription="@null"
         android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/pose_thumb_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingHorizontal="8dp"
-        android:paddingVertical="6dp"
-        android:textColor="@android:color/white"
-        android:textSize="10sp"
-        android:textStyle="bold" />
 </com.aipose.camera.posematch.ui.widget.PoseThumbLayout>

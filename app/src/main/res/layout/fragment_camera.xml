@@ -345,6 +345,34 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Bottom ad slot. Sits ABOVE the reference strip on purpose: the reference strip
+             plus the shutter dock keep it well clear of the capture button, so an ad here
+             cannot be mistaken for a camera control. Off by default (`nativeCamera`). -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp">
+
+            <TextView
+                android:id="@+id/camera_ad_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:text="@string/ad_badge"
+                android:textColor="#B0FFFFFF"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/camera_ad_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+
         <!-- Reference selector strip. -->
         <HorizontalScrollView
             android:id="@+id/camera_ref_scroll"

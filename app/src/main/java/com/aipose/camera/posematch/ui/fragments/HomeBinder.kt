@@ -38,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.aipose.camera.posematch.analytics.Analytics
 
 private val poseBitmapCache = LruCache<String, Bitmap>(80)
 
@@ -60,17 +61,14 @@ private fun categoryIconRes(cat: String): Int = when (cat) {
     else -> R.drawable.ic_collections
 }
 
-/**
- * Binds the real-XML Home tab ([R.layout.fragment_home]) to the shared [MainViewModel] via View
- * Binding: brand + gallery top bar, a search box, and either a flat search-results grid or the browse
- * view (hero card + guidance caption + per-trend rows of 3 with a "Show all" album overlay).
- */
 class HomeBinder(
     private val host: Fragment,
     private val viewModel: MainViewModel,
     private val root: View,
     private val onOpenCamera: () -> Unit,
-    private val onLaunchGalleryPicker: () -> Unit
+    private val onLaunchGalleryPicker: () -> Unit,
+    // Hides/shows the container's bottom nav while the full-screen "Show all" album is open.
+    private val onAlbumOpenChanged: (Boolean) -> Unit = {}
 ) {
     private val binding = FragmentHomeBinding.bind(root)
     private val jobs = mutableListOf<Job>()
@@ -87,6 +85,7 @@ class HomeBinder(
     private val dynamic get() = binding.homeDynamic
 
     fun bind() {
+        Analytics.screen(Analytics.Screen.HOME)
         binding.homeTopbar.applySystemBarInsets(top = true)
 
         binding.homeSearchBar.background = rounded(card, 14f)
@@ -213,6 +212,7 @@ class HomeBinder(
             }
             setOnClickListener {
                 dismissKeyboard()
+                Analytics.click("hero_start_posing", Analytics.Screen.HOME)
                 heroPose?.let { viewModel.selectPose(it) }
                 onOpenCamera()
             }
@@ -285,18 +285,13 @@ class HomeBinder(
             setStroke((0.5f * d).toInt().coerceAtLeast(1), glass)
         }
         loadPose(thumb.poseThumbImage, pose.image)
-        thumb.poseThumbTitle.apply {
-            text = pose.title
-            background = GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, 0xBF000000.toInt())
-            )
-        }
         thumb.root.setOnClickListener { openPose(pose) }
     }
 
     private fun openPose(pose: PoseItem) {
         dismissKeyboard()
         viewModel.setSearchQuery("")
+        Analytics.click("pose_selected", Analytics.Screen.HOME)
         viewModel.selectPose(pose)
         onOpenCamera()
     }
@@ -305,6 +300,7 @@ class HomeBinder(
 
     private fun showAlbum(category: String) {
         showAllCategory = category
+        onAlbumOpenChanged(true)
         val overlay = binding.homeAlbumOverlay
         overlay.removeAllViews()
         val albumB = ViewCategoryAlbumBinding.inflate(LayoutInflater.from(host.requireContext()), overlay, false)
@@ -313,7 +309,9 @@ class HomeBinder(
             GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(palette.bgTop, palette.bgBottom)
         )
-        albumB.root.applySystemBarInsets(top = true)
+        // Full-screen album: pad for the status bar (top) and the system nav bar (bottom) so the
+        // grid doesn't scroll behind the system icons now that the bottom nav is hidden.
+        albumB.root.applySystemBarInsets(top = true, bottom = true)
         albumB.catAlbumTitle.text = category
         albumB.catAlbumBack.setOnClickListener { closeAlbum() }
         overlay.addView(albumB.root)
@@ -349,6 +347,7 @@ class HomeBinder(
             albumBinding = null
         }.start()
         showAllCategory = null
+        onAlbumOpenChanged(false)
     }
 
     // ---- Image loading -------------------------------------------------------------------

@@ -2,4 +2,13 @@
 <resources>
 
     <style name="Theme.MyApplication" parent="android:Theme.DeviceDefault.NoActionBar" />
+
+    <!--
+        The AdMob native-ad layouts (native_layout1..5) use MaterialComponents widgets
+        (MaterialCardView), which throw IllegalArgumentException unless the inflating context's
+        theme descends from Theme.MaterialComponents. The app itself is DeviceDefault-based, so
+        instead of restyling the whole app we inflate ad views through a ContextThemeWrapper
+        using this theme (see NativeAdHelper.adInflater).
+    -->
+    <style name="Theme.PoseMatch.Ads" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 </resources>

@@ -33,9 +33,6 @@ class MainViewModel(
     val onboardingCompleted: StateFlow<Boolean> = repository.onboardingCompleted
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
-    val selectedLanguage: StateFlow<String> = repository.selectedLanguage
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "English")
-
     val appTheme: StateFlow<String> = repository.appTheme
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "Dark")
 
@@ -219,10 +216,6 @@ class MainViewModel(
 
     fun setOnboardingCompleted() {
         viewModelScope.launch { repository.setOnboardingCompleted(true) }
-    }
-
-    fun setLanguage(language: String) {
-        viewModelScope.launch { repository.setSelectedLanguage(language) }
     }
 
     fun setTheme(theme: String) {

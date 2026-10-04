@@ -4,7 +4,6 @@ package com.aipose.camera.posematch.ui.screens
 object Routes {
     const val SPLASH = "splash"
     const val ONBOARDING = "onboarding"
-    const val LANGUAGE = "language"
     const val MAIN_CONTAINER = "main_container"
     const val STYLE_CATEGORY = "style_category/{category}"
 }

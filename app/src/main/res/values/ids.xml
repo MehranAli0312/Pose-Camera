@@ -8,6 +8,15 @@
     -->
     <item name="splashFragment" type="id" />
     <item name="onboardingFragment" type="id" />
-    <item name="languageFragment" type="id" />
     <item name="mainFragment" type="id" />
+
+    <!--
+      Optional native-ad asset views. NativeAdHelper binds these with findViewById (nullable) and
+      guards each with ?.let, so they only need to exist in the R class — the individual native ad
+      layouts include them only when that asset is shown.
+    -->
+    <item name="ad_price" type="id" />
+    <item name="ad_stars" type="id" />
+    <item name="ad_store" type="id" />
+    <item name="ad_advertiser" type="id" />
 </resources>

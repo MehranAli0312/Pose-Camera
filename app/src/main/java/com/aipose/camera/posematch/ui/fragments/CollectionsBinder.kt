@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewOutlineProvider
 import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -38,6 +39,13 @@ import com.aipose.camera.posematch.databinding.ItemCollectionThumbBinding
 import com.aipose.camera.posematch.databinding.ItemDetailRowBinding
 import com.aipose.camera.posematch.databinding.ViewLocationAlbumBinding
 import com.aipose.camera.posematch.databinding.ViewPhotoDetailBinding
+import com.aipose.camera.posematch.admob_ads.ScreenBottomAd
+import com.aipose.camera.posematch.admob_ads.backInter
+import com.aipose.camera.posematch.admob_ads.canShowAds
+import com.aipose.camera.posematch.admob_ads.forwardInter
+import com.aipose.camera.posematch.admob_ads.remote.NATIVE_DETAIL
+import com.aipose.camera.posematch.admob_ads.remote.RemoteConfig
+import com.aipose.camera.posematch.admob_ads.showInterThen
 import com.aipose.camera.posematch.ui.theme.paletteFor
 import com.aipose.camera.posematch.ui.util.applySystemBarInsets
 import com.aipose.camera.posematch.ui.viewmodel.MainViewModel
@@ -48,6 +56,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.aipose.camera.posematch.analytics.Analytics
 
 /**
  * Binds the real-XML Collections tab ([R.layout.fragment_collections]) to the shared [MainViewModel],
@@ -58,7 +67,9 @@ import java.util.Locale
 class CollectionsBinder(
     private val host: Fragment,
     private val viewModel: MainViewModel,
-    private val root: View
+    private val root: View,
+    // Hides/shows the container's bottom nav while the full-screen photo preview is open.
+    private val onDetailOpenChanged: (Boolean) -> Unit = {}
 ) {
     private val binding = FragmentCollectionsBinding.bind(root)
     private var albumBinding: ViewLocationAlbumBinding? = null
@@ -77,6 +88,9 @@ class CollectionsBinder(
     private var selectedPhotoId: Long? = null
     private var deleteDialog: Dialog? = null
 
+    /** Bottom ad on the full-screen photo preview; released whenever the preview closes. */
+    private var detailAdSlot: ScreenBottomAd.Slot? = null
+
     private val main get() = binding.collectionsMain
     private val list get() = binding.collectionsList
     private val scroll get() = binding.collectionsScroll
@@ -85,6 +99,7 @@ class CollectionsBinder(
     private val detailOverlay get() = binding.collectionsDetailOverlay
 
     fun bind() {
+        Analytics.screen(Analytics.Screen.COLLECTIONS)
         // Status-bar inset on top of the content (edge-to-edge safe on all versions).
         main.applySystemBarInsets(top = true)
 
@@ -124,13 +139,17 @@ class CollectionsBinder(
         jobs.forEach { it.cancel() }
         jobs.clear()
         deleteDialog?.dismiss(); deleteDialog = null
+        detailAdSlot?.release(); detailAdSlot = null
         // Reset search when leaving (the Compose onDispose did the same).
         viewModel.setHistoryQuery("")
     }
 
     /** @return true if a back press was consumed (an open overlay was closed). */
     fun onBack(): Boolean = when {
-        selectedPhotoId != null -> { closeDetail(); true }
+        selectedPhotoId != null -> {
+            host.showInterThen(backInter(RemoteConfig.interDetailBack)) { closeDetail() }
+            true
+        }
         albumLocation != null -> { closeAlbum(); true }
         else -> false
     }
@@ -271,7 +290,11 @@ class CollectionsBinder(
                 GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(Color.TRANSPARENT, 0x99000000.toInt())
             )
         }
-        thumb.root.setOnClickListener { dismissKeyboard(); showDetail(photo) }
+        thumb.root.setOnClickListener {
+            dismissKeyboard()
+            Analytics.click("collection_photo", Analytics.Screen.COLLECTIONS)
+            host.showInterThen(forwardInter(RemoteConfig.interCollectionDetail)) { showDetail(photo) }
+        }
     }
 
     // ---- Album overlay -------------------------------------------------------------------
@@ -321,23 +344,36 @@ class CollectionsBinder(
 
     private fun showDetail(photo: CapturedPhoto) {
         selectedPhotoId = photo.id
+        onDetailOpenChanged(true)
         val overlay = detailOverlay
         overlay.removeAllViews()
         val detailB = ViewPhotoDetailBinding.inflate(LayoutInflater.from(host.requireContext()), overlay, false)
         detailBinding = detailB
         detailB.root.applySystemBarInsets(top = true, bottom = true)
-        detailB.detailCard.background = rounded(card, 16f)
+        // Theme-aware gradient background + a subtly bordered card (works in dark and light).
+        detailB.root.background = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(palette.bgTop, palette.bgBottom)
+        )
+        detailB.detailCard.background = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 16f * d
+            setColor(card)
+            setStroke((1f * d).toInt().coerceAtLeast(1), glass)
+        }
         detailB.detailImage.apply {
             clipToOutline = true
             outlineProvider = roundOutline(16f)
         }
         detailB.detailShare.background = rounded(accent, 12f)
         detailB.detailDelete.background = outlined(12f)
-        detailB.detailBack.setOnClickListener { closeDetail() }
+        detailB.detailBack.setOnClickListener {
+            host.showInterThen(backInter(RemoteConfig.interDetailBack)) { closeDetail() }
+        }
         overlay.addView(detailB.root)
         overlay.visibility = View.VISIBLE
         ViewCompat.requestApplyInsets(detailB.root)
         bindDetail(photo)
+        renderDetailAd(detailB)
 
         overlay.alpha = 0f
         overlay.scaleX = 0.94f
@@ -351,11 +387,11 @@ class CollectionsBinder(
         loadPhoto(detailB.detailImage, detailB.detailBroken, photo.imagePath)
 
         detailB.detailRows.removeAllViews()
-        addDetailRow(detailB.detailRows, R.drawable.ic_location_on, host.getString(R.string.detail_location), photo.locationName, Color.WHITE)
-        addDetailRow(detailB.detailRows, R.drawable.ic_schedule, host.getString(R.string.detail_captured), formatHistoryDate(photo.dateTimestamp), Color.WHITE)
+        addDetailRow(detailB.detailRows, R.drawable.ic_location_on, host.getString(R.string.detail_location), photo.locationName, palette.textPrimary)
+        addDetailRow(detailB.detailRows, R.drawable.ic_schedule, host.getString(R.string.detail_captured), formatHistoryDate(photo.dateTimestamp), palette.textPrimary)
         addDetailRow(detailB.detailRows, R.drawable.ic_analytics, host.getString(R.string.detail_match_score), "${photo.matchScore}%",
             if (photo.matchScore >= 80) scoreGreen else scoreOrange)
-        addDetailRow(detailB.detailRows, R.drawable.ic_category, host.getString(R.string.detail_category), photo.category, Color.WHITE)
+        addDetailRow(detailB.detailRows, R.drawable.ic_category, host.getString(R.string.detail_category), photo.category, palette.textPrimary)
 
         detailB.detailShare.setOnClickListener {
             val share = Intent(Intent.ACTION_SEND).apply {
@@ -383,8 +419,32 @@ class CollectionsBinder(
         container.addView(rowB.root)
     }
 
+    /** Photo-preview bottom ad — a browsing screen with room below the metadata card. */
+    private fun renderDetailAd(detailB: ViewPhotoDetailBinding) {
+        detailAdSlot?.release()
+        detailAdSlot = null
+        detailB.detailAdHolder.removeAllViews()
+        detailB.detailAdHolder.visibility = View.GONE
+        detailB.detailAdText.visibility = View.GONE
+        if (!host.requireContext().canShowAds(true)) return
+
+        detailAdSlot = ScreenBottomAd.render(
+            activity = host.requireActivity(),
+            owner = host.viewLifecycleOwner,
+            holder = detailB.detailAdHolder,
+            label = detailB.detailAdText,
+            mode = RemoteConfig.nativeDetail,
+            placement = NATIVE_DETAIL,
+            nativeId = host.getString(R.string.NativeAll),
+            bannerId = host.getString(R.string.Banner_Ad),
+            tag = "ScreenNative-Detail"
+        )
+    }
+
     private fun closeDetail() {
         selectedPhotoId = null
+        detailAdSlot?.release()
+        detailAdSlot = null
         val overlay = detailOverlay
         overlay.animate().alpha(0f).scaleX(0.94f).scaleY(0.94f).setDuration(180).withEndAction {
             overlay.visibility = View.GONE
@@ -392,6 +452,7 @@ class CollectionsBinder(
             overlay.alpha = 1f; overlay.scaleX = 1f; overlay.scaleY = 1f
             detailBinding = null
         }.start()
+        onDetailOpenChanged(false)
     }
 
     private fun showDeleteDialog(photo: CapturedPhoto) {
@@ -403,8 +464,15 @@ class CollectionsBinder(
         val dialog = Dialog(ctx).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(deleteB.root)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            window?.setDimAmount(0.6f)
+            window?.apply {
+                setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                // Programmatically set width to screen width minus 20dp margin on each side (40dp total).
+                val width = (ctx.resources.displayMetrics.widthPixels - (40 * d)).toInt()
+                setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+                setGravity(Gravity.CENTER)
+                addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+                setDimAmount(0.7f)
+            }
         }
         deleteDialog = dialog
         deleteB.deleteCancel.setOnClickListener { dialog.dismiss() }

@@ -1,0 +1,54 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="420dp"
+    android:viewportWidth="240"
+    android:viewportHeight="420">
+
+    <!-- Phone Frame -->
+    <path
+        android:fillColor="#1A1A1E"
+        android:pathData="M30,0h180c16.5,0 30,13.5 30,30v360c0,16.5 -13.5,30 -30,30h-180c-16.5,0 -30,-13.5 -30,-30v-360c0,-16.5 13.5,-30 30,-30z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M35,10h170c11,0 20,9 20,20v340c0,11 -9,20 -20,20h-170c-11,0 -20,-9 -20,-20v-340c0,-11 9,-20 20,-20z" />
+
+    <!-- Screen Content -->
+    <path
+        android:fillColor="#080808"
+        android:pathData="M35,10h170v380h-170z" />
+
+    <!-- transformed image preview -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.1"
+        android:pathData="M50,100 L160,80 L180,280 L70,300 Z" />
+    <!-- Grid points -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M50,100c2,0 4,-2 4,-4s-2,-4 -4,-4s-4,2 -4,4s2,4 4,4z M160,80c2,0 4,-2 4,-4s-2,-4 -4,-4s-4,2 -4,4s2,4 4,4z M180,280c2,0 4,-2 4,-4s-2,-4 -4,-4s-4,2 -4,4s2,4 4,4z M70,300c2,0 4,-2 4,-4s-2,-4 -4,-4s-4,2 -4,4s2,4 4,4z" />
+
+    <!-- Right Control Panel -->
+    <path
+        android:fillColor="#1F1F23"
+        android:pathData="M185,120h30v150h-30z" />
+    <!-- Vertical Sliders -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.2"
+        android:pathData="M198,140h4v30h-4z M198,185h4v30h-4z M198,230h4v30h-4z" />
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M195,150h10v4c0,1 -1,2 -2,2h-6c-1,0 -2,-1 -2,-2z M195,200h10v4c0,1 -1,2 -2,2h-6c-1,0 -2,-1 -2,-2z M195,245h10v4c0,1 -1,2 -2,2h-6c-1,0 -2,-1 -2,-2z" />
+
+    <!-- Bottom Bar Icons -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.4"
+        android:pathData="M50,370h20v20h-20z M85,370h20v20h-20z M120,375h30v10h-30z M165,370h20v20h-20z" />
+
+    <!-- Capture Button -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M120,340c8,0 15,-7 15,-15s-7,-15 -15,-15s-15,7 -15,15s7,15 15,15z" />
+
+</vector>

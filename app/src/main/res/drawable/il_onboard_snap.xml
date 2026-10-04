@@ -1,0 +1,52 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+
+    <!-- Soft accent backdrop -->
+    <path
+        android:fillColor="@color/accent"
+        android:fillAlpha="0.12"
+        android:pathData="M120,20 a100,100 0 1,0 0,200 a100,100 0 1,0 0,-200 z" />
+
+    <!-- Sparkle (filter) -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M72,74 L76,85 L87,89 L76,93 L72,104 L68,93 L57,89 L68,85 Z" />
+
+    <!-- Camera top bump -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M102,82 H138 A6,6 0 0 1 144,88 V98 H96 V88 A6,6 0 0 1 102,82 Z" />
+
+    <!-- Camera body -->
+    <path
+        android:fillColor="@color/accent"
+        android:fillAlpha="0.14"
+        android:strokeColor="@color/accent"
+        android:strokeWidth="5"
+        android:pathData="M74,98 H166 A16,16 0 0 1 182,114 V162 A16,16 0 0 1 166,178 H74 A16,16 0 0 1 58,162 V114 A16,16 0 0 1 74,98 Z" />
+
+    <!-- Lens -->
+    <path
+        android:strokeColor="@color/text_primary"
+        android:strokeWidth="5"
+        android:fillColor="#00000000"
+        android:pathData="M120,110 a28,28 0 1,0 0,56 a28,28 0 1,0 0,-56 z" />
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M120,125 a13,13 0 1,0 0,26 a13,13 0 1,0 0,-26 z" />
+
+    <!-- Saved badge -->
+    <path
+        android:fillColor="@color/accent"
+        android:pathData="M170,82 a18,18 0 1,0 0,36 a18,18 0 1,0 0,-36 z" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillColor="#00000000"
+        android:pathData="M162,100 l6,6 l10,-11" />
+</vector>

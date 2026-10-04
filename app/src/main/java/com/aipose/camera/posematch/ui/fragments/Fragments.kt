@@ -7,7 +7,7 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.screens.Routes
 
 // ---- Shared helpers ----------------------------------------------------------------------
-// Splash, Onboarding, Language and the Main container are now real XML fragments in their own files.
+// Splash, Onboarding and the Main container are now real XML fragments in their own files.
 
 /** Maps the screens' route strings onto Fragment destinations, popping the current screen. */
 internal fun Fragment.navigateToRoute(route: String) {
@@ -15,7 +15,6 @@ internal fun Fragment.navigateToRoute(route: String) {
     val dest = when (route) {
         Routes.SPLASH -> R.id.splashFragment
         Routes.ONBOARDING -> R.id.onboardingFragment
-        Routes.LANGUAGE -> R.id.languageFragment
         Routes.MAIN_CONTAINER -> R.id.mainFragment
         else -> return
     }

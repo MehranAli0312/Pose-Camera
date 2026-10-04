@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Onboarding (real XML — migration step 3). 3-page pager driven by a local currentPage field.
-  Background gradient, image border (glass), dot/button accent colours and per-page illustration
-  are applied in code from the persisted theme's palette + drawable lookup, mirroring the old
-  Compose OnboardingScreen. Header gets the status-bar inset; the bottom panel the nav-bar inset.
--->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/onboarding_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <!-- Header row (Skip aligned to the end; hidden on the last page). -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onboarding_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:id="@+id/onboarding_header"
+        android:id="@+id/onboarding_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="36dp"
-        android:gravity="end|center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginBottom="32dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/onboarding_skip_button"
@@ -34,124 +36,65 @@
             android:text="@string/action_skip"
             android:textColor="@color/text_secondary"
             android:textSize="16sp" />
-    </LinearLayout>
 
-    <!-- Central illustration; sized to 85% height / 2:3 aspect in code. -->
-    <FrameLayout
-        android:id="@+id/onboarding_image_block"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingVertical="12dp">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/onboarding_image"
+        <LinearLayout
+            android:id="@+id/onboarding_dots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="Onboarding Visual"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/pose_guide_onboard1_1781797560457" />
-    </FrameLayout>
-
-    <!-- Description + navigation control panel. -->
-    <LinearLayout
-        android:id="@+id/onboarding_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/onboarding_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/text_primary"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            tools:text="1. Pick a Pose" />
-
-        <TextView
-            android:id="@+id/onboarding_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:letterSpacing="0.03125"
-            android:paddingHorizontal="12dp"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            tools:text="Browse 100+ ready-made poses." />
-
-        <!-- Indicators + Next/Let's Go, spaced apart. -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/onboarding_dots"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <View
+                android:id="@+id/onboarding_dot_0"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp" />
 
-                <View
-                    android:id="@+id/onboarding_dot_0"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp" />
+            <View
+                android:id="@+id/onboarding_dot_1"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp" />
 
-                <View
-                    android:id="@+id/onboarding_dot_1"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp" />
-
-                <View
-                    android:id="@+id/onboarding_dot_2"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp" />
-            </LinearLayout>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:id="@+id/onboarding_next_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:minWidth="120dp"
-                android:minHeight="44dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="10dp">
-
-                <TextView
-                    android:id="@+id/onboarding_next_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/action_next"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="4dp"
-                    android:contentDescription="Arrow Next"
-                    android:src="@drawable/ic_arrow_forward" />
-            </LinearLayout>
+            <View
+                android:id="@+id/onboarding_dot_2"
+                android:layout_width="8dp"
+                android:layout_height="8dp" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/onboarding_next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:id="@+id/onboarding_next_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_next"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

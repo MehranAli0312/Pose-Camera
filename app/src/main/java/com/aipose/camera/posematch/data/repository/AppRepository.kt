@@ -8,12 +8,10 @@ import kotlinx.coroutines.flow.flow
 interface IAppRepository {
     // Preferences Data
     val onboardingCompleted: Flow<Boolean>
-    val selectedLanguage: Flow<String>
     val appTheme: Flow<String>
     val retainSkeleton: Flow<Boolean>
 
     suspend fun setOnboardingCompleted(completed: Boolean)
-    suspend fun setSelectedLanguage(language: String)
     suspend fun setAppTheme(theme: String)
     suspend fun setRetainSkeleton(retain: Boolean)
 
@@ -40,16 +38,11 @@ class AppRepositoryImpl(
 ) : IAppRepository {
 
     override val onboardingCompleted: Flow<Boolean> = preferencesManager.onboardingCompleted
-    override val selectedLanguage: Flow<String> = preferencesManager.selectedLanguage
     override val appTheme: Flow<String> = preferencesManager.appTheme
     override val retainSkeleton: Flow<Boolean> = preferencesManager.retainSkeleton
 
     override suspend fun setOnboardingCompleted(completed: Boolean) {
         preferencesManager.setOnboardingCompleted(completed)
-    }
-
-    override suspend fun setSelectedLanguage(language: String) {
-        preferencesManager.setSelectedLanguage(language)
     }
 
     override suspend fun setAppTheme(theme: String) {

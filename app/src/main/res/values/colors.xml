@@ -23,4 +23,9 @@
     <color name="text_secondary">#FF667085</color>
     <color name="icon_muted">#FF98A0AC</color>
     <color name="nav_bg">#FFFFFFFF</color>
+
+    <color name="ads_bg">#E0E0E0</color>
+    <color name="template_red">#D32F2F</color>
+    <color name="transparent_10">#1A000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

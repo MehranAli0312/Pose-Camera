@@ -15,11 +15,6 @@
         android:label="Onboarding" />
 
     <fragment
-        android:id="@id/languageFragment"
-        android:name="com.aipose.camera.posematch.ui.fragments.LanguageFragment"
-        android:label="Language" />
-
-    <fragment
         android:id="@id/mainFragment"
         android:name="com.aipose.camera.posematch.ui.fragments.MainFragment"
         android:label="Main" />

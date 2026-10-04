@@ -20,17 +20,12 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class PreferencesManager(private val context: Context) {
     companion object {
         val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
-        val KEY_SELECTED_LANGUAGE = stringPreferencesKey("selected_language")
         val KEY_APP_THEME = stringPreferencesKey("app_theme")
         val KEY_RETAIN_SKELETON = booleanPreferencesKey("retain_skeleton")
     }
 
     val onboardingCompleted: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[KEY_ONBOARDING_COMPLETED] ?: false
-    }
-
-    val selectedLanguage: Flow<String> = context.dataStore.data.map { preferences ->
-        preferences[KEY_SELECTED_LANGUAGE] ?: "English"
     }
 
     val appTheme: Flow<String> = context.dataStore.data.map { preferences ->
@@ -44,12 +39,6 @@ class PreferencesManager(private val context: Context) {
     suspend fun setOnboardingCompleted(completed: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[KEY_ONBOARDING_COMPLETED] = completed
-        }
-    }
-
-    suspend fun setSelectedLanguage(language: String) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_SELECTED_LANGUAGE] = language
         }
     }
 

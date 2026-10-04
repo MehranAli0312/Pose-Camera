@@ -1,0 +1,63 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="420dp"
+    android:viewportWidth="240"
+    android:viewportHeight="420">
+
+    <!-- Phone Frame -->
+    <path
+        android:fillColor="#1A1A1E"
+        android:pathData="M30,0h180c16.5,0 30,13.5 30,30v360c0,16.5 -13.5,30 -30,30h-180c-16.5,0 -30,-13.5 -30,-30v-360c0,-16.5 13.5,-30 30,-30z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M35,10h170c11,0 20,9 20,20v340c0,11 -9,20 -20,20h-170c-11,0 -20,-9 -20,-20v-340c0,-11 9,-20 20,-20z" />
+
+    <!-- Camera View Background -->
+    <path
+        android:fillColor="#121212"
+        android:pathData="M35,10h170v380h-170z" />
+
+    <!-- Silhouette and Skeleton (Stylized) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.1"
+        android:pathData="M120,80c10,0 20,10 20,20s-10,20 -20,20s-20,-10 -20,-20s10,-20 20,-20z M120,125l-30,40l10,120h40l10,-120z" />
+    <!-- Skeleton dots -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M120,100c2,0 4,2 4,4s-2,4 -4,4s-4,-2 -4,-4s2,-4 4,-4z M90,140c2,0 4,2 4,4s-2,4 -4,4s-4,-2 -4,-4s2,-4 4,-4z M150,140c2,0 4,2 4,4s-2,4 -4,4s-4,-2 -4,-4s2,-4 4,-4z M100,285c2,0 4,2 4,4s-2,4 -4,4s-4,-2 -4,-4s2,-4 4,-4z M140,285c2,0 4,2 4,4s-2,4 -4,4s-4,-2 -4,-4s2,-4 4,-4z" />
+    <!-- Skeleton lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeAlpha="0.6"
+        android:pathData="M120,104l0,40 M90,144l60,0 M90,144l10,141 M150,144l-10,141" />
+
+    <!-- Match Score Card -->
+    <path
+        android:fillColor="#1F1F23"
+        android:pathData="M95,35h50c4,0 8,4 8,8v25c0,4 -4,8 -8,8h-50c-4,0 -8,-4 -8,-8v-25c0,-4 4,-8 8,-8z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.4"
+        android:pathData="M105,42h30v2h-30z" />
+    <path
+        android:fillColor="#8B5CF6"
+        android:pathData="M105,50h30v8c0,2 -2,4 -4,4h-22c-2,0 -4,-2 -4,-4z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M110,54h15v3h-15z" />
+
+    <!-- Bottom Controls -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.1"
+        android:pathData="M50,330h140v2h-140z" />
+    <path
+        android:fillColor="#8B5CF6"
+        android:pathData="M110,325h20c3,0 6,3 6,6s-3,6 -6,6h-20c-3,0 -6,-3 -6,-6s3,-6 6,-6z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M120,380c10,0 18,-8 18,-18s-8,-18 -18,-18s-18,8 -18,18s8,18 18,18z" />
+
+</vector>

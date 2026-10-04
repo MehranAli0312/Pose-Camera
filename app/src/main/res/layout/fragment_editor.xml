@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Post-capture editor (real XML — migration step 9). Ports PhotoEditScreen: live-filtered preview,
-  Filters/Adjust tabs, real-image filter chips, iPhone-style adjustment sliders + Rotate/Crop tools,
-  revert, and Save. Colours/segmented styling applied in code. Shown as an overlay by CameraBinder.
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/editor_root"
     android:layout_width="match_parent"
@@ -11,7 +6,6 @@
     android:background="#FF060608"
     android:orientation="vertical">
 
-    <!-- Top bar. -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -185,4 +179,31 @@
                 android:minHeight="48dp" />
         </LinearLayout>
     </FrameLayout>
+
+    <!-- Bottom ad slot. Native or banner, chosen at runtime by Remote Config `nativeEditor`;
+         collapsed to zero height when the mode is "off" or nothing fills. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/editor_ad_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="2dp"
+            android:text="@string/ad_badge"
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/editor_ad_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
 </LinearLayout>

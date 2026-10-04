@@ -75,6 +75,26 @@
 -dontwarn com.google.firebase.**
 -dontwarn com.google.mediapipe.**
 
+# The accelerated pose detector spins up a MediaPipe graph in a separate
+# "mlkit_acceleration_mini_benchmark" process. Native code reads protobuf-lite
+# message fields (e.g. the byte[] "value" of ...mlkit_vision_mediapipe.zzib) by
+# reflection through JNI (PacketCreator.nativeCreateProto). R8 in the release
+# build strips/renames those fields, which aborts that process with
+# java.lang.NoSuchFieldError. Keep MediaPipe/MLKit internals and all
+# protobuf-lite message fields so the reflective JNI lookups still resolve.
+-keep class com.google.mediapipe.** { *; }
+-keepclassmembers class com.google.mediapipe.** { *; }
+-keep class com.google.android.gms.internal.mlkit_vision_mediapipe.** { *; }
+-keepclassmembers class com.google.android.gms.internal.mlkit_vision_mediapipe.** { *; }
+-keep class com.google.mlkit.** { *; }
+-keepclassmembers class com.google.mlkit.** { *; }
+
+# protobuf-lite: generated message classes expose their fields reflectively.
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite { <fields>; }
+-keep class com.google.protobuf.** { *; }
+-dontwarn com.google.protobuf.**
+
 # ---- Coil / Compose (R8-friendly; suppress optional-reference warnings) ----
 -dontwarn coil.**
 -dontwarn androidx.compose.**
