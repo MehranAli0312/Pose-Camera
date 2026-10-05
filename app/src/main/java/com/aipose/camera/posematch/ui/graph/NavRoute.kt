@@ -21,7 +21,6 @@ private object Routes {
     const val CAPTURE_DETAIL_SCREEN = "CAPTURE_DETAIL_SCREEN"
     const val PHOTO_EDIT_SCREEN = "PHOTO_EDIT_SCREEN"
     const val PHOTO_SUCCESS_SCREEN = "PHOTO_SUCCESS_SCREEN"
-    const val THEME_PICKER_SCREEN = "THEME_PICKER_SCREEN"
     const val PROGRESS_SCREEN = "PROGRESS_SCREEN"
     const val ACHIEVEMENTS_SCREEN = "ACHIEVEMENTS_SCREEN"
 }
@@ -45,7 +44,6 @@ sealed class NavRoute(val route: String) {
     data object ProScreenRoute : NavRoute(Routes.PRO_SCREEN)
     data object SplashProScreenRoute : NavRoute(Routes.SPLASH_PRO_SCREEN)
     data object PhotoEditScreenRoute : NavRoute(Routes.PHOTO_EDIT_SCREEN)
-    data object ThemePickerScreenRoute : NavRoute(Routes.THEME_PICKER_SCREEN)
     data object ProgressScreenRoute : NavRoute(Routes.PROGRESS_SCREEN)
     data object AchievementsScreenRoute : NavRoute(Routes.ACHIEVEMENTS_SCREEN)
 

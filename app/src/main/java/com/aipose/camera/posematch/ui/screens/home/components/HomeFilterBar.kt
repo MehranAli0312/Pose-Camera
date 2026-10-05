@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,12 +32,15 @@ import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.GlossyIconBadge
 import com.aipose.camera.posematch.ui.common.GlossyIconCircle
+import com.aipose.camera.posematch.ui.common.PoseOptionSheet
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.common.poseCard
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.screens.home.models.HomeFilter
+import com.aipose.camera.posematch.ui.theme.Emerald
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
+import com.aipose.camera.posematch.ui.theme.Orange
 import com.aipose.camera.posematch.ui.theme.PoseTextChevron
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
@@ -74,6 +75,7 @@ internal fun HomeFilterBar(
                 labelRes = R.string.home_filter_category,
                 value = filter.selectedCategory,
                 options = filter.categories,
+                accent = Orange,
                 onSelect = onSelectCategory,
             )
             Spacer(modifier = Modifier.width(ShuffleSize + ShuffleClearance * 2))
@@ -83,6 +85,7 @@ internal fun HomeFilterBar(
                 labelRes = R.string.home_filter_level,
                 value = filter.selectedDifficulty,
                 options = filter.difficulties,
+                accent = Emerald,
                 onSelect = onSelectDifficulty,
             )
         }
@@ -103,18 +106,20 @@ private fun RowScope.FilterSlot(
     labelRes: Int,
     value: String?,
     options: List<String>,
+    accent: Color,
     onSelect: (String) -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var isSheetVisible by remember { mutableStateOf(false) }
+    val label = stringResource(labelRes)
     Box(modifier = Modifier.weight(1f)) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .click(enabled = options.isNotEmpty()) { expanded = true },
+                .click(enabled = options.isNotEmpty()) { isSheetVisible = true },
             verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
             Text(
-                text = stringResource(labelRes),
+                text = label,
                 style = poseTextStyle(8.5.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -139,21 +144,18 @@ private fun RowScope.FilterSlot(
                 )
             }
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = option,
-                            style = poseTextStyle(14.sp, FontWeight.SemiBold, Color.White),
-                        )
-                    },
-                    onClick = {
-                        expanded = false
-                        onSelect(option)
-                    },
-                )
-            }
-        }
+    }
+    if (isSheetVisible) {
+        PoseOptionSheet(
+            title = label,
+            options = options,
+            selectedIndex = options.indexOf(value),
+            accent = accent,
+            onSelect = { index ->
+                isSheetVisible = false
+                onSelect(options[index])
+            },
+            onDismiss = { isSheetVisible = false },
+        )
     }
 }

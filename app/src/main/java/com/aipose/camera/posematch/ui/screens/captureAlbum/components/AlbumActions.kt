@@ -55,7 +55,7 @@ internal fun AlbumActions(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_saved_camera),
+                painter = painterResource(R.drawable.ic_shoot_again),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(Color.White),
                 modifier = Modifier.size(CameraGlyphSize),

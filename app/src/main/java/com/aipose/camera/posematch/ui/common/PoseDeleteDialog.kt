@@ -1,23 +1,9 @@
 package com.aipose.camera.posematch.ui.common
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.theme.DangerRed
+import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 
 @Composable
 fun PoseDeleteDialog(
@@ -26,47 +12,14 @@ fun PoseDeleteDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        containerColor = MaterialTheme.colorScheme.surface,
-        icon = {
-            Icon(
-                imageVector = Icons.Default.DeleteForever,
-                contentDescription = null,
-                tint = DangerRed,
-            )
-        },
-        title = {
-            Text(
-                text = title,
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-            )
-        },
-        text = {
-            Text(
-                text = message,
-                color = Color.Gray,
-                fontSize = 13.sp,
-            )
-        },
-        confirmButton = {
-            Button(
-                onClick = onConfirm,
-                colors = ButtonDefaults.buttonColors(containerColor = DangerRed),
-                shape = RoundedCornerShape(12.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.action_delete),
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-        },
-        dismissButton = {
-            OutlinedButton(onClick = onDismiss, shape = RoundedCornerShape(12.dp)) {
-                Text(text = stringResource(R.string.action_cancel), color = Color.White)
-            }
-        },
+    PoseDialog(
+        iconRes = R.drawable.ic_trash,
+        iconPalette = GlossyBadgePalette.Rose,
+        title = title,
+        message = message,
+        confirmLabel = stringResource(R.string.action_delete),
+        onConfirm = onConfirm,
+        dismissLabel = stringResource(R.string.action_cancel),
+        onDismiss = onDismiss,
     )
 }

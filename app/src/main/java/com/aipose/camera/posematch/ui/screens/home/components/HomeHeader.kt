@@ -29,7 +29,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.GlossyIconBadge
 import com.aipose.camera.posematch.ui.common.GlossyIconCircle
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.isProUser
@@ -42,7 +41,6 @@ import com.aipose.camera.posematch.ui.theme.PoseTextSoft
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val LogoSize = 44.dp
 private val TrophySize = 40.dp
 private val StreakMinHeight = 40.dp
 private val StreakShape = RoundedCornerShape(20.dp)
@@ -60,12 +58,6 @@ internal fun HomeHeader(
             .padding(end = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        GlossyIconBadge(
-            iconRes = R.drawable.ic_pose_logo,
-            palette = GlossyBadgePalette.Indigo,
-            size = LogoSize,
-        )
-        Spacer(modifier = Modifier.width(12.dp))
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(2.dp),

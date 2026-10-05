@@ -51,7 +51,7 @@ object LegacyPreferencesMigration : DataMigration<Preferences> {
             }
         }
         currentData[LEGACY_RETAIN_SKELETON]?.let { retain ->
-            migrated[AppPreferencesKeys.RETAIN_SKELETON] = retain
+            migrated[AppPreferencesKeys.KEEP_POSE_OVERLAY] = retain
         }
         migrated[AppPreferencesKeys.LEGACY_PREFERENCES_IMPORTED] = true
 

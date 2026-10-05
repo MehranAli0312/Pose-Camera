@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import com.example.common.showToast
 import com.pdfutility.billing.presentation.states.PurchaseResult
 import com.aipose.camera.posematch.ads.ProRestoreResult
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.screens.pro.components.ProBottomCta
@@ -96,7 +97,7 @@ fun ProScreen(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = PoseScreenGutter),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             ProHeader()

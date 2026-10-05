@@ -6,6 +6,7 @@ import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.CaptureDraft
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
+import com.aipose.camera.posematch.domain.models.PhotoCropRect
 import com.aipose.camera.posematch.domain.models.PhotoGeometry
 import com.aipose.camera.posematch.domain.usecase.CaptureLocationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
@@ -60,19 +61,29 @@ class PhotoEditViewModel(
     }
 
     fun setCropAspect(aspect: Float?) {
-        _uiState.update { state -> state.copy(geometry = state.geometry.withCropAspect(aspect)) }
+        _uiState.update { state ->
+            state.copy(geometry = state.geometry.withCrop(aspect, state.cropRectFor(aspect)))
+        }
+    }
+
+    fun setCropRect(rect: PhotoCropRect) {
+        _uiState.update { state -> state.copy(geometry = state.geometry.withCropRect(rect)) }
     }
 
     fun applyTransform(transform: CropTransform) {
         _uiState.update { state ->
             val geometry = state.geometry
+            val transformed = when (transform) {
+                CropTransform.RotateLeft -> geometry.rotatedBack()
+                CropTransform.RotateRight -> geometry.rotated()
+                CropTransform.FlipHorizontal -> geometry.flippedHorizontally()
+                CropTransform.FlipVertical -> geometry.flippedVertically()
+            }
+            val rotatedSize = state.sourceSize.rotatedBy(transformed.rotationDegrees)
             state.copy(
-                geometry = when (transform) {
-                    CropTransform.RotateLeft -> geometry.rotatedBack()
-                    CropTransform.RotateRight -> geometry.rotated()
-                    CropTransform.FlipHorizontal -> geometry.flippedHorizontally()
-                    CropTransform.FlipVertical -> geometry.flippedVertically()
-                }
+                geometry = transformed.withCropRect(
+                    PhotoCropRect.centeredFor(transformed.cropAspect, rotatedSize.aspect ?: 1f)
+                )
             )
         }
     }
@@ -156,6 +167,9 @@ class PhotoEditViewModel(
             ).withGrade()
         }
     }
+
+    private fun PhotoEditUiState.cropRectFor(aspect: Float?): PhotoCropRect =
+        PhotoCropRect.centeredFor(aspect, rotatedSourceSize.aspect ?: 1f)
 
     private fun PhotoEditUiState.withGrade(
         selectedFilter: PhotoFilterId = this.selectedFilter,

@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">ข้าม</string>
     <string name="item_settings">การตั้งค่า</string>
-    <string name="settings_theme">ธีม</string>
     <string name="close">ปิด</string>
     <string name="settings_language">ภาษา</string>
     <string name="settings_language_value">ไทย</string>
     <string name="settings_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="settings_rate_us">ให้คะแนนเรา</string>
     <string name="settings_share_app">แชร์แอป</string>
     <string name="exitApp">ออกจากแอป</string>
     <string name="exitAppDescription">คุณแน่ใจหรือไม่ว่าต้องการออกจากแอป</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">ยกเลิกการซื้อแล้ว</string>
     <string name="pro_purchase_failed">ซื้อไม่สำเร็จ %1$s</string>
     <string name="pro_plan_unavailable">แผนนี้ยังไม่พร้อมใช้งาน</string>
-    <string name="onboard_continue">ดำเนินการต่อ</string>
     <string name="pro_purchase_pending">การชำระเงินอยู่ระหว่างดำเนินการ Pro จะปลดล็อกเมื่อได้รับการยืนยัน</string>
     <string name="pro_restore_success">กู้คืนการซื้อแล้ว</string>
     <string name="pro_restore_nothing_found">ไม่พบการซื้อที่ใช้งานอยู่สำหรับบัญชี Google นี้</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">หมวดหมู่</string>
     <string name="camera_sim_title">โหมดจำลองสตูดิโอ</string>
     <string name="camera_sim_hint">ย้ายการจัดแนวด้วยวงกลมที่ลากได้ด้านล่าง</string>
-    <string name="camera_pro_title">การจัดแนวแบบสตูดิโอมืออาชีพ</string>
     <string name="action_reset">รีเซ็ต</string>
     <string name="tab_filters">ฟิลเตอร์</string>
     <string name="tab_adjust">ปรับแต่ง</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">ถ่ายภาพ</string>
     <string name="camera_change_pose">เปลี่ยนท่า</string>
     <string name="camera_no_pose">ถ่ายอิสระ</string>
-    <string name="camera_skeleton">เส้นโครงกระดูก</string>
     <string name="edit_match_badge">ตรง %1$d%%</string>
     <string name="edit_intensity">ความเข้ม</string>
     <string name="edit_compare">ลากเพื่อเปรียบเทียบ</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · เมื่อสักครู่</string>
     <string name="saved_shoot_again">ถ่ายอีกครั้ง</string>
     <string name="saved_view_collections">ดูในคอลเลกชัน</string>
-    <string name="theme_dark">มืด</string>
-    <string name="theme_light">สว่าง</string>
-    <string name="theme_sleek_charcoal">ถ่านเรียบหรู</string>
-    <string name="theme_cyberpunk_violet">ม่วงไซเบอร์พังก์</string>
     <string name="action_clear">ล้าง</string>
     <string name="imported_pose_title">ภาพอ้างอิงจากแกลเลอรี</string>
     <string name="action_back">กลับ</string>
     <string name="unknown_location">ไม่ทราบสถานที่</string>
     <string name="action_favorite">รายการโปรด</string>
     <string name="camera_flash">แฟลช</string>
-    <string name="camera_controls">ตัวควบคุมกล้อง</string>
     <string name="camera_grid">ตาราง</string>
     <string name="camera_timer">ตั้งเวลา</string>
-    <string name="camera_timer_seconds">ตั้งเวลา %1$d วิ</string>
     <string name="camera_switch">สลับกล้อง</string>
     <string name="camera_selected">เลือกแล้ว</string>
     <string name="pose_overlay">เส้นโครงท่าโพส</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">แตะเพื่อลอง</string>
     <string name="nav_saved">ที่บันทึก</string>
     <string name="nav_capture">เปิดกล้อง</string>
-    <string name="onboard_back">กลับ</string>
     <string name="onboard_next">ถัดไป</string>
     <string name="onboard_lets_go">เริ่มกันเลย</string>
-    <string name="onboard_step_label">ขั้นที่ %1$d จาก %2$d</string>
     <string name="onboard_pose_count_badge">%1$d ท่า</string>
     <string name="onboard_pose_name">พิงดาดฟ้า</string>
     <string name="onboard_badge_viral">ไวรัล</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">ภาพ · %1$d</string>
     <string name="saved_tab_poses">ท่าโพส · %1$d</string>
-    <string name="saved_section_shots">ภาพที่บันทึก</string>
-    <string name="saved_section_poses">ท่าโพสที่บันทึก</string>
-    <string name="saved_see_all">ดูทั้งหมด</string>
     <string name="saved_add">เพิ่มในรายการโปรด</string>
     <string name="saved_remove">นำออกจากรายการโปรด</string>
     <string name="saved_sort_title">จัดเรียงที่บันทึก</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">สถานที่</string>
     <string name="collections_stat_average">ตรงเฉลี่ย</string>
     <string name="collections_filter_all">ทั้งหมด</string>
-    <string name="collections_filter_favorites">รายการโปรด</string>
     <string name="collections_filter_top_match">ตรงที่สุด</string>
     <string name="collections_filter_recent">ล่าสุด</string>
     <string name="collections_sort_title">จัดเรียงภาพ</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">แนะนำ</string>
     <string name="explore_sort_easiest">ง่ายสุดก่อน</string>
     <string name="explore_empty">ไม่มีท่าโพสที่ตรงกับการค้นหา</string>
-    <string name="theme_picker_subtitle">เลือกลุคที่เข้ากับสไตล์คุณ</string>
-    <string name="theme_desc_dark">น้ำเงินเข้ม · สีเน้นคราม</string>
-    <string name="theme_desc_light">เทาอ่อน · สีเน้นเดิม</string>
-    <string name="theme_desc_sleek_charcoal">ทองแดงอบอุ่นบนพื้นเกือบดำ</string>
-    <string name="theme_desc_cyberpunk_violet">ประกายบานเย็น · พลัมเข้ม</string>
-    <string name="theme_current">ปัจจุบัน</string>
-    <string name="theme_apply">ใช้ธีม</string>
     <string name="detail_saved_in">บันทึกในคอลเลกชัน · %1$s</string>
     <string name="detail_today">วันนี้ %1$s</string>
     <string name="detail_yesterday">เมื่อวาน %1$s</string>

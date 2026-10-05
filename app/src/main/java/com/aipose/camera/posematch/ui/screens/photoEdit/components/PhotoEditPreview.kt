@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -22,7 +21,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.aipose.camera.posematch.R
@@ -45,7 +43,6 @@ internal fun PhotoEditPreview(
     geometry: PhotoGeometry,
     frameAspect: Float?,
     modifier: Modifier = Modifier,
-    imageInset: Dp = 0.dp,
     onCompareChange: ((Boolean) -> Unit)? = null,
     overlay: @Composable BoxScope.() -> Unit = {},
 ) {
@@ -69,9 +66,7 @@ internal fun PhotoEditPreview(
                 imagePath = imagePath,
                 colorFilter = colorFilter,
                 geometry = geometry,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(imageInset),
+                modifier = Modifier.fillMaxSize(),
             )
             overlay()
         }

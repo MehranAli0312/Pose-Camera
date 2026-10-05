@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">تخطي</string>
     <string name="item_settings">الإعدادات</string>
-    <string name="settings_theme">السمة</string>
     <string name="close">إغلاق</string>
     <string name="settings_language">اللغة</string>
     <string name="settings_language_value">العربية</string>
     <string name="settings_privacy_policy">سياسة الخصوصية</string>
+    <string name="settings_rate_us">قيّمنا</string>
     <string name="settings_share_app">مشاركة التطبيق</string>
     <string name="exitApp">إغلاق التطبيق</string>
     <string name="exitAppDescription">هل تريد فعلاً إغلاق التطبيق؟</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">تم إلغاء الشراء</string>
     <string name="pro_purchase_failed">فشل الشراء. %1$s</string>
     <string name="pro_plan_unavailable">هذه الخطة غير متاحة حالياً</string>
-    <string name="onboard_continue">متابعة</string>
     <string name="pro_purchase_pending">الدفع قيد الانتظار. سيتم تفعيل Pro بعد تأكيده</string>
     <string name="pro_restore_success">تمت استعادة الشراء</string>
     <string name="pro_restore_nothing_found">لم يتم العثور على عملية شراء نشطة لحساب Google هذا</string>
@@ -100,7 +99,6 @@
     <string name="detail_category">الفئة</string>
     <string name="camera_sim_title">وضع محاكاة الاستوديو</string>
     <string name="camera_sim_hint">حرّك المحاذاة باستخدام الدوائر القابلة للسحب أدناه</string>
-    <string name="camera_pro_title">محاذاة الاستوديو الاحترافية</string>
     <string name="action_reset">إعادة ضبط</string>
     <string name="tab_filters">الفلاتر</string>
     <string name="tab_adjust">ضبط</string>
@@ -117,7 +115,6 @@
     <string name="camera_shutter">التقاط صورة</string>
     <string name="camera_change_pose">تغيير الوضعية</string>
     <string name="camera_no_pose">لقطة حرة</string>
-    <string name="camera_skeleton">إطار الهيكل</string>
     <string name="edit_match_badge">تطابق %1$d%%</string>
     <string name="edit_intensity">الشدة</string>
     <string name="edit_compare">اسحب للمقارنة</string>
@@ -133,20 +130,14 @@
     <string name="saved_place_now">%1$s · الآن</string>
     <string name="saved_shoot_again">التقط مرة أخرى</string>
     <string name="saved_view_collections">عرض في المجموعات</string>
-    <string name="theme_dark">داكن</string>
-    <string name="theme_light">فاتح</string>
-    <string name="theme_sleek_charcoal">فحمي أنيق</string>
-    <string name="theme_cyberpunk_violet">بنفسجي سايبربانك</string>
     <string name="action_clear">مسح</string>
     <string name="imported_pose_title">مرجع من المعرض</string>
     <string name="action_back">رجوع</string>
     <string name="unknown_location">موقع غير معروف</string>
     <string name="action_favorite">المفضلة</string>
     <string name="camera_flash">الفلاش</string>
-    <string name="camera_controls">عناصر التحكم بالكاميرا</string>
     <string name="camera_grid">الشبكة</string>
     <string name="camera_timer">المؤقت</string>
-    <string name="camera_timer_seconds">المؤقت %1$d ث</string>
     <string name="camera_switch">تبديل الكاميرا</string>
     <string name="camera_selected">محدد</string>
     <string name="pose_overlay">إطار الوضعية</string>
@@ -253,10 +244,8 @@
     <string name="home_daily_subtitle">اضغط للتجربة</string>
     <string name="nav_saved">المحفوظة</string>
     <string name="nav_capture">فتح الكاميرا</string>
-    <string name="onboard_back">رجوع</string>
     <string name="onboard_next">التالي</string>
     <string name="onboard_lets_go">لنبدأ</string>
-    <string name="onboard_step_label">الخطوة %1$d من %2$d</string>
     <string name="onboard_pose_count_badge">%1$d وضعية</string>
     <string name="onboard_pose_name">اتكاءة السطح</string>
     <string name="onboard_badge_viral">رائج</string>
@@ -280,9 +269,6 @@
     </plurals>
     <string name="saved_tab_shots">الصور · %1$d</string>
     <string name="saved_tab_poses">الوضعيات · %1$d</string>
-    <string name="saved_section_shots">الصور المحفوظة</string>
-    <string name="saved_section_poses">الوضعيات المحفوظة</string>
-    <string name="saved_see_all">عرض الكل</string>
     <string name="saved_add">إضافة إلى المفضلة</string>
     <string name="saved_remove">إزالة من المفضلة</string>
     <string name="saved_sort_title">ترتيب المحفوظات</string>
@@ -321,7 +307,6 @@
     <string name="collections_stat_places">الأماكن</string>
     <string name="collections_stat_average">متوسط التطابق</string>
     <string name="collections_filter_all">الكل</string>
-    <string name="collections_filter_favorites">المفضلة</string>
     <string name="collections_filter_top_match">أعلى تطابق</string>
     <string name="collections_filter_recent">الأحدث</string>
     <string name="collections_sort_title">ترتيب الصور</string>
@@ -341,13 +326,6 @@
     <string name="explore_sort_featured">المميزة</string>
     <string name="explore_sort_easiest">الأسهل أولًا</string>
     <string name="explore_empty">لا توجد وضعيات تطابق بحثك</string>
-    <string name="theme_picker_subtitle">اختر المظهر الذي يناسب ذوقك</string>
-    <string name="theme_desc_dark">كحلي داكن · لمسة نيلية</string>
-    <string name="theme_desc_light">رماديات فاتحة · اللمسة نفسها</string>
-    <string name="theme_desc_sleek_charcoal">نحاسي دافئ على أسود عميق</string>
-    <string name="theme_desc_cyberpunk_violet">توهج أرجواني · برقوقي داكن</string>
-    <string name="theme_current">الحالي</string>
-    <string name="theme_apply">تطبيق المظهر</string>
     <string name="detail_saved_in">محفوظة في المجموعات · %1$s</string>
     <string name="detail_today">اليوم %1$s</string>
     <string name="detail_yesterday">أمس %1$s</string>

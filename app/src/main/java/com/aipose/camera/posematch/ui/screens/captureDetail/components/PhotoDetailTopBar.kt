@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.theme.PosePinkSoft
 
@@ -50,7 +52,7 @@ internal fun PhotoDetailTopBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 20.dp),
+            .padding(start = PoseScreenGutter, end = PoseScreenGutter, top = PoseScreenTopSpacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GlassButton(

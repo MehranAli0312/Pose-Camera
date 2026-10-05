@@ -4,7 +4,6 @@ import com.aipose.camera.posematch.domain.models.NormalizedPoint
 import com.aipose.camera.posematch.domain.models.PoseBone
 import com.aipose.camera.posematch.domain.models.PoseJoint
 import com.aipose.camera.posematch.domain.models.PoseMatch
-import com.aipose.camera.posematch.domain.models.SkeletonPoint
 import kotlin.math.abs
 import kotlin.math.atan2
 
@@ -18,9 +17,6 @@ object PoseMatcher {
         userLandmarks: Map<PoseJoint, NormalizedPoint>,
         referenceLandmarks: Map<PoseJoint, NormalizedPoint>
     ): PoseMatch {
-        val userSkeleton = skeletonOf(userLandmarks)
-        val referenceSkeleton = skeletonOf(referenceLandmarks)
-
         var totalDegrees = 0f
         var comparedBones = 0
         for (bone in PoseBone.entries) {
@@ -35,22 +31,16 @@ object PoseMatcher {
             comparedBones++
         }
 
-        if (comparedBones < MINIMUM_COMPARABLE_BONES) {
-            return PoseMatch(0, userSkeleton, referenceSkeleton)
-        }
+        if (comparedBones < MINIMUM_COMPARABLE_BONES) return PoseMatch()
 
         val averageDegrees = totalDegrees / comparedBones
-        val score = ((1f - averageDegrees / DEGREES_TOLERANCE) * 100f).toInt().coerceIn(0, 100)
-        return PoseMatch(score, userSkeleton, referenceSkeleton)
+        return PoseMatch(((1f - averageDegrees / DEGREES_TOLERANCE) * 100f).toInt().coerceIn(0, 100))
     }
 
     fun smoothScore(previousScore: Int, targetScore: Int): Int =
         if (targetScore == 0) 0
         else (SCORE_SMOOTHING_WEIGHT * targetScore + (1f - SCORE_SMOOTHING_WEIGHT) * previousScore)
             .toInt()
-
-    private fun skeletonOf(landmarks: Map<PoseJoint, NormalizedPoint>): List<SkeletonPoint> =
-        PoseJoint.entries.map { joint -> SkeletonPoint(joint, landmarks[joint]) }
 
     private fun angleOf(from: NormalizedPoint, to: NormalizedPoint): Double =
         atan2((to.y - from.y).toDouble(), (to.x - from.x).toDouble())

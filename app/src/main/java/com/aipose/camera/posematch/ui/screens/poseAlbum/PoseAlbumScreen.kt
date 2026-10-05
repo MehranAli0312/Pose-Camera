@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.StudioSearchField
@@ -67,8 +70,14 @@ fun PoseAlbumScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding(),
-            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 24.dp),
+                .statusBarsPadding()
+                .navigationBarsPadding(),
+            contentPadding = PaddingValues(
+                start = PoseScreenGutter,
+                end = PoseScreenGutter,
+                top = PoseScreenTopSpacing,
+                bottom = 24.dp,
+            ),
             horizontalArrangement = Arrangement.spacedBy(GridGap),
             verticalArrangement = Arrangement.spacedBy(GridGap),
         ) {

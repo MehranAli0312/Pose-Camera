@@ -13,18 +13,21 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.imageModelOf
 import com.aipose.camera.posematch.ui.screens.camera.models.OverlayTransform
 
+private const val MIRRORED_SCALE = -1f
+
 @Composable
 internal fun PoseOverlayImage(
     imagePath: String,
     transform: OverlayTransform,
     surfaceSize: IntSize,
+    isMirrored: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .graphicsLayer {
-                scaleX = transform.scale
+                scaleX = transform.scale * if (isMirrored) MIRRORED_SCALE else 1f
                 scaleY = transform.scale
                 translationX = transform.offsetX * surfaceSize.width
                 translationY = transform.offsetY * surfaceSize.height

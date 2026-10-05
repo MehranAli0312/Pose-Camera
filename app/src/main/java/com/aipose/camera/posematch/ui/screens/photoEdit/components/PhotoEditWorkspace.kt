@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.domain.models.PhotoCropRect
 import com.aipose.camera.posematch.domain.models.PhotoSize
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditUiState
@@ -26,6 +27,7 @@ internal fun PhotoEditWorkspace(
     uiState: PhotoEditUiState,
     imagePath: String,
     onCompareChange: (Boolean) -> Unit,
+    onCropRectChange: (PhotoCropRect) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val isCropping = uiState.selectedTab == PhotoEditTab.Crop
@@ -36,18 +38,17 @@ internal fun PhotoEditWorkspace(
             ColorFilter.colorMatrix(ColorMatrix(grade.values.toFloatArray()))
         },
         geometry = uiState.geometry,
-        frameAspect = frameSize.aspectOrNull(),
-        imageInset = if (isCropping) CropImageInset else 0.dp,
+        frameAspect = frameSize.aspect,
         onCompareChange = if (isCropping) null else onCompareChange,
-        modifier = modifier,
+        modifier = if (isCropping) modifier.padding(CropImageInset) else modifier,
     ) {
         if (isCropping) {
             CropFrameOverlay(
-                aspect = uiState.geometry.cropAspect,
+                cropRect = uiState.geometry.cropRect,
+                lockedAspect = uiState.geometry.cropAspect,
                 outputLabel = uiState.outputSize.outputLabel(),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(CropImageInset),
+                onCropRectChange = onCropRectChange,
+                modifier = Modifier.fillMaxSize(),
             )
         } else {
             if (uiState.selectedTab == PhotoEditTab.Filters) {
@@ -82,8 +83,6 @@ internal fun PhotoEditWorkspace(
     }
 }
 
-private fun PhotoSize.aspectOrNull(): Float? =
-    if (isValid) width.toFloat() / height else null
 
 @Composable
 private fun PhotoSize.outputLabel(): String =

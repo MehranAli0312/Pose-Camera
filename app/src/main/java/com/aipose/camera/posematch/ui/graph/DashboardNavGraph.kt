@@ -17,7 +17,6 @@ import com.aipose.camera.posematch.ui.screens.home.HomeScreen
 import com.aipose.camera.posematch.ui.screens.language.LocalizeScreen
 import com.aipose.camera.posematch.ui.screens.photoEdit.PhotoEditScreen
 import com.aipose.camera.posematch.ui.screens.photoSuccess.PhotoSuccessScreen
-import com.aipose.camera.posematch.ui.screens.themePicker.ThemePickerScreen
 import com.aipose.camera.posematch.ui.screens.progress.ProgressScreen
 import com.aipose.camera.posematch.ui.screens.achievements.AchievementsScreen
 import com.aipose.camera.posematch.ui.screens.poseAlbum.PoseAlbumScreen
@@ -47,7 +46,6 @@ fun DashboardNavGraph(
         addCaptureAlbumScreen(navController, this)
         addCaptureDetailScreen(navController, this)
         addPhotoEditScreen(navController, this)
-        addThemePickerScreen(navController, this)
         addProgressScreen(navController, this)
         addAchievementsScreen(navController, this)
         addPhotoSuccessScreen(navController, this)
@@ -193,16 +191,6 @@ private fun addCaptureDetailScreen(
             navController = navController,
             captureId = backStackEntry.arguments?.getLong(NavArgs.CAPTURE_ID) ?: 0L,
         )
-    }
-}
-
-private fun addThemePickerScreen(
-    navController: NavHostController, navGraphBuilder: NavGraphBuilder
-) {
-    navGraphBuilder.addScreenWithTransitions(
-        route = NavRoute.ThemePickerScreenRoute.route
-    ) {
-        ThemePickerScreen(navController = navController)
     }
 }
 

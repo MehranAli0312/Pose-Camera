@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
@@ -68,7 +70,7 @@ fun CollectionsScreen(
                 .fillMaxHeight()
                 .adaptiveWidth()
                 .statusBarsPadding(),
-            contentPadding = PaddingValues(top = 22.dp, bottom = 24.dp),
+            contentPadding = PaddingValues(top = PoseScreenTopSpacing, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             item(key = HEADER_KEY) {

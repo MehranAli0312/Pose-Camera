@@ -3,11 +3,11 @@
     <string name="app_name" translatable="false">Pose Match Camera</string>
     <string name="skip">Skip</string>
     <string name="item_settings">Settings</string>
-    <string name="settings_theme">Theme</string>
     <string name="close">Close</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_value">English</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_rate_us">Rate us</string>
     <string name="settings_share_app">Share PoseAI</string>
     <string name="exitApp">Exit App</string>
     <string name="exitAppDescription">Do you really want to quit the app</string>
@@ -92,7 +92,6 @@
     <string name="detail_category">Category</string>
     <string name="camera_sim_title">Studio Simulation Mode</string>
     <string name="camera_sim_hint">Move alignment using draggable circles below</string>
-    <string name="camera_pro_title">Pro Studio Alignments</string>
     <string name="action_reset">Reset</string>
     <string name="tab_filters">Filters</string>
     <string name="tab_adjust">Adjust</string>
@@ -111,7 +110,6 @@
     <string name="camera_flash_auto" translatable="false">A</string>
     <string name="camera_timer_badge" translatable="false">%1$d</string>
     <string name="camera_no_pose">Free shot</string>
-    <string name="camera_skeleton">Skeleton overlay</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_look_chip" translatable="false">%1$s · %2$s</string>
     <string name="edit_intensity">INTENSITY</string>
@@ -132,10 +130,6 @@
     <string name="saved_place_now">%1$s · Just now</string>
     <string name="saved_shoot_again">Shoot again</string>
     <string name="saved_view_collections">View in Collections</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_sleek_charcoal">Sleek Charcoal</string>
-    <string name="theme_cyberpunk_violet">Cyberpunk Violet</string>
     <string name="action_clear">Clear</string>
     <string name="imported_pose_title">Gallery Reference</string>
     <string name="action_back">Back</string>
@@ -143,12 +137,8 @@
     <string name="score_percent" translatable="false">%1$d%%</string>
     <string name="action_favorite">Favorite</string>
     <string name="camera_flash">Flash</string>
-    <string name="camera_controls">Camera controls</string>
     <string name="camera_grid">Grid</string>
     <string name="camera_timer">Timer</string>
-    <string name="camera_timer_seconds">Timer %1$ds</string>
-    <string name="camera_iso" translatable="false">ISO</string>
-    <string name="camera_ev" translatable="false">EV</string>
     <string name="camera_switch">Switch camera</string>
     <string name="camera_selected">Selected</string>
     <string name="pose_overlay">Pose overlay</string>
@@ -191,7 +181,6 @@
     <string name="crop_sixteen_by_nine" translatable="false">16:9</string>
     <string name="settings_retain_skeleton">Keep pose overlay after shot</string>
     <string name="splash_brand_pose" translatable="false">Pose</string>
-    <string name="splash_brand_ai" translatable="false">AI</string>
     <string name="splash_privacy_note">On-device AI · No uploads</string>
     <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
     <string name="toast_reference_failed">Reference alignment loading failed</string>
@@ -199,6 +188,8 @@
     <string name="perm_camera_title">Camera Permission Needed</string>
     <string name="perm_camera_desc">Allow camera access to take pictures and match your poses.</string>
     <string name="perm_allow">Allow</string>
+    <string name="perm_camera_blocked_desc">Camera access is turned off. Open settings and enable the camera permission to keep posing.</string>
+    <string name="perm_open_settings">Open Settings</string>
     <string name="capture_untitled">Untitled frame</string>
     <string name="home_title_pose" translatable="false">Pose</string>
     <string name="home_title_ai" translatable="false">AI</string>
@@ -247,10 +238,8 @@
     <string name="home_daily_meta" translatable="false">%1$s · %2$s</string>
     <string name="nav_saved">Saved</string>
     <string name="nav_capture">Open camera</string>
-    <string name="onboard_back">Back</string>
     <string name="onboard_next">Next</string>
     <string name="onboard_lets_go">Let\'s Go</string>
-    <string name="onboard_step_label">STEP %1$d OF %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSES</string>
     <string name="onboard_pose_name">Rooftop Lean</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -271,9 +260,6 @@
     </plurals>
     <string name="saved_tab_shots">Shots · %1$d</string>
     <string name="saved_tab_poses">Poses · %1$d</string>
-    <string name="saved_section_shots">SAVED SHOTS</string>
-    <string name="saved_section_poses">SAVED POSES</string>
-    <string name="saved_see_all">See all</string>
     <string name="saved_pose_meta" translatable="false">%1$s · %2$s</string>
     <string name="saved_add">Save to favourites</string>
     <string name="saved_remove">Remove from favourites</string>
@@ -309,7 +295,6 @@
     <string name="collections_stat_places">PLACES</string>
     <string name="collections_stat_average">AVG MATCH</string>
     <string name="collections_filter_all">All</string>
-    <string name="collections_filter_favorites">Favorites</string>
     <string name="collections_filter_top_match">Top Match</string>
     <string name="collections_filter_recent">Recent</string>
     <string name="collections_sort_title">Sort shots</string>
@@ -325,13 +310,6 @@
     <string name="explore_sort_featured">Featured</string>
     <string name="explore_sort_easiest">Easiest first</string>
     <string name="explore_empty">No poses match your search</string>
-    <string name="theme_picker_subtitle">Pick the look that fits your vibe</string>
-    <string name="theme_desc_dark">Deep navy · indigo accent</string>
-    <string name="theme_desc_light">Lifted greys · same accent</string>
-    <string name="theme_desc_sleek_charcoal">Warm copper on near-black</string>
-    <string name="theme_desc_cyberpunk_violet">Magenta glow · deep plum</string>
-    <string name="theme_current">CURRENT</string>
-    <string name="theme_apply">Apply theme</string>
     <string name="detail_saved_in">Saved in Collections · %1$s</string>
     <string name="detail_today">Today %1$s</string>
     <string name="detail_yesterday">Yesterday %1$s</string>

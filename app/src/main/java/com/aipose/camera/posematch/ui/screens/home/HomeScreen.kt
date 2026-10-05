@@ -16,6 +16,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.Pose
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.rememberPosePicker
@@ -82,7 +84,7 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = PoseScreenGutter),
             contentPadding = PaddingValues(bottom = 24.dp),
         ) {
             val content = uiState as? HomeUiState.Content
@@ -93,7 +95,7 @@ fun HomeScreen(
                     onOpenPro = { navController.navigateOnClick(NavRoute.ProScreenRoute.route) },
                     modifier = Modifier
                         .statusBarsPadding()
-                        .padding(top = 8.dp),
+                        .padding(top = PoseScreenTopSpacing),
                 )
             }
 

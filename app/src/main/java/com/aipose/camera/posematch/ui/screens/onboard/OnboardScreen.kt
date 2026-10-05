@@ -20,6 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseCtaButton
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBackdrop
@@ -32,8 +34,7 @@ import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-private val ScreenPadding = 20.dp
-private val TopBarTop = 40.dp
+private val TopBarTop = PoseScreenTopSpacing
 private val IndicatorTop = 44.dp
 private val IndicatorToCta = 30.dp
 private val CtaBottom = 36.dp
@@ -75,14 +76,12 @@ fun OnboardScreen(
                 .adaptiveWidth()
                 .statusBarsPadding()
                 .navigationBarsPadding()
-                .padding(horizontal = ScreenPadding),
+                .padding(horizontal = PoseScreenGutter),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(TopBarTop))
             OnboardTopBar(
-                showBack = currentPage > 0,
                 showSkip = !isLastPage,
-                onBack = { goToPage(currentPage - 1) },
                 onSkip = ::finishOnboarding,
             )
             HorizontalPager(
@@ -91,11 +90,7 @@ fun OnboardScreen(
                     .weight(1f)
                     .fillMaxWidth(),
             ) { page ->
-                OnboardContentPage(
-                    step = steps[page],
-                    stepNumber = page + 1,
-                    totalSteps = steps.size,
-                )
+                OnboardContentPage(step = steps[page])
             }
             Spacer(modifier = Modifier.height(IndicatorTop))
             OnboardPagerIndicator(

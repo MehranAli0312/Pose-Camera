@@ -68,6 +68,7 @@ fun PhotoEditScreen(
                 uiState = uiState,
                 imagePath = draft.imagePath,
                 onCompareChange = viewModel::setComparing,
+                onCropRectChange = viewModel::setCropRect,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()

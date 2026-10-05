@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -82,19 +81,5 @@ private fun DrawScope.drawRoundedBrackets() {
             cap = StrokeCap.Round,
             join = StrokeJoin.Round,
         ),
-    )
-}
-
-internal fun Size.fittedRect(aspect: Float?): Rect {
-    if (aspect == null || aspect <= 0f || width <= 0f || height <= 0f) return Rect(Offset.Zero, this)
-    val containerAspect = width / height
-    val fitted = if (containerAspect > aspect) {
-        Size(height * aspect, height)
-    } else {
-        Size(width, width / aspect)
-    }
-    return Rect(
-        offset = Offset((width - fitted.width) / 2f, (height - fitted.height) / 2f),
-        size = fitted,
     )
 }

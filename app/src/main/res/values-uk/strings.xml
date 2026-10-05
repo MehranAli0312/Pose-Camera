@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Пропустити</string>
     <string name="item_settings">Налаштування</string>
-    <string name="settings_theme">Тема</string>
     <string name="close">Закрити</string>
     <string name="settings_language">Мова</string>
     <string name="settings_language_value">Українська</string>
     <string name="settings_privacy_policy">Політика конфіденційності</string>
+    <string name="settings_rate_us">Оцініть нас</string>
     <string name="settings_share_app">Поділитися додатком</string>
     <string name="exitApp">Вийти з додатка</string>
     <string name="exitAppDescription">Ви впевнені, що хочете вийти з додатка</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Покупку скасовано</string>
     <string name="pro_purchase_failed">Покупка не вдалася. %1$s</string>
     <string name="pro_plan_unavailable">Цей план зараз недоступний</string>
-    <string name="onboard_continue">Продовжити</string>
     <string name="pro_purchase_pending">Платіж очікує підтвердження. Pro відкриється після підтвердження</string>
     <string name="pro_restore_success">Покупку відновлено</string>
     <string name="pro_restore_nothing_found">Для цього облікового запису Google не знайдено активних покупок</string>
@@ -96,7 +95,6 @@
     <string name="detail_category">Категорія</string>
     <string name="camera_sim_title">Режим симуляції студії</string>
     <string name="camera_sim_hint">Переміщуйте вирівнювання за допомогою кіл нижче</string>
-    <string name="camera_pro_title">Професійне вирівнювання</string>
     <string name="action_reset">Скинути</string>
     <string name="tab_filters">Фільтри</string>
     <string name="tab_adjust">Налаштування</string>
@@ -113,7 +111,6 @@
     <string name="camera_shutter">Зробити знімок</string>
     <string name="camera_change_pose">Змінити позу</string>
     <string name="camera_no_pose">Вільний знімок</string>
-    <string name="camera_skeleton">Скелет поверх кадру</string>
     <string name="edit_match_badge">ЗБІГ %1$d%%</string>
     <string name="edit_intensity">ІНТЕНСИВНІСТЬ</string>
     <string name="edit_compare">Потягніть для порівняння</string>
@@ -129,20 +126,14 @@
     <string name="saved_place_now">%1$s · Щойно</string>
     <string name="saved_shoot_again">Зняти ще</string>
     <string name="saved_view_collections">Відкрити в Колекціях</string>
-    <string name="theme_dark">Темна</string>
-    <string name="theme_light">Світла</string>
-    <string name="theme_sleek_charcoal">Елегантний графіт</string>
-    <string name="theme_cyberpunk_violet">Кіберпанк-фіолетовий</string>
     <string name="action_clear">Очистити</string>
     <string name="imported_pose_title">Зразок із галереї</string>
     <string name="action_back">Назад</string>
     <string name="unknown_location">Невідоме місце</string>
     <string name="action_favorite">Обране</string>
     <string name="camera_flash">Спалах</string>
-    <string name="camera_controls">Керування камерою</string>
     <string name="camera_grid">Сітка</string>
     <string name="camera_timer">Таймер</string>
-    <string name="camera_timer_seconds">Таймер %1$d с</string>
     <string name="camera_switch">Змінити камеру</string>
     <string name="camera_selected">Вибрано</string>
     <string name="pose_overlay">Контур пози</string>
@@ -241,10 +232,8 @@
     <string name="home_daily_subtitle">Торкніться, щоб спробувати</string>
     <string name="nav_saved">Обране</string>
     <string name="nav_capture">Відкрити камеру</string>
-    <string name="onboard_back">Назад</string>
     <string name="onboard_next">Далі</string>
     <string name="onboard_lets_go">Почнімо</string>
-    <string name="onboard_step_label">КРОК %1$d З %2$d</string>
     <string name="onboard_pose_count_badge">%1$d ПОЗ</string>
     <string name="onboard_pose_name">Опора на даху</string>
     <string name="onboard_badge_viral">ВІРУСНЕ</string>
@@ -266,9 +255,6 @@
     </plurals>
     <string name="saved_tab_shots">Знімки · %1$d</string>
     <string name="saved_tab_poses">Пози · %1$d</string>
-    <string name="saved_section_shots">ЗБЕРЕЖЕНІ ЗНІМКИ</string>
-    <string name="saved_section_poses">ЗБЕРЕЖЕНІ ПОЗИ</string>
-    <string name="saved_see_all">Усі</string>
     <string name="saved_add">Додати в обране</string>
     <string name="saved_remove">Прибрати з обраного</string>
     <string name="saved_sort_title">Сортування обраного</string>
@@ -305,7 +291,6 @@
     <string name="collections_stat_places">МІСЦЯ</string>
     <string name="collections_stat_average">СЕРЕДНЄ</string>
     <string name="collections_filter_all">Усі</string>
-    <string name="collections_filter_favorites">Обране</string>
     <string name="collections_filter_top_match">Найкращі</string>
     <string name="collections_filter_recent">Нещодавні</string>
     <string name="collections_sort_title">Сортування знімків</string>
@@ -323,13 +308,6 @@
     <string name="explore_sort_featured">Рекомендовані</string>
     <string name="explore_sort_easiest">Спочатку прості</string>
     <string name="explore_empty">Немає поз за вашим запитом</string>
-    <string name="theme_picker_subtitle">Оберіть стиль, який вам пасує</string>
-    <string name="theme_desc_dark">Глибокий синій · індиго-акцент</string>
-    <string name="theme_desc_light">Світло-сірі тони · той самий акцент</string>
-    <string name="theme_desc_sleek_charcoal">Тепла мідь на майже чорному</string>
-    <string name="theme_desc_cyberpunk_violet">Пурпурове сяйво · темна слива</string>
-    <string name="theme_current">ПОТОЧНА</string>
-    <string name="theme_apply">Застосувати тему</string>
     <string name="detail_saved_in">Збережено в Колекції · %1$s</string>
     <string name="detail_today">Сьогодні %1$s</string>
     <string name="detail_yesterday">Учора %1$s</string>

@@ -106,7 +106,6 @@ class CollectionsViewModel(
 
     private fun CaptureUi.matches(filter: CollectionsFilter): Boolean = when (filter) {
         CollectionsFilter.All -> true
-        CollectionsFilter.Favorites -> capture.isFavorite
         CollectionsFilter.TopMatch -> capture.matchScore >= PERFECT_MATCH_SCORE
         CollectionsFilter.Recent -> captureProgressUseCase.isWithinDays(capture, RECENT_DAYS)
     }

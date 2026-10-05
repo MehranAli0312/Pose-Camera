@@ -5,7 +5,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.aipose.camera.posematch.domain.models.AppThemeOption
 import com.aipose.camera.posematch.domain.models.ProEntitlement
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -47,16 +46,6 @@ class AppDataStore(private val context: Context) {
         }
     }
 
-    fun getThemeOption() = preferences.data.map { stored ->
-        AppThemeOption.fromKey(stored[AppPreferencesKeys.APP_THEME])
-    }
-
-    suspend fun setThemeOption(option: AppThemeOption) {
-        preferences.edit { stored ->
-            stored[AppPreferencesKeys.APP_THEME] = option.key
-        }
-    }
-
     fun getLanguageCode() = preferences.data.map { stored ->
         stored[AppPreferencesKeys.LANGUAGE] ?: DEFAULT_LANGUAGE_CODE
     }
@@ -67,13 +56,13 @@ class AppDataStore(private val context: Context) {
         }
     }
 
-    fun getRetainSkeleton() = preferences.data.map { stored ->
-        stored[AppPreferencesKeys.RETAIN_SKELETON] ?: true
+    fun getKeepPoseOverlay() = preferences.data.map { stored ->
+        stored[AppPreferencesKeys.KEEP_POSE_OVERLAY] ?: true
     }
 
-    suspend fun setRetainSkeleton(retain: Boolean) {
+    suspend fun setKeepPoseOverlay(keepOverlay: Boolean) {
         preferences.edit { stored ->
-            stored[AppPreferencesKeys.RETAIN_SKELETON] = retain
+            stored[AppPreferencesKeys.KEEP_POSE_OVERLAY] = keepOverlay
         }
     }
 

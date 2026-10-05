@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Überspringen</string>
     <string name="item_settings">Einstellungen</string>
-    <string name="settings_theme">Design</string>
     <string name="close">Schließen</string>
     <string name="settings_language">Sprache</string>
     <string name="settings_language_value">Deutsch</string>
     <string name="settings_privacy_policy">Datenschutzerklärung</string>
+    <string name="settings_rate_us">Bewerte uns</string>
     <string name="settings_share_app">App teilen</string>
     <string name="exitApp">App beenden</string>
     <string name="exitAppDescription">Möchten Sie die App wirklich beenden</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Kauf abgebrochen</string>
     <string name="pro_purchase_failed">Kauf fehlgeschlagen. %1$s</string>
     <string name="pro_plan_unavailable">Dieses Abo ist derzeit nicht verfügbar</string>
-    <string name="onboard_continue">Weiter</string>
     <string name="pro_purchase_pending">Zahlung ausstehend. Pro wird nach der Bestätigung freigeschaltet</string>
     <string name="pro_restore_success">Kauf wiederhergestellt</string>
     <string name="pro_restore_nothing_found">Kein aktiver Kauf für dieses Google-Konto gefunden</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Kategorie</string>
     <string name="camera_sim_title">Studio-Simulationsmodus</string>
     <string name="camera_sim_hint">Verschiebe die Ausrichtung mit den ziehbaren Kreisen unten</string>
-    <string name="camera_pro_title">Profi-Studio-Ausrichtung</string>
     <string name="action_reset">Zurücksetzen</string>
     <string name="tab_filters">Filter</string>
     <string name="tab_adjust">Anpassen</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Foto aufnehmen</string>
     <string name="camera_change_pose">Pose wechseln</string>
     <string name="camera_no_pose">Freies Foto</string>
-    <string name="camera_skeleton">Skelett-Overlay</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_intensity">INTENSITÄT</string>
     <string name="edit_compare">Zum Vergleichen ziehen</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Gerade eben</string>
     <string name="saved_shoot_again">Noch einmal</string>
     <string name="saved_view_collections">In Sammlungen ansehen</string>
-    <string name="theme_dark">Dunkel</string>
-    <string name="theme_light">Hell</string>
-    <string name="theme_sleek_charcoal">Elegantes Anthrazit</string>
-    <string name="theme_cyberpunk_violet">Cyberpunk-Violett</string>
     <string name="action_clear">Leeren</string>
     <string name="imported_pose_title">Galerie-Vorlage</string>
     <string name="action_back">Zurück</string>
     <string name="unknown_location">Unbekannter Ort</string>
     <string name="action_favorite">Favorit</string>
     <string name="camera_flash">Blitz</string>
-    <string name="camera_controls">Kamerasteuerung</string>
     <string name="camera_grid">Raster</string>
     <string name="camera_timer">Timer</string>
-    <string name="camera_timer_seconds">Timer %1$d s</string>
     <string name="camera_switch">Kamera wechseln</string>
     <string name="camera_selected">Ausgewählt</string>
     <string name="pose_overlay">Posen-Overlay</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Zum Ausprobieren tippen</string>
     <string name="nav_saved">Gespeichert</string>
     <string name="nav_capture">Kamera öffnen</string>
-    <string name="onboard_back">Zurück</string>
     <string name="onboard_next">Weiter</string>
     <string name="onboard_lets_go">Los geht\'s</string>
-    <string name="onboard_step_label">SCHRITT %1$d VON %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSEN</string>
     <string name="onboard_pose_name">Dachterrassen-Lehne</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Fotos · %1$d</string>
     <string name="saved_tab_poses">Posen · %1$d</string>
-    <string name="saved_section_shots">GESPEICHERTE FOTOS</string>
-    <string name="saved_section_poses">GESPEICHERTE POSEN</string>
-    <string name="saved_see_all">Alle ansehen</string>
     <string name="saved_add">Zu Favoriten hinzufügen</string>
     <string name="saved_remove">Aus Favoriten entfernen</string>
     <string name="saved_sort_title">Gespeichertes sortieren</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">ORTE</string>
     <string name="collections_stat_average">Ø MATCH</string>
     <string name="collections_filter_all">Alle</string>
-    <string name="collections_filter_favorites">Favoriten</string>
     <string name="collections_filter_top_match">Top-Match</string>
     <string name="collections_filter_recent">Neueste</string>
     <string name="collections_sort_title">Fotos sortieren</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Empfohlen</string>
     <string name="explore_sort_easiest">Einfachste zuerst</string>
     <string name="explore_empty">Keine Posen passen zu deiner Suche</string>
-    <string name="theme_picker_subtitle">Wähle den Look, der zu dir passt</string>
-    <string name="theme_desc_dark">Tiefes Marineblau · Indigo-Akzent</string>
-    <string name="theme_desc_light">Helle Grautöne · gleicher Akzent</string>
-    <string name="theme_desc_sleek_charcoal">Warmes Kupfer auf Fast-Schwarz</string>
-    <string name="theme_desc_cyberpunk_violet">Magenta-Glow · tiefes Pflaume</string>
-    <string name="theme_current">AKTUELL</string>
-    <string name="theme_apply">Design anwenden</string>
     <string name="detail_saved_in">In Sammlungen gespeichert · %1$s</string>
     <string name="detail_today">Heute %1$s</string>
     <string name="detail_yesterday">Gestern %1$s</string>

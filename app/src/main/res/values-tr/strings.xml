@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Atla</string>
     <string name="item_settings">Ayarlar</string>
-    <string name="settings_theme">Tema</string>
     <string name="close">Kapat</string>
     <string name="settings_language">Dil</string>
     <string name="settings_language_value">Türkçe</string>
     <string name="settings_privacy_policy">Gizlilik Politikası</string>
+    <string name="settings_rate_us">Bizi değerlendirin</string>
     <string name="settings_share_app">Uygulamayı Paylaş</string>
     <string name="exitApp">Uygulamadan Çık</string>
     <string name="exitAppDescription">Uygulamadan çıkmak istediğinizden emin misiniz</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Satın alma iptal edildi</string>
     <string name="pro_purchase_failed">Satın alma başarısız. %1$s</string>
     <string name="pro_plan_unavailable">Bu plan şu anda kullanılamıyor</string>
-    <string name="onboard_continue">Devam</string>
     <string name="pro_purchase_pending">Ödeme beklemede. Onaylandığında Pro kilidi açılacak</string>
     <string name="pro_restore_success">Satın alma geri yüklendi</string>
     <string name="pro_restore_nothing_found">Bu Google hesabı için etkin satın alma bulunamadı</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Kategori</string>
     <string name="camera_sim_title">Stüdyo simülasyon modu</string>
     <string name="camera_sim_hint">Aşağıdaki sürüklenebilir dairelerle hizalamayı taşı</string>
-    <string name="camera_pro_title">Profesyonel stüdyo hizalamaları</string>
     <string name="action_reset">Sıfırla</string>
     <string name="tab_filters">Filtreler</string>
     <string name="tab_adjust">Ayarla</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Fotoğraf çek</string>
     <string name="camera_change_pose">Pozu değiştir</string>
     <string name="camera_no_pose">Serbest çekim</string>
-    <string name="camera_skeleton">İskelet katmanı</string>
     <string name="edit_match_badge">%%%1$d EŞLEŞME</string>
     <string name="edit_intensity">YOĞUNLUK</string>
     <string name="edit_compare">Karşılaştırmak için sürükle</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Az önce</string>
     <string name="saved_shoot_again">Tekrar çek</string>
     <string name="saved_view_collections">Koleksiyonlarda gör</string>
-    <string name="theme_dark">Koyu</string>
-    <string name="theme_light">Açık</string>
-    <string name="theme_sleek_charcoal">Şık antrasit</string>
-    <string name="theme_cyberpunk_violet">Siberpunk mor</string>
     <string name="action_clear">Temizle</string>
     <string name="imported_pose_title">Galeri referansı</string>
     <string name="action_back">Geri</string>
     <string name="unknown_location">Bilinmeyen konum</string>
     <string name="action_favorite">Favori</string>
     <string name="camera_flash">Flaş</string>
-    <string name="camera_controls">Kamera kontrolleri</string>
     <string name="camera_grid">Izgara</string>
     <string name="camera_timer">Zamanlayıcı</string>
-    <string name="camera_timer_seconds">Zamanlayıcı %1$d sn</string>
     <string name="camera_switch">Kamerayı değiştir</string>
     <string name="camera_selected">Seçili</string>
     <string name="pose_overlay">Poz çizgisi</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Denemek için dokun</string>
     <string name="nav_saved">Kaydedilenler</string>
     <string name="nav_capture">Kamerayı aç</string>
-    <string name="onboard_back">Geri</string>
     <string name="onboard_next">İleri</string>
     <string name="onboard_lets_go">Başlayalım</string>
-    <string name="onboard_step_label">ADIM %1$d / %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POZ</string>
     <string name="onboard_pose_name">Çatıda yaslanma</string>
     <string name="onboard_badge_viral">VİRAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Çekimler · %1$d</string>
     <string name="saved_tab_poses">Pozlar · %1$d</string>
-    <string name="saved_section_shots">KAYDEDİLEN ÇEKİMLER</string>
-    <string name="saved_section_poses">KAYDEDİLEN POZLAR</string>
-    <string name="saved_see_all">Tümünü gör</string>
     <string name="saved_add">Favorilere ekle</string>
     <string name="saved_remove">Favorilerden kaldır</string>
     <string name="saved_sort_title">Kaydedilenleri sırala</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">YER</string>
     <string name="collections_stat_average">ORT. EŞLEŞME</string>
     <string name="collections_filter_all">Tümü</string>
-    <string name="collections_filter_favorites">Favoriler</string>
     <string name="collections_filter_top_match">En iyi eşleşme</string>
     <string name="collections_filter_recent">Son çekilenler</string>
     <string name="collections_sort_title">Çekimleri sırala</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Öne çıkanlar</string>
     <string name="explore_sort_easiest">Önce en kolaylar</string>
     <string name="explore_empty">Aramanla eşleşen poz yok</string>
-    <string name="theme_picker_subtitle">Tarzına uyan görünümü seç</string>
-    <string name="theme_desc_dark">Derin lacivert · çivit vurgusu</string>
-    <string name="theme_desc_light">Açık griler · aynı vurgu</string>
-    <string name="theme_desc_sleek_charcoal">Siyaha yakın zeminde sıcak bakır</string>
-    <string name="theme_desc_cyberpunk_violet">Eflatun ışıltı · koyu erik</string>
-    <string name="theme_current">GEÇERLİ</string>
-    <string name="theme_apply">Temayı uygula</string>
     <string name="detail_saved_in">Koleksiyonlara kaydedildi · %1$s</string>
     <string name="detail_today">Bugün %1$s</string>
     <string name="detail_yesterday">Dün %1$s</string>

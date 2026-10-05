@@ -5,16 +5,20 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseFilterChip
+import com.aipose.camera.posematch.ui.common.centerItem
 import com.aipose.camera.posematch.ui.models.badgeForCategory
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseCategoryCount
 
-private val CategoryGlyphSize = 22.dp
+private val CategoryGlyphSize = 24.dp
+private const val ALL_CHIP_OFFSET = 1
 
 @Composable
 internal fun ExploreCategoryChips(
@@ -24,8 +28,20 @@ internal fun ExploreCategoryChips(
     onSelect: (String?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val listState = rememberLazyListState()
+    val selectedIndex = categories
+        .indexOfFirst { item -> item.category == selectedCategory }
+        .takeIf { it >= 0 }
+        ?.plus(ALL_CHIP_OFFSET)
+        ?: 0
+
+    LaunchedEffect(selectedIndex, categories.size) {
+        listState.centerItem(selectedIndex)
+    }
+
     LazyRow(
         modifier = modifier.fillMaxWidth(),
+        state = listState,
         contentPadding = PaddingValues(bottom = 6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -43,8 +59,8 @@ internal fun ExploreCategoryChips(
                 isSelected = item.category == selectedCategory,
                 onClick = { onSelect(item.category) },
                 iconRes = badge.iconRes,
-                iconTint = badge.palette.mid,
                 glyphSize = CategoryGlyphSize,
+                iconBadgePalette = badge.palette,
             )
         }
     }

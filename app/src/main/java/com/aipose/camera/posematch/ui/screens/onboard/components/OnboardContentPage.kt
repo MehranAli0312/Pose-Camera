@@ -26,18 +26,16 @@ import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardStep
 import com.aipose.camera.posematch.ui.theme.PoseTextMuted
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val PanelToBadge = 28.dp
-private val BadgeToTitle = 9.dp
-private val TitleToDescription = 11.dp
+private val PanelToTitle = 30.dp
+private val TitleToDescription = 12.dp
 private val TitleSize = 27.sp
 private val DescriptionSize = 13.sp
-private val DescriptionPadding = 40.dp
+private val DescriptionPadding = 16.dp
+private val DescriptionLineHeight = 19.sp
 
 @Composable
 internal fun OnboardContentPage(
     step: OnboardStep,
-    stepNumber: Int,
-    totalSteps: Int,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -56,18 +54,18 @@ internal fun OnboardContentPage(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(PanelToBadge))
-        OnboardStepBadge(stepNumber = stepNumber, totalSteps = totalSteps)
-        Spacer(modifier = Modifier.height(BadgeToTitle))
+        Spacer(modifier = Modifier.height(PanelToTitle))
         Text(
             text = stringResource(step.titleRes),
             style = poseTextStyle(TitleSize, FontWeight.Bold, Color.White),
             textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(TitleToDescription))
         Text(
             text = descriptionFor(step),
-            style = poseTextStyle(DescriptionSize, FontWeight.Normal, PoseTextMuted),
+            style = poseTextStyle(DescriptionSize, FontWeight.Normal, PoseTextMuted)
+                .copy(lineHeight = DescriptionLineHeight),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()

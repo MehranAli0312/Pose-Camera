@@ -16,11 +16,8 @@ data class PoseCameraUiState(
     val timer: CaptureTimer = CaptureTimer.Off,
     val countdownSeconds: Int = 0,
     val isGridVisible: Boolean = false,
-    val areProControlsVisible: Boolean = false,
     val isPosePickerVisible: Boolean = false,
     val isTimerSheetVisible: Boolean = false,
-    val manualIso: Int = DEFAULT_ISO,
-    val manualExposure: Float = 0f,
     val selectedFilter: PhotoFilterId = PhotoFilterId.Auto,
     val autoGrade: ColorGrade? = null,
     val autoSwatchColor: Int? = null,
@@ -28,7 +25,7 @@ data class PoseCameraUiState(
     val match: PoseMatch = PoseMatch(),
     val bestScore: Int = 0,
     val galleryCount: Int = 0,
-    val isSkeletonVisible: Boolean = true,
+    val isPoseOverlayEnabled: Boolean = true,
     val isCoachVisible: Boolean = false,
     val isGreatMatchVisible: Boolean = false,
     val isImporting: Boolean = false,
@@ -41,16 +38,11 @@ data class PoseCameraUiState(
 
     val feedback: MatchFeedback get() = MatchFeedback.forScore(match.score)
 
-    val overlayImagePath: String? get() = overlayCutoutPath ?: selectedPose?.imagePath
+    val overlayImagePath: String?
+        get() = if (isPoseOverlayEnabled) overlayCutoutPath ?: selectedPose?.imagePath else null
 
     fun isToolActive(tool: CameraTool): Boolean = when (tool) {
         CameraTool.Grid -> isGridVisible
         CameraTool.Timer -> timer.isEnabled
-        CameraTool.Skeleton -> isSkeletonVisible
-        CameraTool.Pro -> areProControlsVisible
-    }
-
-    companion object {
-        const val DEFAULT_ISO = 400
     }
 }

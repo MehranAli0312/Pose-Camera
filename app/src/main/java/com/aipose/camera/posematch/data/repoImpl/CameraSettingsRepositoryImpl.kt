@@ -8,10 +8,10 @@ class CameraSettingsRepositoryImpl(
     private val dataStore: AppDataStore
 ) : CameraSettingsRepository {
 
-    override fun getRetainSkeleton(): Flow<Boolean> = dataStore.getRetainSkeleton()
+    override fun getKeepPoseOverlay(): Flow<Boolean> = dataStore.getKeepPoseOverlay()
 
-    override suspend fun setRetainSkeleton(retain: Boolean) {
-        dataStore.setRetainSkeleton(retain)
+    override suspend fun setKeepPoseOverlay(keepOverlay: Boolean) {
+        dataStore.setKeepPoseOverlay(keepOverlay)
     }
 
     override fun isCameraCoachSeen(): Flow<Boolean> = dataStore.isCameraCoachSeen()

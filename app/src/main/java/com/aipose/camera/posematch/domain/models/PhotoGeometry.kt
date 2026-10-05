@@ -5,11 +5,13 @@ data class PhotoGeometry(
     val straightenDegrees: Float = 0f,
     val isFlippedHorizontally: Boolean = false,
     val isFlippedVertically: Boolean = false,
-    val cropAspect: Float? = null
+    val cropAspect: Float? = null,
+    val cropRect: PhotoCropRect = PhotoCropRect.Full
 ) {
     val isNeutral: Boolean
         get() = rotationDegrees == 0 && straightenDegrees == 0f &&
-            !isFlippedHorizontally && !isFlippedVertically && cropAspect == null
+            !isFlippedHorizontally && !isFlippedVertically && cropAspect == null &&
+            cropRect.isFull
 
     fun rotated(): PhotoGeometry =
         copy(rotationDegrees = (rotationDegrees + QUARTER_TURN) % FULL_TURN)
@@ -26,7 +28,10 @@ data class PhotoGeometry(
     fun withStraighten(degrees: Float): PhotoGeometry =
         copy(straightenDegrees = degrees.coerceIn(MIN_STRAIGHTEN, MAX_STRAIGHTEN))
 
-    fun withCropAspect(aspect: Float?): PhotoGeometry = copy(cropAspect = aspect)
+    fun withCrop(aspect: Float?, rect: PhotoCropRect): PhotoGeometry =
+        copy(cropAspect = aspect, cropRect = rect)
+
+    fun withCropRect(rect: PhotoCropRect): PhotoGeometry = copy(cropRect = rect)
 
     companion object {
         const val MIN_STRAIGHTEN = -45f

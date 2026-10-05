@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">スキップ</string>
     <string name="item_settings">設定</string>
-    <string name="settings_theme">テーマ</string>
     <string name="close">閉じる</string>
     <string name="settings_language">言語</string>
     <string name="settings_language_value">日本語</string>
     <string name="settings_privacy_policy">プライバシーポリシー</string>
+    <string name="settings_rate_us">評価する</string>
     <string name="settings_share_app">アプリを共有</string>
     <string name="exitApp">アプリを終了</string>
     <string name="exitAppDescription">本当にアプリを終了しますか</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">購入がキャンセルされました</string>
     <string name="pro_purchase_failed">購入に失敗しました。%1$s</string>
     <string name="pro_plan_unavailable">このプランは現在ご利用いただけません</string>
-    <string name="onboard_continue">続ける</string>
     <string name="pro_purchase_pending">支払いは保留中です。確認後に Pro が有効になります</string>
     <string name="pro_restore_success">購入を復元しました</string>
     <string name="pro_restore_nothing_found">この Google アカウントで有効な購入が見つかりません</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">カテゴリ</string>
     <string name="camera_sim_title">スタジオシミュレーションモード</string>
     <string name="camera_sim_hint">下の円をドラッグして位置を調整します</string>
-    <string name="camera_pro_title">プロのスタジオ位置合わせ</string>
     <string name="action_reset">リセット</string>
     <string name="tab_filters">フィルター</string>
     <string name="tab_adjust">調整</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">撮影</string>
     <string name="camera_change_pose">ポーズを変更</string>
     <string name="camera_no_pose">フリー撮影</string>
-    <string name="camera_skeleton">骨格オーバーレイ</string>
     <string name="edit_match_badge">%1$d%% マッチ</string>
     <string name="edit_intensity">強さ</string>
     <string name="edit_compare">ドラッグして比較</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · たった今</string>
     <string name="saved_shoot_again">もう一度撮る</string>
     <string name="saved_view_collections">コレクションで見る</string>
-    <string name="theme_dark">ダーク</string>
-    <string name="theme_light">ライト</string>
-    <string name="theme_sleek_charcoal">スリーク チャコール</string>
-    <string name="theme_cyberpunk_violet">サイバーパンク バイオレット</string>
     <string name="action_clear">クリア</string>
     <string name="imported_pose_title">ギャラリーの参考写真</string>
     <string name="action_back">戻る</string>
     <string name="unknown_location">不明な場所</string>
     <string name="action_favorite">お気に入り</string>
     <string name="camera_flash">フラッシュ</string>
-    <string name="camera_controls">カメラ操作</string>
     <string name="camera_grid">グリッド</string>
     <string name="camera_timer">タイマー</string>
-    <string name="camera_timer_seconds">タイマー %1$d秒</string>
     <string name="camera_switch">カメラを切り替え</string>
     <string name="camera_selected">選択中</string>
     <string name="pose_overlay">ポーズの輪郭</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">タップして試す</string>
     <string name="nav_saved">保存済み</string>
     <string name="nav_capture">カメラを開く</string>
-    <string name="onboard_back">戻る</string>
     <string name="onboard_next">次へ</string>
     <string name="onboard_lets_go">はじめる</string>
-    <string name="onboard_step_label">ステップ %1$d / %2$d</string>
     <string name="onboard_pose_count_badge">%1$d ポーズ</string>
     <string name="onboard_pose_name">屋上でもたれる</string>
     <string name="onboard_badge_viral">バイラル</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">写真 · %1$d</string>
     <string name="saved_tab_poses">ポーズ · %1$d</string>
-    <string name="saved_section_shots">保存した写真</string>
-    <string name="saved_section_poses">保存したポーズ</string>
-    <string name="saved_see_all">すべて表示</string>
     <string name="saved_add">お気に入りに追加</string>
     <string name="saved_remove">お気に入りから削除</string>
     <string name="saved_sort_title">保存済みを並べ替え</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">場所</string>
     <string name="collections_stat_average">平均マッチ</string>
     <string name="collections_filter_all">すべて</string>
-    <string name="collections_filter_favorites">お気に入り</string>
     <string name="collections_filter_top_match">高マッチ</string>
     <string name="collections_filter_recent">最近</string>
     <string name="collections_sort_title">写真を並べ替え</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">おすすめ</string>
     <string name="explore_sort_easiest">やさしい順</string>
     <string name="explore_empty">検索に一致するポーズはありません</string>
-    <string name="theme_picker_subtitle">あなたに合う雰囲気を選びましょう</string>
-    <string name="theme_desc_dark">深いネイビー · インディゴのアクセント</string>
-    <string name="theme_desc_light">明るいグレー · 同じアクセント</string>
-    <string name="theme_desc_sleek_charcoal">ほぼ黒に温かみのあるカッパー</string>
-    <string name="theme_desc_cyberpunk_violet">マゼンタの輝き · 深いプラム</string>
-    <string name="theme_current">現在</string>
-    <string name="theme_apply">テーマを適用</string>
     <string name="detail_saved_in">コレクションに保存 · %1$s</string>
     <string name="detail_today">今日 %1$s</string>
     <string name="detail_yesterday">昨日 %1$s</string>

@@ -42,7 +42,6 @@ import com.aipose.camera.posematch.ui.theme.PoseCyanBright
 import com.aipose.camera.posematch.ui.theme.PoseFuchsiaLight
 import com.aipose.camera.posematch.ui.theme.PoseIndigo400
 import com.aipose.camera.posematch.ui.theme.PoseTextBright
-import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val PreviewStart = 39.dp
@@ -76,45 +75,10 @@ private const val RING_BORDER_ALPHA = 0.16f
 private const val RING_TRACK_ALPHA = 0.18f
 private const val MATCH_PILL_ALPHA = 0.92f
 private const val CHECK_BUBBLE_ALPHA = 0.25f
-private const val SKELETON_ALPHA = 0.9f
 private const val SWEEP_START_DEGREES = -90f
 private const val FULL_TURN_DEGREES = 360f
 private const val PERCENT_SCALE = 100f
-
-private val BoneStroke = 3.2.dp
-private val JointRadius = 4.8.dp
-private val HeadRadius = 12.dp
-
-private val SkeletonBones = listOf(
-    listOf(Offset(155f, 80.4f), Offset(155f, 114f), Offset(155f, 190.8f)),
-    listOf(
-        Offset(89.4f, 214.8f),
-        Offset(99f, 163.6f),
-        Offset(124.6f, 114f),
-        Offset(185.4f, 114f),
-        Offset(211f, 163.6f),
-        Offset(220.6f, 214.8f),
-    ),
-    listOf(
-        Offset(124.6f, 299.6f),
-        Offset(129.4f, 246.8f),
-        Offset(137.4f, 190.8f),
-        Offset(172.6f, 190.8f),
-        Offset(180.6f, 246.8f),
-        Offset(185.4f, 299.6f),
-    ),
-)
-
-private val SkeletonJoints = listOf(
-    Offset(124.6f, 114f), Offset(185.4f, 114f),
-    Offset(99f, 163.6f), Offset(211f, 163.6f),
-    Offset(89.4f, 214.8f), Offset(220.6f, 214.8f),
-    Offset(137.4f, 190.8f), Offset(172.6f, 190.8f),
-    Offset(129.4f, 246.8f), Offset(180.6f, 246.8f),
-    Offset(124.6f, 299.6f), Offset(185.4f, 299.6f),
-)
-
-private val SkeletonHead = Offset(155f, 67.6f)
+private const val OVERLAY_IMAGE_ALPHA = ONBOARD_OVERLAY_PERCENT / PERCENT_SCALE
 
 @Composable
 internal fun OnboardMatchStage(modifier: Modifier = Modifier) {
@@ -132,9 +96,15 @@ internal fun OnboardMatchStage(modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
             )
+            Image(
+                painter = painterResource(R.drawable.onboard_pose_viral),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alpha = OVERLAY_IMAGE_ALPHA,
+                modifier = Modifier.fillMaxSize(),
+            )
             Canvas(modifier = Modifier.fillMaxSize()) { drawThirdsGrid() }
         }
-        Canvas(modifier = Modifier.fillMaxSize()) { drawSkeleton() }
         OverlayPill()
         MatchRing()
         MatchHintPill()
@@ -149,35 +119,6 @@ private fun DrawScope.drawThirdsGrid() {
         drawLine(color, Offset(x, inset), Offset(x, size.height - inset))
         val y = size.height * step / 3f
         drawLine(color, Offset(inset, y), Offset(size.width - inset, y))
-    }
-}
-
-private fun DrawScope.drawSkeleton() {
-    val boneColor = PoseVioletLight.copy(alpha = SKELETON_ALPHA)
-    val stroke = BoneStroke.toPx()
-    SkeletonBones.forEach { bone ->
-        bone.zipWithNext { from, to ->
-            drawLine(
-                color = boneColor,
-                start = Offset(from.x.dp.toPx(), from.y.dp.toPx()),
-                end = Offset(to.x.dp.toPx(), to.y.dp.toPx()),
-                strokeWidth = stroke,
-                cap = StrokeCap.Round,
-            )
-        }
-    }
-    drawCircle(
-        color = boneColor,
-        radius = HeadRadius.toPx(),
-        center = Offset(SkeletonHead.x.dp.toPx(), SkeletonHead.y.dp.toPx()),
-        style = Stroke(width = stroke),
-    )
-    SkeletonJoints.forEach { joint ->
-        drawCircle(
-            color = PoseCyanBright,
-            radius = JointRadius.toPx(),
-            center = Offset(joint.x.dp.toPx(), joint.y.dp.toPx()),
-        )
     }
 }
 

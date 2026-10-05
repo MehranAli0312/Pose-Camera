@@ -39,8 +39,7 @@ class MlKitPoseDetector {
                     continuation.resume(
                         pose.toLandmarks(
                             width = bitmap.width.toFloat(),
-                            height = bitmap.height.toFloat(),
-                            mirrored = false
+                            height = bitmap.height.toFloat()
                         )
                     )
                 }
@@ -50,7 +49,6 @@ class MlKitPoseDetector {
     @OptIn(ExperimentalGetImage::class)
     fun detectStream(
         imageProxy: ImageProxy,
-        isFrontCamera: Boolean,
         onDetected: (Map<PoseJoint, NormalizedPoint>) -> Unit
     ) {
         val mediaImage = imageProxy.image
@@ -65,21 +63,22 @@ class MlKitPoseDetector {
 
         streamDetector.process(InputImage.fromMediaImage(mediaImage, rotation))
             .addOnSuccessListener { pose ->
-                onDetected(pose.toLandmarks(width.toFloat(), height.toFloat(), isFrontCamera))
+                onDetected(pose.toLandmarks(width.toFloat(), height.toFloat()))
             }
             .addOnCompleteListener { imageProxy.close() }
     }
 
     private fun Pose.toLandmarks(
         width: Float,
-        height: Float,
-        mirrored: Boolean
+        height: Float
     ): Map<PoseJoint, NormalizedPoint> = buildMap {
         ML_KIT_JOINTS.forEach { (joint, mlKitLandmarkType) ->
             val landmark = getPoseLandmark(mlKitLandmarkType) ?: return@forEach
             if (landmark.inFrameLikelihood <= MINIMUM_LIKELIHOOD) return@forEach
-            val x = landmark.position.x / width
-            put(joint, NormalizedPoint(if (mirrored) 1f - x else x, landmark.position.y / height))
+            put(
+                joint,
+                NormalizedPoint(landmark.position.x / width, landmark.position.y / height)
+            )
         }
     }
 

@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CameraSettingsRepository {
 
-    fun getRetainSkeleton(): Flow<Boolean>
+    fun getKeepPoseOverlay(): Flow<Boolean>
 
-    suspend fun setRetainSkeleton(retain: Boolean)
+    suspend fun setKeepPoseOverlay(keepOverlay: Boolean)
 
     fun isCameraCoachSeen(): Flow<Boolean>
 

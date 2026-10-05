@@ -41,6 +41,7 @@ fun PoseFilterChip(
     @DrawableRes iconRes: Int? = null,
     iconTint: Color? = null,
     glyphSize: Dp = DefaultGlyphSize,
+    iconBadgePalette: GlossyBadgePalette? = null,
     selectedPalette: GlossyBadgePalette = GlossyBadgePalette.Violet,
 ) {
     val surface = if (isSelected) {
@@ -66,12 +67,22 @@ fun PoseFilterChip(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         if (iconRes != null) {
-            Image(
-                painter = painterResource(iconRes),
-                contentDescription = null,
-                colorFilter = iconTint?.let { tint -> ColorFilter.tint(if (isSelected) Color.White else tint) },
-                modifier = Modifier.size(glyphSize),
-            )
+            if (iconBadgePalette != null) {
+                GlossyIconBadge(
+                    iconRes = iconRes,
+                    palette = iconBadgePalette,
+                    size = glyphSize,
+                )
+            } else {
+                Image(
+                    painter = painterResource(iconRes),
+                    contentDescription = null,
+                    colorFilter = iconTint?.let { tint ->
+                        ColorFilter.tint(if (isSelected) Color.White else tint)
+                    },
+                    modifier = Modifier.size(glyphSize),
+                )
+            }
         }
         Text(
             text = label,

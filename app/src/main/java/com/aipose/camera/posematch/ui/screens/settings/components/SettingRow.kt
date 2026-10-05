@@ -41,6 +41,7 @@ private val BadgeSize = 36.dp
 private val RowStartPadding = 16.dp
 private val RowEndPadding = 22.dp
 private val BadgeToTitle = 14.dp
+private val TitleToTrailing = 16.dp
 private val ValueToChevron = 11.dp
 private val ChevronWidth = 7.dp
 private val ChevronHeight = 12.dp
@@ -84,6 +85,7 @@ internal fun SettingRow(
             modifier = Modifier.weight(1f),
         )
         if (trailing != null) {
+            Spacer(modifier = Modifier.width(TitleToTrailing))
             trailing()
         } else {
             if (value != null) {

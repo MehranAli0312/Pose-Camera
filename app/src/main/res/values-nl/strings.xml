@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Overslaan</string>
     <string name="item_settings">Instellingen</string>
-    <string name="settings_theme">Thema</string>
     <string name="close">Sluiten</string>
     <string name="settings_language">Taal</string>
     <string name="settings_language_value">Nederlands</string>
     <string name="settings_privacy_policy">Privacybeleid</string>
+    <string name="settings_rate_us">Beoordeel ons</string>
     <string name="settings_share_app">App delen</string>
     <string name="exitApp">App afsluiten</string>
     <string name="exitAppDescription">Weet je zeker dat je de app wilt afsluiten</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Aankoop geannuleerd</string>
     <string name="pro_purchase_failed">Aankoop mislukt. %1$s</string>
     <string name="pro_plan_unavailable">Dit abonnement is momenteel niet beschikbaar</string>
-    <string name="onboard_continue">Doorgaan</string>
     <string name="pro_purchase_pending">Betaling in behandeling. Pro wordt ontgrendeld zodra deze is bevestigd</string>
     <string name="pro_restore_success">Aankoop hersteld</string>
     <string name="pro_restore_nothing_found">Geen actieve aankoop gevonden voor dit Google-account</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Categorie</string>
     <string name="camera_sim_title">Studiosimulatiemodus</string>
     <string name="camera_sim_hint">Verplaats de uitlijning met de versleepbare cirkels hieronder</string>
-    <string name="camera_pro_title">Pro-studio-uitlijning</string>
     <string name="action_reset">Herstellen</string>
     <string name="tab_filters">Filters</string>
     <string name="tab_adjust">Aanpassen</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Foto maken</string>
     <string name="camera_change_pose">Pose wisselen</string>
     <string name="camera_no_pose">Vrije foto</string>
-    <string name="camera_skeleton">Skeletoverlay</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_intensity">INTENSITEIT</string>
     <string name="edit_compare">Sleep om te vergelijken</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Zojuist</string>
     <string name="saved_shoot_again">Opnieuw fotograferen</string>
     <string name="saved_view_collections">Bekijk in Collecties</string>
-    <string name="theme_dark">Donker</string>
-    <string name="theme_light">Licht</string>
-    <string name="theme_sleek_charcoal">Strak antraciet</string>
-    <string name="theme_cyberpunk_violet">Cyberpunk-violet</string>
     <string name="action_clear">Wissen</string>
     <string name="imported_pose_title">Galerijreferentie</string>
     <string name="action_back">Terug</string>
     <string name="unknown_location">Onbekende locatie</string>
     <string name="action_favorite">Favoriet</string>
     <string name="camera_flash">Flitser</string>
-    <string name="camera_controls">Camerabediening</string>
     <string name="camera_grid">Raster</string>
     <string name="camera_timer">Timer</string>
-    <string name="camera_timer_seconds">Timer %1$d s</string>
     <string name="camera_switch">Camera wisselen</string>
     <string name="camera_selected">Geselecteerd</string>
     <string name="pose_overlay">Pose-omtrek</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Tik om te proberen</string>
     <string name="nav_saved">Bewaard</string>
     <string name="nav_capture">Camera openen</string>
-    <string name="onboard_back">Terug</string>
     <string name="onboard_next">Volgende</string>
     <string name="onboard_lets_go">Aan de slag</string>
-    <string name="onboard_step_label">STAP %1$d VAN %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSES</string>
     <string name="onboard_pose_name">Leunen op het dak</string>
     <string name="onboard_badge_viral">VIRAAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Foto\'s · %1$d</string>
     <string name="saved_tab_poses">Poses · %1$d</string>
-    <string name="saved_section_shots">BEWAARDE FOTO\'S</string>
-    <string name="saved_section_poses">BEWAARDE POSES</string>
-    <string name="saved_see_all">Alles bekijken</string>
     <string name="saved_add">Toevoegen aan favorieten</string>
     <string name="saved_remove">Verwijderen uit favorieten</string>
     <string name="saved_sort_title">Bewaarde items sorteren</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">PLAATSEN</string>
     <string name="collections_stat_average">GEM. MATCH</string>
     <string name="collections_filter_all">Alle</string>
-    <string name="collections_filter_favorites">Favorieten</string>
     <string name="collections_filter_top_match">Topmatch</string>
     <string name="collections_filter_recent">Recent</string>
     <string name="collections_sort_title">Foto\'s sorteren</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Uitgelicht</string>
     <string name="explore_sort_easiest">Makkelijkste eerst</string>
     <string name="explore_empty">Geen poses komen overeen met je zoekopdracht</string>
-    <string name="theme_picker_subtitle">Kies de look die bij je past</string>
-    <string name="theme_desc_dark">Diep marineblauw · indigo accent</string>
-    <string name="theme_desc_light">Lichte grijstinten · zelfde accent</string>
-    <string name="theme_desc_sleek_charcoal">Warm koper op bijna zwart</string>
-    <string name="theme_desc_cyberpunk_violet">Magenta gloed · diep pruim</string>
-    <string name="theme_current">HUIDIG</string>
-    <string name="theme_apply">Thema toepassen</string>
     <string name="detail_saved_in">Opgeslagen in Collecties · %1$s</string>
     <string name="detail_today">Vandaag %1$s</string>
     <string name="detail_yesterday">Gisteren %1$s</string>

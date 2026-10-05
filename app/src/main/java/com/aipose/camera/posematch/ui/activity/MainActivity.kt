@@ -1,19 +1,17 @@
 package com.aipose.camera.posematch.ui.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
 import com.example.ads.AdsManager
 import com.example.common.Constants
 import com.example.common.update.InAppUpdateManager
-import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
-import com.aipose.camera.posematch.ui.common.applyAppImmersiveSystemBars
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
 import com.aipose.camera.posematch.ui.screens.MainScreen
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -32,12 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val darkBar = ContextCompat.getColor(this, R.color.background_dark)
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(darkBar),
-            navigationBarStyle = SystemBarStyle.dark(darkBar),
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
         )
-        window.applyAppImmersiveSystemBars()
         startAdsForFirstActivity()
         observeAppUpdateConfig()
 
@@ -73,13 +69,6 @@ class MainActivity : AppCompatActivity() {
                     .filter { isOnline -> isOnline }
                     .collect { appFirebaseRemote.refreshIfFetchFailed() }
             }
-        }
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            window.applyAppImmersiveSystemBars()
         }
     }
 

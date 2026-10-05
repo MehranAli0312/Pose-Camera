@@ -67,7 +67,7 @@ private val BadgeHeight = 26.dp
 private val ViralBadgeHeight = 22.dp
 private val ChipRowTop = 264.dp
 private val ChipHeight = 30.dp
-private val ChipIconSize = 11.dp
+private val ChipIconSize = 14.dp
 private val HintTop = 316.dp
 
 private val SideCardShape = RoundedCornerShape(16.dp)
@@ -210,9 +210,9 @@ private fun BoxScope.CategoryChipRow() {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        CategoryChip(R.string.onboard_chip_viral, R.drawable.ic_pose_flame, PoseRose400)
-        CategoryChip(R.string.onboard_chip_couple, R.drawable.ic_pose_couple, PoseFuchsiaLight)
-        CategoryChip(R.string.onboard_chip_beach, R.drawable.ic_pose_sun, PoseAmber400)
+        CategoryChip(R.string.onboard_chip_viral, R.drawable.ic_glyph_flame, PoseRose400)
+        CategoryChip(R.string.onboard_chip_couple, R.drawable.ic_glyph_couple, PoseFuchsiaLight)
+        CategoryChip(R.string.onboard_chip_beach, R.drawable.ic_glyph_beach, PoseAmber400)
         MoreChip()
     }
 }
@@ -227,7 +227,7 @@ private fun CategoryChip(@StringRes labelRes: Int, @DrawableRes iconRes: Int, ic
             .border(1.dp, Color.White.copy(alpha = CHIP_BORDER_ALPHA), ChipShape)
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Icon(
             painter = painterResource(iconRes),

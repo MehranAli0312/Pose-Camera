@@ -8,6 +8,7 @@ import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.ui.models.PoseCategories
+import com.aipose.camera.posematch.ui.models.PoseDifficulty
 import com.aipose.camera.posematch.ui.screens.home.models.HomeFilter
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
 import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickAction
@@ -89,7 +90,7 @@ class HomeViewModel(
         val categories = poses.orderedCategories()
         val category = selection.category?.takeIf { it in categories } ?: categories.firstOrNull()
         val inCategory = poses.filter { category == null || it.category == category }
-        val difficulties = inCategory.map { it.difficulty }.distinct()
+        val difficulties = PoseDifficulty.ordered(inCategory.map { it.difficulty }.distinct())
         val difficulty = selection.difficulty?.takeIf { it in difficulties }
             ?: difficulties.firstOrNull()
         val heroPose = inCategory.firstOrNull { difficulty == null || it.difficulty == difficulty }

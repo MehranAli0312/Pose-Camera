@@ -39,7 +39,7 @@ private val BarHeight = 56.dp
 private val CloseSize = 40.dp
 private val ResetSize = 36.dp
 private val CloseGlyphSize = 18.dp
-private val ResetGlyphSize = 17.dp
+private val ResetGlyphSize = 19.dp
 private val SaveMinWidth = 84.dp
 private val SaveHeight = 36.dp
 private val SaveCorner = 18.dp
@@ -80,7 +80,7 @@ internal fun PhotoEditTopBar(
             modifier = Modifier.weight(1f),
         )
         GlassCircleButton(
-            iconRes = R.drawable.ic_edit_reset,
+            iconRes = R.drawable.ic_edit_revert,
             contentDescription = stringResource(R.string.action_reset),
             size = ResetSize,
             glyphSize = ResetGlyphSize,

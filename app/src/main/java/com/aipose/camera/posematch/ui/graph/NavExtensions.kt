@@ -3,13 +3,15 @@ package com.aipose.camera.posematch.ui.graph
 import android.os.SystemClock
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 
-private const val NAVIGATION_CLICK_INTERVAL_MS = 500L
+private const val NAVIGATION_CLICK_INTERVAL_MS = 400L
 private var lastNavigationClickAtMs = 0L
 
 fun NavController.acceptNavigationClick(): Boolean {
-    if (currentBackStackEntry?.lifecycle?.currentState != Lifecycle.State.RESUMED) return false
+    val state = currentBackStackEntry?.lifecycle?.currentState ?: return false
+    if (!state.isAtLeast(Lifecycle.State.STARTED)) return false
     val now = SystemClock.elapsedRealtime()
     if (now - lastNavigationClickAtMs < NAVIGATION_CLICK_INTERVAL_MS) return false
     lastNavigationClickAtMs = now
@@ -26,9 +28,12 @@ fun NavController.popBackStackOnClick() {
 
 fun NavController.navigateToTab(route: String) {
     if (!acceptNavigationClick()) return
+    navigateToTabNow(route)
+}
+
+fun NavController.navigateToTabNow(route: String) {
     navigate(route) {
-        popUpTo(graph.id) { saveState = true }
+        popUpTo(graph.findStartDestination().id)
         launchSingleTop = true
-        restoreState = true
     }
 }

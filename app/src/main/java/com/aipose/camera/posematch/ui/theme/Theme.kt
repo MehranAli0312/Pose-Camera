@@ -9,7 +9,6 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import com.aipose.camera.posematch.domain.models.AppThemeOption
 
 private const val FIXED_FONT_SCALE = 1f
 
@@ -39,10 +38,9 @@ private val DarkColorPalette = darkColorScheme(
 
 @Composable
 fun MyAppTheme(
-    themeOption: AppThemeOption = AppThemeOption.Dark,
     content: @Composable () -> Unit,
 ) {
-    val palette = remember(themeOption) { paletteFor(themeOption) }
+    val palette = StudioDarkPalette
     val colorScheme = remember(palette) {
         DarkColorPalette.copy(
             primary = palette.accent,

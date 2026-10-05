@@ -1,6 +1,8 @@
 package com.aipose.camera.posematch.ui.screens.saved
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,24 +10,24 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedEmptyState
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedHeader
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedPoseRow
-import com.aipose.camera.posematch.ui.screens.saved.components.SavedSectionHeader
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedShotCard
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedSortSheet
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedTabs
@@ -37,8 +39,6 @@ import com.aipose.camera.posematch.ui.vm.SavedViewModel
 import org.koin.androidx.compose.koinViewModel
 
 private const val SHOTS_PER_ROW = 2
-private const val POSE_PREVIEW_SIZE = 2
-private const val SHOT_PREVIEW_ROWS = 1
 
 @Composable
 fun SavedScreen(
@@ -62,53 +62,57 @@ fun SavedScreen(
     }
 
     PoseGlowBackground(glows = PoseGlows.Saved) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding()
-                .padding(horizontal = 20.dp),
-            contentPadding = PaddingValues(bottom = 24.dp),
+                .poseScreenPadding(),
         ) {
-            item(key = HEADER_KEY) {
-                Spacer(modifier = Modifier.height(14.dp))
-                SavedHeader(
-                    totalCount = content?.totalCount ?: 0,
-                    onOpenSort = viewModel::showSortSheet,
-                )
-                Spacer(modifier = Modifier.height(19.dp))
+            SavedHeader(
+                totalCount = content?.totalCount ?: 0,
+                onOpenSort = viewModel::showSortSheet,
+            )
+            Spacer(modifier = Modifier.height(19.dp))
+
+            if (content == null) return@PoseGlowBackground
+
+            SavedTabs(
+                selected = content.selectedTab,
+                shotsCount = content.shots.size,
+                posesCount = content.poses.size,
+                onSelect = viewModel::selectTab,
+            )
+            Spacer(modifier = Modifier.height(17.dp))
+
+            val isTabEmpty = when (content.selectedTab) {
+                SavedTab.Shots -> content.shots.isEmpty()
+                SavedTab.Poses -> content.poses.isEmpty()
             }
 
-            if (content == null) return@LazyColumn
+            if (isTabEmpty) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    SavedEmptyState(tab = content.selectedTab)
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentPadding = PaddingValues(bottom = 24.dp),
+                ) {
+                    when (content.selectedTab) {
+                        SavedTab.Shots ->
+                            shotRows(content.shots, ::openShot, viewModel::unsaveShot)
 
-            item(key = TABS_KEY) {
-                SavedTabs(
-                    selected = content.selectedTab,
-                    shotsCount = content.shots.size,
-                    posesCount = content.poses.size,
-                    onSelect = viewModel::selectTab,
-                )
-                Spacer(modifier = Modifier.height(17.dp))
-            }
-
-            when (content.selectedTab) {
-                SavedTab.Shots -> shotsTab(
-                    content = content,
-                    onOpenShot = ::openShot,
-                    onUnsaveShot = viewModel::unsaveShot,
-                    onOpenPose = ::openPose,
-                    onUnsavePose = viewModel::unsavePose,
-                    onSeeAllPoses = { viewModel.selectTab(SavedTab.Poses) },
-                )
-
-                SavedTab.Poses -> posesTab(
-                    content = content,
-                    onOpenPose = ::openPose,
-                    onUnsavePose = viewModel::unsavePose,
-                    onOpenShot = ::openShot,
-                    onUnsaveShot = viewModel::unsaveShot,
-                    onSeeAllShots = { viewModel.selectTab(SavedTab.Shots) },
-                )
+                        SavedTab.Poses ->
+                            poseRows(content.poses, ::openPose, viewModel::unsavePose)
+                    }
+                }
             }
         }
     }
@@ -123,75 +127,13 @@ fun SavedScreen(
     }
 }
 
-private fun LazyListScope.shotsTab(
-    content: SavedUiState.Content,
-    onOpenShot: (SavedShot) -> Unit,
-    onUnsaveShot: (SavedShot) -> Unit,
-    onOpenPose: (SavedPose) -> Unit,
-    onUnsavePose: (SavedPose) -> Unit,
-    onSeeAllPoses: () -> Unit,
-) {
-    item(key = SHOTS_LABEL_KEY) {
-        SavedSectionHeader(titleRes = SavedTab.Shots.sectionRes)
-        Spacer(modifier = Modifier.height(14.dp))
-    }
-    if (content.shots.isEmpty()) {
-        item(key = SHOTS_EMPTY_KEY) { SavedEmptyState(tab = SavedTab.Shots) }
-    } else {
-        shotRows(content.shots, onOpenShot, onUnsaveShot, SHOTS_ROW_KEY)
-    }
-    if (content.poses.isNotEmpty()) {
-        item(key = POSES_LABEL_KEY) {
-            Spacer(modifier = Modifier.height(13.dp))
-            SavedSectionHeader(
-                titleRes = SavedTab.Poses.sectionRes,
-                onSeeAll = onSeeAllPoses.takeIf { content.poses.size > POSE_PREVIEW_SIZE },
-            )
-            Spacer(modifier = Modifier.height(18.dp))
-        }
-        poseRows(content.poses.take(POSE_PREVIEW_SIZE), onOpenPose, onUnsavePose)
-    }
-}
-
-private fun LazyListScope.posesTab(
-    content: SavedUiState.Content,
-    onOpenPose: (SavedPose) -> Unit,
-    onUnsavePose: (SavedPose) -> Unit,
-    onOpenShot: (SavedShot) -> Unit,
-    onUnsaveShot: (SavedShot) -> Unit,
-    onSeeAllShots: () -> Unit,
-) {
-    item(key = POSES_LABEL_KEY) {
-        SavedSectionHeader(titleRes = SavedTab.Poses.sectionRes)
-        Spacer(modifier = Modifier.height(18.dp))
-    }
-    if (content.poses.isEmpty()) {
-        item(key = POSES_EMPTY_KEY) { SavedEmptyState(tab = SavedTab.Poses) }
-    } else {
-        poseRows(content.poses, onOpenPose, onUnsavePose)
-    }
-    if (content.shots.isNotEmpty()) {
-        val preview = content.shots.take(SHOT_PREVIEW_ROWS * SHOTS_PER_ROW)
-        item(key = SHOTS_LABEL_KEY) {
-            Spacer(modifier = Modifier.height(15.dp))
-            SavedSectionHeader(
-                titleRes = SavedTab.Shots.sectionRes,
-                onSeeAll = onSeeAllShots.takeIf { content.shots.size > preview.size },
-            )
-            Spacer(modifier = Modifier.height(14.dp))
-        }
-        shotRows(preview, onOpenShot, onUnsaveShot, SHOTS_PREVIEW_ROW_KEY)
-    }
-}
-
 private fun LazyListScope.shotRows(
     shots: List<SavedShot>,
     onOpenShot: (SavedShot) -> Unit,
     onUnsaveShot: (SavedShot) -> Unit,
-    keyPrefix: String,
 ) {
     shots.chunked(SHOTS_PER_ROW).forEachIndexed { index, rowShots ->
-        item(key = keyPrefix + index) {
+        item(key = SHOTS_ROW_KEY + index) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -231,12 +173,5 @@ private fun LazyListScope.poseRows(
     }
 }
 
-private const val HEADER_KEY = "saved_header"
-private const val TABS_KEY = "saved_tabs"
-private const val SHOTS_LABEL_KEY = "saved_shots_label"
 private const val SHOTS_ROW_KEY = "saved_shots_row_"
-private const val SHOTS_PREVIEW_ROW_KEY = "saved_shots_preview_row_"
-private const val SHOTS_EMPTY_KEY = "saved_shots_empty"
-private const val POSES_LABEL_KEY = "saved_poses_label"
 private const val POSES_ROW_KEY = "saved_poses_row_"
-private const val POSES_EMPTY_KEY = "saved_poses_empty"

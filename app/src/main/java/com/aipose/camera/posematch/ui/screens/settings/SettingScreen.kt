@@ -23,9 +23,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.BuildConfig
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
+import com.aipose.camera.posematch.ui.common.RateUsSheet
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
@@ -33,7 +36,6 @@ import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.models.allLanguageItems
-import com.aipose.camera.posematch.ui.models.themeOptionLabel
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingRow
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingSectionLabel
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingToggle
@@ -43,7 +45,6 @@ import com.aipose.camera.posematch.ui.screens.settings.components.SettingsStreak
 import com.aipose.camera.posematch.ui.vm.CameraSettingsViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.SettingsViewModel
-import com.aipose.camera.posematch.ui.vm.ThemeViewModel
 import com.aipose.camera.posematch.util.PRIVACY_POLICY
 import com.aipose.camera.posematch.util.bidiIsolate
 import com.aipose.camera.posematch.util.shareApp
@@ -55,18 +56,17 @@ private const val TEXT_MIME_TYPE = "text/plain"
 @Composable
 fun SettingScreen(
     navController: NavHostController,
-    themeViewModel: ThemeViewModel = koinInject(),
     languageViewModel: LanguageViewModel = koinInject(),
     settingsViewModel: SettingsViewModel = koinViewModel(),
     cameraSettingsViewModel: CameraSettingsViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
-    val themeOption by themeViewModel.themeOption.collectAsStateWithLifecycle()
     val progress by settingsViewModel.progress.collectAsStateWithLifecycle()
-    val retainSkeleton by cameraSettingsViewModel.retainSkeleton.collectAsStateWithLifecycle()
+    val keepPoseOverlay by cameraSettingsViewModel.keepPoseOverlay.collectAsStateWithLifecycle()
     val captureTimer by cameraSettingsViewModel.captureTimer.collectAsStateWithLifecycle()
     var isTimerSheetVisible by rememberSaveable { mutableStateOf(false) }
+    val isRateUsVisible = rememberSaveable { mutableStateOf(false) }
     val shareChooserTitle = stringResource(R.string.app_name)
     val languageName = allLanguageItems
         .firstOrNull { item -> item.code == languageViewModel.currentLanguageCode }
@@ -80,7 +80,12 @@ fun SettingScreen(
                 .adaptiveWidth()
                 .statusBarsPadding()
                 .verticalScroll(rememberScrollState())
-                .padding(start = 20.dp, end = 20.dp, top = 22.dp, bottom = 24.dp),
+                .padding(
+                    start = PoseScreenGutter,
+                    end = PoseScreenGutter,
+                    top = PoseScreenTopSpacing,
+                    bottom = 24.dp,
+                ),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             SettingsHeader()
@@ -106,21 +111,14 @@ fun SettingScreen(
                 onClick = { navController.navigateOnClick(NavRoute.LanguageScreenRoute.route) },
             )
             SettingRow(
-                iconRes = R.drawable.ic_pose_palette,
-                palette = GlossyBadgePalette.Pink,
-                title = stringResource(R.string.settings_theme),
-                value = stringResource(themeOptionLabel(themeOption)),
-                onClick = { navController.navigateOnClick(NavRoute.ThemePickerScreenRoute.route) },
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_person,
+                iconRes = R.drawable.ic_pose_overlay,
                 palette = GlossyBadgePalette.Cyan,
                 title = stringResource(R.string.settings_retain_skeleton),
-                onClick = { cameraSettingsViewModel.setRetainSkeleton(!retainSkeleton) },
+                onClick = { cameraSettingsViewModel.setKeepPoseOverlay(!keepPoseOverlay) },
                 trailing = {
                     SettingToggle(
-                        checked = retainSkeleton,
-                        onCheckedChange = cameraSettingsViewModel::setRetainSkeleton,
+                        checked = keepPoseOverlay,
+                        onCheckedChange = cameraSettingsViewModel::setKeepPoseOverlay,
                     )
                 },
             )
@@ -136,7 +134,13 @@ fun SettingScreen(
                 modifier = Modifier.padding(top = 20.dp),
             )
             SettingRow(
-                iconRes = R.drawable.ic_pose_share,
+                iconRes = R.drawable.ic_pose_rate_us,
+                palette = GlossyBadgePalette.Amber,
+                title = stringResource(R.string.settings_rate_us),
+                onClick = { isRateUsVisible.value = true },
+            )
+            SettingRow(
+                iconRes = R.drawable.ic_pose_share_app,
                 palette = GlossyBadgePalette.Emerald,
                 title = stringResource(R.string.settings_share_app),
                 onClick = {
@@ -165,6 +169,8 @@ fun SettingScreen(
             )
         }
     }
+
+    RateUsSheet(visible = isRateUsVisible)
 
     if (isTimerSheetVisible) {
         CaptureTimerSheet(

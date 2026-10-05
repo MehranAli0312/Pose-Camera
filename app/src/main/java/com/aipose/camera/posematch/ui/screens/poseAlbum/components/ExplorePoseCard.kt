@@ -34,7 +34,7 @@ import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.click
-import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseDifficulty
+import com.aipose.camera.posematch.ui.models.PoseDifficulty
 import com.aipose.camera.posematch.ui.theme.PoseCardLabel
 import com.aipose.camera.posematch.ui.theme.PosePinkSoft
 import com.aipose.camera.posematch.ui.theme.poseTextStyle

@@ -9,7 +9,7 @@ import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.models.PoseCategories
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseAlbumUiState
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseCategoryCount
-import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseDifficulty
+import com.aipose.camera.posematch.ui.models.PoseDifficulty
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseSort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

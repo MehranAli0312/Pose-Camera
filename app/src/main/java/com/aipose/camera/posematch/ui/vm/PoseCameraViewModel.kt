@@ -48,7 +48,7 @@ class PoseCameraViewModel(
     init {
         poseFrameAnalyzer.onLandmarks = ::onUserLandmarks
         observePoses()
-        observeSkeletonPreference()
+        observePoseOverlayPreference()
         observeTimerPreference()
         observeCoachVisibility()
         observeGalleryCount()
@@ -117,8 +117,6 @@ class PoseCameraViewModel(
         when (tool) {
             CameraTool.Grid -> toggleGrid()
             CameraTool.Timer -> showTimerSheet()
-            CameraTool.Skeleton -> setSkeletonVisible(!_uiState.value.isSkeletonVisible)
-            CameraTool.Pro -> toggleProControls()
         }
     }
 
@@ -137,15 +135,7 @@ class PoseCameraViewModel(
     }
 
     fun toggleCameraFacing() {
-        _uiState.update { state ->
-            val facing = state.cameraFacing.toggled()
-            poseFrameAnalyzer.isFrontCamera = facing.isFront
-            state.copy(cameraFacing = facing)
-        }
-    }
-
-    fun toggleProControls() {
-        _uiState.update { state -> state.copy(areProControlsVisible = !state.areProControlsVisible) }
+        _uiState.update { state -> state.copy(cameraFacing = state.cameraFacing.toggled()) }
     }
 
     fun showTimerSheet() {
@@ -161,20 +151,8 @@ class PoseCameraViewModel(
         viewModelScope.launch { cameraSettingsUseCase.setCaptureTimerSeconds(timer.seconds) }
     }
 
-    fun cycleTimer() {
-        setTimer(_uiState.value.timer.next())
-    }
-
     fun toggleGrid() {
         _uiState.update { state -> state.copy(isGridVisible = !state.isGridVisible) }
-    }
-
-    fun setManualIso(iso: Int) {
-        _uiState.update { state -> state.copy(manualIso = iso) }
-    }
-
-    fun setManualExposure(exposure: Float) {
-        _uiState.update { state -> state.copy(manualExposure = exposure) }
     }
 
     fun selectFilter(filterId: PhotoFilterId) {
@@ -184,10 +162,6 @@ class PoseCameraViewModel(
                 activeGrade = photoEditUseCase.gradeFor(filterId, state.autoGrade)
             )
         }
-    }
-
-    fun setSkeletonVisible(visible: Boolean) {
-        viewModelScope.launch { cameraSettingsUseCase.setRetainSkeleton(visible) }
     }
 
     fun dismissCoach() {
@@ -296,10 +270,10 @@ class PoseCameraViewModel(
         }
     }
 
-    private fun observeSkeletonPreference() {
+    private fun observePoseOverlayPreference() {
         viewModelScope.launch {
-            cameraSettingsUseCase.getRetainSkeleton().collect { retain ->
-                _uiState.update { state -> state.copy(isSkeletonVisible = retain) }
+            cameraSettingsUseCase.getKeepPoseOverlay().collect { keepOverlay ->
+                _uiState.update { state -> state.copy(isPoseOverlayEnabled = keepOverlay) }
             }
         }
     }

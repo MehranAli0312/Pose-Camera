@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Bỏ qua</string>
     <string name="item_settings">Cài đặt</string>
-    <string name="settings_theme">Giao diện</string>
     <string name="close">Đóng</string>
     <string name="settings_language">Ngôn ngữ</string>
     <string name="settings_language_value">Tiếng Việt</string>
     <string name="settings_privacy_policy">Chính sách quyền riêng tư</string>
+    <string name="settings_rate_us">Đánh giá ứng dụng</string>
     <string name="settings_share_app">Chia sẻ ứng dụng</string>
     <string name="exitApp">Thoát ứng dụng</string>
     <string name="exitAppDescription">Bạn có chắc muốn thoát ứng dụng không</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Đã hủy mua</string>
     <string name="pro_purchase_failed">Mua không thành công. %1$s</string>
     <string name="pro_plan_unavailable">Gói này hiện không khả dụng</string>
-    <string name="onboard_continue">Tiếp tục</string>
     <string name="pro_purchase_pending">Thanh toán đang chờ xử lý. Pro sẽ được mở khóa sau khi xác nhận</string>
     <string name="pro_restore_success">Đã khôi phục giao dịch mua</string>
     <string name="pro_restore_nothing_found">Không tìm thấy giao dịch mua nào đang hoạt động cho tài khoản Google này</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">Danh mục</string>
     <string name="camera_sim_title">Chế độ mô phỏng studio</string>
     <string name="camera_sim_hint">Di chuyển căn chỉnh bằng các vòng tròn kéo được bên dưới</string>
-    <string name="camera_pro_title">Căn chỉnh studio chuyên nghiệp</string>
     <string name="action_reset">Đặt lại</string>
     <string name="tab_filters">Bộ lọc</string>
     <string name="tab_adjust">Điều chỉnh</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">Chụp ảnh</string>
     <string name="camera_change_pose">Đổi dáng</string>
     <string name="camera_no_pose">Chụp tự do</string>
-    <string name="camera_skeleton">Lớp phủ khung xương</string>
     <string name="edit_match_badge">KHỚP %1$d%%</string>
     <string name="edit_intensity">CƯỜNG ĐỘ</string>
     <string name="edit_compare">Kéo để so sánh</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · Vừa xong</string>
     <string name="saved_shoot_again">Chụp lại</string>
     <string name="saved_view_collections">Xem trong Bộ sưu tập</string>
-    <string name="theme_dark">Tối</string>
-    <string name="theme_light">Sáng</string>
-    <string name="theme_sleek_charcoal">Than chì thanh lịch</string>
-    <string name="theme_cyberpunk_violet">Tím cyberpunk</string>
     <string name="action_clear">Xóa</string>
     <string name="imported_pose_title">Ảnh mẫu từ thư viện</string>
     <string name="action_back">Quay lại</string>
     <string name="unknown_location">Không rõ địa điểm</string>
     <string name="action_favorite">Yêu thích</string>
     <string name="camera_flash">Đèn flash</string>
-    <string name="camera_controls">Điều khiển camera</string>
     <string name="camera_grid">Lưới</string>
     <string name="camera_timer">Hẹn giờ</string>
-    <string name="camera_timer_seconds">Hẹn giờ %1$d giây</string>
     <string name="camera_switch">Đổi camera</string>
     <string name="camera_selected">Đã chọn</string>
     <string name="pose_overlay">Đường viền dáng</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">Chạm để thử</string>
     <string name="nav_saved">Đã lưu</string>
     <string name="nav_capture">Mở camera</string>
-    <string name="onboard_back">Quay lại</string>
     <string name="onboard_next">Tiếp</string>
     <string name="onboard_lets_go">Bắt đầu nào</string>
-    <string name="onboard_step_label">BƯỚC %1$d / %2$d</string>
     <string name="onboard_pose_count_badge">%1$d DÁNG</string>
     <string name="onboard_pose_name">Tựa sân thượng</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">Ảnh · %1$d</string>
     <string name="saved_tab_poses">Dáng · %1$d</string>
-    <string name="saved_section_shots">ẢNH ĐÃ LƯU</string>
-    <string name="saved_section_poses">DÁNG ĐÃ LƯU</string>
-    <string name="saved_see_all">Xem tất cả</string>
     <string name="saved_add">Thêm vào yêu thích</string>
     <string name="saved_remove">Xóa khỏi yêu thích</string>
     <string name="saved_sort_title">Sắp xếp mục đã lưu</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">ĐỊA ĐIỂM</string>
     <string name="collections_stat_average">KHỚP TB</string>
     <string name="collections_filter_all">Tất cả</string>
-    <string name="collections_filter_favorites">Yêu thích</string>
     <string name="collections_filter_top_match">Khớp cao nhất</string>
     <string name="collections_filter_recent">Gần đây</string>
     <string name="collections_sort_title">Sắp xếp ảnh</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">Nổi bật</string>
     <string name="explore_sort_easiest">Dễ nhất trước</string>
     <string name="explore_empty">Không có dáng khớp với tìm kiếm</string>
-    <string name="theme_picker_subtitle">Chọn giao diện hợp với bạn</string>
-    <string name="theme_desc_dark">Xanh navy đậm · điểm nhấn chàm</string>
-    <string name="theme_desc_light">Xám sáng · cùng điểm nhấn</string>
-    <string name="theme_desc_sleek_charcoal">Đồng ấm trên nền gần đen</string>
-    <string name="theme_desc_cyberpunk_violet">Ánh hồng tím · mận đậm</string>
-    <string name="theme_current">HIỆN TẠI</string>
-    <string name="theme_apply">Áp dụng giao diện</string>
     <string name="detail_saved_in">Đã lưu trong Bộ sưu tập · %1$s</string>
     <string name="detail_today">Hôm nay %1$s</string>
     <string name="detail_yesterday">Hôm qua %1$s</string>

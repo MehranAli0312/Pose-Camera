@@ -67,7 +67,7 @@ internal fun PhotoSuccessActions(
                     .poseRaisedSurface(ButtonShape, borderAlpha = SHARE_BORDER_ALPHA),
             )
             ActionButton(
-                iconRes = R.drawable.ic_saved_camera,
+                iconRes = R.drawable.ic_shoot_again,
                 iconTint = Color.White,
                 label = stringResource(R.string.saved_shoot_again),
                 onClick = onShootAgain,

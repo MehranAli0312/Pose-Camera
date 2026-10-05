@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">छोड़ें</string>
     <string name="item_settings">सेटिंग्स</string>
-    <string name="settings_theme">थीम</string>
     <string name="close">बंद करें</string>
     <string name="settings_language">भाषा</string>
     <string name="settings_language_value">हिंदी</string>
     <string name="settings_privacy_policy">गोपनीयता नीति</string>
+    <string name="settings_rate_us">हमें रेट करें</string>
     <string name="settings_share_app">ऐप शेयर करें</string>
     <string name="exitApp">ऐप बंद करें</string>
     <string name="exitAppDescription">क्या आप वाकई ऐप बंद करना चाहते हैं</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">खरीद रद्द हुई</string>
     <string name="pro_purchase_failed">खरीद विफल. %1$s</string>
     <string name="pro_plan_unavailable">यह प्लान अभी उपलब्ध नहीं है</string>
-    <string name="onboard_continue">जारी रखें</string>
     <string name="pro_purchase_pending">भुगतान लंबित है। पुष्टि होते ही Pro अनलॉक हो जाएगा</string>
     <string name="pro_restore_success">खरीद बहाल कर दी गई</string>
     <string name="pro_restore_nothing_found">इस Google खाते के लिए कोई सक्रिय खरीद नहीं मिली</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">कैटेगरी</string>
     <string name="camera_sim_title">स्टूडियो सिमुलेशन मोड</string>
     <string name="camera_sim_hint">नीचे दिए खींचने वाले सर्कल से अलाइनमेंट बदलें</string>
-    <string name="camera_pro_title">प्रो स्टूडियो अलाइनमेंट</string>
     <string name="action_reset">रीसेट करें</string>
     <string name="tab_filters">फ़िल्टर</string>
     <string name="tab_adjust">एडजस्ट</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">फ़ोटो लें</string>
     <string name="camera_change_pose">पोज़ बदलें</string>
     <string name="camera_no_pose">फ़्री शॉट</string>
-    <string name="camera_skeleton">स्केलेटन ओवरले</string>
     <string name="edit_match_badge">%1$d%% मैच</string>
     <string name="edit_intensity">तीव्रता</string>
     <string name="edit_compare">तुलना के लिए खींचें</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · अभी</string>
     <string name="saved_shoot_again">फिर से लें</string>
     <string name="saved_view_collections">कलेक्शन में देखें</string>
-    <string name="theme_dark">डार्क</string>
-    <string name="theme_light">लाइट</string>
-    <string name="theme_sleek_charcoal">स्लीक चारकोल</string>
-    <string name="theme_cyberpunk_violet">साइबरपंक वायलेट</string>
     <string name="action_clear">साफ़ करें</string>
     <string name="imported_pose_title">गैलरी रेफ़रेंस</string>
     <string name="action_back">वापस</string>
     <string name="unknown_location">अज्ञात जगह</string>
     <string name="action_favorite">पसंदीदा</string>
     <string name="camera_flash">फ़्लैश</string>
-    <string name="camera_controls">कैमरा कंट्रोल</string>
     <string name="camera_grid">ग्रिड</string>
     <string name="camera_timer">टाइमर</string>
-    <string name="camera_timer_seconds">टाइमर %1$d से.</string>
     <string name="camera_switch">कैमरा बदलें</string>
     <string name="camera_selected">चुना गया</string>
     <string name="pose_overlay">पोज़ आउटलाइन</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">आज़माने के लिए टैप करें</string>
     <string name="nav_saved">सेव किए गए</string>
     <string name="nav_capture">कैमरा खोलें</string>
-    <string name="onboard_back">वापस</string>
     <string name="onboard_next">आगे</string>
     <string name="onboard_lets_go">चलिए शुरू करें</string>
-    <string name="onboard_step_label">चरण %1$d / %2$d</string>
     <string name="onboard_pose_count_badge">%1$d पोज़</string>
     <string name="onboard_pose_name">छत पर टेक</string>
     <string name="onboard_badge_viral">वायरल</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">फ़ोटो · %1$d</string>
     <string name="saved_tab_poses">पोज़ · %1$d</string>
-    <string name="saved_section_shots">सेव की गई फ़ोटो</string>
-    <string name="saved_section_poses">सेव किए गए पोज़</string>
-    <string name="saved_see_all">सभी देखें</string>
     <string name="saved_add">पसंदीदा में जोड़ें</string>
     <string name="saved_remove">पसंदीदा से हटाएँ</string>
     <string name="saved_sort_title">सेव किए गए को क्रम दें</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">जगहें</string>
     <string name="collections_stat_average">औसत मैच</string>
     <string name="collections_filter_all">सभी</string>
-    <string name="collections_filter_favorites">पसंदीदा</string>
     <string name="collections_filter_top_match">टॉप मैच</string>
     <string name="collections_filter_recent">हाल की</string>
     <string name="collections_sort_title">फ़ोटो को क्रम दें</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">फ़ीचर्ड</string>
     <string name="explore_sort_easiest">आसान पहले</string>
     <string name="explore_empty">आपकी खोज से कोई पोज़ मेल नहीं खाता</string>
-    <string name="theme_picker_subtitle">अपनी पसंद का लुक चुनें</string>
-    <string name="theme_desc_dark">गहरा नेवी · इंडिगो एक्सेंट</string>
-    <string name="theme_desc_light">हल्के ग्रे · वही एक्सेंट</string>
-    <string name="theme_desc_sleek_charcoal">लगभग काले पर गर्म तांबा</string>
-    <string name="theme_desc_cyberpunk_violet">मैजेंटा चमक · गहरा बैंगनी</string>
-    <string name="theme_current">मौजूदा</string>
-    <string name="theme_apply">थीम लागू करें</string>
     <string name="detail_saved_in">कलेक्शन में सेव · %1$s</string>
     <string name="detail_today">आज %1$s</string>
     <string name="detail_yesterday">कल %1$s</string>

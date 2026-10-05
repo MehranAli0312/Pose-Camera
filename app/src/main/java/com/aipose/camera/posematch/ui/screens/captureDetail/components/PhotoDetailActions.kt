@@ -38,7 +38,7 @@ private val ButtonCorner = 20.dp
 private val ButtonShape = RoundedCornerShape(ButtonCorner)
 private val ButtonMinHeight = 52.dp
 private val ShareGlyphSize = DpSize(17.dp, 18.dp)
-private val CameraGlyphSize = DpSize(17.dp, 12.dp)
+private val CameraGlyphSize = DpSize(18.dp, 18.dp)
 private val TrashGlyphSize = DpSize(16.dp, 18.dp)
 private const val SHARE_BORDER_ALPHA = 0.1f
 private const val RESHOOT_FILL_ALPHA = 0.16f
@@ -72,7 +72,7 @@ internal fun PhotoDetailActions(
                 .poseRaisedSurface(ButtonShape, borderAlpha = SHARE_BORDER_ALPHA),
         )
         ActionButton(
-            iconRes = R.drawable.ic_saved_camera,
+            iconRes = R.drawable.ic_shoot_again,
             glyphSize = CameraGlyphSize,
             label = stringResource(R.string.detail_reshoot),
             contentColor = PoseVioletPale,

@@ -14,20 +14,21 @@ class CameraSettingsViewModel(
     private val cameraSettingsUseCase: CameraSettingsUseCase
 ) : ViewModel() {
 
-    val retainSkeleton: StateFlow<Boolean> = cameraSettingsUseCase.getRetainSkeleton()
+    val keepPoseOverlay: StateFlow<Boolean> = cameraSettingsUseCase.getKeepPoseOverlay()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), true)
 
     val captureTimer: StateFlow<CaptureTimer> = cameraSettingsUseCase.getCaptureTimerSeconds()
         .map(CaptureTimer::fromSeconds)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), CaptureTimer.Off)
 
-    fun setRetainSkeleton(retain: Boolean) {
-        viewModelScope.launch { cameraSettingsUseCase.setRetainSkeleton(retain) }
+    fun setKeepPoseOverlay(keepOverlay: Boolean) {
+        viewModelScope.launch { cameraSettingsUseCase.setKeepPoseOverlay(keepOverlay) }
     }
 
     fun setCaptureTimer(timer: CaptureTimer) {
         viewModelScope.launch { cameraSettingsUseCase.setCaptureTimerSeconds(timer.seconds) }
     }
+
 
     private companion object {
         const val SUBSCRIPTION_TIMEOUT = 5_000L

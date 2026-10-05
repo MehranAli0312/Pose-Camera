@@ -29,6 +29,7 @@ import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val BackGlyphSize = DpSize(16.dp, 16.dp)
+private val FilterGlyphSize = DpSize(18.dp, 17.dp)
 private val PinWidth = 16.dp
 private val PinHeight = 22.dp
 
@@ -38,10 +39,14 @@ internal fun AlbumHeader(
     summary: String,
     accent: AlbumAccent,
     onBack: () -> Unit,
+    onOpenSort: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             PoseRaisedIconButton(
                 iconRes = R.drawable.ic_back,
                 contentDescription = stringResource(R.string.action_back),
@@ -60,7 +65,15 @@ internal fun AlbumHeader(
                 style = poseTextStyle(22.sp, FontWeight.Bold, Color.White),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 12.dp),
+            )
+            PoseRaisedIconButton(
+                iconRes = R.drawable.ic_pose_filter,
+                contentDescription = stringResource(R.string.collections_sort_title),
+                glyphSize = FilterGlyphSize,
+                onClick = onOpenSort,
             )
         }
         Spacer(modifier = Modifier.height(18.dp))

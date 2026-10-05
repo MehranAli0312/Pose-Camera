@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
 import com.aipose.camera.posematch.domain.models.ColorGrade
+import com.aipose.camera.posematch.domain.models.PhotoCropRect
 import com.aipose.camera.posematch.domain.models.PhotoGeometry
 import com.aipose.camera.posematch.domain.models.PhotoSize
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,7 @@ class CaptureProcessor(private val gradingEngine: PhotoGradingEngine) {
             if (geometry.rotationDegrees % FULL_TURN != 0) {
                 bitmap = rotate(bitmap, geometry.rotationDegrees)
             }
-            geometry.cropAspect?.let { aspect -> bitmap = centerCrop(bitmap, aspect) }
+            geometry.cropRect.takeUnless { it.isFull }?.let { rect -> bitmap = crop(bitmap, rect) }
             bitmap = gradingEngine.bake(bitmap, grade)
             File(targetPath).outputStream().use { output ->
                 bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, output)
@@ -121,17 +122,12 @@ class CaptureProcessor(private val gradingEngine: PhotoGradingEngine) {
         )
     }
 
-    private fun centerCrop(source: Bitmap, aspect: Float): Bitmap {
-        val width = source.width
-        val height = source.height
-        val currentAspect = width.toFloat() / height
-        return if (currentAspect > aspect) {
-            val croppedWidth = (height * aspect).toInt().coerceIn(1, width)
-            Bitmap.createBitmap(source, (width - croppedWidth) / 2, 0, croppedWidth, height)
-        } else {
-            val croppedHeight = (width / aspect).toInt().coerceIn(1, height)
-            Bitmap.createBitmap(source, 0, (height - croppedHeight) / 2, width, croppedHeight)
-        }
+    private fun crop(source: Bitmap, rect: PhotoCropRect): Bitmap {
+        val left = (source.width * rect.left).toInt().coerceIn(0, source.width - 1)
+        val top = (source.height * rect.top).toInt().coerceIn(0, source.height - 1)
+        val width = (source.width * rect.width).toInt().coerceIn(1, source.width - left)
+        val height = (source.height * rect.height).toInt().coerceIn(1, source.height - top)
+        return Bitmap.createBitmap(source, left, top, width, height)
     }
 
     private companion object {

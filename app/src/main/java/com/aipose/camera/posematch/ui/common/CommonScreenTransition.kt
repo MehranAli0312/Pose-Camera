@@ -12,11 +12,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.aipose.camera.posematch.ui.screens.bottomBar.BottomNavItem
 
+private const val SCREEN_TRANSITION_MILLIS = 320
+
 fun NavGraphBuilder.addScreenWithTransitions(
-    enterDuration: Int = 700,
-    exitDuration: Int = 700,
-    popEnterDuration: Int = 700,
-    popExitDuration: Int = 700,
+    enterDuration: Int = SCREEN_TRANSITION_MILLIS,
+    exitDuration: Int = SCREEN_TRANSITION_MILLIS,
+    popEnterDuration: Int = SCREEN_TRANSITION_MILLIS,
+    popExitDuration: Int = SCREEN_TRANSITION_MILLIS,
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     tabIndexMap: Map<String, Int>? = BottomNavItem.tabIndices,

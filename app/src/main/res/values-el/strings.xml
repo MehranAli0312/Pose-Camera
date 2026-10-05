@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Παράλειψη</string>
     <string name="item_settings">Ρυθμίσεις</string>
-    <string name="settings_theme">Θέμα</string>
     <string name="close">Κλείσιμο</string>
     <string name="settings_language">Γλώσσα</string>
     <string name="settings_language_value">Ελληνικά</string>
     <string name="settings_privacy_policy">Πολιτική απορρήτου</string>
+    <string name="settings_rate_us">Αξιολόγησέ μας</string>
     <string name="settings_share_app">Κοινοποίηση εφαρμογής</string>
     <string name="exitApp">Έξοδος από την εφαρμογή</string>
     <string name="exitAppDescription">Θέλετε σίγουρα να βγείτε από την εφαρμογή</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Η αγορά ακυρώθηκε</string>
     <string name="pro_purchase_failed">Η αγορά απέτυχε. %1$s</string>
     <string name="pro_plan_unavailable">Αυτό το πλάνο δεν είναι διαθέσιμο αυτή τη στιγμή</string>
-    <string name="onboard_continue">Συνέχεια</string>
     <string name="pro_purchase_pending">Η πληρωμή εκκρεμεί. Το Pro θα ξεκλειδωθεί μόλις επιβεβαιωθεί</string>
     <string name="pro_restore_success">Η αγορά επαναφέρθηκε</string>
     <string name="pro_restore_nothing_found">Δεν βρέθηκε ενεργή αγορά για αυτόν τον λογαριασμό Google</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Κατηγορία</string>
     <string name="camera_sim_title">Λειτουργία προσομοίωσης στούντιο</string>
     <string name="camera_sim_hint">Μετακινήστε την ευθυγράμμιση με τους κύκλους παρακάτω</string>
-    <string name="camera_pro_title">Επαγγελματικές ευθυγραμμίσεις</string>
     <string name="action_reset">Επαναφορά</string>
     <string name="tab_filters">Φίλτρα</string>
     <string name="tab_adjust">Ρύθμιση</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Λήψη φωτογραφίας</string>
     <string name="camera_change_pose">Αλλαγή πόζας</string>
     <string name="camera_no_pose">Ελεύθερη λήψη</string>
-    <string name="camera_skeleton">Επικάλυψη σκελετού</string>
     <string name="edit_match_badge">ΤΑΙΡΙΑΣΜΑ %1$d%%</string>
     <string name="edit_intensity">ΕΝΤΑΣΗ</string>
     <string name="edit_compare">Σύρετε για σύγκριση</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Μόλις τώρα</string>
     <string name="saved_shoot_again">Νέα λήψη</string>
     <string name="saved_view_collections">Προβολή στις Συλλογές</string>
-    <string name="theme_dark">Σκούρο</string>
-    <string name="theme_light">Ανοιχτό</string>
-    <string name="theme_sleek_charcoal">Κομψό ανθρακί</string>
-    <string name="theme_cyberpunk_violet">Μωβ cyberpunk</string>
     <string name="action_clear">Εκκαθάριση</string>
     <string name="imported_pose_title">Αναφορά από τη συλλογή</string>
     <string name="action_back">Πίσω</string>
     <string name="unknown_location">Άγνωστη τοποθεσία</string>
     <string name="action_favorite">Αγαπημένο</string>
     <string name="camera_flash">Φλας</string>
-    <string name="camera_controls">Χειριστήρια κάμερας</string>
     <string name="camera_grid">Πλέγμα</string>
     <string name="camera_timer">Χρονόμετρο</string>
-    <string name="camera_timer_seconds">Χρονόμετρο %1$d δ</string>
     <string name="camera_switch">Εναλλαγή κάμερας</string>
     <string name="camera_selected">Επιλεγμένο</string>
     <string name="pose_overlay">Περίγραμμα πόζας</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Πατήστε για δοκιμή</string>
     <string name="nav_saved">Αποθηκευμένα</string>
     <string name="nav_capture">Άνοιγμα κάμερας</string>
-    <string name="onboard_back">Πίσω</string>
     <string name="onboard_next">Επόμενο</string>
     <string name="onboard_lets_go">Πάμε</string>
-    <string name="onboard_step_label">ΒΗΜΑ %1$d ΑΠΟ %2$d</string>
     <string name="onboard_pose_count_badge">%1$d ΠΟΖΕΣ</string>
     <string name="onboard_pose_name">Ακούμπημα στην ταράτσα</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Λήψεις · %1$d</string>
     <string name="saved_tab_poses">Πόζες · %1$d</string>
-    <string name="saved_section_shots">ΑΠΟΘΗΚΕΥΜΕΝΕΣ ΛΗΨΕΙΣ</string>
-    <string name="saved_section_poses">ΑΠΟΘΗΚΕΥΜΕΝΕΣ ΠΟΖΕΣ</string>
-    <string name="saved_see_all">Όλα</string>
     <string name="saved_add">Προσθήκη στα αγαπημένα</string>
     <string name="saved_remove">Αφαίρεση από τα αγαπημένα</string>
     <string name="saved_sort_title">Ταξινόμηση αποθηκευμένων</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">ΤΟΠΟΙ</string>
     <string name="collections_stat_average">ΜΕΣΟ ΤΑΙΡ.</string>
     <string name="collections_filter_all">Όλες</string>
-    <string name="collections_filter_favorites">Αγαπημένες</string>
     <string name="collections_filter_top_match">Κορυφαίες</string>
     <string name="collections_filter_recent">Πρόσφατες</string>
     <string name="collections_sort_title">Ταξινόμηση λήψεων</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Προτεινόμενες</string>
     <string name="explore_sort_easiest">Πρώτα οι ευκολότερες</string>
     <string name="explore_empty">Καμία πόζα δεν ταιριάζει με την αναζήτηση</string>
-    <string name="theme_picker_subtitle">Διαλέξτε το στυλ που σας ταιριάζει</string>
-    <string name="theme_desc_dark">Βαθύ ναυτικό μπλε · τόνος indigo</string>
-    <string name="theme_desc_light">Ανοιχτά γκρι · ίδιος τόνος</string>
-    <string name="theme_desc_sleek_charcoal">Ζεστός χαλκός σε σχεδόν μαύρο</string>
-    <string name="theme_desc_cyberpunk_violet">Λάμψη ματζέντα · βαθύ δαμασκηνί</string>
-    <string name="theme_current">ΤΡΕΧΟΝ</string>
-    <string name="theme_apply">Εφαρμογή θέματος</string>
     <string name="detail_saved_in">Αποθηκεύτηκε στις Συλλογές · %1$s</string>
     <string name="detail_today">Σήμερα %1$s</string>
     <string name="detail_yesterday">Χθες %1$s</string>

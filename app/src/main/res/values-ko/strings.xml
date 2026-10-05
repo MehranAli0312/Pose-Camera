@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">건너뛰기</string>
     <string name="item_settings">설정</string>
-    <string name="settings_theme">테마</string>
     <string name="close">닫기</string>
     <string name="settings_language">언어</string>
     <string name="settings_language_value">한국어</string>
     <string name="settings_privacy_policy">개인정보 처리방침</string>
+    <string name="settings_rate_us">평가하기</string>
     <string name="settings_share_app">앱 공유</string>
     <string name="exitApp">앱 종료</string>
     <string name="exitAppDescription">앱을 종료하시겠습니까</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">구매가 취소되었습니다</string>
     <string name="pro_purchase_failed">구매 실패. %1$s</string>
     <string name="pro_plan_unavailable">이 요금제는 현재 이용할 수 없습니다</string>
-    <string name="onboard_continue">계속</string>
     <string name="pro_purchase_pending">결제가 대기 중입니다. 확인되면 Pro가 활성화됩니다</string>
     <string name="pro_restore_success">구매가 복원되었습니다</string>
     <string name="pro_restore_nothing_found">이 Google 계정에서 활성 구매를 찾을 수 없습니다</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">카테고리</string>
     <string name="camera_sim_title">스튜디오 시뮬레이션 모드</string>
     <string name="camera_sim_hint">아래 원을 드래그해 정렬을 이동하세요</string>
-    <string name="camera_pro_title">프로 스튜디오 정렬</string>
     <string name="action_reset">초기화</string>
     <string name="tab_filters">필터</string>
     <string name="tab_adjust">조정</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">사진 촬영</string>
     <string name="camera_change_pose">포즈 변경</string>
     <string name="camera_no_pose">자유 촬영</string>
-    <string name="camera_skeleton">골격 오버레이</string>
     <string name="edit_match_badge">%1$d%% 일치</string>
     <string name="edit_intensity">강도</string>
     <string name="edit_compare">드래그해서 비교</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · 방금</string>
     <string name="saved_shoot_again">다시 찍기</string>
     <string name="saved_view_collections">컬렉션에서 보기</string>
-    <string name="theme_dark">다크</string>
-    <string name="theme_light">라이트</string>
-    <string name="theme_sleek_charcoal">세련된 차콜</string>
-    <string name="theme_cyberpunk_violet">사이버펑크 바이올렛</string>
     <string name="action_clear">지우기</string>
     <string name="imported_pose_title">갤러리 참고 사진</string>
     <string name="action_back">뒤로</string>
     <string name="unknown_location">알 수 없는 위치</string>
     <string name="action_favorite">즐겨찾기</string>
     <string name="camera_flash">플래시</string>
-    <string name="camera_controls">카메라 컨트롤</string>
     <string name="camera_grid">격자</string>
     <string name="camera_timer">타이머</string>
-    <string name="camera_timer_seconds">타이머 %1$d초</string>
     <string name="camera_switch">카메라 전환</string>
     <string name="camera_selected">선택됨</string>
     <string name="pose_overlay">포즈 윤곽선</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">탭해서 도전</string>
     <string name="nav_saved">저장됨</string>
     <string name="nav_capture">카메라 열기</string>
-    <string name="onboard_back">뒤로</string>
     <string name="onboard_next">다음</string>
     <string name="onboard_lets_go">시작하기</string>
-    <string name="onboard_step_label">%2$d단계 중 %1$d단계</string>
     <string name="onboard_pose_count_badge">포즈 %1$d개</string>
     <string name="onboard_pose_name">옥상에 기대기</string>
     <string name="onboard_badge_viral">바이럴</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">사진 · %1$d</string>
     <string name="saved_tab_poses">포즈 · %1$d</string>
-    <string name="saved_section_shots">저장한 사진</string>
-    <string name="saved_section_poses">저장한 포즈</string>
-    <string name="saved_see_all">모두 보기</string>
     <string name="saved_add">즐겨찾기에 추가</string>
     <string name="saved_remove">즐겨찾기에서 삭제</string>
     <string name="saved_sort_title">저장 항목 정렬</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">장소</string>
     <string name="collections_stat_average">평균 일치</string>
     <string name="collections_filter_all">전체</string>
-    <string name="collections_filter_favorites">즐겨찾기</string>
     <string name="collections_filter_top_match">최고 일치</string>
     <string name="collections_filter_recent">최근</string>
     <string name="collections_sort_title">사진 정렬</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">추천</string>
     <string name="explore_sort_easiest">쉬운 순</string>
     <string name="explore_empty">검색과 일치하는 포즈가 없습니다</string>
-    <string name="theme_picker_subtitle">내 스타일에 맞는 분위기를 고르세요</string>
-    <string name="theme_desc_dark">깊은 네이비 · 인디고 포인트</string>
-    <string name="theme_desc_light">밝은 그레이 · 같은 포인트</string>
-    <string name="theme_desc_sleek_charcoal">블랙에 가까운 바탕 위 따뜻한 구리색</string>
-    <string name="theme_desc_cyberpunk_violet">마젠타 글로우 · 짙은 자두색</string>
-    <string name="theme_current">현재</string>
-    <string name="theme_apply">테마 적용</string>
     <string name="detail_saved_in">컬렉션에 저장됨 · %1$s</string>
     <string name="detail_today">오늘 %1$s</string>
     <string name="detail_yesterday">어제 %1$s</string>

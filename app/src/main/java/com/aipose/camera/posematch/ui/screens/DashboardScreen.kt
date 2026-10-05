@@ -20,6 +20,7 @@ import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.graph.DashboardNavGraph
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.bottomBarRoutes
+import com.aipose.camera.posematch.ui.graph.navigateToTabNow
 import com.aipose.camera.posematch.ui.screens.bottomBar.DashboardBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.InScreenBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.LocalInScreenBottomBar
@@ -51,13 +52,7 @@ fun DashboardScreen(
             }
 
             currentRoute in bottomBarRoutes -> {
-                navController.navigate(NavRoute.HomeScreenRoute.route) {
-                    popUpTo(navController.graph.id) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+                navController.navigateToTabNow(NavRoute.HomeScreenRoute.route)
             }
 
             else -> {

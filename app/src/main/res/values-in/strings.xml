@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Lewati</string>
     <string name="item_settings">Setelan</string>
-    <string name="settings_theme">Tema</string>
     <string name="close">Tutup</string>
     <string name="settings_language">Bahasa</string>
     <string name="settings_language_value">Bahasa Indonesia</string>
     <string name="settings_privacy_policy">Kebijakan Privasi</string>
+    <string name="settings_rate_us">Beri peringkat</string>
     <string name="settings_share_app">Bagikan Aplikasi</string>
     <string name="exitApp">Keluar Aplikasi</string>
     <string name="exitAppDescription">Yakin ingin keluar dari aplikasi</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Pembelian dibatalkan</string>
     <string name="pro_purchase_failed">Pembelian gagal. %1$s</string>
     <string name="pro_plan_unavailable">Paket ini sedang tidak tersedia</string>
-    <string name="onboard_continue">Lanjutkan</string>
     <string name="pro_purchase_pending">Pembayaran tertunda. Pro akan terbuka setelah dikonfirmasi</string>
     <string name="pro_restore_success">Pembelian dipulihkan</string>
     <string name="pro_restore_nothing_found">Tidak ada pembelian aktif untuk akun Google ini</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">Kategori</string>
     <string name="camera_sim_title">Mode simulasi studio</string>
     <string name="camera_sim_hint">Geser penyelarasan dengan lingkaran di bawah</string>
-    <string name="camera_pro_title">Penyelarasan studio pro</string>
     <string name="action_reset">Atur ulang</string>
     <string name="tab_filters">Filter</string>
     <string name="tab_adjust">Sesuaikan</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">Ambil foto</string>
     <string name="camera_change_pose">Ganti pose</string>
     <string name="camera_no_pose">Foto bebas</string>
-    <string name="camera_skeleton">Overlay kerangka</string>
     <string name="edit_match_badge">COCOK %1$d%%</string>
     <string name="edit_intensity">INTENSITAS</string>
     <string name="edit_compare">Geser untuk membandingkan</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · Baru saja</string>
     <string name="saved_shoot_again">Potret lagi</string>
     <string name="saved_view_collections">Lihat di Koleksi</string>
-    <string name="theme_dark">Gelap</string>
-    <string name="theme_light">Terang</string>
-    <string name="theme_sleek_charcoal">Arang elegan</string>
-    <string name="theme_cyberpunk_violet">Ungu cyberpunk</string>
     <string name="action_clear">Hapus</string>
     <string name="imported_pose_title">Referensi galeri</string>
     <string name="action_back">Kembali</string>
     <string name="unknown_location">Lokasi tidak diketahui</string>
     <string name="action_favorite">Favorit</string>
     <string name="camera_flash">Flash</string>
-    <string name="camera_controls">Kontrol kamera</string>
     <string name="camera_grid">Kisi</string>
     <string name="camera_timer">Timer</string>
-    <string name="camera_timer_seconds">Timer %1$d dtk</string>
     <string name="camera_switch">Ganti kamera</string>
     <string name="camera_selected">Dipilih</string>
     <string name="pose_overlay">Garis pose</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">Ketuk untuk mencoba</string>
     <string name="nav_saved">Tersimpan</string>
     <string name="nav_capture">Buka kamera</string>
-    <string name="onboard_back">Kembali</string>
     <string name="onboard_next">Berikutnya</string>
     <string name="onboard_lets_go">Ayo mulai</string>
-    <string name="onboard_step_label">LANGKAH %1$d DARI %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSE</string>
     <string name="onboard_pose_name">Bersandar di atap</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">Foto · %1$d</string>
     <string name="saved_tab_poses">Pose · %1$d</string>
-    <string name="saved_section_shots">FOTO TERSIMPAN</string>
-    <string name="saved_section_poses">POSE TERSIMPAN</string>
-    <string name="saved_see_all">Lihat semua</string>
     <string name="saved_add">Simpan ke favorit</string>
     <string name="saved_remove">Hapus dari favorit</string>
     <string name="saved_sort_title">Urutkan tersimpan</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">TEMPAT</string>
     <string name="collections_stat_average">RATA-RATA</string>
     <string name="collections_filter_all">Semua</string>
-    <string name="collections_filter_favorites">Favorit</string>
     <string name="collections_filter_top_match">Kecocokan teratas</string>
     <string name="collections_filter_recent">Terbaru</string>
     <string name="collections_sort_title">Urutkan foto</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">Unggulan</string>
     <string name="explore_sort_easiest">Termudah dulu</string>
     <string name="explore_empty">Tidak ada pose yang cocok dengan pencarianmu</string>
-    <string name="theme_picker_subtitle">Pilih tampilan yang sesuai gayamu</string>
-    <string name="theme_desc_dark">Biru tua pekat · aksen nila</string>
-    <string name="theme_desc_light">Abu-abu terang · aksen sama</string>
-    <string name="theme_desc_sleek_charcoal">Tembaga hangat di atas hitam pekat</string>
-    <string name="theme_desc_cyberpunk_violet">Kilau magenta · plum pekat</string>
-    <string name="theme_current">SAAT INI</string>
-    <string name="theme_apply">Terapkan tema</string>
     <string name="detail_saved_in">Disimpan di Koleksi · %1$s</string>
     <string name="detail_today">Hari ini %1$s</string>
     <string name="detail_yesterday">Kemarin %1$s</string>

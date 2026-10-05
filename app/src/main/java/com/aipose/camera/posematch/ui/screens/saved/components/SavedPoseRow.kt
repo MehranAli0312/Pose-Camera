@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,11 +43,10 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 private val RowMinHeight = 60.dp
 private val RowShape = RoundedCornerShape(20.dp)
 private val BadgeSize = 38.dp
-private val HeartSize = 11.dp
-private val HeartTouchSize = 32.dp
+private val HeartSize = 14.dp
+private val HeartTouchSize = 36.dp
 private val ChevronWidth = 5.dp
 private val ChevronHeight = 10.dp
-private val HeartRaise = (-8).dp
 
 private const val ROW_BORDER_ALPHA = 0.09f
 
@@ -104,7 +102,6 @@ internal fun SavedPoseRow(
         ) {
             Box(
                 modifier = Modifier
-                    .offset(y = HeartRaise)
                     .size(HeartTouchSize)
                     .click(onClick = onUnsave),
                 contentAlignment = Alignment.Center,

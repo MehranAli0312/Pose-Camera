@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.PoseBackHeader
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
@@ -47,7 +49,12 @@ fun AchievementsScreen(
                 .statusBarsPadding()
                 .verticalScroll(rememberScrollState())
                 .navigationBarsPadding()
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 24.dp),
+                .padding(
+                    start = PoseScreenGutter,
+                    end = PoseScreenGutter,
+                    top = PoseScreenTopSpacing,
+                    bottom = 24.dp,
+                ),
         ) {
             PoseBackHeader(
                 title = stringResource(R.string.achievements_title),

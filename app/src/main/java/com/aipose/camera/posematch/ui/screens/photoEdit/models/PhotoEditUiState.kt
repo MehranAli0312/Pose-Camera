@@ -24,9 +24,7 @@ data class PhotoEditUiState(
     val savedCaptureId: Long? = null
 ) {
     val outputSize: PhotoSize
-        get() = sourceSize
-            .rotatedBy(geometry.rotationDegrees)
-            .croppedTo(geometry.cropAspect)
+        get() = rotatedSourceSize.croppedTo(geometry.cropRect)
 
     val rotatedSourceSize: PhotoSize
         get() = sourceSize.rotatedBy(geometry.rotationDegrees)

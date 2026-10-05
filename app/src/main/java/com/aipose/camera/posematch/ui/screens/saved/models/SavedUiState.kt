@@ -11,6 +11,5 @@ sealed interface SavedUiState {
         val poses: List<SavedPose>
     ) : SavedUiState {
         val totalCount: Int get() = shots.size + poses.size
-        val isEmpty: Boolean get() = totalCount == 0
     }
 }

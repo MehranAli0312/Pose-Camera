@@ -53,11 +53,6 @@ object PoseGlows {
         PoseGlow(PoseCyan, 0.16f, 20f, 700f, 200f),
     )
 
-    val ThemePicker = listOf(
-        PoseGlow(PoseGlowPurple, 0.30f, 40f, 70f, 230f),
-        PoseGlow(Indigo, 0.24f, 370f, 813f, 210f),
-    )
-
     val Settings = listOf(
         PoseGlow(Indigo, 0.30f, 40f, 70f, 230f),
         PoseGlow(PoseGlowPurple, 0.24f, 370f, 302f, 200f),

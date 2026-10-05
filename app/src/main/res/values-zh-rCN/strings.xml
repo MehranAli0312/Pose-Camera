@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">跳过</string>
     <string name="item_settings">设置</string>
-    <string name="settings_theme">主题</string>
     <string name="close">关闭</string>
     <string name="settings_language">语言</string>
     <string name="settings_language_value">中文（简体）</string>
     <string name="settings_privacy_policy">隐私政策</string>
+    <string name="settings_rate_us">给我们评分</string>
     <string name="settings_share_app">分享应用</string>
     <string name="exitApp">退出应用</string>
     <string name="exitAppDescription">您确定要退出应用吗</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">已取消购买</string>
     <string name="pro_purchase_failed">购买失败。%1$s</string>
     <string name="pro_plan_unavailable">该方案暂时不可用</string>
-    <string name="onboard_continue">继续</string>
     <string name="pro_purchase_pending">付款处理中。确认后将解锁 Pro</string>
     <string name="pro_restore_success">已恢复购买</string>
     <string name="pro_restore_nothing_found">未找到此 Google 账号的有效购买</string>
@@ -90,7 +89,6 @@
     <string name="detail_category">类别</string>
     <string name="camera_sim_title">影棚模拟模式</string>
     <string name="camera_sim_hint">拖动下方圆圈调整对齐</string>
-    <string name="camera_pro_title">专业影棚对齐</string>
     <string name="action_reset">重置</string>
     <string name="tab_filters">滤镜</string>
     <string name="tab_adjust">调整</string>
@@ -107,7 +105,6 @@
     <string name="camera_shutter">拍照</string>
     <string name="camera_change_pose">更换姿势</string>
     <string name="camera_no_pose">自由拍摄</string>
-    <string name="camera_skeleton">骨架叠加</string>
     <string name="edit_match_badge">匹配 %1$d%%</string>
     <string name="edit_intensity">强度</string>
     <string name="edit_compare">拖动对比</string>
@@ -123,20 +120,14 @@
     <string name="saved_place_now">%1$s · 刚刚</string>
     <string name="saved_shoot_again">再拍一张</string>
     <string name="saved_view_collections">在合集中查看</string>
-    <string name="theme_dark">深色</string>
-    <string name="theme_light">浅色</string>
-    <string name="theme_sleek_charcoal">雅致炭灰</string>
-    <string name="theme_cyberpunk_violet">赛博朋克紫</string>
     <string name="action_clear">清除</string>
     <string name="imported_pose_title">图库参考</string>
     <string name="action_back">返回</string>
     <string name="unknown_location">未知地点</string>
     <string name="action_favorite">收藏</string>
     <string name="camera_flash">闪光灯</string>
-    <string name="camera_controls">相机控制</string>
     <string name="camera_grid">网格</string>
     <string name="camera_timer">定时器</string>
-    <string name="camera_timer_seconds">定时 %1$d 秒</string>
     <string name="camera_switch">切换相机</string>
     <string name="camera_selected">已选择</string>
     <string name="pose_overlay">姿势轮廓</string>
@@ -223,10 +214,8 @@
     <string name="home_daily_subtitle">点按试试</string>
     <string name="nav_saved">已收藏</string>
     <string name="nav_capture">打开相机</string>
-    <string name="onboard_back">返回</string>
     <string name="onboard_next">下一步</string>
     <string name="onboard_lets_go">开始吧</string>
-    <string name="onboard_step_label">第 %1$d 步，共 %2$d 步</string>
     <string name="onboard_pose_count_badge">%1$d 个姿势</string>
     <string name="onboard_pose_name">天台倚靠</string>
     <string name="onboard_badge_viral">爆款</string>
@@ -245,9 +234,6 @@
     </plurals>
     <string name="saved_tab_shots">照片 · %1$d</string>
     <string name="saved_tab_poses">姿势 · %1$d</string>
-    <string name="saved_section_shots">收藏的照片</string>
-    <string name="saved_section_poses">收藏的姿势</string>
-    <string name="saved_see_all">查看全部</string>
     <string name="saved_add">添加到收藏</string>
     <string name="saved_remove">从收藏中移除</string>
     <string name="saved_sort_title">收藏排序</string>
@@ -281,7 +267,6 @@
     <string name="collections_stat_places">地点</string>
     <string name="collections_stat_average">平均匹配</string>
     <string name="collections_filter_all">全部</string>
-    <string name="collections_filter_favorites">收藏</string>
     <string name="collections_filter_top_match">高匹配</string>
     <string name="collections_filter_recent">最近</string>
     <string name="collections_sort_title">照片排序</string>
@@ -296,13 +281,6 @@
     <string name="explore_sort_featured">精选</string>
     <string name="explore_sort_easiest">简单优先</string>
     <string name="explore_empty">没有与搜索匹配的姿势</string>
-    <string name="theme_picker_subtitle">选择适合你的风格</string>
-    <string name="theme_desc_dark">深海军蓝 · 靛蓝点缀</string>
-    <string name="theme_desc_light">浅灰色调 · 相同点缀</string>
-    <string name="theme_desc_sleek_charcoal">近黑底色搭配暖铜色</string>
-    <string name="theme_desc_cyberpunk_violet">品红光晕 · 深梅色</string>
-    <string name="theme_current">当前</string>
-    <string name="theme_apply">应用主题</string>
     <string name="detail_saved_in">已保存到合集 · %1$s</string>
     <string name="detail_today">今天 %1$s</string>
     <string name="detail_yesterday">昨天 %1$s</string>

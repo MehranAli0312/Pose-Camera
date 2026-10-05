@@ -7,10 +7,10 @@ class CameraSettingsUseCase(
     private val cameraSettingsRepository: CameraSettingsRepository
 ) {
 
-    fun getRetainSkeleton(): Flow<Boolean> = cameraSettingsRepository.getRetainSkeleton()
+    fun getKeepPoseOverlay(): Flow<Boolean> = cameraSettingsRepository.getKeepPoseOverlay()
 
-    suspend fun setRetainSkeleton(retain: Boolean) {
-        cameraSettingsRepository.setRetainSkeleton(retain)
+    suspend fun setKeepPoseOverlay(keepOverlay: Boolean) {
+        cameraSettingsRepository.setKeepPoseOverlay(keepOverlay)
     }
 
     fun isCameraCoachSeen(): Flow<Boolean> = cameraSettingsRepository.isCameraCoachSeen()

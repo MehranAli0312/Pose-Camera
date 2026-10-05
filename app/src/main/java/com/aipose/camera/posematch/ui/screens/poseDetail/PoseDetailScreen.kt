@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -28,6 +29,7 @@ import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailHero
 import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailPanel
+import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailTopBar
 import com.aipose.camera.posematch.ui.screens.poseDetail.models.PoseDetailUiState
 import com.aipose.camera.posematch.ui.theme.PoseSheetBottom
 import com.aipose.camera.posematch.ui.vm.PoseDetailViewModel
@@ -78,10 +80,6 @@ fun PoseDetailScreen(
                 PoseDetailHero(
                     imagePath = content.pose.imagePath,
                     category = content.pose.category,
-                    isSaved = content.isSaved,
-                    onBack = { navController.popBackStackOnClick() },
-                    onToggleSaved = viewModel::toggleSaved,
-                    onShare = { viewModel.share(content.pose) },
                     modifier = Modifier.requiredHeight(photoVisibleHeight + PanelOverlap),
                 )
             }
@@ -94,5 +92,12 @@ fun PoseDetailScreen(
                 },
             )
         }
+        PoseDetailTopBar(
+            isSaved = content.isSaved,
+            onBack = { navController.popBackStackOnClick() },
+            onToggleSaved = viewModel::toggleSaved,
+            onShare = { viewModel.share(content.pose) },
+            modifier = Modifier.align(Alignment.TopCenter),
+        )
     }
 }

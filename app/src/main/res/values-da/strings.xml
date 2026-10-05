@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Spring over</string>
     <string name="item_settings">Indstillinger</string>
-    <string name="settings_theme">Tema</string>
     <string name="close">Luk</string>
     <string name="settings_language">Sprog</string>
     <string name="settings_language_value">Dansk</string>
     <string name="settings_privacy_policy">Privatlivspolitik</string>
+    <string name="settings_rate_us">Bedøm os</string>
     <string name="settings_share_app">Del appen</string>
     <string name="exitApp">Afslut app</string>
     <string name="exitAppDescription">Vil du virkelig lukke appen</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Købet blev annulleret</string>
     <string name="pro_purchase_failed">Købet mislykkedes. %1$s</string>
     <string name="pro_plan_unavailable">Dette abonnement er ikke tilgængeligt i øjeblikket</string>
-    <string name="onboard_continue">Fortsæt</string>
     <string name="pro_purchase_pending">Betalingen afventer. Pro låses op, når den er bekræftet</string>
     <string name="pro_restore_success">Købet er gendannet</string>
     <string name="pro_restore_nothing_found">Der blev ikke fundet noget aktivt køb for denne Google-konto</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Kategori</string>
     <string name="camera_sim_title">Studiesimuleringstilstand</string>
     <string name="camera_sim_hint">Flyt justeringen med de trækbare cirkler nedenfor</string>
-    <string name="camera_pro_title">Pro-studiejusteringer</string>
     <string name="action_reset">Nulstil</string>
     <string name="tab_filters">Filtre</string>
     <string name="tab_adjust">Juster</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Tag billede</string>
     <string name="camera_change_pose">Skift pose</string>
     <string name="camera_no_pose">Frit billede</string>
-    <string name="camera_skeleton">Skelet-overlay</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_intensity">INTENSITET</string>
     <string name="edit_compare">Træk for at sammenligne</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Lige nu</string>
     <string name="saved_shoot_again">Tag igen</string>
     <string name="saved_view_collections">Se i Samlinger</string>
-    <string name="theme_dark">Mørk</string>
-    <string name="theme_light">Lys</string>
-    <string name="theme_sleek_charcoal">Elegant koksgrå</string>
-    <string name="theme_cyberpunk_violet">Cyberpunk-violet</string>
     <string name="action_clear">Ryd</string>
     <string name="imported_pose_title">Reference fra galleri</string>
     <string name="action_back">Tilbage</string>
     <string name="unknown_location">Ukendt sted</string>
     <string name="action_favorite">Favorit</string>
     <string name="camera_flash">Blitz</string>
-    <string name="camera_controls">Kamerakontroller</string>
     <string name="camera_grid">Gitter</string>
     <string name="camera_timer">Selvudløser</string>
-    <string name="camera_timer_seconds">Selvudløser %1$d s</string>
     <string name="camera_switch">Skift kamera</string>
     <string name="camera_selected">Valgt</string>
     <string name="pose_overlay">Pose-omrids</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Tryk for at prøve</string>
     <string name="nav_saved">Gemte</string>
     <string name="nav_capture">Åbn kamera</string>
-    <string name="onboard_back">Tilbage</string>
     <string name="onboard_next">Næste</string>
     <string name="onboard_lets_go">Kom i gang</string>
-    <string name="onboard_step_label">TRIN %1$d AF %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSER</string>
     <string name="onboard_pose_name">Læn på taget</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Billeder · %1$d</string>
     <string name="saved_tab_poses">Poser · %1$d</string>
-    <string name="saved_section_shots">GEMTE BILLEDER</string>
-    <string name="saved_section_poses">GEMTE POSER</string>
-    <string name="saved_see_all">Se alle</string>
     <string name="saved_add">Føj til favoritter</string>
     <string name="saved_remove">Fjern fra favoritter</string>
     <string name="saved_sort_title">Sortér gemte</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">STEDER</string>
     <string name="collections_stat_average">GNS. MATCH</string>
     <string name="collections_filter_all">Alle</string>
-    <string name="collections_filter_favorites">Favoritter</string>
     <string name="collections_filter_top_match">Topmatch</string>
     <string name="collections_filter_recent">Seneste</string>
     <string name="collections_sort_title">Sortér billeder</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Udvalgte</string>
     <string name="explore_sort_easiest">Nemmeste først</string>
     <string name="explore_empty">Ingen poser matcher din søgning</string>
-    <string name="theme_picker_subtitle">Vælg det look, der passer til dig</string>
-    <string name="theme_desc_dark">Dyb marineblå · indigo-accent</string>
-    <string name="theme_desc_light">Lyse grå toner · samme accent</string>
-    <string name="theme_desc_sleek_charcoal">Varmt kobber på næsten sort</string>
-    <string name="theme_desc_cyberpunk_violet">Magenta glød · dyb blomme</string>
-    <string name="theme_current">AKTUELT</string>
-    <string name="theme_apply">Anvend tema</string>
     <string name="detail_saved_in">Gemt i Samlinger · %1$s</string>
     <string name="detail_today">I dag %1$s</string>
     <string name="detail_yesterday">I går %1$s</string>

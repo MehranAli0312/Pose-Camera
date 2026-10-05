@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.rememberCameraPermissionState
 import com.aipose.camera.posematch.ui.common.rememberHapticPulse
 import com.aipose.camera.posematch.ui.common.rememberPosePicker
@@ -53,13 +54,10 @@ import com.aipose.camera.posematch.ui.screens.camera.components.CameraSimulatedS
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraToolRail
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraTopBar
 import com.aipose.camera.posematch.ui.screens.camera.components.CaptureCountdown
-import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.screens.camera.components.GreatMatchBanner
 import com.aipose.camera.posematch.ui.screens.camera.components.OverlayOpacitySlider
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseOverlayImage
-import com.aipose.camera.posematch.ui.screens.camera.components.PoseSkeletonOverlay
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseStrip
-import com.aipose.camera.posematch.ui.screens.camera.components.ProControlsPanel
 import com.aipose.camera.posematch.ui.vm.PoseCameraViewModel
 import com.example.common.showToast
 import org.koin.androidx.compose.koinViewModel
@@ -162,14 +160,7 @@ fun PoseCameraScreen(
                     imagePath = overlayPath,
                     transform = uiState.overlay,
                     surfaceSize = surfaceSize,
-                )
-            }
-
-            if (uiState.isSkeletonVisible) {
-                PoseSkeletonOverlay(
-                    skeleton = uiState.match.userSkeleton,
-                    isMirrored = false,
-                    modifier = Modifier.fillMaxSize(),
+                    isMirrored = uiState.cameraFacing.isFront,
                 )
             }
 
@@ -182,13 +173,6 @@ fun PoseCameraScreen(
         }
 
         CameraScrims()
-
-        if (!cameraPermission.isGranted) {
-            CameraPermissionCard(
-                onAllow = cameraPermission.request,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
 
         Column(
             modifier = Modifier
@@ -229,20 +213,7 @@ fun PoseCameraScreen(
                     modifier = Modifier.padding(end = 20.dp),
                 )
             }
-            if (uiState.areProControlsVisible) {
-                ProControlsPanel(
-                    isGridVisible = uiState.isGridVisible,
-                    timer = uiState.timer,
-                    iso = uiState.manualIso,
-                    exposure = uiState.manualExposure,
-                    onToggleGrid = viewModel::toggleGrid,
-                    onCycleTimer = viewModel::cycleTimer,
-                    onIsoChange = viewModel::setManualIso,
-                    onExposureChange = viewModel::setManualExposure,
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-            }
-            if (uiState.selectedPose != null) {
+            if (uiState.selectedPose != null && uiState.isPoseOverlayEnabled) {
                 OverlayOpacitySlider(
                     opacity = uiState.overlay.opacity,
                     onOpacityChange = viewModel::updateOverlayOpacity,
@@ -277,8 +248,16 @@ fun PoseCameraScreen(
             GreatMatchBanner()
         }
 
-        if (uiState.isCoachVisible) {
+        if (uiState.isCoachVisible && cameraPermission.isGranted) {
             CameraCoachOverlay(onDismiss = viewModel::dismissCoach)
+        }
+
+        if (!cameraPermission.isGranted) {
+            CameraPermissionCard(
+                isBlocked = cameraPermission.isBlocked,
+                onAllow = cameraPermission.request,
+                modifier = Modifier.fillMaxSize(),
+            )
         }
     }
 

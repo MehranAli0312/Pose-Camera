@@ -8,9 +8,6 @@ import com.aipose.camera.posematch.domain.models.PoseJoint
 class PoseFrameAnalyzer(private val poseDetector: MlKitPoseDetector) : ImageAnalysis.Analyzer {
 
     @Volatile
-    var isFrontCamera: Boolean = false
-
-    @Volatile
     var onLandmarks: ((Map<PoseJoint, NormalizedPoint>) -> Unit)? = null
 
     override fun analyze(image: ImageProxy) {
@@ -19,6 +16,6 @@ class PoseFrameAnalyzer(private val poseDetector: MlKitPoseDetector) : ImageAnal
             image.close()
             return
         }
-        poseDetector.detectStream(image, isFrontCamera, listener)
+        poseDetector.detectStream(image, listener)
     }
 }

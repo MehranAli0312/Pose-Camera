@@ -18,7 +18,6 @@ import com.aipose.camera.posematch.ui.vm.PoseCameraViewModel
 import com.aipose.camera.posematch.ui.vm.ProViewModel
 import com.aipose.camera.posematch.ui.vm.RateUsViewModel
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
-import com.aipose.camera.posematch.ui.vm.ThemeViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -28,7 +27,6 @@ val viewModelModule = module {
 
     viewModel { SplashViewModel(get()) }
     single { LanguageViewModel(get()) }
-    single { ThemeViewModel(get()) }
     single { RateUsViewModel(get()) }
     viewModel {
         ProViewModel(

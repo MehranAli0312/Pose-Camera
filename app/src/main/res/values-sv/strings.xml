@@ -2,11 +2,11 @@
 <resources>
     <string name="skip">Hoppa över</string>
     <string name="item_settings">Inställningar</string>
-    <string name="settings_theme">Tema</string>
     <string name="close">Stäng</string>
     <string name="settings_language">Språk</string>
     <string name="settings_language_value">Svenska</string>
     <string name="settings_privacy_policy">Integritetspolicy</string>
+    <string name="settings_rate_us">Betygsätt oss</string>
     <string name="settings_share_app">Dela appen</string>
     <string name="exitApp">Avsluta appen</string>
     <string name="exitAppDescription">Vill du verkligen avsluta appen?</string>
@@ -37,7 +37,6 @@
     <string name="pro_purchase_cancelled">Köpet avbröts</string>
     <string name="pro_purchase_failed">Köpet misslyckades. %1$s</string>
     <string name="pro_plan_unavailable">Det här abonnemanget är inte tillgängligt just nu</string>
-    <string name="onboard_continue">Fortsätt</string>
     <string name="pro_purchase_pending">Betalningen väntar. Pro låses upp när den har bekräftats</string>
     <string name="pro_restore_success">Köpet har återställts</string>
     <string name="pro_restore_nothing_found">Inget aktivt köp hittades för detta Google-konto</string>
@@ -92,7 +91,6 @@
     <string name="detail_category">Kategori</string>
     <string name="camera_sim_title">Studiosimuleringsläge</string>
     <string name="camera_sim_hint">Flytta justeringen med de dragbara cirklarna nedan</string>
-    <string name="camera_pro_title">Proffsiga studiojusteringar</string>
     <string name="action_reset">Återställ</string>
     <string name="tab_filters">Filter</string>
     <string name="tab_adjust">Justera</string>
@@ -109,7 +107,6 @@
     <string name="camera_shutter">Ta foto</string>
     <string name="camera_change_pose">Byt pose</string>
     <string name="camera_no_pose">Fritt foto</string>
-    <string name="camera_skeleton">Skelettöverlägg</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_intensity">INTENSITET</string>
     <string name="edit_compare">Dra för att jämföra</string>
@@ -125,20 +122,14 @@
     <string name="saved_place_now">%1$s · Just nu</string>
     <string name="saved_shoot_again">Fota igen</string>
     <string name="saved_view_collections">Visa i Samlingar</string>
-    <string name="theme_dark">Mörkt</string>
-    <string name="theme_light">Ljust</string>
-    <string name="theme_sleek_charcoal">Elegant kolgrå</string>
-    <string name="theme_cyberpunk_violet">Cyberpunkviolett</string>
     <string name="action_clear">Rensa</string>
     <string name="imported_pose_title">Referens från galleriet</string>
     <string name="action_back">Tillbaka</string>
     <string name="unknown_location">Okänd plats</string>
     <string name="action_favorite">Favorit</string>
     <string name="camera_flash">Blixt</string>
-    <string name="camera_controls">Kamerakontroller</string>
     <string name="camera_grid">Rutnät</string>
     <string name="camera_timer">Självutlösare</string>
-    <string name="camera_timer_seconds">Självutlösare %1$d s</string>
     <string name="camera_switch">Byt kamera</string>
     <string name="camera_selected">Vald</string>
     <string name="pose_overlay">Posekontur</string>
@@ -229,10 +220,8 @@
     <string name="home_daily_subtitle">Tryck för att testa</string>
     <string name="nav_saved">Sparade</string>
     <string name="nav_capture">Öppna kameran</string>
-    <string name="onboard_back">Tillbaka</string>
     <string name="onboard_next">Nästa</string>
     <string name="onboard_lets_go">Nu kör vi</string>
-    <string name="onboard_step_label">STEG %1$d AV %2$d</string>
     <string name="onboard_pose_count_badge">%1$d POSER</string>
     <string name="onboard_pose_name">Lutning på taket</string>
     <string name="onboard_badge_viral">VIRAL</string>
@@ -252,9 +241,6 @@
     </plurals>
     <string name="saved_tab_shots">Bilder · %1$d</string>
     <string name="saved_tab_poses">Poser · %1$d</string>
-    <string name="saved_section_shots">SPARADE BILDER</string>
-    <string name="saved_section_poses">SPARADE POSER</string>
-    <string name="saved_see_all">Visa alla</string>
     <string name="saved_add">Spara som favorit</string>
     <string name="saved_remove">Ta bort från favoriter</string>
     <string name="saved_sort_title">Sortera sparade</string>
@@ -289,7 +275,6 @@
     <string name="collections_stat_places">PLATSER</string>
     <string name="collections_stat_average">SNITTMATCH</string>
     <string name="collections_filter_all">Alla</string>
-    <string name="collections_filter_favorites">Favoriter</string>
     <string name="collections_filter_top_match">Toppmatch</string>
     <string name="collections_filter_recent">Senaste</string>
     <string name="collections_sort_title">Sortera bilder</string>
@@ -305,13 +290,6 @@
     <string name="explore_sort_featured">Utvalda</string>
     <string name="explore_sort_easiest">Enklast först</string>
     <string name="explore_empty">Inga poser matchar din sökning</string>
-    <string name="theme_picker_subtitle">Välj looken som passar dig</string>
-    <string name="theme_desc_dark">Djup marinblå · indigoaccent</string>
-    <string name="theme_desc_light">Ljusa gråtoner · samma accent</string>
-    <string name="theme_desc_sleek_charcoal">Varm koppar på nästan svart</string>
-    <string name="theme_desc_cyberpunk_violet">Magentaglöd · djupt plommon</string>
-    <string name="theme_current">AKTUELLT</string>
-    <string name="theme_apply">Använd tema</string>
     <string name="detail_saved_in">Sparat i Samlingar · %1$s</string>
     <string name="detail_today">I dag %1$s</string>
     <string name="detail_yesterday">I går %1$s</string>

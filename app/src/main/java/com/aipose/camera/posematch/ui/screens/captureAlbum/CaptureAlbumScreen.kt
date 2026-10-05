@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
+import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.PoseDeleteDialog
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
@@ -36,6 +38,7 @@ import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumHeade
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumShotRow
 import com.aipose.camera.posematch.ui.screens.captureAlbum.models.CaptureAlbumUiState
 import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsFilterChips
+import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsSortSheet
 import com.aipose.camera.posematch.ui.screens.collections.models.AlbumAccent
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilter
 import com.aipose.camera.posematch.ui.theme.PoseCyanLight
@@ -46,8 +49,8 @@ import org.koin.androidx.compose.koinViewModel
 
 private val AlbumFilters = listOf(
     CollectionsFilter.All,
-    CollectionsFilter.Favorites,
     CollectionsFilter.TopMatch,
+    CollectionsFilter.Recent,
 )
 
 @Composable
@@ -74,7 +77,7 @@ fun CaptureAlbumScreen(
                 .adaptiveWidth()
                 .statusBarsPadding()
                 .navigationBarsPadding(),
-            contentPadding = PaddingValues(top = 18.dp, bottom = 24.dp),
+            contentPadding = PaddingValues(top = PoseScreenTopSpacing, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             item(key = HEADER_KEY) {
@@ -83,6 +86,7 @@ fun CaptureAlbumScreen(
                     summary = albumSummary(content),
                     accent = accent,
                     onBack = navController::popBackStackOnClick,
+                    onOpenSort = viewModel::showSortSheet,
                     modifier = Modifier.padding(horizontal = 20.dp),
                 )
             }
@@ -142,6 +146,14 @@ fun CaptureAlbumScreen(
                 )
             }
         }
+    }
+
+    if (content.isSortSheetVisible) {
+        CollectionsSortSheet(
+            selected = content.sort,
+            onSelect = viewModel::selectSort,
+            onDismiss = viewModel::dismissSortSheet,
+        )
     }
 
     if (content.isRemoveDialogVisible) {
