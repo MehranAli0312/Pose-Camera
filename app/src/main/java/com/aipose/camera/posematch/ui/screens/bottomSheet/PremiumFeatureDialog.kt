@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.FloatingIcon3D
+import com.aipose.camera.posematch.ui.common.ImmersiveDialogWindowEffect
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.models.Icon3DPalette
 import com.aipose.camera.posematch.ui.screens.bottomSheet.components.FreeAccessOption
@@ -68,10 +69,11 @@ fun PremiumFeatureDialog(
         shape = topRound,
         containerColor = MaterialTheme.colorScheme.background,
     ) {
+        ImmersiveDialogWindowEffect()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .navigationBarsPadding()
+                .safeBottomSystemBarsPadding()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 8.dp),

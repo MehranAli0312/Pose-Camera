@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -92,7 +93,12 @@ private fun ConsumeWhenHidden(
 private fun PreparedBanner(banner: PreparedSlotAd.Banner, modifier: Modifier) {
     val context = LocalContext.current
     val activity = remember(context) { context.findActivity() } ?: return
-    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(AdSlotDefaults.colors.container),
+        contentAlignment = Alignment.Center,
+    ) {
         AndroidView(
             modifier = Modifier.size(banner.widthDp.dp, banner.heightDp.dp),
             factory = {

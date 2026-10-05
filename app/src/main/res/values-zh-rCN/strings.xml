@@ -166,7 +166,6 @@
     <string name="adjust_warmth">色温</string>
     <string name="crop_free">自由</string>
     <string name="settings_retain_skeleton">拍摄后保留姿势轮廓</string>
-    <string name="splash_privacy_note">设备端 AI · 不上传</string>
     <string name="toast_reference_imported">参考图已导入！打开相机开始匹配。</string>
     <string name="toast_reference_failed">参考图加载失败</string>
     <string name="toast_capture_failed">拍摄失败：%1$s</string>
@@ -359,4 +358,5 @@
     <string name="achievements_badge_ten_day_streak">连续 10 天</string>
     <string name="achievements_badge_twenty_five_perfect">25 张完美</string>
     <string name="achievements_badge_fifty_poses">50 个姿势</string>
+    <string name="app_open_welcome_back">欢迎回来</string>
 </resources>

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseBackButton
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.screens.camera.models.FlashMode
 import com.aipose.camera.posematch.ui.theme.PoseAmber400
@@ -36,7 +37,6 @@ private val TitleHeight = 32.dp
 private val TitleMinWidth = 120.dp
 private val TitleMaxWidth = 200.dp
 private val TitleShape = RoundedCornerShape(16.dp)
-private val BackGlyphSize = DpSize(10.dp, 17.dp)
 private val FlashGlyphSize = DpSize(18.dp, 18.dp)
 private val ChevronSize = DpSize(10.dp, 6.dp)
 private const val TITLE_BORDER_ALPHA = 0.18f
@@ -59,18 +59,10 @@ internal fun CameraTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(ButtonSize)
-                .cameraGlass(CircleShape)
-                .bounceClick(onClick = onBack),
-            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(ButtonSize),
+            contentAlignment = Alignment.CenterStart,
         ) {
-            Image(
-                painter = painterResource(R.drawable.ic_pose_back),
-                contentDescription = stringResource(R.string.action_back),
-                colorFilter = ColorFilter.tint(Color.White),
-                modifier = Modifier.size(BackGlyphSize),
-            )
+            PoseBackButton(onClick = onBack)
         }
         Box(
             modifier = Modifier.weight(1f),

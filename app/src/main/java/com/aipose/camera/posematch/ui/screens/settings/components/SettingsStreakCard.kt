@@ -1,8 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.settings.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,13 +22,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.GlossyIconBadge
-import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.PoseShadow
 import com.aipose.camera.posematch.ui.theme.PoseStreakCardBottom
@@ -48,9 +41,6 @@ private val CardShape = RoundedCornerShape(CardCorner)
 private val CardPadding = 16.dp
 private val TrophySize = 48.dp
 private val TrophyToText = 16.dp
-private val ChevronCircleSize = 36.dp
-private val ChevronWidth = 7.dp
-private val ChevronHeight = 12.dp
 private val TitleSize = 16.sp
 private val SubtitleSize = 11.sp
 private val ShadowInset = 2.dp
@@ -64,7 +54,6 @@ private const val CARD_BORDER_ALPHA = 0.14f
 private const val CARD_SHADOW_ALPHA = 0.5f
 private const val GLOSS_ALPHA = 0.42f
 private const val GLOSS_LAYER_ALPHA = 0.26f
-private const val CHEVRON_CIRCLE_ALPHA = 0.14f
 private const val GRADIENT_MID_STOP = 0.55f
 private const val GRADIENT_END_X_RATIO = 0.14f
 private const val GRADIENT_END_Y_RATIO = 1.86f
@@ -73,7 +62,6 @@ private const val GRADIENT_END_Y_RATIO = 1.86f
 internal fun SettingsStreakCard(
     title: String,
     subtitle: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -84,7 +72,6 @@ internal fun SettingsStreakCard(
             .clip(CardShape)
             .drawBehind { drawStreakSurface() }
             .border(1.dp, Color.White.copy(alpha = CARD_BORDER_ALPHA), CardShape)
-            .click(onClick = onClick)
             .padding(horizontal = CardPadding, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -103,20 +90,6 @@ internal fun SettingsStreakCard(
             Text(
                 text = subtitle,
                 style = poseTextStyle(SubtitleSize, FontWeight.Normal, PoseTextLavender),
-            )
-        }
-        Box(
-            modifier = Modifier
-                .size(ChevronCircleSize)
-                .clip(CircleShape)
-                .background(Color.White.copy(alpha = CHEVRON_CIRCLE_ALPHA)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_pose_chevron_end),
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier.size(width = ChevronWidth, height = ChevronHeight),
             )
         }
     }

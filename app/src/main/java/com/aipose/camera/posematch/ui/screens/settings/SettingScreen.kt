@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
-import com.aipose.camera.posematch.ui.common.RateUsSheet
+import com.aipose.camera.posematch.ui.common.RateUsDialog
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
@@ -78,7 +78,7 @@ fun SettingScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding()
+                .safeTopSystemBarsPadding()
                 .verticalScroll(rememberScrollState())
                 .padding(
                     start = PoseScreenGutter,
@@ -96,7 +96,6 @@ fun SettingScreen(
                     progress.shotsTaken,
                     progress.averageMatch,
                 ),
-                onClick = { navController.navigateOnClick(NavRoute.AchievementsScreenRoute.route) },
                 modifier = Modifier.padding(top = 7.dp),
             )
             SettingSectionLabel(
@@ -170,7 +169,7 @@ fun SettingScreen(
         }
     }
 
-    RateUsSheet(visible = isRateUsVisible)
+    RateUsDialog(visible = isRateUsVisible)
 
     if (isTimerSheetVisible) {
         CaptureTimerSheet(

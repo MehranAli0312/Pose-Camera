@@ -29,14 +29,15 @@ import com.valentinilk.shimmer.shimmer
 @Composable
 internal fun AdSlotPlaceholder(height: Dp, modifier: Modifier = Modifier) {
     val shimmer = rememberShimmer(shimmerBounds = ShimmerBounds.View)
-    val boneColor = PlaceholderBoneColor
+    val colors = AdSlotDefaults.colors
+    val boneColor = colors.placeholderBone
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
             .clip(RoundedCornerShape(12.dp))
-            .background(PlaceholderSurfaceColor),
+            .background(colors.container),
     ) {
         Box(
             modifier = Modifier
@@ -125,7 +126,5 @@ private fun Bone(color: Color, modifier: Modifier = Modifier) {
     )
 }
 
-private val PlaceholderSurfaceColor = Color.White
-private val PlaceholderBoneColor = Color(0xFFE1E1E1)
 private val CompactMaxHeight = 100.dp
 private val CtaWidth = 96.dp

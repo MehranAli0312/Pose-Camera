@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -75,8 +75,8 @@ fun CaptureAlbumScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding()
-                .navigationBarsPadding(),
+                .safeTopSystemBarsPadding()
+                .safeBottomSystemBarsPadding(),
             contentPadding = PaddingValues(top = PoseScreenTopSpacing, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
@@ -84,7 +84,6 @@ fun CaptureAlbumScreen(
                 AlbumHeader(
                     locationLabel = content.locationLabel,
                     summary = albumSummary(content),
-                    accent = accent,
                     onBack = navController::popBackStackOnClick,
                     onOpenSort = viewModel::showSortSheet,
                     modifier = Modifier.padding(horizontal = 20.dp),

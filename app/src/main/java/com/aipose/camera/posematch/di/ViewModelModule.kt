@@ -30,9 +30,9 @@ val viewModelModule = module {
     single { RateUsViewModel(get()) }
     viewModel {
         ProViewModel(
-            billingManager = get(),
+            subscriptionUseCase = get(),
             remoteConfigStore = get(),
-            proStatusRefresher = get(),
+            purchaseLauncher = get(),
         )
     }
     viewModel { HomeViewModel(get(), get(), get()) }

@@ -1,6 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.bottomBar
 
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -16,7 +16,7 @@ fun DashboardBottomBar(
         navController = navController,
         selectedDestination = destination,
         modifier = if (applyNavigationBarInsets) {
-            Modifier.navigationBarsPadding()
+            Modifier.safeBottomSystemBarsPadding()
         } else {
             Modifier
         },

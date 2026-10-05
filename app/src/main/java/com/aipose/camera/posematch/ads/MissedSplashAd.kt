@@ -1,12 +1,7 @@
 package com.aipose.camera.posematch.ads
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.remember
 import com.example.ads.AdPlacement
-import com.example.ads.AdResult
 import java.util.concurrent.atomic.AtomicBoolean
-import org.koin.compose.koinInject
 
 class MissedSplashAd {
 
@@ -14,12 +9,13 @@ class MissedSplashAd {
 
     private val isShowing = AtomicBoolean(false)
 
-    fun onSplashAdResult(result: AdResult) {
-        pending.set(result is AdResult.NotAvailable || result is AdResult.Failed)
-    }
-
-    fun clear() {
-        pending.set(false)
+    fun onSplashAdResult(ads: ScreenAds, wasShown: Boolean, isFirstSession: Boolean) {
+        val missed = isFirstSession &&
+            !wasShown &&
+            ads.isAdsAllowedNow() &&
+            ads.styleFor(AdPlacement.SplashFullscreen).format != null
+        pending.set(missed)
+        if (!missed) ads.coolDown(AdPlacement.SplashFullscreen)
     }
 
     fun showThen(ads: ScreenAds, continueWhenShown: Boolean, onContinue: () -> Unit) {
@@ -32,29 +28,18 @@ class MissedSplashAd {
             return
         }
         if (!isShowing.compareAndSet(false, true)) return
-        pending.set(false)
-        ads.fullscreen(AdPlacement.SplashFullscreen, continueWhenShown = continueWhenShown) {
+        ads.fullscreen(
+            placement = AdPlacement.SplashFullscreen,
+            continueWhenShown = continueWhenShown,
+            preloadedOnly = true,
+            onResult = { result -> if (result.wasShown) clear(ads) },
+        ) {
             isShowing.set(false)
             onContinue()
         }
     }
-}
 
-@Stable
-class MissedSplashAdTrigger internal constructor(
-    private val missedSplashAd: MissedSplashAd,
-    private val ads: ScreenAds,
-) {
-    fun showThen(continueWhenShown: Boolean = true, onContinue: () -> Unit) =
-        missedSplashAd.showThen(ads, continueWhenShown, onContinue)
-
-    fun clear() = missedSplashAd.clear()
-}
-
-@Composable
-fun rememberMissedSplashAd(): MissedSplashAdTrigger {
-    val missedSplashAd: MissedSplashAd = koinInject()
-    val ads = rememberScreenAds()
-
-    return remember(missedSplashAd, ads) { MissedSplashAdTrigger(missedSplashAd, ads) }
+    fun clear(ads: ScreenAds) {
+        if (pending.getAndSet(false)) ads.coolDown(AdPlacement.SplashFullscreen)
+    }
 }

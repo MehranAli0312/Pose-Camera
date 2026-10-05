@@ -1,5 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.onboard.components
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,7 +21,7 @@ import com.aipose.camera.posematch.ui.theme.PoseTextMuted
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import androidx.compose.ui.unit.dp
 
-private val BarHeight = 36.dp
+private val BarHeight = OnboardChromeMetrics.TopBarHeight
 private val SkipSize = 13.5.sp
 
 @Composable
@@ -28,6 +29,7 @@ internal fun OnboardTopBar(
     showSkip: Boolean,
     onSkip: () -> Unit,
     modifier: Modifier = Modifier,
+    @StringRes labelRes: Int = R.string.skip,
 ) {
     Box(
         modifier = modifier
@@ -37,7 +39,7 @@ internal fun OnboardTopBar(
     ) {
         AnimatedVisibility(visible = showSkip, enter = fadeIn(), exit = fadeOut()) {
             Text(
-                text = stringResource(R.string.skip),
+                text = stringResource(labelRes),
                 style = poseTextStyle(SkipSize, FontWeight.Bold, PoseTextMuted),
                 modifier = Modifier
                     .bounceClick(onClick = onSkip)

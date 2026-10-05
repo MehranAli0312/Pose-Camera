@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Varme</string>
     <string name="crop_free">Fri</string>
     <string name="settings_retain_skeleton">Behold pose-omrids efter billedet</string>
-    <string name="splash_privacy_note">AI på enheden · Ingen upload</string>
     <string name="toast_reference_imported">Reference importeret! Åbn kameraet for at matche.</string>
     <string name="toast_reference_failed">Referencen kunne ikke indlæses</string>
     <string name="toast_capture_failed">Billedet kunne ikke tages: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 dage i træk</string>
     <string name="achievements_badge_twenty_five_perfect">25 perfekte</string>
     <string name="achievements_badge_fifty_poses">50 poser</string>
+    <string name="app_open_welcome_back">Velkommen tilbage</string>
 </resources>

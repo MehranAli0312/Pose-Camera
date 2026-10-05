@@ -14,6 +14,6 @@ enum class ProPlan(
 
         val subscriptionProductIds: List<String> = listOf(PRODUCT_ID)
 
-        fun fromRemote(isAnnual: Boolean): ProPlan = if (isAnnual) YEARLY else MONTHLY
+        val recommended: ProPlan = YEARLY
     }
 }

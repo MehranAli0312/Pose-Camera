@@ -64,36 +64,36 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue("string", "admob_app_id", "ca-app-pub-6629349704657590~2567749704")
+            resValue("string", "admob_app_id", "ca-app-pub-6854526007331629~8767978934")
             buildConfigField(
                 "String",
                 "AD_UNIT_BANNER",
-                "\"ca-app-pub-3940256099942544/9214589741\""
+                "\"\""
             )
             buildConfigField(
                 "String",
                 "AD_UNIT_NATIVE",
-                "\"ca-app-pub-3940256099942544/2247696110\""
+                "\"\""
             )
             buildConfigField(
                 "String",
                 "AD_UNIT_INTERSTITIAL",
-                "\"ca-app-pub-3940256099942544/1033173712\""
+                "\"\""
             )
             buildConfigField(
                 "String",
                 "AD_UNIT_REWARDED",
-                "\"ca-app-pub-3940256099942544/5224354917\""
+                "\"\""
             )
             buildConfigField(
                 "String",
                 "AD_UNIT_REWARDED_INTERSTITIAL",
-                "\"ca-app-pub-3940256099942544/5354046379\""
+                "\"\""
             )
             buildConfigField(
                 "String",
                 "AD_UNIT_APP_OPEN",
-                "\"ca-app-pub-3940256099942544/9257395921\""
+                "\"\""
             )
         }
     }
@@ -114,13 +114,6 @@ kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
-}
-
-// The mediation adapters pull in the legacy play-services-ads SDK, whose classes clash with the
-// GMA Next-Gen SDK. Google's Next-Gen mediation guide requires excluding it.
-configurations.configureEach {
-    exclude(group = "com.google.android.gms", module = "play-services-ads")
-    exclude(group = "com.google.android.gms", module = "play-services-ads-lite")
 }
 
 dependencies {
@@ -145,4 +138,10 @@ dependencies {
     api(libs.admob.ads.next.gen)
 
     api(libs.user.messaging)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
+
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.runner)
 }

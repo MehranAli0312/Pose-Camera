@@ -3,130 +3,96 @@ package com.aipose.camera.posematch.ui.vm
 import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pdfutility.billing.BillingManager
-import com.pdfutility.billing.data.entities.product.ProductDetail
-import com.pdfutility.billing.presentation.states.BillingState
-import com.pdfutility.billing.presentation.states.PurchaseResult
-import com.pdfutility.billing.presentation.states.QueryResponse
 import com.aipose.camera.posematch.ads.ProRestoreResult
-import com.aipose.camera.posematch.ads.ProStatusRefresher
-import com.aipose.camera.posematch.domain.models.ProPlan
+import com.aipose.camera.posematch.domain.models.PremiumPlan
+import com.aipose.camera.posematch.domain.models.PremiumPurchaseOutcome
+import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
+import com.aipose.camera.posematch.ui.common.PremiumPurchaseLauncher
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
-import com.aipose.camera.posematch.ui.firebaseRemote.PremiumCloseButtonPosition
-import com.aipose.camera.posematch.ui.screens.pro.models.ProPlanOption
+import com.aipose.camera.posematch.ui.screens.pro.models.ProEvent
+import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
+import com.aipose.camera.posematch.ui.screens.pro.models.ProUiState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class ProUiState(
-    val selectedPlan: ProPlan,
-    val isLoadingProducts: Boolean = true,
-    val products: List<ProductDetail> = emptyList(),
-    val isPurchasing: Boolean = false,
-    val purchaseResult: PurchaseResult? = null,
-    val isRestoring: Boolean = false,
-    val restoreResult: ProRestoreResult? = null,
-    val closeSecondsRemaining: Int = 0,
-    val closePosition: PremiumCloseButtonPosition = PremiumCloseButtonPosition.Right,
-) {
-    val planOptions: List<ProPlanOption>
-        get() = ProPlan.entries.map { ProPlanOption.from(it, products) }
-
-    val selectedOption: ProPlanOption
-        get() = ProPlanOption.from(selectedPlan, products)
-
-    val yearlySavePercent: Int?
-        get() {
-            val yearly = ProPlanOption.from(ProPlan.YEARLY, products)
-            val monthly = ProPlanOption.from(ProPlan.MONTHLY, products)
-            val yearlyMicros = yearly.priceMicros ?: return null
-            val monthlyMicros = monthly.priceMicros ?: return null
-            if (yearly.currencyCode != monthly.currencyCode) return null
-            val fullYearMicros = monthlyMicros * ProPlan.YEARLY.billingMonths
-            val percent = ((fullYearMicros - yearlyMicros) * PERCENT / fullYearMicros).toInt()
-            return percent.takeIf { it >= MIN_SAVE_PERCENT }
-        }
-
-    val isStoreUnavailable: Boolean
-        get() = !isLoadingProducts && planOptions.none { it.isAvailable }
-
-    val canPurchase: Boolean
-        get() = selectedOption.isAvailable && !isPurchasing && !isRestoring
-
-    val canRestore: Boolean get() = !isPurchasing && !isRestoring
-    val canClose: Boolean get() = closeSecondsRemaining <= 0
-
-    private companion object {
-        const val PERCENT = 100
-        const val MIN_SAVE_PERCENT = 5
-    }
-}
-
 class ProViewModel(
-    private val billingManager: BillingManager,
+    private val subscriptionUseCase: PremiumSubscriptionUseCase,
+    private val purchaseLauncher: PremiumPurchaseLauncher,
     private val remoteConfigStore: AdsRemoteConfigStore,
-    private val proStatusRefresher: ProStatusRefresher,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(initialState())
     val uiState: StateFlow<ProUiState> = _uiState.asStateFlow()
 
+    private val _events = MutableSharedFlow<ProEvent>(extraBufferCapacity = 1)
+    val events: SharedFlow<ProEvent> = _events.asSharedFlow()
+
+    private var loadJob: Job? = null
+    private var restoreJob: Job? = null
+
     init {
         startCloseCountdown()
-        observeBillingConnection()
-        observePurchaseResults()
-        billingManager.startConnection()
+        observePurchaseOutcomes()
+        loadPlans()
     }
 
-    fun selectPlan(plan: ProPlan) {
-        val state = _uiState.value
-        if (state.isPurchasing) return
-        val option = ProPlanOption.from(plan, state.products)
-        if (!state.isLoadingProducts && !option.isAvailable) return
-        _uiState.update { it.copy(selectedPlan = plan) }
-    }
-
-    fun purchaseSelectedPlan(activity: Activity?) {
-        val state = _uiState.value
-        if (!state.canPurchase) return
-        val option = state.selectedOption
-        _uiState.update { it.copy(isPurchasing = true) }
-        billingManager.purchase(
-            activity = activity,
-            productId = option.plan.productId,
-            planId = option.plan.basePlanId,
-            offerId = option.offerId,
-        )
-    }
-
-    fun retryLoadProducts() {
-        if (_uiState.value.isLoadingProducts) return
-        _uiState.update { it.copy(isLoadingProducts = true) }
-        if (billingManager.isBillingConnected) {
-            viewModelScope.launch { loadProducts() }
-        } else {
-            billingManager.startConnection()
+    fun loadPlans() {
+        loadJob?.cancel()
+        loadJob = viewModelScope.launch {
+            _uiState.update { it.copy(plans = ProPlansState.Loading) }
+            val plans = subscriptionUseCase
+                .loadPlans(includeYearly = remoteConfigStore.current.premiumAnnualPlan)
+                .getOrDefault(emptyList())
+            val selected = subscriptionUseCase.defaultSelection(plans)
+            val plansState = if (selected == null) {
+                ProPlansState.Unavailable
+            } else {
+                ProPlansState.Content(
+                    plans = plans,
+                    selectedPlan = selected,
+                    recommendedPlan = plans.firstOrNull {
+                        subscriptionUseCase.isRecommended(it, plans)
+                    },
+                    yearlySavePercent = subscriptionUseCase.yearlySavePercent(plans),
+                    isPurchasing = false,
+                )
+            }
+            _uiState.update { it.copy(plans = plansState) }
         }
     }
 
-    fun consumePurchaseResult() {
-        _uiState.update { it.copy(purchaseResult = null) }
+    fun selectPlan(plan: PremiumPlan) = updateContent { content ->
+        if (content.isPurchasing) content else content.copy(selectedPlan = plan)
+    }
+
+    fun startPurchase(activity: Activity?) {
+        val state = _uiState.value
+        val content = state.plans as? ProPlansState.Content ?: return
+        if (content.isPurchasing || state.isRestoring) return
+        updateContent { it.copy(isPurchasing = true) }
+        if (!purchaseLauncher.launch(activity, content.selectedPlan)) {
+            updateContent { it.copy(isPurchasing = false) }
+            _events.tryEmit(ProEvent.PurchaseFailed(reason = ""))
+        }
     }
 
     fun restorePurchases() {
         if (!_uiState.value.canRestore) return
+        restoreJob?.cancel()
         _uiState.update { it.copy(isRestoring = true) }
-        viewModelScope.launch {
-            val result = proStatusRefresher.refresh()
-            _uiState.update { it.copy(isRestoring = false, restoreResult = result) }
+        restoreJob = viewModelScope.launch {
+            val result = subscriptionUseCase.restorePurchases()
+            _uiState.update { it.copy(isRestoring = false) }
+            _events.tryEmit(result.toEvent())
         }
-    }
-
-    fun consumeRestoreResult() {
-        _uiState.update { it.copy(restoreResult = null) }
     }
 
     private fun startCloseCountdown() {
@@ -138,60 +104,25 @@ class ProViewModel(
         }
     }
 
-    private fun observeBillingConnection() {
+    private fun observePurchaseOutcomes() {
         viewModelScope.launch {
-            billingManager.connectionState.collect { state ->
-                when (state) {
-                    BillingState.CONNECTED -> loadProducts()
-                    BillingState.CONNECT_FAILED,
-                    BillingState.DISCONNECTED -> _uiState.update {
-                        it.copy(isLoadingProducts = false, products = emptyList())
-                    }
-
-                    else -> Unit
-                }
+            subscriptionUseCase.purchaseOutcomes.collect { outcome ->
+                updateContent { it.copy(isPurchasing = false) }
+                _events.tryEmit(outcome.toEvent())
             }
         }
     }
 
-    private fun observePurchaseResults() {
-        viewModelScope.launch {
-            billingManager.purchaseResults.collect { result ->
-                _uiState.update { it.copy(isPurchasing = false) }
-                if (result == PurchaseResult.AlreadyOwned) {
-                    restorePurchases()
-                } else {
-                    _uiState.update { it.copy(purchaseResult = result) }
-                }
-            }
+    private fun updateContent(transform: (ProPlansState.Content) -> ProPlansState.Content) {
+        _uiState.update { state ->
+            val plans = state.plans
+            if (plans is ProPlansState.Content) state.copy(plans = transform(plans)) else state
         }
-    }
-
-    private suspend fun loadProducts() {
-        _uiState.update { it.copy(isLoadingProducts = true) }
-        when (val response = billingManager.queryProducts()) {
-            is QueryResponse.Loading -> Unit
-            is QueryResponse.Success -> _uiState.update {
-                it.copy(
-                    isLoadingProducts = false,
-                    products = response.data,
-                    selectedPlan = availablePlan(it.selectedPlan, response.data),
-                )
-            }
-
-            is QueryResponse.Error -> _uiState.update {
-                it.copy(isLoadingProducts = false, products = emptyList())
-            }
-        }
-    }
-
-    private fun availablePlan(preferred: ProPlan, products: List<ProductDetail>): ProPlan {
-        if (ProPlanOption.from(preferred, products).isAvailable) return preferred
-        return ProPlan.entries.firstOrNull { ProPlanOption.from(it, products).isAvailable } ?: preferred
     }
 
     private fun initialState() = ProUiState(
-        selectedPlan = remoteConfigStore.current.premiumDefaultPlan,
+        plans = ProPlansState.Loading,
+        isRestoring = false,
         closeSecondsRemaining = remoteConfigStore.current.premiumCloseDelay,
         closePosition = remoteConfigStore.current.premiumClosePosition,
     )
@@ -199,4 +130,18 @@ class ProViewModel(
     private companion object {
         const val CLOSE_COUNTDOWN_TICK_MILLIS = 1_000L
     }
+}
+
+private fun ProRestoreResult.toEvent(): ProEvent = when (this) {
+    ProRestoreResult.Restored -> ProEvent.Restored
+    ProRestoreResult.NothingFound -> ProEvent.NothingToRestore
+    ProRestoreResult.Failed -> ProEvent.RestoreFailed
+}
+
+private fun PremiumPurchaseOutcome.toEvent(): ProEvent = when (this) {
+    PremiumPurchaseOutcome.Purchased -> ProEvent.Purchased
+    PremiumPurchaseOutcome.AlreadyOwned -> ProEvent.AlreadyOwned
+    PremiumPurchaseOutcome.Pending -> ProEvent.PurchasePending
+    PremiumPurchaseOutcome.Cancelled -> ProEvent.PurchaseCancelled
+    is PremiumPurchaseOutcome.Failed -> ProEvent.PurchaseFailed(reason)
 }

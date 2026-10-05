@@ -3,7 +3,7 @@ package com.aipose.camera.posematch.ui.screens.home
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -92,9 +92,8 @@ fun HomeScreen(
             item(key = HOME_HEADER_KEY) {
                 HomeHeader(
                     streakDays = content?.progress?.dayStreak ?: 0,
-                    onOpenPro = { navController.navigateOnClick(NavRoute.ProScreenRoute.route) },
                     modifier = Modifier
-                        .statusBarsPadding()
+                        .safeTopSystemBarsPadding()
                         .padding(top = PoseScreenTopSpacing),
                 )
             }

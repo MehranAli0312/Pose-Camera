@@ -9,6 +9,10 @@
         <value>false</value>
     </entry>
     <entry>
+        <key>onboarding_full_native_ad_key</key>
+        <value>0</value>
+    </entry>
+    <entry>
         <key>inner_inter_splash_fallback</key>
         <value>true</value>
     </entry>
@@ -25,8 +29,24 @@
         <value>0</value>
     </entry>
     <entry>
+        <key>language_screen_bottom_ad_key</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>onboard_screen_bottom_ad_key</key>
+        <value>0</value>
+    </entry>
+    <entry>
         <key>app_open_on_resume_ad_key</key>
         <value>false</value>
+    </entry>
+    <entry>
+        <key>app_open_load_timeout_sec</key>
+        <value>8</value>
+    </entry>
+    <entry>
+        <key>splash_ad_max_wait_sec</key>
+        <value>12</value>
     </entry>
     <entry>
         <key>inner_interstitial_ad_key</key>
@@ -73,20 +93,24 @@
         <value></value>
     </entry>
     <entry>
-        <key>native_ad_cta_bg_color</key>
+        <key>rewarded_ad_unit</key>
         <value></value>
+    </entry>
+    <entry>
+        <key>native_ad_cta_bg_color</key>
+        <value>#FFFFFF</value>
     </entry>
     <entry>
         <key>native_ad_cta_text_color</key>
-        <value></value>
+        <value>#077EFC</value>
     </entry>
     <entry>
         <key>native_ad_label_bg_color</key>
-        <value></value>
+        <value>#077EFC</value>
     </entry>
     <entry>
         <key>native_ad_label_text_color</key>
-        <value></value>
+        <value>#FFFFFF</value>
     </entry>
     <entry>
         <key>app_update_version_code</key>

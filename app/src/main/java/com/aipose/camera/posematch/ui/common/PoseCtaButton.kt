@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val CtaHeight = 58.dp
+val PoseCtaHeight = 58.dp
 private val CtaShadowInset = 2.dp
 private val CtaShadowOffset = 6.dp
 private val CtaGlossInset = 8.dp
@@ -51,11 +51,11 @@ fun PoseCtaButton(
     @DrawableRes trailingIconRes: Int? = null,
     palette: GlossyBadgePalette = GlossyBadgePalette.HeroCta,
 ) {
-    val shape = RoundedCornerShape(CtaHeight / 2f)
+    val shape = RoundedCornerShape(PoseCtaHeight / 2f)
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(CtaHeight)
+            .height(PoseCtaHeight)
             .drawBehind { drawCtaShadow(palette) }
             .clip(shape)
             .drawBehind { drawCtaSurface(palette) }

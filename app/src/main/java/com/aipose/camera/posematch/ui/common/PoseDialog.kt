@@ -49,6 +49,7 @@ fun PoseDialog(
     onDismiss: () -> Unit,
 ) {
     Dialog(onDismissRequest = onDismiss) {
+        ImmersiveDialogWindowEffect()
         PoseDialogCard(
             iconRes = iconRes,
             iconPalette = iconPalette,

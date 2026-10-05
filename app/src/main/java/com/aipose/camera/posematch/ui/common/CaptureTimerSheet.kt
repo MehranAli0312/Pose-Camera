@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -91,13 +90,14 @@ fun CaptureTimerSheet(
         tonalElevation = 0.dp,
         dragHandle = null,
     ) {
+        ImmersiveDialogWindowEffect()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(SheetShape)
                 .background(Brush.verticalGradient(listOf(PoseSheetRaisedTop, PoseSheetRaisedBottom)))
                 .border(1.dp, Color.White.copy(alpha = SHEET_BORDER_ALPHA), SheetShape)
-                .navigationBarsPadding()
+                .safeBottomSystemBarsPadding()
                 .padding(start = 28.dp, end = 28.dp, top = 18.dp, bottom = 20.dp),
         ) {
             Box(

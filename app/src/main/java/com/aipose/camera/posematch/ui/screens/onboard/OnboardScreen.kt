@@ -1,43 +1,41 @@
 package com.aipose.camera.posematch.ui.screens.onboard
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
-import com.aipose.camera.posematch.ui.common.adaptiveWidth
-import com.aipose.camera.posematch.ui.common.PoseCtaButton
+import com.aipose.camera.posematch.ads.rememberMissedSplashAd
+import com.aipose.camera.posematch.ads.rememberOnboardingNativeAd
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBackdrop
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardContentPage
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardPagerIndicator
-import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardTopBar
+import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBottomAd
+import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardChrome
+import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardNativeAdPage
+import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardStepPage
 import com.aipose.camera.posematch.ui.screens.onboard.data.onboardSteps
+import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardPage
+import com.aipose.camera.posematch.ui.screens.onboard.models.onboardPages
+import com.aipose.camera.posematch.ui.screens.onboard.models.stepIndexAt
 import com.aipose.camera.posematch.ui.screens.splash.goToHome
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
+import kotlin.math.abs
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-
-private val TopBarTop = PoseScreenTopSpacing
-private val IndicatorTop = 44.dp
-private val IndicatorToCta = 30.dp
-private val CtaBottom = 36.dp
 
 @Composable
 fun OnboardScreen(
@@ -45,16 +43,41 @@ fun OnboardScreen(
     splashViewModel: SplashViewModel = koinViewModel(),
 ) {
     val steps = remember { onboardSteps }
-    val pagerState = rememberPagerState(pageCount = { steps.size })
+    val nativeAd = rememberOnboardingNativeAd()
+    val adPageIndex = nativeAd.pageIndex
+    val pages = remember(steps, adPageIndex) { onboardPages(steps, adPageIndex) }
+    val pagerState = rememberPagerState(pageCount = { pages.size })
     val scope = rememberCoroutineScope()
+    val missedSplashAd = rememberMissedSplashAd()
     val currentPage = pagerState.currentPage
-    val currentStep = steps[currentPage]
-    val isLastPage = currentPage == steps.lastIndex
+    val currentStepIndex = pages.stepIndexAt(currentPage)
+    val currentStep = steps[currentStepIndex]
+    val isLastPage = currentPage == pages.lastIndex
+    val isChromeVisible by remember(pagerState, adPageIndex) {
+        derivedStateOf { pagerState.chromeAlpha(adPageIndex) > 0f }
+    }
+    val isBottomAdVisible by remember(pagerState, adPageIndex) {
+        derivedStateOf { pagerState.settledPage != adPageIndex }
+    }
+    var bottomAdHeight by remember { mutableStateOf(0.dp) }
+    val adPageBottomReserved by animateDpAsState(
+        targetValue = if (isBottomAdVisible) bottomAdHeight else 0.dp,
+        label = AD_PAGE_BOTTOM_LABEL,
+    )
+
+    LaunchedEffect(nativeAd, pagerState) {
+        nativeAd.insertWhenReady { candidate ->
+            pagerState.currentPage < candidate && !pagerState.isScrollInProgress
+        }
+    }
 
     fun finishOnboarding() {
-        scope.launch {
-            splashViewModel.writeSplashStatus()
-            goToHome(navController)
+        missedSplashAd.showThen {
+            missedSplashAd.clear()
+            scope.launch {
+                splashViewModel.writeSplashStatus()
+                goToHome(navController)
+            }
         }
     }
 
@@ -62,50 +85,57 @@ fun OnboardScreen(
         scope.launch { pagerState.animateScrollToPage(page) }
     }
 
-    BackHandler(enabled = currentPage > 0) {
-        goToPage(currentPage - 1)
+    fun goToNextPage() {
+        missedSplashAd.showThen { goToPage(currentPage + 1) }
     }
+
+    BackHandler(enabled = true) {}
 
     OnboardBackdrop(
         accent = currentStep.ambientAccent,
         accentAlpha = currentStep.ambientAccentAlpha,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .adaptiveWidth()
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .padding(horizontal = PoseScreenGutter),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(modifier = Modifier.height(TopBarTop))
-            OnboardTopBar(
-                showSkip = !isLastPage,
-                onSkip = ::finishOnboarding,
-            )
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-            ) { page ->
-                OnboardContentPage(step = steps[page])
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize(),
+            key = { page -> pages[page].key },
+        ) { page ->
+            when (val onboardPage = pages[page]) {
+                is OnboardPage.Step -> OnboardStepPage(
+                    step = onboardPage.step,
+                    bottomReserved = bottomAdHeight,
+                )
+                OnboardPage.NativeAd -> OnboardNativeAdPage(
+                    onContinue = { goToPage(page + 1) },
+                    bottomReserved = adPageBottomReserved,
+                )
             }
-            Spacer(modifier = Modifier.height(IndicatorTop))
-            OnboardPagerIndicator(
-                totalPages = steps.size,
-                currentPage = currentPage,
+        }
+        if (isChromeVisible) {
+            OnboardChrome(
+                showSkip = !isLastPage,
+                totalSteps = steps.size,
+                currentStep = currentStepIndex,
+                ctaText = stringResource(currentStep.ctaRes),
+                onSkip = ::finishOnboarding,
+                onCta = { if (isLastPage) finishOnboarding() else goToNextPage() },
+                modifier = Modifier.graphicsLayer { alpha = pagerState.chromeAlpha(adPageIndex) },
+                bottomReserved = bottomAdHeight,
             )
-            Spacer(modifier = Modifier.height(IndicatorToCta))
-            PoseCtaButton(
-                text = stringResource(currentStep.ctaRes),
-                onClick = {
-                    if (isLastPage) finishOnboarding() else goToPage(currentPage + 1)
-                },
-                trailingIconRes = R.drawable.ic_pose_chevron_cta,
+        }
+        if (isBottomAdVisible) {
+            OnboardBottomAd(
+                onHeightChanged = { height -> bottomAdHeight = height },
+                modifier = Modifier.align(Alignment.BottomCenter),
             )
-            Spacer(modifier = Modifier.height(CtaBottom))
         }
     }
+}
+
+private const val AD_PAGE_BOTTOM_LABEL = "onboardAdPageBottom"
+
+private fun PagerState.chromeAlpha(adPageIndex: Int?): Float {
+    if (adPageIndex == null) return 1f
+    val position = currentPage + currentPageOffsetFraction
+    return abs(position - adPageIndex).coerceIn(0f, 1f)
 }

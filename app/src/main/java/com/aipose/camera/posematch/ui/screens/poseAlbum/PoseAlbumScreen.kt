@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -70,8 +70,8 @@ fun PoseAlbumScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding()
-                .navigationBarsPadding(),
+                .safeTopSystemBarsPadding()
+                .safeBottomSystemBarsPadding(),
             contentPadding = PaddingValues(
                 start = PoseScreenGutter,
                 end = PoseScreenGutter,

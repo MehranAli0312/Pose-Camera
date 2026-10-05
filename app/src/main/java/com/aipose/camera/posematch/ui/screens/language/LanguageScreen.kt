@@ -44,9 +44,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
+import com.example.ads.AdPlacement
+import com.example.ads.compose.AdsSlot
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.AppBar
+import com.aipose.camera.posematch.ui.common.PoseBackButton
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
@@ -121,12 +126,14 @@ fun LocalizeScreen(
         if (isFirstSession) {
             missedSplashAd.showThen(continueWhenShown = false) {
                 coroutineScope.launch {
+                    val showOnboarding = remoteConfigStore.current.showOnboardingScreen
+                    if (!showOnboarding) missedSplashAd.clear()
                     splashViewModel.writeSplashStatus()
                     languageViewModel.changeLanguage(selectedLanguage)
                     languageViewModel.applyLanguage(selectedLanguage)
                     goToOnboardOrNext(
                         navController = navController,
-                        showOnboarding = remoteConfigStore.current.showOnboardingScreen,
+                        showOnboarding = showOnboarding,
                     )
                 }
             }
@@ -138,7 +145,9 @@ fun LocalizeScreen(
     }
 
     BackHandler(enabled = true) {
-        applyAndNavigate()
+        if (navController.acceptNavigationClick()) {
+            applyAndNavigate()
+        }
     }
 
     Scaffold(
@@ -149,14 +158,7 @@ fun LocalizeScreen(
                     null
                 } else {
                     {
-                        Icon(
-                            modifier = Modifier.bounceClick {
-                                navController.popBackStackOnClick()
-                            },
-                            painter = painterResource(id = R.drawable.ic_back),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
+                        PoseBackButton(onClick = navController::popBackStackOnClick)
                     }
                 },
                 menuItems = {
@@ -192,6 +194,12 @@ fun LocalizeScreen(
                         )
                     }
                 },
+            )
+        },
+        bottomBar = {
+            AdsSlot(
+                placement = AdPlacement.LanguageScreenBottom,
+                modifier = Modifier.safeBottomSystemBarsPadding(),
             )
         },
     ) { paddingValues ->

@@ -2,9 +2,9 @@ package com.aipose.camera.posematch.ui.screens.achievements
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -46,9 +46,9 @@ fun AchievementsScreen(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .statusBarsPadding()
+                .safeTopSystemBarsPadding()
                 .verticalScroll(rememberScrollState())
-                .navigationBarsPadding()
+                .safeBottomSystemBarsPadding()
                 .padding(
                     start = PoseScreenGutter,
                     end = PoseScreenGutter,

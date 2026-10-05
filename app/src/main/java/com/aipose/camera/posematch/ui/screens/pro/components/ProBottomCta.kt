@@ -32,11 +32,12 @@ import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.rememberThrottledClick
 import com.aipose.camera.posematch.ui.theme.AppMainColor
 import com.aipose.camera.posematch.ui.theme.White
-import com.aipose.camera.posematch.ui.vm.ProUiState
+import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
 
 @Composable
 internal fun ProBottomCta(
-    state: ProUiState,
+    state: ProPlansState,
+    isRestoring: Boolean,
     onContinue: () -> Unit,
     onRetry: () -> Unit,
     onPrivacyPolicy: () -> Unit,
@@ -54,7 +55,8 @@ internal fun ProBottomCta(
 
         ProContinueButton(
             state = state,
-            onClick = if (state.isStoreUnavailable) onRetry else onContinue,
+            isRestoring = isRestoring,
+            onClick = if (state is ProPlansState.Unavailable) onRetry else onContinue,
         )
 
         Spacer(Modifier.height(10.dp))
@@ -78,14 +80,14 @@ internal fun ProBottomCta(
 }
 
 @Composable
-private fun ProBottomNote(state: ProUiState) {
+private fun ProBottomNote(state: ProPlansState) {
     when {
-        state.isStoreUnavailable -> ProLegalText(
+        state is ProPlansState.Unavailable -> ProLegalText(
             text = stringResource(R.string.pro_store_unavailable),
             color = MaterialTheme.colorScheme.error,
         )
 
-        state.selectedOption.freeTrialDays != null -> PrivacyNote(
+        state is ProPlansState.Content && state.startsWithTrial -> PrivacyNote(
             text = stringResource(R.string.pro_no_payment_now),
         )
 
@@ -95,11 +97,16 @@ private fun ProBottomNote(state: ProUiState) {
 
 @Composable
 private fun ProContinueButton(
-    state: ProUiState,
+    state: ProPlansState,
+    isRestoring: Boolean,
     onClick: () -> Unit,
 ) {
-    val enabled = !state.isLoadingProducts && !state.isPurchasing && !state.isRestoring &&
-        (state.isStoreUnavailable || state.canPurchase)
+    val isPurchasing = state is ProPlansState.Content && state.isPurchasing
+    val enabled = !isRestoring && when (state) {
+        ProPlansState.Loading -> false
+        ProPlansState.Unavailable -> true
+        is ProPlansState.Content -> !state.isPurchasing
+    }
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.CenterEnd,
@@ -124,7 +131,7 @@ private fun ProContinueButton(
                 .background(White),
             contentAlignment = Alignment.Center,
         ) {
-            if (state.isPurchasing || state.isLoadingProducts) {
+            if (isPurchasing || state is ProPlansState.Loading) {
                 CircularProgressIndicator(
                     color = AppMainColor,
                     strokeWidth = 2.dp,

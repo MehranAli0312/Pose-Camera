@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Värme</string>
     <string name="crop_free">Fri</string>
     <string name="settings_retain_skeleton">Behåll posekonturen efter fotot</string>
-    <string name="splash_privacy_note">AI på enheten · Inga uppladdningar</string>
     <string name="toast_reference_imported">Referens importerad! Öppna kameran för att matcha.</string>
     <string name="toast_reference_failed">Referensen kunde inte läsas in</string>
     <string name="toast_capture_failed">Fotot misslyckades: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 dagar i rad</string>
     <string name="achievements_badge_twenty_five_perfect">25 perfekta</string>
     <string name="achievements_badge_fifty_poses">50 poser</string>
+    <string name="app_open_welcome_back">Välkommen tillbaka</string>
 </resources>

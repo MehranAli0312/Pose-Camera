@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Chaleur</string>
     <string name="crop_free">Libre</string>
     <string name="settings_retain_skeleton">Garder la silhouette après la photo</string>
-    <string name="splash_privacy_note">IA sur l\'appareil · Aucun envoi</string>
     <string name="toast_reference_imported">Référence importée ! Ouvrez la caméra pour comparer.</string>
     <string name="toast_reference_failed">Impossible de charger la référence</string>
     <string name="toast_capture_failed">Échec de la capture : %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 jours d\'affilée</string>
     <string name="achievements_badge_twenty_five_perfect">25 parfaites</string>
     <string name="achievements_badge_fifty_poses">50 poses</string>
+    <string name="app_open_welcome_back">Bon retour</string>
 </resources>

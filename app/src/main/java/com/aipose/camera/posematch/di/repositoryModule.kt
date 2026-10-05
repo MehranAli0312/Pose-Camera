@@ -7,6 +7,7 @@ import com.aipose.camera.posematch.data.repoImpl.FavoritePoseRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.LanguageRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PhotoGradingRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PoseRepositoryImpl
+import com.aipose.camera.posematch.data.repoImpl.PremiumRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.RateUsRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.SplashStatusRepositoryImpl
 import com.aipose.camera.posematch.domain.repo.CameraSettingsRepository
@@ -16,6 +17,7 @@ import com.aipose.camera.posematch.domain.repo.FavoritePoseRepository
 import com.aipose.camera.posematch.domain.repo.LanguageRepository
 import com.aipose.camera.posematch.domain.repo.PhotoGradingRepository
 import com.aipose.camera.posematch.domain.repo.PoseRepository
+import com.aipose.camera.posematch.domain.repo.PremiumRepository
 import com.aipose.camera.posematch.domain.repo.RateUsRepository
 import com.aipose.camera.posematch.domain.repo.SplashStatusRepository
 import org.koin.android.ext.koin.androidContext
@@ -42,4 +44,11 @@ val repositoryModule = module {
     single<CaptureRepository> { CaptureRepositoryImpl(get(), get(), get(), get()) }
     single<CaptureLocationRepository> { CaptureLocationRepositoryImpl(get()) }
     single<PhotoGradingRepository> { PhotoGradingRepositoryImpl(get(), get(), get()) }
+    single<PremiumRepository> {
+        PremiumRepositoryImpl(
+            billingManager = get(),
+            proStatusRefresher = get(),
+            proStatusStore = get(),
+        )
+    }
 }

@@ -1,15 +1,15 @@
 package com.aipose.camera.posematch.ui.screens.pro.components
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import com.pdfutility.billing.presentation.states.PurchaseResult
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.ProRestoreResult
+import com.aipose.camera.posematch.domain.models.PremiumPlan
 import com.aipose.camera.posematch.domain.models.ProPlan
-import com.aipose.camera.posematch.ui.screens.pro.models.ProPlanOption
-import com.aipose.camera.posematch.ui.vm.ProUiState
+import com.aipose.camera.posematch.ui.screens.pro.models.ProEvent
+import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
 import com.aipose.camera.posematch.util.bidiIsolate
 import java.text.NumberFormat
 
@@ -26,58 +26,53 @@ internal fun proPlanTitle(plan: ProPlan): String = stringResource(
 )
 
 @Composable
-internal fun proPlanSubtitle(option: ProPlanOption): String {
-    val price = option.price?.bidiIsolate() ?: return stringResource(R.string.pro_plan_unavailable)
-    val trialDays = option.freeTrialDays
+internal fun proPlanSubtitle(details: PremiumPlan?): String {
+    if (details == null) return stringResource(R.string.pro_plan_unavailable)
+    val price = details.formattedPrice.bidiIsolate()
     return when {
-        trialDays != null -> pluralStringResource(
+        details.hasTrial -> pluralStringResource(
             R.plurals.pro_trial_then_price,
-            trialDays,
-            trialDays,
+            details.trialDays,
+            details.trialDays,
             price,
         )
 
-        option.plan == ProPlan.YEARLY -> stringResource(R.string.pro_billed_yearly, price)
+        details.plan == ProPlan.YEARLY -> stringResource(R.string.pro_billed_yearly, price)
         else -> stringResource(R.string.pro_billed_monthly)
     }
 }
 
 @Composable
-internal fun rememberMonthlyPrice(option: ProPlanOption): String? = remember(option) {
-    val price = when (option.plan.billingMonths) {
-        1 -> option.price
-        else -> formatLikePlayPrice(option.price, option.monthlyPriceMicros)
+internal fun rememberMonthlyPrice(details: PremiumPlan): String? = remember(details) {
+    val price = when (details.plan.billingMonths) {
+        1 -> details.formattedPrice
+        else -> formatLikePlayPrice(details.formattedPrice, details.monthlyPriceMicros)
     }
     price?.bidiIsolate()
 }
 
 @Composable
-internal fun proCtaText(state: ProUiState): String = stringResource(
+internal fun proCtaText(state: ProPlansState): String = stringResource(
     when {
-        state.isStoreUnavailable -> R.string.pro_retry
-        state.selectedOption.freeTrialDays != null -> R.string.pro_try_for_free
+        state is ProPlansState.Unavailable -> R.string.pro_retry
+        state is ProPlansState.Content && state.startsWithTrial -> R.string.pro_try_for_free
         else -> R.string.pro_upgrade_title
     },
 )
 
-@Composable
-internal fun proPurchaseMessage(result: PurchaseResult): String = when (result) {
-    is PurchaseResult.Success -> stringResource(R.string.pro_purchase_success)
-    PurchaseResult.AlreadyOwned -> stringResource(R.string.pro_purchase_already_owned)
-    PurchaseResult.Pending -> stringResource(R.string.pro_purchase_pending)
-    PurchaseResult.Cancelled -> stringResource(R.string.pro_purchase_cancelled)
-    is PurchaseResult.Error -> stringResource(R.string.pro_purchase_failed, result.message)
+internal fun Context.proEventMessage(event: ProEvent): String = when (event) {
+    ProEvent.Purchased -> getString(R.string.pro_purchase_success)
+    ProEvent.AlreadyOwned -> getString(R.string.pro_purchase_already_owned)
+    ProEvent.PurchasePending -> getString(R.string.pro_purchase_pending)
+    ProEvent.PurchaseCancelled -> getString(R.string.pro_purchase_cancelled)
+    is ProEvent.PurchaseFailed -> getString(R.string.pro_purchase_failed, event.reason)
+    ProEvent.Restored -> getString(R.string.pro_restore_success)
+    ProEvent.NothingToRestore -> getString(R.string.pro_restore_nothing_found)
+    ProEvent.RestoreFailed -> getString(R.string.pro_restore_failed)
 }
 
-@Composable
-internal fun proRestoreMessage(result: ProRestoreResult): String = when (result) {
-    ProRestoreResult.Restored -> stringResource(R.string.pro_restore_success)
-    ProRestoreResult.NothingFound -> stringResource(R.string.pro_restore_nothing_found)
-    ProRestoreResult.Failed -> stringResource(R.string.pro_restore_failed)
-}
-
-private fun formatLikePlayPrice(playPrice: String?, micros: Long?): String? {
-    if (playPrice == null || micros == null) return null
+private fun formatLikePlayPrice(playPrice: String, micros: Long): String? {
+    if (micros <= 0) return null
     val amountRange = PlayPriceAmount.find(playPrice)?.range ?: return null
     val amount = NumberFormat.getNumberInstance().apply {
         maximumFractionDigits = MAX_PRICE_FRACTION_DIGITS

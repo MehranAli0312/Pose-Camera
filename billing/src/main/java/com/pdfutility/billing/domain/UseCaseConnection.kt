@@ -21,7 +21,10 @@ internal class UseCaseConnection(private val repository: BillingRepository) {
         }
 
         isConnecting = true
-        repository.startConnection(onResult)
-        isConnecting = false
+        try {
+            repository.startConnection(onResult)
+        } finally {
+            isConnecting = false
+        }
     }
 }

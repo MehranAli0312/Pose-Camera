@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.RateUsOutcome
-import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumRateUsBottomSheet
+import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumRateUsDialog
 import com.aipose.camera.posematch.ui.vm.RateUsViewModel
 import com.aipose.camera.posematch.util.contact
 import com.aipose.camera.posematch.util.getAppLink
@@ -20,7 +20,7 @@ import org.koin.compose.koinInject
 private const val DEFAULT_RATING = 5f
 
 @Composable
-fun RateUsSheet(
+fun RateUsDialog(
     visible: MutableState<Boolean>,
     viewModel: RateUsViewModel = koinInject(),
 ) {
@@ -28,7 +28,7 @@ fun RateUsSheet(
     val uriHandler = LocalUriHandler.current
     var rating by rememberSaveable { mutableFloatStateOf(DEFAULT_RATING) }
 
-    PremiumRateUsBottomSheet(
+    PremiumRateUsDialog(
         rating = rating,
         openFullDialogCustom = visible,
         onRatingChanged = { value -> rating = value },

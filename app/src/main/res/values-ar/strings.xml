@@ -176,7 +176,6 @@
     <string name="adjust_warmth">الدفء</string>
     <string name="crop_free">حر</string>
     <string name="settings_retain_skeleton">إبقاء إطار الوضعية بعد الالتقاط</string>
-    <string name="splash_privacy_note">ذكاء اصطناعي على الجهاز · دون رفع</string>
     <string name="toast_reference_imported">تم استيراد المرجع! افتح الكاميرا للمطابقة.</string>
     <string name="toast_reference_failed">تعذّر تحميل المرجع</string>
     <string name="toast_capture_failed">فشل الالتقاط: %1$s</string>
@@ -449,4 +448,5 @@
     <string name="achievements_badge_ten_day_streak">10 أيام متتالية</string>
     <string name="achievements_badge_twenty_five_perfect">25 مثالية</string>
     <string name="achievements_badge_fifty_poses">50 وضعية</string>
+    <string name="app_open_welcome_back">مرحبًا بعودتك</string>
 </resources>

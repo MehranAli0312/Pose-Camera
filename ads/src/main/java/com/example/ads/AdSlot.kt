@@ -18,6 +18,8 @@ enum class NativeAdDesign {
     MEDIUM,
 
     LARGE,
+
+    FULL_SCREEN,
 }
 
 sealed interface AdSlotStyle {

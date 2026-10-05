@@ -11,6 +11,7 @@ import com.aipose.camera.posematch.domain.usecase.LanguageUseCase
 import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
+import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
 import com.aipose.camera.posematch.domain.usecase.RateUsUseCase
 import com.aipose.camera.posematch.domain.usecase.SplashStatusUseCase
 import org.koin.dsl.module
@@ -29,4 +30,5 @@ val useCaseModule = module {
     factory { FavoritePoseUseCase(get()) }
     factory { CaptureLocationUseCase(get()) }
     factory { PhotoEditUseCase(get()) }
+    factory { PremiumSubscriptionUseCase(get()) }
 }

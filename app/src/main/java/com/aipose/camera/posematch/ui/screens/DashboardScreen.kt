@@ -16,6 +16,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.aipose.camera.posematch.ads.AppOpenRouteGate
 import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.graph.DashboardNavGraph
 import com.aipose.camera.posematch.ui.graph.NavRoute
@@ -30,9 +31,15 @@ import org.koin.compose.koinInject
 @Composable
 fun DashboardScreen(
     navParentController: NavHostController,
+    appOpenRouteGate: AppOpenRouteGate = koinInject(),
 ) {
     val activity = getActivity()
     val navController = rememberNavController()
+    LaunchedEffect(appOpenRouteGate) {
+        navController.currentBackStackEntryFlow.collect { entry ->
+            appOpenRouteGate.onRouteChanged(entry.destination.route)
+        }
+    }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 

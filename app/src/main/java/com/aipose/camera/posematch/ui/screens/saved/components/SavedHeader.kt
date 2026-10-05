@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseRaisedIconButton
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
+import com.aipose.camera.posematch.ui.theme.poseScreenTitleStyle
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val FilterGlyphSize = DpSize(18.dp, 17.dp)
@@ -36,7 +36,7 @@ internal fun SavedHeader(
         ) {
             Text(
                 text = stringResource(R.string.nav_saved),
-                style = poseTextStyle(26.sp, FontWeight.Bold, Color.White),
+                style = poseScreenTitleStyle(),
                 modifier = Modifier.weight(1f),
             )
             PoseRaisedIconButton(

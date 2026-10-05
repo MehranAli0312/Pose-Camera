@@ -1,5 +1,6 @@
 package com.example.ads.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -21,6 +24,7 @@ import com.example.ads.AdPlacement
 import com.example.ads.bannerStyleOr
 import com.example.ads.AdsManager
 import com.example.ads.BannerStyle
+import com.example.ads.internal.AdRetryState
 import com.example.ads.internal.BannerAdController
 import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
@@ -35,6 +39,7 @@ fun AdsBanner(
     modifier: Modifier = Modifier,
     style: BannerStyle? = null,
     showPlaceholderWhileLoading: Boolean = true,
+    containerColor: Color = Color.Unspecified,
     onFailed: () -> Unit = {},
 ) {
     val adsManager: AdsManager = koinInject()
@@ -46,6 +51,7 @@ fun AdsBanner(
     if (isPro || LocalInspectionMode.current) return
 
     val resolvedStyle = adsManager.styleFor(placement).bannerStyleOr(style) ?: return
+    val slotColor = containerColor.takeOrElse { AdSlotDefaults.colors.container }
 
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val widthDp = maxWidth.value.toInt()
@@ -53,11 +59,24 @@ fun AdsBanner(
         var request by remember(placement, resolvedStyle) { mutableStateOf<BannerAdRequest?>(null) }
         var failed by remember(placement, resolvedStyle) { mutableStateOf(false) }
         var loaded by remember(placement, resolvedStyle) { mutableStateOf(false) }
+        val retryState = remember(placement, resolvedStyle) { AdRetryState() }
 
-        LaunchedEffect(placement, resolvedStyle, widthDp, isReady) {
+        AdRetryEffect(failed = failed, retryState = retryState) {
+            request = null
+            loaded = false
+            failed = false
+        }
+
+        LaunchedEffect(placement, resolvedStyle, widthDp, isReady, retryState.attempt) {
             if (!isReady || widthDp <= 0) return@LaunchedEffect
-            if (request == null) {
-                request = controller.buildRequest(placement, resolvedStyle, widthDp)
+            if (request != null || failed) return@LaunchedEffect
+            val builtRequest = controller.buildRequest(placement, resolvedStyle, widthDp)
+            if (builtRequest == null) {
+                retryState.markFailed()
+                failed = true
+                onFailed()
+            } else {
+                request = builtRequest
             }
         }
 
@@ -70,7 +89,10 @@ fun AdsBanner(
             failed -> Unit
 
             currentRequest != null -> Box(
-                modifier = Modifier.fillMaxWidth().height(slotHeight),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(slotHeight)
+                    .background(slotColor),
                 contentAlignment = Alignment.Center,
             ) {
                 key(currentRequest) {
@@ -88,6 +110,7 @@ fun AdsBanner(
 
                                         override fun onAdFailedToLoad(adError: LoadAdError) {
                                             controller.onFailed(placement, adError.message)
+                                            retryState.markFailed()
                                             failed = true
                                             onFailed()
                                         }

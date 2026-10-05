@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Θερμότητα</string>
     <string name="crop_free">Ελεύθερο</string>
     <string name="settings_retain_skeleton">Διατήρηση περιγράμματος μετά τη λήψη</string>
-    <string name="splash_privacy_note">AI στη συσκευή · Χωρίς μεταφορτώσεις</string>
     <string name="toast_reference_imported">Η αναφορά εισήχθη! Ανοίξτε την κάμερα για σύγκριση.</string>
     <string name="toast_reference_failed">Αποτυχία φόρτωσης αναφοράς</string>
     <string name="toast_capture_failed">Η λήψη απέτυχε: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 ημέρες σερί</string>
     <string name="achievements_badge_twenty_five_perfect">25 τέλειες</string>
     <string name="achievements_badge_fifty_poses">50 πόζες</string>
+    <string name="app_open_welcome_back">Καλώς ήρθατε ξανά</string>
 </resources>

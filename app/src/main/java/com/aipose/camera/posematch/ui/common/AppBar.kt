@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.aipose.camera.posematch.ui.theme.poseScreenTitleStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,10 +30,7 @@ fun AppBar(
         title = {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleSmall.copy(
-                    fontSize = 16.sp,
-                    color = mTitleColor
-                ),
+                style = poseScreenTitleStyle(color = mTitleColor),
                 modifier = modifier
 
             )

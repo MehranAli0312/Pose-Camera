@@ -20,6 +20,7 @@ internal object NativeAdTemplateRegistry {
                 NativeAdDesign.SMALL -> SmallNativeTemplate(nativeAd, colors)
                 NativeAdDesign.MEDIUM -> MediumNativeTemplate(nativeAd, colors)
                 NativeAdDesign.LARGE -> LargeNativeTemplate(nativeAd, colors)
+                NativeAdDesign.FULL_SCREEN -> FullScreenNativeTemplate(nativeAd, colors)
             }
         }
     }
@@ -28,5 +29,6 @@ internal object NativeAdTemplateRegistry {
         NativeAdDesign.SMALL -> 72
         NativeAdDesign.MEDIUM -> 260
         NativeAdDesign.LARGE -> 320
+        NativeAdDesign.FULL_SCREEN -> 480
     }
 }

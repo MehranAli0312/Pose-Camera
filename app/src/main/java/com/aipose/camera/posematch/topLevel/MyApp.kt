@@ -9,6 +9,7 @@ import com.aipose.camera.posematch.ads.ProStatusForegroundObserver
 import com.aipose.camera.posematch.ads.ProStatusRefresher
 import com.aipose.camera.posematch.ads.ProStatusStore
 import com.aipose.camera.posematch.ads.appAdsModule
+import com.aipose.camera.posematch.ads.registerAppOpenAds
 import com.aipose.camera.posematch.ads.splashAdsLoads
 import com.aipose.camera.posematch.di.localModule
 import com.aipose.camera.posematch.di.repositoryModule
@@ -29,26 +30,25 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val koin = startKoin {
+            androidContext(this@MyApp)
+            modules(
+                localModule,
+                repositoryModule,
+                useCaseModule,
+                viewModelModule,
+                adsModule,
+                appAdsModule,
+            )
+        }.koin
 
-        try {
-            val koin = startKoin {
-                androidContext(this@MyApp)
-                modules(
-                    localModule,
-                    repositoryModule,
-                    useCaseModule,
-                    viewModelModule,
-                    adsModule,
-                    appAdsModule,
-                )
-            }.koin
-
-            startAds(koin)
-        } catch (_: Exception) {
-        }
+        startAds(koin)
     }
 
     private fun startAds(koin: Koin) {
+        runCatching { resolveProStatus(koin) }
+            .onFailure { koin.get<ProStatusStore>().resolveUnknownAsFree() }
+
         runCatching {
             val adsManager = koin.get<AdsManager>()
 
@@ -56,9 +56,9 @@ class MyApp : Application() {
 
             splashAdsLoads(adsManager)
 
-            koin.get<AppFirebaseRemote>().create()
+            registerAppOpenAds(this, koin.get(), koin.get(), koin.get(), koin.get())
 
-            resolveProStatus(koin)
+            koin.get<AppFirebaseRemote>().create()
         }
     }
 

@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Calore</string>
     <string name="crop_free">Libero</string>
     <string name="settings_retain_skeleton">Mantieni la sagoma dopo lo scatto</string>
-    <string name="splash_privacy_note">IA sul dispositivo · Nessun caricamento</string>
     <string name="toast_reference_imported">Riferimento importato! Apri la fotocamera per il confronto.</string>
     <string name="toast_reference_failed">Impossibile caricare il riferimento</string>
     <string name="toast_capture_failed">Scatto non riuscito: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 giorni di fila</string>
     <string name="achievements_badge_twenty_five_perfect">25 perfetti</string>
     <string name="achievements_badge_fifty_poses">50 pose</string>
+    <string name="app_open_welcome_back">Bentornato</string>
 </resources>

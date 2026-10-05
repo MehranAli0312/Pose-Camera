@@ -18,6 +18,7 @@ import com.aipose.camera.posematch.data.pose.MlKitPoseDetector
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
 import com.aipose.camera.posematch.data.pose.SubjectCutoutDataSource
 import com.aipose.camera.posematch.domain.models.ProPlan
+import com.aipose.camera.posematch.ui.common.PremiumPurchaseLauncher
 import com.pdfutility.billing.BillingManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -28,6 +29,7 @@ val localModule = module {
         BillingManager(androidContext())
             .setSubscriptions(ProPlan.subscriptionProductIds)
     }
+    single { PremiumPurchaseLauncher(get()) }
     single { AppDataStore(get()) }
     single { NetworkConnectivityChecker(androidContext()) }
 

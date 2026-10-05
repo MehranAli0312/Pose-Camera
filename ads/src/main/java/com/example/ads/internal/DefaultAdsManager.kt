@@ -14,10 +14,12 @@ import com.example.ads.ProStatus
 import com.example.ads.ProStatusProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -54,6 +56,10 @@ internal class DefaultAdsManager(
 
     private val warmUpGeneration = MutableStateFlow(0)
 
+    private val warmPlacements = MutableStateFlow<Set<AdPlacement>>(emptySet())
+
+    private val warmUpObserved = MutableStateFlow(false)
+
     override fun initialize() {
         if (initializationStarted.value) return
         initializationStarted.value = true
@@ -61,12 +67,14 @@ internal class DefaultAdsManager(
             val cachedConsentAllowsAds = withContext(Dispatchers.Main) {
                 consentManager.canRequestAds()
             }
-            if (cachedConsentAllowsAds) {
-                state.setCanRequestAds(true)
-                log.d("Cached consent already permits ad requests")
+            if (!cachedConsentAllowsAds) {
+                log.d("SDK initialisation deferred until consent permits ad requests")
+                return@launch
             }
 
             initializer.initialize()
+            state.setCanRequestAds(true)
+            log.d("Cached consent already permits ad requests")
         }
     }
 
@@ -85,43 +93,58 @@ internal class DefaultAdsManager(
 
     override fun preload(vararg formats: AdFormat, placement: AdPlacement) {
         scope.launch {
-            formats.forEach { format ->
-                when (format) {
-                    AdFormat.NATIVE -> nativeAds.preload(placement)
-                    AdFormat.BANNER -> Unit
-                    else -> fullScreenAds.startPreloading(format, placement)
-                }
-            }
+            formats.forEach { format -> startPreload(format, placement) }
         }
     }
 
     override fun preloadFor(placements: List<AdPlacement>) {
-        placements.forEach { placement ->
-            val fullScreenFormat = fullscreenStyleFor(placement).format
-            when {
-                fullScreenFormat != null -> preload(fullScreenFormat, placement = placement)
-                styleFor(placement) is AdSlotStyle.Native ->
-                    preload(AdFormat.NATIVE, placement = placement)
-                else -> Unit
-            }
+        scope.launch { placements.forEach(::startPreloadFor) }
+    }
+
+    private fun startPreload(format: AdFormat, placement: AdPlacement) {
+        when (format) {
+            AdFormat.NATIVE -> nativeAds.preload(placement)
+            AdFormat.BANNER -> Unit
+            else -> fullScreenAds.startPreloading(format, placement)
+        }
+    }
+
+    private fun startPreloadFor(placement: AdPlacement) {
+        val fullScreenFormat = fullscreenStyleFor(placement).format
+        when {
+            fullScreenFormat != null -> startPreload(fullScreenFormat, placement)
+            styleFor(placement) is AdSlotStyle.Native -> startPreload(AdFormat.NATIVE, placement)
+            else -> Unit
         }
     }
 
     override fun keepWarm(placements: List<AdPlacement>) {
         if (placements.isEmpty()) return
-        scope.launch {
-            combine(isReady, isPro, warmUpGeneration) { ready, _, _ -> ready }
-                .collect { ready ->
-                    if (!ready) return@collect
-                    stopHiddenPreloads(placements)
-                    preloadFor(placements)
-                }
-        }
+        warmPlacements.update { current -> current + placements }
+        if (warmUpObserved.compareAndSet(expect = false, update = true)) observeWarmUp()
         log.d("Warm-up registered for ${placements.joinToString { it.id }}")
     }
 
-    // A placement turned off remotely, or a user who went pro, should not keep a preloader
-    // refilling ads that will never be shown.
+    override fun coolDown(placement: AdPlacement) {
+        warmPlacements.update { current -> current - placement }
+        log.d("Warm-up stopped for ${placement.id}")
+    }
+
+    private fun observeWarmUp() {
+        scope.launch {
+            var warmed = emptySet<AdPlacement>()
+            combine(isReady, isPro, warmUpGeneration, warmPlacements) { ready, _, _, placements ->
+                ready to placements
+            }.collect { (ready, placements) ->
+                (warmed - placements).forEach(fullScreenAds::stopPreloading)
+                warmed = placements
+                if (!ready) return@collect
+                stopHiddenPreloads(placements.toList())
+                placements.forEach(::startPreloadFor)
+            }
+        }
+    }
+
     private fun stopHiddenPreloads(placements: List<AdPlacement>) {
         placements
             .filter { placement -> fullscreenStyleFor(placement).format == null }
@@ -140,6 +163,15 @@ internal class DefaultAdsManager(
             isReady.first { it }
             preparedSlots.prepare(placement, styleFor(placement))
         }
+    }
+
+    override fun isSlotPrepared(placement: AdPlacement): Flow<Boolean> =
+        preparedSlots.state(placement)
+            .map { prepared -> prepared is PreparedSlotAd.Banner || prepared is PreparedSlotAd.Native }
+            .distinctUntilChanged()
+
+    override fun releaseSlot(placement: AdPlacement) {
+        preparedSlots.abandon(placement)
     }
 
     override fun loadOnDemand(placement: AdPlacement) {
@@ -168,6 +200,24 @@ internal class DefaultAdsManager(
     ): AdResult {
         val format = fullscreenStyleFor(placement).format ?: return AdResult.NotEligible
         return fullScreenAds.showPreloaded(activity, format, placement, onShown)
+    }
+
+    override suspend fun loadAndShow(
+        activity: Activity,
+        placement: AdPlacement,
+        onShown: (() -> Unit)?,
+        loadTimeoutMs: Long?,
+        onLoadStarted: (() -> Unit)?,
+    ): AdResult {
+        val format = fullscreenStyleFor(placement).format ?: return AdResult.NotEligible
+        return fullScreenAds.loadAndShow(
+            activity = activity,
+            format = format,
+            placement = placement,
+            onShown = onShown,
+            loadTimeoutMs = loadTimeoutMs,
+            onLoadStarted = onLoadStarted,
+        )
     }
 
     override fun styleFor(placement: AdPlacement): AdSlotStyle =

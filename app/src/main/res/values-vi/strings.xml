@@ -166,7 +166,6 @@
     <string name="adjust_warmth">Độ ấm</string>
     <string name="crop_free">Tự do</string>
     <string name="settings_retain_skeleton">Giữ đường viền dáng sau khi chụp</string>
-    <string name="splash_privacy_note">AI trên thiết bị · Không tải lên</string>
     <string name="toast_reference_imported">Đã nhập ảnh mẫu! Mở camera để so khớp.</string>
     <string name="toast_reference_failed">Không tải được ảnh mẫu</string>
     <string name="toast_capture_failed">Chụp thất bại: %1$s</string>
@@ -359,4 +358,5 @@
     <string name="achievements_badge_ten_day_streak">Chuỗi 10 ngày</string>
     <string name="achievements_badge_twenty_five_perfect">25 hoàn hảo</string>
     <string name="achievements_badge_fifty_poses">50 dáng</string>
+    <string name="app_open_welcome_back">Chào mừng trở lại</string>
 </resources>

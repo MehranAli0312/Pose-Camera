@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Sıcaklık</string>
     <string name="crop_free">Serbest</string>
     <string name="settings_retain_skeleton">Çekimden sonra poz çizgisini koru</string>
-    <string name="splash_privacy_note">Cihazda yapay zeka · Yükleme yok</string>
     <string name="toast_reference_imported">Referans içe aktarıldı! Eşleştirmek için kamerayı aç.</string>
     <string name="toast_reference_failed">Referans yüklenemedi</string>
     <string name="toast_capture_failed">Çekim başarısız: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 günlük seri</string>
     <string name="achievements_badge_twenty_five_perfect">25 kusursuz</string>
     <string name="achievements_badge_fifty_poses">50 poz</string>
+    <string name="app_open_welcome_back">Tekrar hoş geldiniz</string>
 </resources>

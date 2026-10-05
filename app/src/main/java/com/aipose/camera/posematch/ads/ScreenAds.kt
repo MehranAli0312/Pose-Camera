@@ -12,6 +12,7 @@ import com.example.ads.AdResult
 import com.example.ads.AdsManager
 import com.example.ads.FullscreenAdStyle
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -38,9 +39,39 @@ class ScreenAds internal constructor(
 
     fun isAdsAllowedNow(): Boolean = adsManager.proStatus.value.isEligibleForAds
 
+    fun keepWarm(placement: AdPlacement) {
+        adsManager.keepWarm(listOf(placement))
+    }
+
+    fun preload(placement: AdPlacement) {
+        adsManager.preloadFor(listOf(placement))
+    }
+
+    fun coolDown(placement: AdPlacement) {
+        adsManager.coolDown(placement)
+    }
+
+    fun prepareSlot(placement: AdPlacement) {
+        adsManager.prepareSlot(placement)
+    }
+
+    fun isSlotPrepared(placement: AdPlacement): Flow<Boolean> =
+        adsManager.isSlotPrepared(placement)
+
+    fun releaseSlot(placement: AdPlacement) {
+        adsManager.releaseSlot(placement)
+    }
+
+    suspend fun rewarded(placement: AdPlacement): AdResult {
+        val activity = activity ?: return AdResult.NotAvailable
+        return runCatching { adsManager.loadAndShow(activity, placement) }
+            .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+    }
+
     fun fullscreen(
         placement: AdPlacement,
         continueWhenShown: Boolean = false,
+        preloadedOnly: Boolean = false,
         onResult: (AdResult) -> Unit = {},
         onDone: () -> Unit,
     ) {
@@ -58,8 +89,13 @@ class ScreenAds internal constructor(
             }
 
             val onShown = if (continueWhenShown) ({ doneOnce() }) else null
-            val result = runCatching { adsManager.showFullscreen(activity, placement, onShown) }
-                .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+            val result = runCatching {
+                if (preloadedOnly) {
+                    adsManager.showPreloaded(activity, placement, onShown)
+                } else {
+                    adsManager.showFullscreen(activity, placement, onShown)
+                }
+            }.getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
             onResult(result)
             doneOnce()
         }

@@ -166,7 +166,6 @@
     <string name="adjust_warmth">색온도</string>
     <string name="crop_free">자유</string>
     <string name="settings_retain_skeleton">촬영 후에도 포즈 윤곽선 유지</string>
-    <string name="splash_privacy_note">기기 내 AI · 업로드 없음</string>
     <string name="toast_reference_imported">참고 사진을 가져왔습니다! 카메라를 열어 맞춰 보세요.</string>
     <string name="toast_reference_failed">참고 사진을 불러오지 못했습니다</string>
     <string name="toast_capture_failed">촬영 실패: %1$s</string>
@@ -359,4 +358,5 @@
     <string name="achievements_badge_ten_day_streak">10일 연속</string>
     <string name="achievements_badge_twenty_five_perfect">완벽 25장</string>
     <string name="achievements_badge_fifty_poses">포즈 50개</string>
+    <string name="app_open_welcome_back">다시 오신 것을 환영합니다</string>
 </resources>

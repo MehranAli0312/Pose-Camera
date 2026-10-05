@@ -13,20 +13,31 @@ import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
 import org.koin.dsl.module
 
+private const val PRELOAD_BUFFER_SIZE = 1
+private const val INTERSTITIAL_FREQUENCY = 1
+
 val appAdsModule = module {
 
     single { ProStatusStore() }
-    single { MissedSplashAd() }
-    single { ProStatusRefresher(billingManager = get(), proStatusStore = get(), appDataStore = get()) }
+    single {
+        ProStatusRefresher(
+            billingManager = get(),
+            proStatusStore = get(),
+            appDataStore = get(),
+        )
+    }
     single { AdsRemoteConfigStore(get()) }
+    single { AppOpenLoaderState() }
+    single { AppOpenRouteGate() }
+    single { MissedSplashAd() }
 
     single { AppFirebaseRemote(store = get(), adsManager = get()) }
 
     single {
         AdsConfig(
             isDebugBuild = BuildConfig.DEBUG,
-            preloadBufferSize = 2,
-            interstitialFrequency = 1,
+            preloadBufferSize = PRELOAD_BUFFER_SIZE,
+            interstitialFrequency = INTERSTITIAL_FREQUENCY,
         )
     }
 
@@ -52,6 +63,7 @@ internal class AppAdSlotStyleProvider(
             AdPlacement.SplashFullscreen -> store.current.splashInterstitial.toInterstitialStyle()
             AdPlacement.AppOpenResume -> store.current.appOpenOnResume.toAppOpenStyle()
             AdPlacement.InnerInterstitial -> store.current.innerInterstitial.toInterstitialStyle()
+            AdPlacement.PremiumRewarded -> FullscreenAdStyle.Rewarded
             else -> FullscreenAdStyle.Hidden
         }
 

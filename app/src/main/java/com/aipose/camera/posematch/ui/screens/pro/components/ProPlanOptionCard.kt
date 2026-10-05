@@ -38,7 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.screens.pro.models.ProPlanOption
+import com.aipose.camera.posematch.domain.models.PremiumPlan
+import com.aipose.camera.posematch.domain.models.ProPlan
 import com.aipose.camera.posematch.ui.theme.AppMainColor
 import com.aipose.camera.posematch.ui.theme.AppSecondaryColor
 import com.aipose.camera.posematch.ui.theme.AppTheme
@@ -60,7 +61,8 @@ private val SelectedTint = Brush.linearGradient(
 
 @Composable
 internal fun ProPlanOptionCard(
-    option: ProPlanOption,
+    plan: ProPlan,
+    details: PremiumPlan?,
     selected: Boolean,
     isLoading: Boolean,
     savePercent: Int?,
@@ -73,20 +75,21 @@ internal fun ProPlanOptionCard(
         ProPlanOptionSurface(
             selected = selected,
             enabled = enabled,
-            dimmed = !isLoading && !option.isAvailable,
+            dimmed = !isLoading && details == null,
             onClick = onClick,
             modifier = Modifier.padding(top = if (showBestValue) BadgeHeight / 2 else 0.dp),
         ) {
             ProPlanRadio(selected = selected)
             Spacer(Modifier.width(14.dp))
             ProPlanDetails(
-                option = option,
+                plan = plan,
+                details = details,
                 isLoading = isLoading,
                 savePercent = savePercent,
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(12.dp))
-            ProPlanPrice(option = option, selected = selected, isLoading = isLoading)
+            ProPlanPrice(details = details, selected = selected, isLoading = isLoading)
         }
         if (showBestValue) {
             ProBestValueBadge(modifier = Modifier.padding(start = 20.dp))
@@ -157,7 +160,8 @@ private fun ProPlanRadio(selected: Boolean) {
 
 @Composable
 private fun ProPlanDetails(
-    option: ProPlanOption,
+    plan: ProPlan,
+    details: PremiumPlan?,
     isLoading: Boolean,
     savePercent: Int?,
     modifier: Modifier = Modifier,
@@ -168,7 +172,7 @@ private fun ProPlanDetails(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = proPlanTitle(option.plan),
+                text = proPlanTitle(plan),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontSize = 16.sp,
                     lineHeight = 20.sp,
@@ -187,7 +191,7 @@ private fun ProPlanDetails(
             ProPricePlaceholder(width = 104.dp, height = 12.dp)
         } else {
             Text(
-                text = proPlanSubtitle(option),
+                text = proPlanSubtitle(details),
                 style = MaterialTheme.typography.bodySmall.copy(
                     lineHeight = 16.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -201,17 +205,17 @@ private fun ProPlanDetails(
 
 @Composable
 private fun ProPlanPrice(
-    option: ProPlanOption,
+    details: PremiumPlan?,
     selected: Boolean,
     isLoading: Boolean,
 ) {
-    val monthlyPrice = rememberMonthlyPrice(option)
     Column(horizontalAlignment = Alignment.End) {
         if (isLoading) {
             ProPricePlaceholder(width = 64.dp, height = 18.dp)
             return@Column
         }
-        if (monthlyPrice == null) return@Column
+        if (details == null) return@Column
+        val monthlyPrice = rememberMonthlyPrice(details) ?: return@Column
         Text(
             text = monthlyPrice,
             style = MaterialTheme.typography.titleMedium.copy(

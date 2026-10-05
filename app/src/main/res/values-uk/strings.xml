@@ -172,7 +172,6 @@
     <string name="adjust_warmth">Теплота</string>
     <string name="crop_free">Вільно</string>
     <string name="settings_retain_skeleton">Залишати контур після знімка</string>
-    <string name="splash_privacy_note">ШІ на пристрої · Без завантажень</string>
     <string name="toast_reference_imported">Зразок імпортовано! Відкрийте камеру для порівняння.</string>
     <string name="toast_reference_failed">Не вдалося завантажити зразок</string>
     <string name="toast_capture_failed">Помилка зйомки: %1$s</string>
@@ -413,4 +412,5 @@
     <string name="achievements_badge_ten_day_streak">10 днів поспіль</string>
     <string name="achievements_badge_twenty_five_perfect">25 ідеальних</string>
     <string name="achievements_badge_fifty_poses">50 поз</string>
+    <string name="app_open_welcome_back">З поверненням</string>
 </resources>

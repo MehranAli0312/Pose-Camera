@@ -29,10 +29,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.GlossyIconCircle
-import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.common.isProUser
-import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.PoseAmber
 import com.aipose.camera.posematch.ui.theme.PoseStreakBottom
@@ -41,7 +37,6 @@ import com.aipose.camera.posematch.ui.theme.PoseTextSoft
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val TrophySize = 40.dp
 private val StreakMinHeight = 40.dp
 private val StreakShape = RoundedCornerShape(20.dp)
 private const val STREAK_BORDER_ALPHA = 0.35f
@@ -49,7 +44,6 @@ private const val STREAK_BORDER_ALPHA = 0.35f
 @Composable
 internal fun HomeHeader(
     streakDays: Int,
-    onOpenPro: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -83,16 +77,6 @@ internal fun HomeHeader(
         }
         Spacer(modifier = Modifier.width(8.dp))
         StreakPill(streakDays = streakDays)
-        if (!isProUser()) {
-            Spacer(modifier = Modifier.width(14.dp))
-            GlossyIconCircle(
-                iconRes = R.drawable.ic_pose_trophy,
-                palette = GlossyBadgePalette.Amber,
-                size = TrophySize,
-                contentDescription = stringResource(R.string.pro_upgrade_title),
-                modifier = Modifier.bounceClick(onClick = onOpenPro),
-            )
-        }
     }
 }
 

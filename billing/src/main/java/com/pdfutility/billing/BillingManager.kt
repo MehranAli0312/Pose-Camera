@@ -82,6 +82,8 @@ class BillingManager(
     private var billingPurchaseListener: BillingPurchaseListener? = null
     private val isPurchaseInProgress = AtomicBoolean(false)
 
+    private val connectionLock = Any()
+
     private val _connectionState = MutableStateFlow(BillingState.NONE)
     val connectionState: StateFlow<BillingState> = _connectionState.asStateFlow()
 
@@ -91,10 +93,18 @@ class BillingManager(
     val isBillingConnected: Boolean get() = billingService.isBillingClientReady
 
     fun startConnection() {
-        _connectionState.value = BillingState.CONNECTING
-        useCaseConnection.startConnection { isSuccess, message ->
-            _connectionState.value = if (isSuccess) BillingState.CONNECTED else billingService.currentState
-            connectionListener?.onBillingClientConnected(isSuccess, message ?: billingService.currentState.message)
+        synchronized(connectionLock) {
+            if (_connectionState.value == BillingState.CONNECTING) return
+            _connectionState.value = BillingState.CONNECTING
+        }
+        try {
+            useCaseConnection.startConnection { isSuccess, message ->
+                _connectionState.value = if (isSuccess) BillingState.CONNECTED else billingService.currentState
+                connectionListener?.onBillingClientConnected(isSuccess, message ?: billingService.currentState.message)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "BillingManager: startConnection failed", e)
+            _connectionState.value = BillingState.CONNECT_FAILED
         }
     }
 

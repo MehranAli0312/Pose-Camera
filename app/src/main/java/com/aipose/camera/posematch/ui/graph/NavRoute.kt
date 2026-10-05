@@ -13,7 +13,6 @@ private object Routes {
     const val SAVED_SCREEN = "SAVED_SCREEN"
     const val SETTING_SCREEN = "SETTING_SCREEN"
     const val PRO_SCREEN = "UPGRADE_SCREEN"
-    const val SPLASH_PRO_SCREEN = "SPLASH_UPGRADE_SCREEN"
     const val CAMERA_SCREEN = "CAMERA_SCREEN"
     const val POSE_ALBUM_SCREEN = "POSE_ALBUM_SCREEN"
     const val POSE_DETAIL_SCREEN = "POSE_DETAIL_SCREEN"
@@ -42,7 +41,6 @@ sealed class NavRoute(val route: String) {
     data object SavedScreenRoute : NavRoute(Routes.SAVED_SCREEN)
     data object SettingScreenRoute : NavRoute(Routes.SETTING_SCREEN)
     data object ProScreenRoute : NavRoute(Routes.PRO_SCREEN)
-    data object SplashProScreenRoute : NavRoute(Routes.SPLASH_PRO_SCREEN)
     data object PhotoEditScreenRoute : NavRoute(Routes.PHOTO_EDIT_SCREEN)
     data object ProgressScreenRoute : NavRoute(Routes.PROGRESS_SCREEN)
     data object AchievementsScreenRoute : NavRoute(Routes.ACHIEVEMENTS_SCREEN)

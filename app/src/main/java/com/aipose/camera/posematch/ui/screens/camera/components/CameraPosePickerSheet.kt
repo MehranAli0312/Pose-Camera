@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.Pose
+import com.aipose.camera.posematch.ui.common.ImmersiveDialogWindowEffect
 import com.aipose.camera.posematch.ui.common.PoseThumbnail
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
@@ -43,6 +44,7 @@ internal fun CameraPosePickerSheet(
         containerColor = palette.backgroundMid,
         dragHandle = null,
     ) {
+        ImmersiveDialogWindowEffect()
         Text(
             text = stringResource(R.string.camera_change_pose),
             style = poseTextStyle(15.sp, FontWeight.Bold, Color.White),

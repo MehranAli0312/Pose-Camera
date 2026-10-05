@@ -8,7 +8,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -17,6 +17,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.AdChoicesView
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaView
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
+import kotlin.math.roundToInt
 
 internal val LocalNativeAd = staticCompositionLocalOf<NativeAd?> { null }
 
@@ -30,9 +31,6 @@ internal fun NativeAdContainer(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val nativeAdViewRef = remember { mutableStateOf<NativeAdView?>(null) }
-    val mediaViewRef = remember { mutableStateOf<MediaView?>(null) }
-
     AndroidView(
         factory = { context ->
             val composeView = ComposeView(context).apply {
@@ -47,15 +45,14 @@ internal fun NativeAdContainer(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                 )
                 addView(composeView)
-                nativeAdViewRef.value = this
             }
         },
         modifier = modifier,
         update = { view ->
             val composeView = view.getChildAt(0) as? ComposeView
             composeView?.setContent {
-                val registerMediaView: (MediaView?) -> Unit =
-                    remember { { mediaView -> mediaViewRef.value = mediaView } }
+                var mediaView by remember { mutableStateOf<MediaView?>(null) }
+                val registerMediaView: (MediaView?) -> Unit = remember { { mediaView = it } }
                 CompositionLocalProvider(
                     LocalNativeAdView provides view,
                     LocalNativeAd provides nativeAd,
@@ -63,18 +60,16 @@ internal fun NativeAdContainer(
                 ) {
                     content()
                 }
+                // Asset views are assigned in their AndroidView updates during this composition's
+                // apply phase; registering afterwards lets the SDK bind clicks to assets only
+                // instead of falling back to the whole NativeAdView.
+                DisposableEffect(nativeAd, mediaView) {
+                    view.register(nativeAd, mediaView)
+                    onDispose { }
+                }
             }
         },
     )
-
-    val currentNativeAd by rememberUpdatedState(nativeAd)
-    val currentNativeAdView = nativeAdViewRef.value
-    val currentMediaView = mediaViewRef.value
-
-    DisposableEffect(currentNativeAd, currentNativeAdView, currentMediaView) {
-        currentNativeAdView?.register(currentNativeAd, currentMediaView)
-        onDispose { }
-    }
 }
 
 private fun NativeAdView.register(nativeAd: NativeAd, mediaView: MediaView?) {
@@ -176,11 +171,14 @@ internal fun NativeAdChoicesView(modifier: Modifier = Modifier) {
     AndroidView(
         factory = { context ->
             AdChoicesView(context).apply {
-                minimumWidth = 15
-                minimumHeight = 15
+                val minSizePx = (ADCHOICES_MIN_SIZE_DP * resources.displayMetrics.density).roundToInt()
+                minimumWidth = minSizePx
+                minimumHeight = minSizePx
             }
         },
         modifier = modifier,
         update = { view -> nativeAdView.adChoicesView = view },
     )
 }
+
+private const val ADCHOICES_MIN_SIZE_DP = 16

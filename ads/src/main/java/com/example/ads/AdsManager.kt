@@ -1,6 +1,7 @@
 package com.example.ads
 
 import android.app.Activity
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface AdsManager {
@@ -23,11 +24,17 @@ interface AdsManager {
 
     fun keepWarm(placements: List<AdPlacement>)
 
+    fun coolDown(placement: AdPlacement)
+
     fun revalidateWarmUp()
 
     fun isAvailable(format: AdFormat, placement: AdPlacement = AdPlacement.Default): Boolean
 
     fun prepareSlot(placement: AdPlacement)
+
+    fun isSlotPrepared(placement: AdPlacement): Flow<Boolean>
+
+    fun releaseSlot(placement: AdPlacement)
 
     fun loadOnDemand(placement: AdPlacement)
 
@@ -44,6 +51,14 @@ interface AdsManager {
         activity: Activity,
         placement: AdPlacement,
         onShown: (() -> Unit)? = null,
+    ): AdResult
+
+    suspend fun loadAndShow(
+        activity: Activity,
+        placement: AdPlacement,
+        onShown: (() -> Unit)? = null,
+        loadTimeoutMs: Long? = null,
+        onLoadStarted: (() -> Unit)? = null,
     ): AdResult
 
     fun styleFor(placement: AdPlacement): AdSlotStyle

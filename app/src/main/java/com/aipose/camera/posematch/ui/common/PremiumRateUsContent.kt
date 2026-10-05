@@ -57,16 +57,16 @@ import com.aipose.camera.posematch.ui.theme.White
 
 val PremiumRateUsCorner = 32.dp
 val PremiumRateUsMaxWidth = 340.dp
-private val PremiumRateUsBottomPadding = 36.dp
+private val PremiumRateUsBottomPadding = 20.dp
 
 private val BadgeOverhang = 52.dp
 private val BadgeSize = 104.dp
 private val BadgeStarSize = 50.dp
-private val CardSidePadding = 28.dp
-private val TitleTopPadding = 90.dp
-private val StarSize = 40.dp
+private val CardSidePadding = 18.dp
+private val TitleTopPadding = 70.dp
+private val StarSize = 24.dp
 private val StarSpacing = 13.dp
-private val ButtonHeight = 58.dp
+private val ButtonHeight = 45.dp
 private val CloseSize = 30.dp
 
 private val CardEdgeGold = Color(0xFFD6B05C)
@@ -241,26 +241,26 @@ private fun PremiumRateUsCard(
             Text(
                 text = stringResource(R.string.rate_us_premium_title),
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontSize = 25.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = palette.title,
                 ),
                 textAlign = TextAlign.Center,
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = stringResource(R.string.rate_us_premium_subtitle),
                 style = MaterialTheme.typography.labelMedium.copy(
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Normal,
                     color = palette.subtitle,
                 ),
                 textAlign = TextAlign.Center,
             )
 
-            Spacer(modifier = Modifier.height(42.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             PremiumRateUsStars(
                 rating = rating,
@@ -269,18 +269,18 @@ private fun PremiumRateUsCard(
                 onRatingChanged = onRatingChanged,
             )
 
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             PremiumRateUsButton(onClick = onSubmit)
 
-            Spacer(modifier = Modifier.height(22.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = stringResource(R.string.rate_us_premium_dismiss),
                 style = MaterialTheme.typography.labelLarge.copy(
-                    fontSize = 15.sp,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.Medium,
-                    color = palette.dismiss,
+                    color = palette.dismiss.copy(alpha = .5f),
                 ),
                 modifier = Modifier.click(onClick = onDismiss),
             )
@@ -498,7 +498,7 @@ private fun PremiumRateUsButton(onClick: () -> Unit) {
         Text(
             text = stringResource(R.string.rate_us_premium_action),
             style = MaterialTheme.typography.labelLarge.copy(
-                fontSize = 17.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = ButtonLabelColor,
             ),

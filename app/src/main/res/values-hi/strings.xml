@@ -168,7 +168,6 @@
     <string name="adjust_warmth">गर्माहट</string>
     <string name="crop_free">फ़्री</string>
     <string name="settings_retain_skeleton">फ़ोटो के बाद पोज़ आउटलाइन रखें</string>
-    <string name="splash_privacy_note">डिवाइस पर AI · कोई अपलोड नहीं</string>
     <string name="toast_reference_imported">रेफ़रेंस इंपोर्ट हो गया! मिलाने के लिए कैमरा खोलें।</string>
     <string name="toast_reference_failed">रेफ़रेंस लोड नहीं हो सका</string>
     <string name="toast_capture_failed">फ़ोटो नहीं ली जा सकी: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10 दिन की स्ट्रीक</string>
     <string name="achievements_badge_twenty_five_perfect">25 परफ़ेक्ट</string>
     <string name="achievements_badge_fifty_poses">50 पोज़</string>
+    <string name="app_open_welcome_back">वापसी पर स्वागत है</string>
 </resources>

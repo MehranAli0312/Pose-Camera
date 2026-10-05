@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.ui.theme.Violet
 
-private val DotSize = 8.dp
+private val DotSize = OnboardChromeMetrics.IndicatorHeight
 private val ActiveDotWidth = 22.dp
 private val DotSpacing = 7.dp
 private const val INACTIVE_ALPHA = 0.22f

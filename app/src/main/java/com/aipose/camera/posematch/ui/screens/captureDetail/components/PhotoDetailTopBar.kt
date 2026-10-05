@@ -27,13 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseBackButton
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.theme.PosePinkSoft
 
 private val ButtonSize = 40.dp
-private val BackGlyphSize = DpSize(10.dp, 17.dp)
 private val HeartGlyphSize = DpSize(16.dp, 15.dp)
 private val GlossInset = 3.dp
 private const val SCRIM_ALPHA = 0.42f
@@ -55,13 +55,7 @@ internal fun PhotoDetailTopBar(
             .padding(start = PoseScreenGutter, end = PoseScreenGutter, top = PoseScreenTopSpacing),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        GlassButton(
-            iconRes = R.drawable.ic_pose_back,
-            glyphSize = BackGlyphSize,
-            tint = Color.White,
-            contentDescription = stringResource(R.string.action_back),
-            onClick = onBack,
-        )
+        PoseBackButton(onClick = onBack)
         Spacer(modifier = Modifier.weight(1f))
         GlassButton(
             iconRes = R.drawable.ic_pose_heart,

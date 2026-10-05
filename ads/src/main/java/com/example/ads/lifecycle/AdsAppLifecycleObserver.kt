@@ -32,11 +32,22 @@ class AdsAppLifecycleObserver internal constructor(
 
     private var skipNextAppOpen = false
 
+    private var startedActivities = 0
+
     var appOpenEnabled: () -> Boolean = { false }
 
     var appOpenPlacement: AdPlacement = AdPlacement.Default
 
     var onAppOpenFinished: (AdResult) -> Unit = {}
+
+    var appOpenLoadTimeoutMs: () -> Long? = { null }
+
+    var onAppOpenCoverChanged: (Boolean) -> Unit = {}
+
+    @Volatile
+    private var appOpenLoading = false
+
+    private var appOpenCovered = false
 
     fun register(application: Application) {
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
@@ -73,6 +84,7 @@ class AdsAppLifecycleObserver internal constructor(
     override fun onStop(owner: LifecycleOwner) {
         state.setForeground(false)
         wentToBackground = true
+        if (appOpenLoading) appOpenJob?.cancel()
         if (externalScreenLaunchedAt != NOT_LAUNCHED &&
             SystemClock.elapsedRealtime() - externalScreenLaunchedAt <= EXTERNAL_LAUNCH_WINDOW_MS
         ) {
@@ -80,21 +92,46 @@ class AdsAppLifecycleObserver internal constructor(
         }
     }
 
-    // Only an ad that is already loaded is shown: waiting on a network load would drop the ad
-    // on the user seconds after they are back in the app.
     private fun showAppOpenOnResume() {
         if (appOpenJob?.isActive == true) return
         if (!appOpenEnabled() || !adsManager.isReady.value || adsManager.isPro.value) return
         val activity = currentActivity ?: return
 
         appOpenJob = scope.launch(Dispatchers.Main.immediate) {
-            val result = adsManager.showPreloaded(activity, appOpenPlacement)
+            val result = try {
+                adsManager.loadAndShow(
+                    activity = currentActivity ?: activity,
+                    placement = appOpenPlacement,
+                    onShown = { appOpenLoading = false },
+                    loadTimeoutMs = appOpenLoadTimeoutMs(),
+                    onLoadStarted = {
+                        appOpenLoading = true
+                        setAppOpenCovered(true)
+                    },
+                )
+            } finally {
+                appOpenLoading = false
+                setAppOpenCovered(false)
+            }
             onAppOpenFinished(result)
         }
     }
 
+    private fun setAppOpenCovered(covered: Boolean) {
+        if (appOpenCovered == covered) return
+        appOpenCovered = covered
+        onAppOpenCoverChanged(covered)
+    }
+
     override fun onActivityStarted(activity: Activity) {
+        startedActivities++
+        state.setForeground(true)
         if (!state.fullScreenAdVisible.value) currentActivity = activity
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+        startedActivities = (startedActivities - 1).coerceAtLeast(0)
+        if (startedActivities == 0) state.setForeground(false)
     }
 
     override fun onActivityDestroyed(activity: Activity) {
@@ -104,7 +141,6 @@ class AdsAppLifecycleObserver internal constructor(
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
     override fun onActivityResumed(activity: Activity) = Unit
     override fun onActivityPaused(activity: Activity) = Unit
-    override fun onActivityStopped(activity: Activity) = Unit
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
 
     private companion object {

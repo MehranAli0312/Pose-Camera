@@ -7,17 +7,15 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -25,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseBackButton
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.bounceClick
@@ -33,7 +32,6 @@ import com.aipose.camera.posematch.ui.theme.PosePinkSoft
 private val ActionSize = 40.dp
 private const val ACTION_FILL_ALPHA = 0.42f
 private const val ACTION_BORDER_ALPHA = 0.2f
-private const val BACK_GLOSS_ALPHA = 0.19f
 
 @Composable
 internal fun PoseDetailTopBar(
@@ -45,7 +43,7 @@ internal fun PoseDetailTopBar(
 ) {
     Row(
         modifier = modifier
-            .statusBarsPadding()
+            .safeTopSystemBarsPadding()
             .fillMaxWidth()
             .padding(
                 start = PoseScreenGutter,
@@ -54,14 +52,7 @@ internal fun PoseDetailTopBar(
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        HeroAction(
-            iconRes = R.drawable.ic_pose_back,
-            contentDescription = stringResource(R.string.action_back),
-            onClick = onBack,
-            iconWidth = 10.dp,
-            iconHeight = 17.dp,
-            withGloss = true,
-        )
+        PoseBackButton(onClick = onBack)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
@@ -97,7 +88,6 @@ private fun HeroAction(
     iconHeight: Dp,
     modifier: Modifier = Modifier,
     tint: Color = Color.White,
-    withGloss: Boolean = false,
 ) {
     Box(
         modifier = modifier
@@ -108,20 +98,6 @@ private fun HeroAction(
             .bounceClick(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        if (withGloss) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                Color.White.copy(alpha = BACK_GLOSS_ALPHA),
-                                Color.Transparent,
-                            )
-                        )
-                    ),
-            )
-        }
         Image(
             painter = painterResource(iconRes),
             contentDescription = contentDescription,

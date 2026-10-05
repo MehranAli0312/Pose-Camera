@@ -1,0 +1,5 @@
+-keep class com.pdfutility.billing.BillingManager { *; }
+-keep class com.pdfutility.billing.data.entities.** { *; }
+-keep class com.pdfutility.billing.presentation.states.** { *; }
+-keep interface com.pdfutility.billing.presentation.interfaces.** { *; }
+-keep class com.pdfutility.billing.utilities.responses.** { *; }

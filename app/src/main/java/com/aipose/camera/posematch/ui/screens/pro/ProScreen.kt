@@ -6,15 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.common.showToast
-import com.pdfutility.billing.presentation.states.PurchaseResult
-import com.aipose.camera.posematch.ads.ProRestoreResult
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
@@ -34,8 +33,7 @@ import com.aipose.camera.posematch.ui.screens.pro.components.ProIncludedFeatures
 import com.aipose.camera.posematch.ui.screens.pro.components.ProPlanSelector
 import com.aipose.camera.posematch.ui.screens.pro.components.ProTopBar
 import com.aipose.camera.posematch.ui.screens.pro.components.proAmbientGlow
-import com.aipose.camera.posematch.ui.screens.pro.components.proPurchaseMessage
-import com.aipose.camera.posematch.ui.screens.pro.components.proRestoreMessage
+import com.aipose.camera.posematch.ui.screens.pro.components.proEventMessage
 import com.aipose.camera.posematch.ui.vm.ProViewModel
 import com.aipose.camera.posematch.util.PRIVACY_POLICY
 import org.koin.androidx.compose.koinViewModel
@@ -51,25 +49,12 @@ fun ProScreen(
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val activity = getActivity()
-    val purchaseMessage = state.purchaseResult?.let { proPurchaseMessage(it) }
-    val restoreMessage = state.restoreResult?.let { proRestoreMessage(it) }
+    val currentOnPurchased by rememberUpdatedState(onPurchased)
 
-
-    LaunchedEffect(state.purchaseResult) {
-        val result = state.purchaseResult ?: return@LaunchedEffect
-        purchaseMessage?.let(context::showToast)
-        viewModel.consumePurchaseResult()
-        if (result is PurchaseResult.Success || result is PurchaseResult.Pending) {
-            onPurchased()
-        }
-    }
-
-    LaunchedEffect(state.restoreResult) {
-        val result = state.restoreResult ?: return@LaunchedEffect
-        restoreMessage?.let(context::showToast)
-        viewModel.consumeRestoreResult()
-        if (result == ProRestoreResult.Restored) {
-            onPurchased()
+    LaunchedEffect(viewModel) {
+        viewModel.events.collect { event ->
+            context.showToast(context.proEventMessage(event))
+            if (event.closesPaywall) currentOnPurchased()
         }
     }
 
@@ -82,8 +67,8 @@ fun ProScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .proAmbientGlow()
-            .statusBarsPadding()
-            .navigationBarsPadding(),
+            .safeTopSystemBarsPadding()
+            .safeBottomSystemBarsPadding(),
     ) {
         ProTopBar(
             closeSecondsRemaining = state.closeSecondsRemaining,
@@ -109,7 +94,7 @@ fun ProScreen(
             Spacer(Modifier.height(20.dp))
 
             ProPlanSelector(
-                state = state,
+                state = state.plans,
                 onSelectPlan = viewModel::selectPlan,
             )
 
@@ -117,9 +102,10 @@ fun ProScreen(
         }
 
         ProBottomCta(
-            state = state,
-            onContinue = { viewModel.purchaseSelectedPlan(activity) },
-            onRetry = viewModel::retryLoadProducts,
+            state = state.plans,
+            isRestoring = state.isRestoring,
+            onContinue = { viewModel.startPurchase(activity) },
+            onRetry = viewModel::loadPlans,
             onPrivacyPolicy = { uriHandler.openUri(PRIVACY_POLICY) },
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
         )

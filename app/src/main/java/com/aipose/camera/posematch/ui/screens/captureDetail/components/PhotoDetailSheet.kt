@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -78,7 +78,7 @@ internal fun PhotoDetailSheet(
                 )
             }
             .border(1.dp, Color.White.copy(alpha = SHEET_BORDER_ALPHA), SheetShape)
-            .navigationBarsPadding()
+            .safeBottomSystemBarsPadding()
             .padding(start = 24.dp, end = 24.dp, top = 18.dp, bottom = 28.dp),
     ) {
         Box(

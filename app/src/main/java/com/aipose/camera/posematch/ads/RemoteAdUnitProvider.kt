@@ -8,12 +8,11 @@ import com.example.ads.AdUnitProvider
 
 internal class RemoteAdUnitProvider(
     private val store: AdsRemoteConfigStore,
-    private val fallback: AdUnitProvider = AdUnitProvider.BuildConfigUnits,
+    private val debugUnits: AdUnitProvider = AdUnitProvider.BuildConfigUnits,
 ) : AdUnitProvider {
 
     override fun adUnitId(format: AdFormat, placement: AdPlacement): String? {
-        if (BuildConfig.DEBUG) return fallback.adUnitId(format, placement)
+        if (BuildConfig.DEBUG) return debugUnits.adUnitId(format, placement)
         return store.current.adUnits.unitFor(format, placement).ifBlank { null }
-            ?: fallback.adUnitId(format, placement)
     }
 }

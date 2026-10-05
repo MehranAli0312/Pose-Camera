@@ -11,6 +11,7 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesResult
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
@@ -66,7 +67,7 @@ internal class BillingService(private val billingClient: BillingClient) {
         }
 
         Log.i(TAG, "BillingService: queryInAppPurchases: productType = $inApp, PurchaseList: ${result.purchasesList}, Error: ${result.billingResult.debugMessage}")
-        return result.purchasesList
+        return result.requireOkPurchases()
     }
 
     suspend fun querySubsPurchases(): List<Purchase> {
@@ -81,7 +82,14 @@ internal class BillingService(private val billingClient: BillingClient) {
         }
 
         Log.i(TAG, "BillingService: querySubsPurchases: productType = $subs, PurchaseList: ${result.purchasesList}, Error: ${result.billingResult.debugMessage}")
-        return result.purchasesList
+        return result.requireOkPurchases()
+    }
+
+    private fun PurchasesResult.requireOkPurchases(): List<Purchase> {
+        check(BillingResponse(billingResult.responseCode).isOk) {
+            "Purchase query failed (${billingResult.responseCode}): ${billingResult.debugMessage}"
+        }
+        return purchasesList
     }
 
     /* ----------------------------------- Products ----------------------------------- */

@@ -172,7 +172,6 @@
     <string name="adjust_warmth">Ciepło</string>
     <string name="crop_free">Dowolnie</string>
     <string name="settings_retain_skeleton">Zachowaj kontur po zdjęciu</string>
-    <string name="splash_privacy_note">AI na urządzeniu · Bez przesyłania</string>
     <string name="toast_reference_imported">Wzór zaimportowany! Otwórz aparat, aby porównać.</string>
     <string name="toast_reference_failed">Nie udało się wczytać wzoru</string>
     <string name="toast_capture_failed">Nie udało się zrobić zdjęcia: %1$s</string>
@@ -413,4 +412,5 @@
     <string name="achievements_badge_ten_day_streak">10 dni z rzędu</string>
     <string name="achievements_badge_twenty_five_perfect">25 idealnych</string>
     <string name="achievements_badge_fifty_poses">50 póz</string>
+    <string name="app_open_welcome_back">Witaj ponownie</string>
 </resources>

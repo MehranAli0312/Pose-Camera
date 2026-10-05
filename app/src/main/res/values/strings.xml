@@ -181,7 +181,6 @@
     <string name="crop_sixteen_by_nine" translatable="false">16:9</string>
     <string name="settings_retain_skeleton">Keep pose overlay after shot</string>
     <string name="splash_brand_pose" translatable="false">Pose</string>
-    <string name="splash_privacy_note">On-device AI · No uploads</string>
     <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
     <string name="toast_reference_failed">Reference alignment loading failed</string>
     <string name="toast_capture_failed">Capture failed: %1$s</string>
@@ -400,4 +399,5 @@
     <string name="achievements_badge_ten_day_streak">10-Day Streak</string>
     <string name="achievements_badge_twenty_five_perfect">25 Perfect</string>
     <string name="achievements_badge_fifty_poses">50 Poses</string>
+    <string name="app_open_welcome_back">Welcome back</string>
 </resources>

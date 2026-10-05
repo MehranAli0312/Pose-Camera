@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -180,8 +180,8 @@ fun PoseCameraScreen(
                 .fillMaxHeight()
                 .widthIn(max = MaxControlsWidth)
                 .fillMaxWidth()
-                .statusBarsPadding()
-                .navigationBarsPadding()
+                .safeTopSystemBarsPadding()
+                .safeBottomSystemBarsPadding()
                 .padding(bottom = 10.dp),
         ) {
             CameraTopBar(

@@ -168,7 +168,6 @@
     <string name="adjust_warmth">Wärme</string>
     <string name="crop_free">Frei</string>
     <string name="settings_retain_skeleton">Posen-Overlay nach dem Foto behalten</string>
-    <string name="splash_privacy_note">KI auf dem Gerät · Keine Uploads</string>
     <string name="toast_reference_imported">Vorlage importiert! Öffne die Kamera zum Abgleichen.</string>
     <string name="toast_reference_failed">Vorlage konnte nicht geladen werden</string>
     <string name="toast_capture_failed">Aufnahme fehlgeschlagen: %1$s</string>
@@ -377,4 +376,5 @@
     <string name="achievements_badge_ten_day_streak">10-Tage-Serie</string>
     <string name="achievements_badge_twenty_five_perfect">25 perfekt</string>
     <string name="achievements_badge_fifty_poses">50 Posen</string>
+    <string name="app_open_welcome_back">Willkommen zurück</string>
 </resources>

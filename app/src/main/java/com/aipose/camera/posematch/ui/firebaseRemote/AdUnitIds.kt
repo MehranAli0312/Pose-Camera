@@ -7,6 +7,7 @@ import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.ACTIVITY_INTER_AD_UNIT
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.ACTIVITY_NATIVE_AD_UNIT
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.APP_OPEN_ON_RESUME_AD_UNIT
+import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.REWARDED_AD_UNIT
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.SPLASH_INTER_AD_UNIT
 
 data class AdUnitIds(
@@ -15,6 +16,7 @@ data class AdUnitIds(
     val activityBanner: String = "",
     val activityNative: String = "",
     val appOpenOnResume: String = "",
+    val rewarded: String = "",
 ) {
     fun unitFor(format: AdFormat, placement: AdPlacement): String = when (format) {
         AdFormat.INTERSTITIAL ->
@@ -22,7 +24,7 @@ data class AdUnitIds(
         AdFormat.BANNER -> activityBanner
         AdFormat.NATIVE -> activityNative
         AdFormat.APP_OPEN -> appOpenOnResume
-        AdFormat.REWARDED, AdFormat.REWARDED_INTERSTITIAL -> ""
+        AdFormat.REWARDED, AdFormat.REWARDED_INTERSTITIAL -> rewarded
     }
 
     fun byKey(): Map<String, String> = mapOf(
@@ -31,6 +33,7 @@ data class AdUnitIds(
         ACTIVITY_BANNER_AD_UNIT to activityBanner,
         ACTIVITY_NATIVE_AD_UNIT to activityNative,
         APP_OPEN_ON_RESUME_AD_UNIT to appOpenOnResume,
+        REWARDED_AD_UNIT to rewarded,
     )
 
     companion object {
@@ -40,6 +43,7 @@ data class AdUnitIds(
             activityBanner = valueOf(ACTIVITY_BANNER_AD_UNIT).trim(),
             activityNative = valueOf(ACTIVITY_NATIVE_AD_UNIT).trim(),
             appOpenOnResume = valueOf(APP_OPEN_ON_RESUME_AD_UNIT).trim(),
+            rewarded = valueOf(REWARDED_AD_UNIT).trim(),
         )
     }
 }

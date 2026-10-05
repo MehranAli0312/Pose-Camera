@@ -24,6 +24,7 @@ import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.Rewarded
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 internal class FullScreenAdController(
     private val config: AdsConfig,
@@ -190,6 +191,31 @@ internal class FullScreenAdController(
         }
     }
 
+    suspend fun loadAndShow(
+        activity: Activity,
+        format: AdFormat,
+        placement: AdPlacement,
+        onShown: (() -> Unit)? = null,
+        loadTimeoutMs: Long? = null,
+        onLoadStarted: (() -> Unit)? = null,
+    ): AdResult {
+        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return AdResult.NotEligible
+        onLoadStarted?.invoke()
+        val ad = loadWithin(loadTimeoutMs, format, adUnitId, placement)
+            ?: return AdResult.NotAvailable
+
+        if (!gate.tryAcquireFullScreen(format)) return AdResult.NotEligible
+
+        return try {
+            present(ad, activity, format, onShown)
+        } catch (error: Throwable) {
+            log.w("Showing freshly loaded $format failed", error)
+            AdResult.Failed(error.message ?: "unknown error")
+        } finally {
+            state.releaseFullScreen()
+        }
+    }
+
     fun destroy() {
         onDemandAds.clear()
         onDemandLoading.clear()
@@ -234,6 +260,21 @@ internal class FullScreenAdController(
         return loadDirect(format, adUnitId)
     }
 
+    private suspend fun loadWithin(
+        timeoutMs: Long?,
+        format: AdFormat,
+        adUnitId: String,
+        placement: AdPlacement,
+    ): Any? {
+        val load = suspend {
+            runCatching { loadDirect(format, adUnitId) }
+                .onFailure { error -> log.w("$format load failed for ${placement.id}", error) }
+                .getOrNull()
+        }
+        if (timeoutMs == null) return load()
+        return withTimeoutOrNull(timeoutMs) { load() }
+    }
+
     private suspend fun loadDirect(format: AdFormat, adUnitId: String): Any? {
         val request = AdRequests.fullScreen(adUnitId)
         val result: AdLoadResult<*> = when (format) {
@@ -269,6 +310,11 @@ internal class FullScreenAdController(
         format: AdFormat,
         onShown: (() -> Unit)? = null,
     ): AdResult {
+        if (!withContext(Dispatchers.Main.immediate) { canPresentOn(activity) }) {
+            log.d("$format blocked: app is not in foreground")
+            return AdResult.NotEligible
+        }
+
         val presentation = AdPresentation(
             onShownCallback = {
                 state.markFullScreenVisible()
@@ -332,6 +378,9 @@ internal class FullScreenAdController(
         log.d("$format finished with $result")
         return result
     }
+
+    private fun canPresentOn(activity: Activity): Boolean =
+        state.foreground.value && !activity.isFinishing && !activity.isDestroyed
 
     private fun freshOnDemandAd(key: String): OnDemandAd? {
         val loaded = onDemandAds[key] ?: return null

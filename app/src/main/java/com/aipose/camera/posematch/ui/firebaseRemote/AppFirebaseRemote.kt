@@ -81,7 +81,11 @@ class AppFirebaseRemote(
         homeScreenBottomAdPosition = BottomAdPosition.fromRemote(
             remoteConfig.getLong(HOME_SCREEN_BOTTOM_AD_POSITION_KEY),
         ),
+        languageScreenBottomAd = remoteConfig.getLong(LANGUAGE_SCREEN_BOTTOM_AD_KEY).toInt(),
+        onboardScreenBottomAd = remoteConfig.getLong(ONBOARD_SCREEN_BOTTOM_AD_KEY).toInt(),
         appOpenOnResume = remoteConfig.getBoolean(APP_OPEN_ON_RESUME_AD_KEY),
+        appOpenLoadTimeoutSeconds = remoteConfig.getLong(APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY),
+        splashAdMaxWaitSeconds = remoteConfig.getLong(SPLASH_AD_MAX_WAIT_SECONDS_KEY),
         innerInterstitial = remoteConfig.getBoolean(INNER_INTERSTITIAL_AD_KEY),
         innerInterstitialCappingSeconds = remoteConfig.getLong(INNER_INTERSTITIAL_CAPPING_KEY),
         innerInterstitialSplashFallback = remoteConfig.getBoolean(
@@ -97,6 +101,9 @@ class AppFirebaseRemote(
         premiumAnnualPlan = remoteConfig.getBoolean(PREMIUM_ANNUAL_PLAN_KEY),
         showOnboardingScreen = remoteConfig.getBoolean(SHOW_ONBOARDING_SCREEN_KEY),
         splashToPremium = remoteConfig.getBoolean(SPLASH_TO_PREMIUM_KEY),
+        onboardingNativeAd = OnboardingNativeAdPosition.fromRemote(
+            remoteConfig.getLong(ONBOARDING_NATIVE_AD_KEY),
+        ),
         adUnits = AdUnitIds.read(remoteConfig::getString),
         nativeAdColors = NativeAdColorHexes.read(remoteConfig::getString),
     )
@@ -115,6 +122,7 @@ class AppFirebaseRemote(
 
         const val SHOW_ONBOARDING_SCREEN_KEY = "show_onboarding_screen"
         const val SPLASH_TO_PREMIUM_KEY = "splash_to_premium"
+        const val ONBOARDING_NATIVE_AD_KEY = "onboarding_full_native_ad_key"
 
         const val SPLASH_INTERSTITIAL_AD_KEY = "splash_interstitial_ad_key"
         const val INNER_INTERSTITIAL_AD_KEY = "inner_interstitial_ad_key"
@@ -122,9 +130,13 @@ class AppFirebaseRemote(
         const val INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY = "inner_inter_splash_fallback"
 
         const val APP_OPEN_ON_RESUME_AD_KEY = "app_open_on_resume_ad_key"
+        const val APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY = "app_open_load_timeout_sec"
+        const val SPLASH_AD_MAX_WAIT_SECONDS_KEY = "splash_ad_max_wait_sec"
 
         const val HOME_SCREEN_BOTTOM_AD_KEY = "home_screen_bottom_ad_key"
         const val HOME_SCREEN_BOTTOM_AD_POSITION_KEY = "home_screen_bottom_ad_position_key"
+        const val LANGUAGE_SCREEN_BOTTOM_AD_KEY = "language_screen_bottom_ad_key"
+        const val ONBOARD_SCREEN_BOTTOM_AD_KEY = "onboard_screen_bottom_ad_key"
 
         const val PREMIUM_FEATURE_DIALOG_KEY = "premium_feature_dialog_key"
         const val PREMIUM_CLOSE_DELAY_SECONDS_KEY = "premium_close_delay_sec"
@@ -141,6 +153,7 @@ class AppFirebaseRemote(
         const val ACTIVITY_BANNER_AD_UNIT = "activity_banner_ad_unit"
         const val ACTIVITY_NATIVE_AD_UNIT = "activity_native_ad_unit"
         const val APP_OPEN_ON_RESUME_AD_UNIT = "app_open_on_resume_ad_unit"
+        const val REWARDED_AD_UNIT = "rewarded_ad_unit"
 
         const val APP_UPDATE_VERSION_CODE_KEY = "app_update_version_code"
         const val APP_UPDATE_FORCE_KEY = "app_update_force"

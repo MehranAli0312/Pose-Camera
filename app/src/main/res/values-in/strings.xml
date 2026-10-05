@@ -166,7 +166,6 @@
     <string name="adjust_warmth">Kehangatan</string>
     <string name="crop_free">Bebas</string>
     <string name="settings_retain_skeleton">Pertahankan garis pose setelah memotret</string>
-    <string name="splash_privacy_note">AI di perangkat · Tanpa unggahan</string>
     <string name="toast_reference_imported">Referensi diimpor! Buka kamera untuk mencocokkan.</string>
     <string name="toast_reference_failed">Gagal memuat referensi</string>
     <string name="toast_capture_failed">Gagal memotret: %1$s</string>
@@ -359,4 +358,5 @@
     <string name="achievements_badge_ten_day_streak">10 hari beruntun</string>
     <string name="achievements_badge_twenty_five_perfect">25 sempurna</string>
     <string name="achievements_badge_fifty_poses">50 pose</string>
+    <string name="app_open_welcome_back">Selamat datang kembali</string>
 </resources>

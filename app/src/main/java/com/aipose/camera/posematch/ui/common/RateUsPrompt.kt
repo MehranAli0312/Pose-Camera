@@ -16,14 +16,14 @@ fun RateUsPrompt(
     matchScore: Int,
     viewModel: RateUsViewModel = koinInject(),
 ) {
-    val sheetVisible = rememberSaveable { mutableStateOf(false) }
+    val dialogVisible = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(savedShotCount, matchScore) {
         if (!viewModel.shouldPrompt(savedShotCount, matchScore)) return@LaunchedEffect
         delay(PROMPT_DELAY_MILLIS)
         viewModel.markPrompted()
-        sheetVisible.value = true
+        dialogVisible.value = true
     }
 
-    RateUsSheet(visible = sheetVisible, viewModel = viewModel)
+    RateUsDialog(visible = dialogVisible, viewModel = viewModel)
 }
