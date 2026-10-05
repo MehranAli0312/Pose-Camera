@@ -18,4 +18,10 @@ class CameraSettingsUseCase(
     suspend fun markCameraCoachSeen() {
         cameraSettingsRepository.markCameraCoachSeen()
     }
+
+    fun getCaptureTimerSeconds(): Flow<Int> = cameraSettingsRepository.getCaptureTimerSeconds()
+
+    suspend fun setCaptureTimerSeconds(seconds: Int) {
+        cameraSettingsRepository.setCaptureTimerSeconds(seconds)
+    }
 }

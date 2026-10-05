@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.screens.camera.models.CaptureTimer
+import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import java.util.Locale
 import kotlin.math.roundToInt

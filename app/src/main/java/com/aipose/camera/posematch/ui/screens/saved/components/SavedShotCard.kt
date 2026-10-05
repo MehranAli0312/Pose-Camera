@@ -84,7 +84,7 @@ internal fun SavedShotCard(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                .padding(start = 12.dp, end = 12.dp, bottom = 6.dp),
         ) {
             PoseScorePill(score = shot.capture.matchScore)
             Text(

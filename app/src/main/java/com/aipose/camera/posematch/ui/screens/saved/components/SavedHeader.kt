@@ -46,7 +46,7 @@ internal fun SavedHeader(
                 onClick = onOpenSort,
             )
         }
-        Spacer(modifier = Modifier.height(11.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = pluralStringResource(R.plurals.saved_subtitle, totalCount, totalCount),
             style = poseTextStyle(12.sp, FontWeight.Normal, LocalAppPalette.current.textMuted),

@@ -11,4 +11,8 @@ interface CameraSettingsRepository {
     fun isCameraCoachSeen(): Flow<Boolean>
 
     suspend fun markCameraCoachSeen()
+
+    fun getCaptureTimerSeconds(): Flow<Int>
+
+    suspend fun setCaptureTimerSeconds(seconds: Int)
 }

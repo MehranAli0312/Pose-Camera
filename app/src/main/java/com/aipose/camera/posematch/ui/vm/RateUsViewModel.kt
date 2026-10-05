@@ -8,8 +8,8 @@ import kotlinx.coroutines.launch
 
 class RateUsViewModel(private val rateUsUseCase: RateUsUseCase) : ViewModel() {
 
-    suspend fun shouldPrompt(cleanedItems: Int, freedBytes: Long): Boolean =
-        rateUsUseCase.shouldPrompt(cleanedItems, freedBytes)
+    suspend fun shouldPrompt(savedShotCount: Int, matchScore: Int): Boolean =
+        rateUsUseCase.shouldPrompt(savedShotCount, matchScore)
 
     fun markPrompted() {
         viewModelScope.launch { rateUsUseCase.markPrompted() }

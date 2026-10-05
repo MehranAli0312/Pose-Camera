@@ -3,6 +3,8 @@ package com.aipose.camera.posematch.di
 import com.aipose.camera.posematch.domain.usecase.CameraSettingsUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureLocationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
+import com.aipose.camera.posematch.domain.usecase.ProgressStatsUseCase
+import com.aipose.camera.posematch.domain.usecase.AchievementsUseCase
 import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.LanguageUseCase
@@ -24,6 +26,8 @@ val useCaseModule = module {
     factory { PoseMatchUseCase() }
     factory { CaptureUseCase(get()) }
     factory { CaptureProgressUseCase() }
+    factory { ProgressStatsUseCase(get()) }
+    factory { AchievementsUseCase(get()) }
     factory { FavoritePoseUseCase(get()) }
     factory { CaptureLocationUseCase(get()) }
     factory { PhotoEditUseCase(get()) }

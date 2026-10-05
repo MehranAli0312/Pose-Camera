@@ -5,6 +5,8 @@ import com.aipose.camera.posematch.ui.vm.CameraSettingsViewModel
 import com.aipose.camera.posematch.ui.vm.CaptureAlbumViewModel
 import com.aipose.camera.posematch.ui.vm.SettingsViewModel
 import com.aipose.camera.posematch.ui.vm.CollectionsViewModel
+import com.aipose.camera.posematch.ui.vm.ProgressViewModel
+import com.aipose.camera.posematch.ui.vm.AchievementsViewModel
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
 import com.aipose.camera.posematch.ui.vm.SavedViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
@@ -45,6 +47,8 @@ val viewModelModule = module {
     viewModel { PhotoSuccessViewModel(get(), get()) }
     viewModel { CameraSettingsViewModel(get()) }
     viewModel { SettingsViewModel(get(), get()) }
+    viewModel { ProgressViewModel(get(), get()) }
+    viewModel { AchievementsViewModel(get(), get(), get()) }
     viewModel {
         PoseCameraViewModel(
             poseLibraryUseCase = get(),

@@ -13,8 +13,32 @@ class CaptureProgressUseCase {
             averageMatch = captures.sumOf { it.matchScore } / captures.size,
             shotsTaken = captures.size,
             perfectShots = captures.count { it.matchScore >= PERFECT_MATCH_SCORE },
-            dayStreak = captures.dayStreak()
+            dayStreak = currentStreak(captures)
         )
+    }
+
+    fun currentStreak(captures: List<Capture>, nowMillis: Long = System.currentTimeMillis()): Int {
+        val days = captures.map { localDayIndex(it.capturedAtMillis) }.distinct().sortedDescending()
+        if (days.isEmpty()) return 0
+        if (days.first() < localDayIndex(nowMillis) - 1) return 0
+        var streak = 1
+        for (index in 1 until days.size) {
+            if (days[index] != days[index - 1] - 1) break
+            streak++
+        }
+        return streak
+    }
+
+    fun bestStreak(captures: List<Capture>): Int {
+        val days = captures.map { localDayIndex(it.capturedAtMillis) }.distinct().sorted()
+        if (days.isEmpty()) return 0
+        var best = 1
+        var run = 1
+        for (index in 1 until days.size) {
+            run = if (days[index] == days[index - 1] + 1) run + 1 else 1
+            best = maxOf(best, run)
+        }
+        return best
     }
 
     fun bestMatchFor(captures: List<Capture>, poseId: Int): Int? =
@@ -37,17 +61,5 @@ class CaptureProgressUseCase {
             .maxOfOrNull { it.matchScore }
             ?: return true
         return capture.matchScore > previousBest
-    }
-
-    private fun List<Capture>.dayStreak(): Int {
-        val days = map { localDayIndex(it.capturedAtMillis) }.distinct().sortedDescending()
-        if (days.isEmpty()) return 0
-        if (days.first() < localDayIndex(System.currentTimeMillis()) - 1) return 0
-        var streak = 1
-        for (index in 1 until days.size) {
-            if (days[index] != days[index - 1] - 1) break
-            streak++
-        }
-        return streak
     }
 }

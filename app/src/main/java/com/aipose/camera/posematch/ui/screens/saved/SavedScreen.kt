@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.graph.NavRoute
@@ -63,7 +64,8 @@ fun SavedScreen(
     PoseGlowBackground(glows = PoseGlows.Saved) {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxHeight()
+                .adaptiveWidth()
                 .statusBarsPadding()
                 .padding(horizontal = 20.dp),
             contentPadding = PaddingValues(bottom = 24.dp),
@@ -86,7 +88,7 @@ fun SavedScreen(
                     posesCount = content.poses.size,
                     onSelect = viewModel::selectTab,
                 )
-                Spacer(modifier = Modifier.height(23.dp))
+                Spacer(modifier = Modifier.height(17.dp))
             }
 
             when (content.selectedTab) {
@@ -131,7 +133,7 @@ private fun LazyListScope.shotsTab(
 ) {
     item(key = SHOTS_LABEL_KEY) {
         SavedSectionHeader(titleRes = SavedTab.Shots.sectionRes)
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(14.dp))
     }
     if (content.shots.isEmpty()) {
         item(key = SHOTS_EMPTY_KEY) { SavedEmptyState(tab = SavedTab.Shots) }
@@ -140,12 +142,12 @@ private fun LazyListScope.shotsTab(
     }
     if (content.poses.isNotEmpty()) {
         item(key = POSES_LABEL_KEY) {
-            Spacer(modifier = Modifier.height(29.dp))
+            Spacer(modifier = Modifier.height(13.dp))
             SavedSectionHeader(
                 titleRes = SavedTab.Poses.sectionRes,
                 onSeeAll = onSeeAllPoses.takeIf { content.poses.size > POSE_PREVIEW_SIZE },
             )
-            Spacer(modifier = Modifier.height(23.dp))
+            Spacer(modifier = Modifier.height(18.dp))
         }
         poseRows(content.poses.take(POSE_PREVIEW_SIZE), onOpenPose, onUnsavePose)
     }
@@ -161,7 +163,7 @@ private fun LazyListScope.posesTab(
 ) {
     item(key = POSES_LABEL_KEY) {
         SavedSectionHeader(titleRes = SavedTab.Poses.sectionRes)
-        Spacer(modifier = Modifier.height(23.dp))
+        Spacer(modifier = Modifier.height(18.dp))
     }
     if (content.poses.isEmpty()) {
         item(key = POSES_EMPTY_KEY) { SavedEmptyState(tab = SavedTab.Poses) }
@@ -171,12 +173,12 @@ private fun LazyListScope.posesTab(
     if (content.shots.isNotEmpty()) {
         val preview = content.shots.take(SHOT_PREVIEW_ROWS * SHOTS_PER_ROW)
         item(key = SHOTS_LABEL_KEY) {
-            Spacer(modifier = Modifier.height(29.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             SavedSectionHeader(
                 titleRes = SavedTab.Shots.sectionRes,
                 onSeeAll = onSeeAllShots.takeIf { content.shots.size > preview.size },
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(14.dp))
         }
         shotRows(preview, onOpenShot, onUnsaveShot, SHOTS_PREVIEW_ROW_KEY)
     }

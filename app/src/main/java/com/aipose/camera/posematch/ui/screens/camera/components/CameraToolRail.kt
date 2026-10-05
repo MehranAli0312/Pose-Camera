@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
-import com.aipose.camera.posematch.ui.screens.camera.models.CaptureTimer
+import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.ui.theme.PoseVioletPale
 import com.aipose.camera.posematch.ui.theme.Violet
 import com.aipose.camera.posematch.ui.theme.poseTextStyle

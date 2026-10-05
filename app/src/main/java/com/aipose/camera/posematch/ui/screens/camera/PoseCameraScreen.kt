@@ -53,7 +53,7 @@ import com.aipose.camera.posematch.ui.screens.camera.components.CameraSimulatedS
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraToolRail
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraTopBar
 import com.aipose.camera.posematch.ui.screens.camera.components.CaptureCountdown
-import com.aipose.camera.posematch.ui.screens.camera.components.CaptureTimerSheet
+import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.screens.camera.components.GreatMatchBanner
 import com.aipose.camera.posematch.ui.screens.camera.components.OverlayOpacitySlider
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseOverlayImage

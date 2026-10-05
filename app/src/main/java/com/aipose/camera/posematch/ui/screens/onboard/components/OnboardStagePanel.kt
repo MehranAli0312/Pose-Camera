@@ -2,13 +2,12 @@ package com.aipose.camera.posematch.ui.screens.onboard.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
+import com.aipose.camera.posematch.ui.common.fitDesignSize
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.theme.PoseShadow
 import com.aipose.camera.posematch.ui.theme.PoseSurface
@@ -27,8 +26,7 @@ internal fun OnboardStagePanel(
 ) {
     Box(
         modifier = modifier
-            .width(StagePanelWidth)
-            .height(StagePanelHeight)
+            .fitDesignSize(StagePanelWidth, StagePanelHeight)
             .poseRaisedCard(
                 cornerRadius = StageCorner,
                 brush = SolidColor(PoseSurface),

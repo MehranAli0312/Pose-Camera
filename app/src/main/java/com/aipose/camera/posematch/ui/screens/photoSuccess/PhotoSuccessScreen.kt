@@ -23,6 +23,7 @@ import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.shareImageFile
 import com.aipose.camera.posematch.ui.common.PoseGlows
+import com.aipose.camera.posematch.ui.common.RateUsPrompt
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateToTab
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
@@ -85,5 +86,9 @@ fun PhotoSuccessScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
+        RateUsPrompt(
+            savedShotCount = content.savedShotCount,
+            matchScore = capture.matchScore,
+        )
     }
 }

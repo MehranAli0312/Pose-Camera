@@ -15,7 +15,7 @@ import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
-import com.aipose.camera.posematch.ui.screens.camera.models.CaptureTimer
+import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.ui.screens.camera.models.PoseCameraUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -49,6 +49,7 @@ class PoseCameraViewModel(
         poseFrameAnalyzer.onLandmarks = ::onUserLandmarks
         observePoses()
         observeSkeletonPreference()
+        observeTimerPreference()
         observeCoachVisibility()
         observeGalleryCount()
     }
@@ -157,10 +158,11 @@ class PoseCameraViewModel(
 
     fun setTimer(timer: CaptureTimer) {
         _uiState.update { state -> state.copy(timer = timer, isTimerSheetVisible = false) }
+        viewModelScope.launch { cameraSettingsUseCase.setCaptureTimerSeconds(timer.seconds) }
     }
 
     fun cycleTimer() {
-        _uiState.update { state -> state.copy(timer = state.timer.next()) }
+        setTimer(_uiState.value.timer.next())
     }
 
     fun toggleGrid() {
@@ -282,6 +284,14 @@ class PoseCameraViewModel(
 
                     current == null -> poses.firstOrNull()?.let(::selectPose)
                 }
+            }
+        }
+    }
+
+    private fun observeTimerPreference() {
+        viewModelScope.launch {
+            cameraSettingsUseCase.getCaptureTimerSeconds().collect { seconds ->
+                _uiState.update { state -> state.copy(timer = CaptureTimer.fromSeconds(seconds)) }
             }
         }
     }

@@ -47,7 +47,7 @@ internal fun OnboardContentPage(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        OnboardStagePanel {
+        OnboardStagePanel(modifier = Modifier.padding(horizontal = 20.dp)) {
             LtrLayout {
                 when (step.stage) {
                     OnboardStage.PickPose -> OnboardPoseStage()

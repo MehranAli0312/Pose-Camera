@@ -19,6 +19,7 @@ internal object AppPreferencesKeys {
     val PRO_VERIFIED_AT = longPreferencesKey("pro_verified_at")
     val RETAIN_SKELETON = booleanPreferencesKey("retain_skeleton_overlay")
     val CAMERA_COACH_SEEN = booleanPreferencesKey("camera_coach_seen")
+    val CAPTURE_TIMER_SECONDS = intPreferencesKey("capture_timer_seconds")
     val LEGACY_PREFERENCES_IMPORTED = booleanPreferencesKey("legacy_preferences_imported")
     val FAVORITE_POSES = stringSetPreferencesKey("favorite_poses")
 }

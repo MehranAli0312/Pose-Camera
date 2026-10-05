@@ -19,6 +19,7 @@ import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.PoseRaisedBottom
 import com.aipose.camera.posematch.ui.theme.PoseRaisedTop
+import com.aipose.camera.posematch.ui.theme.PoseShadow
 
 private val BorderWidth = 1.dp
 private val RaisedShadowInsetX = 2.dp
@@ -29,6 +30,9 @@ private val SurfaceGlossInset = 8.dp
 private val SurfaceGlossTop = 4.dp
 private val SurfaceGlossHeight = 26.dp
 private const val RAISED_SURFACE_BORDER_ALPHA = 0.09f
+private const val ELEVATED_BORDER_ALPHA = 0.1f
+private const val ELEVATED_GLOSS_ALPHA = 0.14f
+private const val ELEVATED_SHADOW_ALPHA = 0.45f
 
 fun Modifier.poseRaisedSurface(
     shape: Shape,
@@ -55,6 +59,23 @@ fun Modifier.poseRaisedSurface(
         )
     }
     .border(BorderWidth, Color.White.copy(alpha = borderAlpha), shape)
+
+fun Modifier.poseElevatedSurface(
+    cornerRadius: Dp,
+    borderAlpha: Float = ELEVATED_BORDER_ALPHA,
+    glossAlpha: Float = ELEVATED_GLOSS_ALPHA,
+    shadowAlpha: Float = ELEVATED_SHADOW_ALPHA,
+): Modifier = this
+    .drawBehind {
+        val insetX = RaisedShadowInsetX.toPx()
+        drawRoundRect(
+            color = PoseShadow.copy(alpha = shadowAlpha),
+            topLeft = Offset(insetX, RaisedShadowOffsetY.toPx()),
+            size = Size(size.width - insetX * 2f, size.height - RaisedShadowShrinkY.toPx()),
+            cornerRadius = CornerRadius(cornerRadius.toPx()),
+        )
+    }
+    .poseRaisedSurface(RoundedCornerShape(cornerRadius), borderAlpha, glossAlpha)
 
 @Composable
 fun Modifier.poseCard(shape: Shape): Modifier {

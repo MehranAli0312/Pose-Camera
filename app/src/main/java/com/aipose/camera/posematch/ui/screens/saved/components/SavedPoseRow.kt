@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,13 +41,14 @@ import com.aipose.camera.posematch.ui.theme.PoseRaisedTop
 import com.aipose.camera.posematch.ui.theme.PoseTextFaint
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val RowHeight = 60.dp
+private val RowMinHeight = 60.dp
 private val RowShape = RoundedCornerShape(20.dp)
 private val BadgeSize = 38.dp
 private val HeartSize = 11.dp
 private val HeartTouchSize = 32.dp
 private val ChevronWidth = 5.dp
 private val ChevronHeight = 10.dp
+private val HeartRaise = (-8).dp
 
 private const val ROW_BORDER_ALPHA = 0.09f
 
@@ -60,12 +63,12 @@ internal fun SavedPoseRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(RowHeight)
+            .heightIn(min = RowMinHeight)
             .clip(RowShape)
             .background(Brush.verticalGradient(listOf(PoseRaisedTop, PoseRaisedBottom)))
             .border(1.dp, Color.White.copy(alpha = ROW_BORDER_ALPHA), RowShape)
             .bounceClick(onClick = onClick)
-            .padding(start = 16.dp, end = 20.dp),
+            .padding(start = 16.dp, end = 20.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GlossyIconBadge(
@@ -101,6 +104,7 @@ internal fun SavedPoseRow(
         ) {
             Box(
                 modifier = Modifier
+                    .offset(y = HeartRaise)
                     .size(HeartTouchSize)
                     .click(onClick = onUnsave),
                 contentAlignment = Alignment.Center,

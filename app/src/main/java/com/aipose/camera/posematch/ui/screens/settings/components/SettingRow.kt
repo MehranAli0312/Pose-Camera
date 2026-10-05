@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
@@ -33,7 +35,7 @@ import com.aipose.camera.posematch.ui.theme.PoseTextFaint
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val RowHeight = 56.dp
+private val RowMinHeight = 56.dp
 private val RowShape = RoundedCornerShape(20.dp)
 private val BadgeSize = 36.dp
 private val RowStartPadding = 16.dp
@@ -60,12 +62,12 @@ internal fun SettingRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(RowHeight)
+            .heightIn(min = RowMinHeight)
             .clip(RowShape)
             .background(Brush.verticalGradient(listOf(PoseRaisedTop, PoseRaisedBottom)))
             .border(1.dp, Color.White.copy(alpha = ROW_BORDER_ALPHA), RowShape)
             .then(if (onClick != null) Modifier.click(onClick = onClick) else Modifier)
-            .padding(start = RowStartPadding, end = RowEndPadding),
+            .padding(start = RowStartPadding, end = RowEndPadding, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GlossyIconBadge(
@@ -77,6 +79,8 @@ internal fun SettingRow(
         Text(
             text = title,
             style = poseTextStyle(TitleSize, FontWeight.Bold, Color.White),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
         )
         if (trailing != null) {

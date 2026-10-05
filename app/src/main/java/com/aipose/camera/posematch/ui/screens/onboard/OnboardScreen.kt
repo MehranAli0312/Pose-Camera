@@ -3,7 +3,7 @@ package com.aipose.camera.posematch.ui.screens.onboard
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseCtaButton
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBackdrop
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardContentPage
@@ -70,7 +71,8 @@ fun OnboardScreen(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxHeight()
+                .adaptiveWidth()
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .padding(horizontal = ScreenPadding),

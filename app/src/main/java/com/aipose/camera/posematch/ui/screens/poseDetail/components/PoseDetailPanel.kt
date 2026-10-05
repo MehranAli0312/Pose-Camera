@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,10 +57,10 @@ private val PanelShape = RoundedCornerShape(topStart = 34.dp, topEnd = 34.dp)
 private val HandleWidth = 56.dp
 private val HandleHeight = 5.dp
 private val ChipShape = RoundedCornerShape(14.dp)
-private val ChipHeight = 28.dp
+private val ChipMinHeight = 28.dp
 private val ChipDotSize = 6.8.dp
 private val MatchCardShape = RoundedCornerShape(20.dp)
-private val MatchCardHeight = 60.dp
+private val MatchCardMinHeight = 60.dp
 private val RingSize = 40.dp
 private val RingStroke = 4.dp
 private val CtaHeight = 58.dp
@@ -154,11 +155,11 @@ private fun InfoChip(
 ) {
     Row(
         modifier = modifier
-            .height(ChipHeight)
+            .heightIn(min = ChipMinHeight)
             .clip(ChipShape)
             .background(Brush.verticalGradient(listOf(PoseChipTop, PoseChipBottom)))
             .border(1.dp, Color.White.copy(alpha = CHIP_BORDER_ALPHA), ChipShape)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(5.dp),
     ) {
@@ -184,11 +185,11 @@ private fun BestMatchCard(bestMatch: Int?, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(MatchCardHeight)
+            .heightIn(min = MatchCardMinHeight)
             .clip(MatchCardShape)
             .background(Brush.verticalGradient(listOf(PoseChipTop, PoseChipBottom)))
             .border(1.dp, Color.White.copy(alpha = CHIP_BORDER_ALPHA), MatchCardShape)
-            .padding(horizontal = 14.dp),
+            .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(modifier = Modifier.size(RingSize), contentAlignment = Alignment.Center) {

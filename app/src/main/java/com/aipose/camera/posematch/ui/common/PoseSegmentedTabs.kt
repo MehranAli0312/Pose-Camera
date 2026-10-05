@@ -29,14 +29,15 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val TrackHeight = 44.dp
-private val TrackShape = RoundedCornerShape(22.dp)
-private val PillShape = RoundedCornerShape(18.dp)
+private val DefaultTrackHeight = 44.dp
+private val DefaultLabelSize = 12.5.sp
 private val PillInset = 4.dp
 private val GlossInset = 5.dp
 private val GlossTop = 3.dp
@@ -53,13 +54,17 @@ fun PoseSegmentedTabs(
     pillBrush: Brush,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    height: Dp = DefaultTrackHeight,
+    labelSize: TextUnit = DefaultLabelSize,
 ) {
     val mutedColor = LocalAppPalette.current.textMuted
+    val trackShape = RoundedCornerShape(height / 2)
+    val pillShape = RoundedCornerShape((height - PillInset * 2) / 2)
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(TrackHeight)
-            .poseRaisedSurface(TrackShape),
+            .height(height)
+            .poseRaisedSurface(trackShape),
     ) {
         val segmentWidth = (maxWidth - PillInset * 2) / labels.size.coerceAtLeast(1)
         val pillOffset by animateFloatAsState(
@@ -73,7 +78,7 @@ fun PoseSegmentedTabs(
                 .offset(x = segmentWidth * pillOffset)
                 .width(segmentWidth)
                 .fillMaxSize()
-                .clip(PillShape)
+                .clip(pillShape)
                 .background(pillBrush)
                 .drawBehind { drawPillGloss() },
         )
@@ -93,7 +98,7 @@ fun PoseSegmentedTabs(
                     Text(
                         text = label,
                         style = poseTextStyle(
-                            12.5.sp,
+                            labelSize,
                             FontWeight.Bold,
                             if (index == selectedIndex) Color.White else mutedColor,
                         ),

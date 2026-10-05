@@ -7,6 +7,7 @@ sealed interface PhotoSuccessUiState {
 
     data class Content(
         val capture: Capture,
-        val isPersonalBest: Boolean
+        val isPersonalBest: Boolean,
+        val savedShotCount: Int
     ) : PhotoSuccessUiState
 }

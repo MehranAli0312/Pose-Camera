@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,7 +42,7 @@ import com.aipose.camera.posematch.ui.theme.PoseStreakCardTop
 import com.aipose.camera.posematch.ui.theme.PoseTextLavender
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val CardHeight = 96.dp
+private val CardMinHeight = 96.dp
 private val CardCorner = 26.dp
 private val CardShape = RoundedCornerShape(CardCorner)
 private val CardPadding = 16.dp
@@ -78,13 +79,13 @@ internal fun SettingsStreakCard(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(CardHeight)
+            .heightIn(min = CardMinHeight)
             .drawBehind { drawStreakShadow() }
             .clip(CardShape)
             .drawBehind { drawStreakSurface() }
             .border(1.dp, Color.White.copy(alpha = CARD_BORDER_ALPHA), CardShape)
             .click(onClick = onClick)
-            .padding(horizontal = CardPadding),
+            .padding(horizontal = CardPadding, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         GlossyIconBadge(

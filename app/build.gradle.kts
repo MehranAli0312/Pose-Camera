@@ -4,11 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.devtools.ksp)
-}
-
-if (file("google-services.json").exists()) {
-    apply(plugin = "com.google.gms.google-services")
-    apply(plugin = "com.google.firebase.crashlytics")
+    alias(libs.plugins.gms.services)
+    alias(libs.plugins.crashlytic)
 }
 
 android {

@@ -17,6 +17,9 @@ import com.aipose.camera.posematch.ui.screens.home.HomeScreen
 import com.aipose.camera.posematch.ui.screens.language.LocalizeScreen
 import com.aipose.camera.posematch.ui.screens.photoEdit.PhotoEditScreen
 import com.aipose.camera.posematch.ui.screens.photoSuccess.PhotoSuccessScreen
+import com.aipose.camera.posematch.ui.screens.themePicker.ThemePickerScreen
+import com.aipose.camera.posematch.ui.screens.progress.ProgressScreen
+import com.aipose.camera.posematch.ui.screens.achievements.AchievementsScreen
 import com.aipose.camera.posematch.ui.screens.poseAlbum.PoseAlbumScreen
 import com.aipose.camera.posematch.ui.screens.poseDetail.PoseDetailScreen
 import com.aipose.camera.posematch.ui.screens.pro.ProScreen
@@ -44,6 +47,9 @@ fun DashboardNavGraph(
         addCaptureAlbumScreen(navController, this)
         addCaptureDetailScreen(navController, this)
         addPhotoEditScreen(navController, this)
+        addThemePickerScreen(navController, this)
+        addProgressScreen(navController, this)
+        addAchievementsScreen(navController, this)
         addPhotoSuccessScreen(navController, this)
     }
 }
@@ -190,6 +196,16 @@ private fun addCaptureDetailScreen(
     }
 }
 
+private fun addThemePickerScreen(
+    navController: NavHostController, navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.addScreenWithTransitions(
+        route = NavRoute.ThemePickerScreenRoute.route
+    ) {
+        ThemePickerScreen(navController = navController)
+    }
+}
+
 private fun addPhotoEditScreen(
     navController: NavHostController, navGraphBuilder: NavGraphBuilder
 ) {
@@ -221,3 +237,23 @@ val bottomBarRoutes =
         NavRoute.SavedScreenRoute.route,
         NavRoute.SettingScreenRoute.route,
     )
+
+private fun addProgressScreen(
+    navController: NavHostController, navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.addScreenWithTransitions(
+        route = NavRoute.ProgressScreenRoute.route
+    ) {
+        ProgressScreen(navController = navController)
+    }
+}
+
+private fun addAchievementsScreen(
+    navController: NavHostController, navGraphBuilder: NavGraphBuilder
+) {
+    navGraphBuilder.addScreenWithTransitions(
+        route = NavRoute.AchievementsScreenRoute.route
+    ) {
+        AchievementsScreen(navController = navController)
+    }
+}

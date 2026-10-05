@@ -24,8 +24,8 @@ private const val DefaultRating = 5f
 
 @Composable
 fun RateUsPrompt(
-    cleanedItems: Int,
-    freedBytes: Long,
+    savedShotCount: Int,
+    matchScore: Int,
     viewModel: RateUsViewModel = koinInject(),
 ) {
     val context = LocalContext.current
@@ -33,8 +33,8 @@ fun RateUsPrompt(
     val sheetVisible = rememberSaveable { mutableStateOf(false) }
     var rating by rememberSaveable { mutableFloatStateOf(DefaultRating) }
 
-    LaunchedEffect(cleanedItems, freedBytes) {
-        if (!viewModel.shouldPrompt(cleanedItems, freedBytes)) return@LaunchedEffect
+    LaunchedEffect(savedShotCount, matchScore) {
+        if (!viewModel.shouldPrompt(savedShotCount, matchScore)) return@LaunchedEffect
         delay(PromptDelayMs)
         viewModel.markPrompted()
         sheetVisible.value = true

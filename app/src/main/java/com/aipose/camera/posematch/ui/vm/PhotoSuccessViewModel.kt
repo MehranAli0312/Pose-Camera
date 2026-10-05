@@ -31,6 +31,7 @@ class PhotoSuccessViewModel(
                 _uiState.value = PhotoSuccessUiState.Content(
                     capture = capture,
                     isPersonalBest = captureProgressUseCase.isPersonalBest(captures, capture),
+                    savedShotCount = captures.size,
                 )
             }
         }

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import com.aipose.camera.posematch.ui.theme.Emerald
 import com.aipose.camera.posematch.ui.theme.Indigo
+import com.aipose.camera.posematch.ui.theme.PoseAmber
 import com.aipose.camera.posematch.ui.theme.PoseCyan
 import com.aipose.camera.posematch.ui.theme.PoseGlowPurple
 import com.aipose.camera.posematch.ui.theme.PosePink
@@ -52,6 +53,16 @@ object PoseGlows {
         PoseGlow(PoseCyan, 0.16f, 20f, 700f, 200f),
     )
 
+    val ThemePicker = listOf(
+        PoseGlow(PoseGlowPurple, 0.30f, 40f, 70f, 230f),
+        PoseGlow(Indigo, 0.24f, 370f, 813f, 210f),
+    )
+
+    val Settings = listOf(
+        PoseGlow(Indigo, 0.30f, 40f, 70f, 230f),
+        PoseGlow(PoseGlowPurple, 0.24f, 370f, 302f, 200f),
+    )
+
     val LocationAlbum = listOf(
         PoseGlow(PoseCyan, 0.22f, 40f, 70f, 230f),
         PoseGlow(PoseGlowPurple, 0.24f, 370f, 790f, 210f),
@@ -60,6 +71,18 @@ object PoseGlows {
     val PhotoEdit = listOf(
         PoseGlow(Indigo, 0.30f, 40f, 70f, 220f),
         PoseGlow(PoseGlowPurple, 0.24f, 370f, 813f, 210f),
+    )
+
+    val Progress = listOf(
+        PoseGlow(Indigo, 0.32f, 40f, 60f, 200f),
+        PoseGlow(PoseGlowPurple, 0.26f, 370f, 330f, 200f),
+        PoseGlow(PoseCyan, 0.18f, 30f, 800f, 180f),
+    )
+
+    val Achievements = listOf(
+        PoseGlow(PoseAmber, 0.26f, 40f, 70f, 230f),
+        PoseGlow(PoseGlowPurple, 0.26f, 370f, 400f, 210f),
+        PoseGlow(Indigo, 0.22f, 20f, 800f, 200f),
     )
 
     val CaptureSaved = listOf(

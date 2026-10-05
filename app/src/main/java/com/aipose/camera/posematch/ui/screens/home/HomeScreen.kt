@@ -21,7 +21,6 @@ import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.graph.navigateToTab
 import com.aipose.camera.posematch.ui.screens.home.components.HomeFilterBar
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeader
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeroCard
@@ -140,7 +139,7 @@ fun HomeScreen(
             item(key = HOME_PROGRESS_KEY) {
                 HomeProgressCard(
                     progress = content.progress,
-                    onViewAll = { navController.navigateToTab(NavRoute.CollectionsScreenRoute.route) },
+                    onViewAll = { navController.navigateOnClick(NavRoute.ProgressScreenRoute.route) },
                     modifier = Modifier.padding(top = 14.dp),
                 )
             }

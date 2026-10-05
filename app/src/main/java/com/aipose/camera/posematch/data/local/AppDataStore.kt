@@ -87,6 +87,16 @@ class AppDataStore(private val context: Context) {
         }
     }
 
+    fun getCaptureTimerSeconds() = preferences.data.map { stored ->
+        stored[AppPreferencesKeys.CAPTURE_TIMER_SECONDS] ?: 0
+    }
+
+    suspend fun setCaptureTimerSeconds(seconds: Int) {
+        preferences.edit { stored ->
+            stored[AppPreferencesKeys.CAPTURE_TIMER_SECONDS] = seconds
+        }
+    }
+
     fun getNotificationsEnabled() = preferences.data.map { stored ->
         stored[AppPreferencesKeys.NOTIFICATIONS_ENABLED] ?: true
     }

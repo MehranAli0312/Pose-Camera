@@ -1,6 +1,7 @@
 package com.aipose.camera.posematch.ui.screens.camera.models
 
 import com.aipose.camera.posematch.domain.models.ColorGrade
+import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseMatch
