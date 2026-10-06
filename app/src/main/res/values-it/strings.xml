@@ -138,14 +138,6 @@
     <string name="match_status_raise">Segui la posa per alzare il punteggio</string>
     <string name="match_status_move">Entra nell\'inquadratura per il confronto</string>
     <string name="great_match">Ottima corrispondenza!</string>
-    <string name="coach_title">Come funziona Pose Match</string>
-    <string name="coach_pick_title">Scegli una posa</string>
-    <string name="coach_pick_description">Selezionane una dalla barra in basso.</string>
-    <string name="coach_match_title">Segui la sagoma</string>
-    <string name="coach_match_description">Muoviti finché il corpo riempie la sagoma: il punteggio sale.</string>
-    <string name="coach_snap_title">Scatta e salva</string>
-    <string name="coach_snap_description">Tocca l\'otturatore, aggiungi un filtro e salva.</string>
-    <string name="coach_got_it">Capito</string>
     <string name="action_discard">Scarta</string>
     <string name="captured_frame">Foto scattata</string>
     <string name="saved_photo">Foto salvata</string>

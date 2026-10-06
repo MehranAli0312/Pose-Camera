@@ -2,8 +2,8 @@ package com.aipose.camera.posematch.ui.firebaseRemote
 
 enum class BottomAdPosition(val remoteValue: Long) {
     Off(0L),
-    AboveBottomBar(1L),
-    BelowBottomBar(2L),
+    BelowBottomBar(1L),
+    AboveBottomBar(2L),
     ;
 
     companion object {

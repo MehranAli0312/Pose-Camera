@@ -142,14 +142,6 @@
     <string name="match_status_raise">Повторіть позу, щоб підвищити оцінку</string>
     <string name="match_status_move">Увійдіть у кадр для порівняння</string>
     <string name="great_match">Чудовий збіг!</string>
-    <string name="coach_title">Як працює Pose Match</string>
-    <string name="coach_pick_title">Оберіть позу</string>
-    <string name="coach_pick_description">Виберіть одну на стрічці внизу.</string>
-    <string name="coach_match_title">Повторіть контур</string>
-    <string name="coach_match_description">Рухайтеся, доки тіло не заповнить контур, — оцінка зростає.</string>
-    <string name="coach_snap_title">Зніміть і збережіть</string>
-    <string name="coach_snap_description">Натисніть затвор, додайте фільтр і збережіть.</string>
-    <string name="coach_got_it">Зрозуміло</string>
     <string name="action_discard">Відхилити</string>
     <string name="captured_frame">Знімок</string>
     <string name="saved_photo">Збережене фото</string>

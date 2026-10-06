@@ -138,14 +138,6 @@
     <string name="match_status_raise">Puanını yükseltmek için poza uy</string>
     <string name="match_status_move">Eşleştirmek için kadraja gir</string>
     <string name="great_match">Harika eşleşme!</string>
-    <string name="coach_title">Pose Match nasıl çalışır</string>
-    <string name="coach_pick_title">Bir poz seç</string>
-    <string name="coach_pick_description">Alttaki şeritten birini seç.</string>
-    <string name="coach_match_title">Çizgiye uy</string>
-    <string name="coach_match_description">Vücudun çizgiyi doldurana kadar hareket et — puanın yükselir.</string>
-    <string name="coach_snap_title">Çek ve kaydet</string>
-    <string name="coach_snap_description">Deklanşöre dokun, filtre ekle ve kaydet.</string>
-    <string name="coach_got_it">Anladım</string>
     <string name="action_discard">Vazgeç</string>
     <string name="captured_frame">Çekilen fotoğraf</string>
     <string name="saved_photo">Kaydedilen fotoğraf</string>

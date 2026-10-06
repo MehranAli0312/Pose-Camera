@@ -8,7 +8,6 @@ import com.aipose.camera.posematch.data.local.AdsRemoteDataStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.APP_OPEN_ON_RESUME_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.HOME_SCREEN_BOTTOM_AD_KEY
-import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.HOME_SCREEN_BOTTOM_AD_POSITION_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.INNER_INTERSTITIAL_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.INNER_INTERSTITIAL_CAPPING_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY
@@ -33,8 +32,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 data class AdsRemoteConfig(
     val splashInterstitial: Boolean = false,
-    val homeScreenBottomAd: Int = AdRemoteStyles.OFF,
-    val homeScreenBottomAdPosition: BottomAdPosition = BottomAdPosition.Off,
+    val homeScreenBottomAd: BottomAdPosition = BottomAdPosition.Off,
     val languageScreenBottomAd: Int = AdRemoteStyles.OFF,
     val onboardScreenBottomAd: Int = AdRemoteStyles.OFF,
     val appOpenOnResume: Boolean = false,
@@ -54,7 +52,12 @@ data class AdsRemoteConfig(
     val nativeAdColors: NativeAdColorHexes = NativeAdColorHexes(),
 ) {
     fun slotStyleFor(placement: AdPlacement): AdSlotStyle = when (placement) {
-        AdPlacement.HomeScreenBottom -> AdRemoteStyles.bannerOrSmallNative(homeScreenBottomAd)
+        AdPlacement.HomeScreenBottom ->
+            if (homeScreenBottomAd == BottomAdPosition.Off) {
+                AdSlotStyle.Hidden
+            } else {
+                AdSlotStyle.Native(NativeAdDesign.SMALL)
+            }
         AdPlacement.LanguageScreenBottom ->
             AdRemoteStyles.bannerOrSmallNative(languageScreenBottomAd)
 
@@ -69,11 +72,6 @@ data class AdsRemoteConfig(
             }
 
         else -> AdSlotStyle.Hidden
-    }
-
-    fun positionFor(placement: AdPlacement): BottomAdPosition = when (placement) {
-        AdPlacement.HomeScreenBottom -> homeScreenBottomAdPosition
-        else -> BottomAdPosition.Off
     }
 
     val premiumCloseDelay: Int
@@ -121,14 +119,10 @@ class AdsRemoteConfigStore(
             SPLASH_INTERSTITIAL_AD_KEY,
             defaults.splashInterstitial,
         ),
-        homeScreenBottomAd = dataStore.getLong(
-            HOME_SCREEN_BOTTOM_AD_KEY,
-            defaults.homeScreenBottomAd.toLong(),
-        ).toInt(),
-        homeScreenBottomAdPosition = BottomAdPosition.fromRemote(
+        homeScreenBottomAd = BottomAdPosition.fromRemote(
             dataStore.getLong(
-                HOME_SCREEN_BOTTOM_AD_POSITION_KEY,
-                defaults.homeScreenBottomAdPosition.remoteValue,
+                HOME_SCREEN_BOTTOM_AD_KEY,
+                defaults.homeScreenBottomAd.remoteValue,
             ),
         ),
         languageScreenBottomAd = dataStore.getLong(
@@ -204,11 +198,7 @@ class AdsRemoteConfigStore(
     suspend fun update(config: AdsRemoteConfig) {
         _config.value = config
         dataStore.putBoolean(SPLASH_INTERSTITIAL_AD_KEY, config.splashInterstitial)
-        dataStore.putLong(HOME_SCREEN_BOTTOM_AD_KEY, config.homeScreenBottomAd.toLong())
-        dataStore.putLong(
-            HOME_SCREEN_BOTTOM_AD_POSITION_KEY,
-            config.homeScreenBottomAdPosition.remoteValue,
-        )
+        dataStore.putLong(HOME_SCREEN_BOTTOM_AD_KEY, config.homeScreenBottomAd.remoteValue)
         dataStore.putLong(LANGUAGE_SCREEN_BOTTOM_AD_KEY, config.languageScreenBottomAd.toLong())
         dataStore.putLong(ONBOARD_SCREEN_BOTTOM_AD_KEY, config.onboardScreenBottomAd.toLong())
         dataStore.putBoolean(APP_OPEN_ON_RESUME_AD_KEY, config.appOpenOnResume)
@@ -238,8 +228,7 @@ private fun AdsRemoteConfig.withTestAdsForced() = copy(
     languageScreenBottomAd = TEST_FORCED_BANNER_STYLE,
     onboardScreenBottomAd = TEST_FORCED_BANNER_STYLE,
     onboardingNativeAd = OnboardingNativeAdPosition.AfterFirstStep,
-    homeScreenBottomAd = TEST_FORCED_BANNER_STYLE,
-    homeScreenBottomAdPosition = BottomAdPosition.AboveBottomBar,
+    homeScreenBottomAd = BottomAdPosition.AboveBottomBar,
     innerInterstitial = true,
     showOnboardingScreen = true,
 )

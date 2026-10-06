@@ -14,12 +14,6 @@ class CameraSettingsRepositoryImpl(
         dataStore.setKeepPoseOverlay(keepOverlay)
     }
 
-    override fun isCameraCoachSeen(): Flow<Boolean> = dataStore.isCameraCoachSeen()
-
-    override suspend fun markCameraCoachSeen() {
-        dataStore.markCameraCoachSeen()
-    }
-
     override fun getCaptureTimerSeconds(): Flow<Int> = dataStore.getCaptureTimerSeconds()
 
     override suspend fun setCaptureTimerSeconds(seconds: Int) {

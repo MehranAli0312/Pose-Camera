@@ -136,14 +136,6 @@
     <string name="match_status_raise">ポーズに合わせてスコアを上げよう</string>
     <string name="match_status_move">フレームに入ってマッチさせましょう</string>
     <string name="great_match">ばっちりマッチ！</string>
-    <string name="coach_title">Pose Match の使い方</string>
-    <string name="coach_pick_title">ポーズを選ぶ</string>
-    <string name="coach_pick_description">下のリストから1つ選びます。</string>
-    <string name="coach_match_title">輪郭に合わせる</string>
-    <string name="coach_match_description">体が輪郭に収まるまで動くと、スコアが上がります。</string>
-    <string name="coach_snap_title">撮って保存</string>
-    <string name="coach_snap_description">シャッターをタップし、フィルターをかけて保存します。</string>
-    <string name="coach_got_it">OK</string>
     <string name="action_discard">破棄</string>
     <string name="captured_frame">撮影した写真</string>
     <string name="saved_photo">保存した写真</string>

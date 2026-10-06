@@ -146,14 +146,6 @@
     <string name="match_status_raise">طابق الوضعية لرفع نتيجتك</string>
     <string name="match_status_move">ادخل إلى الإطار للمطابقة</string>
     <string name="great_match">تطابق رائع!</string>
-    <string name="coach_title">كيف يعمل Pose Match</string>
-    <string name="coach_pick_title">اختر وضعية</string>
-    <string name="coach_pick_description">اختر واحدة من الشريط في الأسفل.</string>
-    <string name="coach_match_title">طابق الإطار</string>
-    <string name="coach_match_description">تحرّك حتى يملأ جسمك الإطار — وسترتفع نتيجتك.</string>
-    <string name="coach_snap_title">التقط واحفظ</string>
-    <string name="coach_snap_description">اضغط على زر الالتقاط وأضف فلترًا واحفظ الصورة.</string>
-    <string name="coach_got_it">فهمت</string>
     <string name="action_discard">تجاهل</string>
     <string name="captured_frame">الصورة الملتقطة</string>
     <string name="saved_photo">الصورة المحفوظة</string>

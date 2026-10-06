@@ -138,14 +138,6 @@
     <string name="match_status_raise">Folge der Pose, um deinen Wert zu steigern</string>
     <string name="match_status_move">Tritt ins Bild, um abzugleichen</string>
     <string name="great_match">Super Match!</string>
-    <string name="coach_title">So funktioniert Pose Match</string>
-    <string name="coach_pick_title">Wähle eine Pose</string>
-    <string name="coach_pick_description">Wähle eine aus der Leiste unten.</string>
-    <string name="coach_match_title">Folge der Kontur</string>
-    <string name="coach_match_description">Bewege dich, bis dein Körper die Kontur ausfüllt – dein Wert steigt.</string>
-    <string name="coach_snap_title">Knipsen &amp; speichern</string>
-    <string name="coach_snap_description">Tippe auf den Auslöser, füge einen Filter hinzu und speichere.</string>
-    <string name="coach_got_it">Verstanden</string>
     <string name="action_discard">Verwerfen</string>
     <string name="captured_frame">Aufgenommenes Foto</string>
     <string name="saved_photo">Gespeichertes Foto</string>

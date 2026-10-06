@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.ads.AdPlacement
 import com.example.common.Constants.splashEnd
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.HomeScreenBottom
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.MissedSplashAd
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
@@ -98,6 +99,7 @@ fun SplashScreen(
         }
 
         if (isFirstSession) ads.preload(AdPlacement.LanguageScreenBottom)
+        ads.preload(AdPlacement.HomeScreenBottom)
         if (isFirstSession && remoteConfigStore.current.showOnboardingScreen) {
             ads.preload(AdPlacement.OnboardScreenBottom)
         }

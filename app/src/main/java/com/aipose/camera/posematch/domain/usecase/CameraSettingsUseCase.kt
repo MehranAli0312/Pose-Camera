@@ -13,12 +13,6 @@ class CameraSettingsUseCase(
         cameraSettingsRepository.setKeepPoseOverlay(keepOverlay)
     }
 
-    fun isCameraCoachSeen(): Flow<Boolean> = cameraSettingsRepository.isCameraCoachSeen()
-
-    suspend fun markCameraCoachSeen() {
-        cameraSettingsRepository.markCameraCoachSeen()
-    }
-
     fun getCaptureTimerSeconds(): Flow<Int> = cameraSettingsRepository.getCaptureTimerSeconds()
 
     suspend fun setCaptureTimerSeconds(seconds: Int) {

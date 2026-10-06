@@ -138,14 +138,6 @@
     <string name="match_status_raise">Ακολουθήστε την πόζα για να ανεβεί η βαθμολογία</string>
     <string name="match_status_move">Μπείτε στο κάδρο για σύγκριση</string>
     <string name="great_match">Εξαιρετικό ταίριασμα!</string>
-    <string name="coach_title">Πώς λειτουργεί το Pose Match</string>
-    <string name="coach_pick_title">Διαλέξτε πόζα</string>
-    <string name="coach_pick_description">Επιλέξτε μία από τη λωρίδα κάτω.</string>
-    <string name="coach_match_title">Ταιριάξτε το περίγραμμα</string>
-    <string name="coach_match_description">Κινηθείτε μέχρι να γεμίσετε το περίγραμμα — η βαθμολογία ανεβαίνει.</string>
-    <string name="coach_snap_title">Τραβήξτε και αποθηκεύστε</string>
-    <string name="coach_snap_description">Πατήστε το κλείστρο, προσθέστε φίλτρο και αποθηκεύστε.</string>
-    <string name="coach_got_it">Κατάλαβα</string>
     <string name="action_discard">Απόρριψη</string>
     <string name="captured_frame">Φωτογραφία λήψης</string>
     <string name="saved_photo">Αποθηκευμένη φωτογραφία</string>

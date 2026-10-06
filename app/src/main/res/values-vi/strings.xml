@@ -136,14 +136,6 @@
     <string name="match_status_raise">Khớp dáng để tăng điểm</string>
     <string name="match_status_move">Vào khung hình để so khớp</string>
     <string name="great_match">Khớp tuyệt vời!</string>
-    <string name="coach_title">Cách Pose Match hoạt động</string>
-    <string name="coach_pick_title">Chọn một dáng</string>
-    <string name="coach_pick_description">Chọn một dáng từ dải bên dưới.</string>
-    <string name="coach_match_title">Khớp với đường viền</string>
-    <string name="coach_match_description">Di chuyển đến khi cơ thể lấp đầy đường viền — điểm sẽ tăng.</string>
-    <string name="coach_snap_title">Chụp &amp; lưu</string>
-    <string name="coach_snap_description">Chạm nút chụp, thêm bộ lọc và lưu lại.</string>
-    <string name="coach_got_it">Đã hiểu</string>
     <string name="action_discard">Bỏ</string>
     <string name="captured_frame">Ảnh đã chụp</string>
     <string name="saved_photo">Ảnh đã lưu</string>

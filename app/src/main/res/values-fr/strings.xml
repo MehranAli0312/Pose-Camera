@@ -138,14 +138,6 @@
     <string name="match_status_raise">Suivez la pose pour augmenter votre score</string>
     <string name="match_status_move">Entrez dans le cadre pour comparer</string>
     <string name="great_match">Super correspondance !</string>
-    <string name="coach_title">Comment fonctionne Pose Match</string>
-    <string name="coach_pick_title">Choisissez une pose</string>
-    <string name="coach_pick_description">Sélectionnez-en une dans la bande du bas.</string>
-    <string name="coach_match_title">Suivez la silhouette</string>
-    <string name="coach_match_description">Bougez jusqu\'à remplir la silhouette : votre score augmente.</string>
-    <string name="coach_snap_title">Photographiez et enregistrez</string>
-    <string name="coach_snap_description">Touchez le déclencheur, ajoutez un filtre et enregistrez.</string>
-    <string name="coach_got_it">Compris</string>
     <string name="action_discard">Ignorer</string>
     <string name="captured_frame">Photo prise</string>
     <string name="saved_photo">Photo enregistrée</string>

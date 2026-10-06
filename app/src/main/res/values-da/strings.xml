@@ -138,14 +138,6 @@
     <string name="match_status_raise">Følg posen for at hæve din score</string>
     <string name="match_status_move">Træd ind i billedet for at matche</string>
     <string name="great_match">Godt match!</string>
-    <string name="coach_title">Sådan virker Pose Match</string>
-    <string name="coach_pick_title">Vælg en pose</string>
-    <string name="coach_pick_description">Vælg en fra båndet nederst.</string>
-    <string name="coach_match_title">Følg omridset</string>
-    <string name="coach_match_description">Bevæg dig, til kroppen fylder omridset — din score stiger.</string>
-    <string name="coach_snap_title">Tag og gem</string>
-    <string name="coach_snap_description">Tryk på udløseren, tilføj et filter, og gem.</string>
-    <string name="coach_got_it">Forstået</string>
     <string name="action_discard">Kassér</string>
     <string name="captured_frame">Taget billede</string>
     <string name="saved_photo">Gemt billede</string>

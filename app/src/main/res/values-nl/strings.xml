@@ -138,14 +138,6 @@
     <string name="match_status_raise">Volg de pose om je score te verhogen</string>
     <string name="match_status_move">Stap in beeld om te vergelijken</string>
     <string name="great_match">Geweldige match!</string>
-    <string name="coach_title">Zo werkt Pose Match</string>
-    <string name="coach_pick_title">Kies een pose</string>
-    <string name="coach_pick_description">Kies er een uit de strook onderaan.</string>
-    <string name="coach_match_title">Volg de omtrek</string>
-    <string name="coach_match_description">Beweeg tot je lichaam de omtrek vult — je score stijgt.</string>
-    <string name="coach_snap_title">Klik &amp; bewaar</string>
-    <string name="coach_snap_description">Tik op de sluiter, voeg een filter toe en bewaar.</string>
-    <string name="coach_got_it">Begrepen</string>
     <string name="action_discard">Weggooien</string>
     <string name="captured_frame">Gemaakte foto</string>
     <string name="saved_photo">Opgeslagen foto</string>

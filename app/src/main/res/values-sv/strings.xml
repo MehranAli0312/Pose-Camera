@@ -138,14 +138,6 @@
     <string name="match_status_raise">Följ posen för att höja poängen</string>
     <string name="match_status_move">Kliv in i bild för att matcha</string>
     <string name="great_match">Bra match!</string>
-    <string name="coach_title">Så fungerar Pose Match</string>
-    <string name="coach_pick_title">Välj en pose</string>
-    <string name="coach_pick_description">Välj en från listen längst ned.</string>
-    <string name="coach_match_title">Följ konturen</string>
-    <string name="coach_match_description">Rör dig tills kroppen fyller konturen — poängen stiger.</string>
-    <string name="coach_snap_title">Fota och spara</string>
-    <string name="coach_snap_description">Tryck på avtryckaren, lägg till ett filter och spara.</string>
-    <string name="coach_got_it">Jag förstår</string>
     <string name="action_discard">Kasta</string>
     <string name="captured_frame">Taget foto</string>
     <string name="saved_photo">Sparat foto</string>

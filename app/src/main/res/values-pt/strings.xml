@@ -138,14 +138,6 @@
     <string name="match_status_raise">Siga a pose para aumentar sua pontuação</string>
     <string name="match_status_move">Entre no enquadramento para comparar</string>
     <string name="great_match">Ótima correspondência!</string>
-    <string name="coach_title">Como o Pose Match funciona</string>
-    <string name="coach_pick_title">Escolha uma pose</string>
-    <string name="coach_pick_description">Selecione uma na faixa abaixo.</string>
-    <string name="coach_match_title">Siga o contorno</string>
-    <string name="coach_match_description">Mova-se até preencher o contorno — sua pontuação sobe.</string>
-    <string name="coach_snap_title">Fotografe e salve</string>
-    <string name="coach_snap_description">Toque no obturador, adicione um filtro e salve.</string>
-    <string name="coach_got_it">Entendi</string>
     <string name="action_discard">Descartar</string>
     <string name="captured_frame">Foto capturada</string>
     <string name="saved_photo">Foto salva</string>

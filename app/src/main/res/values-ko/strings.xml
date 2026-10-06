@@ -136,14 +136,6 @@
     <string name="match_status_raise">포즈를 맞춰 점수를 올리세요</string>
     <string name="match_status_move">화면 안으로 들어와 맞추세요</string>
     <string name="great_match">훌륭한 일치!</string>
-    <string name="coach_title">Pose Match 사용 방법</string>
-    <string name="coach_pick_title">포즈 선택</string>
-    <string name="coach_pick_description">아래 목록에서 하나를 고르세요.</string>
-    <string name="coach_match_title">윤곽선에 맞추기</string>
-    <string name="coach_match_description">몸이 윤곽선을 채울 때까지 움직이면 점수가 올라갑니다.</string>
-    <string name="coach_snap_title">찍고 저장하기</string>
-    <string name="coach_snap_description">셔터를 누르고 필터를 추가한 뒤 저장하세요.</string>
-    <string name="coach_got_it">확인</string>
     <string name="action_discard">버리기</string>
     <string name="captured_frame">촬영한 사진</string>
     <string name="saved_photo">저장한 사진</string>

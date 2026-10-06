@@ -50,7 +50,6 @@ class PoseCameraViewModel(
         observePoses()
         observePoseOverlayPreference()
         observeTimerPreference()
-        observeCoachVisibility()
         observeGalleryCount()
     }
 
@@ -162,11 +161,6 @@ class PoseCameraViewModel(
                 activeGrade = photoEditUseCase.gradeFor(filterId, state.autoGrade)
             )
         }
-    }
-
-    fun dismissCoach() {
-        _uiState.update { state -> state.copy(isCoachVisible = false) }
-        viewModelScope.launch { cameraSettingsUseCase.markCameraCoachSeen() }
     }
 
     fun onShutterClicked() {
@@ -293,15 +287,6 @@ class PoseCameraViewModel(
                 _uiState.update { state ->
                     if (state.selectedPose?.id == poseId) state.copy(bestScore = best) else state
                 }
-            }
-        }
-    }
-
-    private fun observeCoachVisibility() {
-        viewModelScope.launch {
-            val isSeen = cameraSettingsUseCase.isCameraCoachSeen()
-            isSeen.collect { seen ->
-                _uiState.update { state -> state.copy(isCoachVisible = !seen) }
             }
         }
     }

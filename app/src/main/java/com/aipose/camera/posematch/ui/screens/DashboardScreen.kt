@@ -10,8 +10,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -23,6 +26,7 @@ import com.aipose.camera.posematch.ui.graph.DashboardNavGraph
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.bottomBarRoutes
 import com.aipose.camera.posematch.ui.graph.navigateToTabNow
+import com.aipose.camera.posematch.ui.screens.bottomBar.DashboardBottomAdSpace
 import com.aipose.camera.posematch.ui.screens.bottomBar.DashboardBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.InScreenBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.LocalInScreenBottomBar
@@ -78,10 +82,13 @@ fun DashboardScreen(
     val isBottomBarRouteVisible = visibleRoutes.any { it in bottomBarRoutes }
     val shouldShowBottomBar = isBottomBarRouteVisible && visibleRoutes.all { it in bottomBarRoutes }
 
+    var bottomAdHeight by remember { mutableStateOf(0.dp) }
+
     val bottomBar: @Composable (NavDestination?) -> Unit = { destination ->
         DashboardBottomBar(
             navController = navController,
             destination = destination,
+            adSpace = DashboardBottomAdSpace(isLive = false, height = bottomAdHeight),
         )
     }
 
@@ -108,6 +115,11 @@ fun DashboardScreen(
                     navController = navController,
                     destination = currentBackStackEntry?.destination,
                     applyNavigationBarInsets = true,
+                    adSpace = DashboardBottomAdSpace(
+                        isLive = true,
+                        height = bottomAdHeight,
+                        onHeightChanged = { height -> bottomAdHeight = height },
+                    ),
                 )
             }
         }

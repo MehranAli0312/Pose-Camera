@@ -136,14 +136,6 @@
     <string name="match_status_raise">Ikuti pose untuk menaikkan skor</string>
     <string name="match_status_move">Masuk ke bingkai untuk mencocokkan</string>
     <string name="great_match">Cocok sekali!</string>
-    <string name="coach_title">Cara kerja Pose Match</string>
-    <string name="coach_pick_title">Pilih pose</string>
-    <string name="coach_pick_description">Pilih satu dari strip di bawah.</string>
-    <string name="coach_match_title">Ikuti garis</string>
-    <string name="coach_match_description">Bergeraklah sampai tubuhmu mengisi garis — skormu naik.</string>
-    <string name="coach_snap_title">Potret &amp; simpan</string>
-    <string name="coach_snap_description">Ketuk rana, tambahkan filter, lalu simpan.</string>
-    <string name="coach_got_it">Mengerti</string>
     <string name="action_discard">Buang</string>
     <string name="captured_frame">Foto yang diambil</string>
     <string name="saved_photo">Foto tersimpan</string>

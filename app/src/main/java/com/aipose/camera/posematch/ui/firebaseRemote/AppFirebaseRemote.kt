@@ -77,9 +77,8 @@ class AppFirebaseRemote(
 
     private fun readRemoteConfig() = AdsRemoteConfig(
         splashInterstitial = remoteConfig.getBoolean(SPLASH_INTERSTITIAL_AD_KEY),
-        homeScreenBottomAd = remoteConfig.getLong(HOME_SCREEN_BOTTOM_AD_KEY).toInt(),
-        homeScreenBottomAdPosition = BottomAdPosition.fromRemote(
-            remoteConfig.getLong(HOME_SCREEN_BOTTOM_AD_POSITION_KEY),
+        homeScreenBottomAd = BottomAdPosition.fromRemote(
+            remoteConfig.getLong(HOME_SCREEN_BOTTOM_AD_KEY),
         ),
         languageScreenBottomAd = remoteConfig.getLong(LANGUAGE_SCREEN_BOTTOM_AD_KEY).toInt(),
         onboardScreenBottomAd = remoteConfig.getLong(ONBOARD_SCREEN_BOTTOM_AD_KEY).toInt(),
@@ -134,7 +133,6 @@ class AppFirebaseRemote(
         const val SPLASH_AD_MAX_WAIT_SECONDS_KEY = "splash_ad_max_wait_sec"
 
         const val HOME_SCREEN_BOTTOM_AD_KEY = "home_screen_bottom_ad_key"
-        const val HOME_SCREEN_BOTTOM_AD_POSITION_KEY = "home_screen_bottom_ad_position_key"
         const val LANGUAGE_SCREEN_BOTTOM_AD_KEY = "language_screen_bottom_ad_key"
         const val ONBOARD_SCREEN_BOTTOM_AD_KEY = "onboard_screen_bottom_ad_key"
 

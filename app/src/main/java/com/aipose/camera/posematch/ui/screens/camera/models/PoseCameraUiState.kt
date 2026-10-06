@@ -26,7 +26,6 @@ data class PoseCameraUiState(
     val bestScore: Int = 0,
     val galleryCount: Int = 0,
     val isPoseOverlayEnabled: Boolean = true,
-    val isCoachVisible: Boolean = false,
     val isGreatMatchVisible: Boolean = false,
     val isImporting: Boolean = false,
     val isImportFailed: Boolean = false,

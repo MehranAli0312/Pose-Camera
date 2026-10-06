@@ -136,14 +136,6 @@
     <string name="match_status_raise">ทำตามท่าเพื่อเพิ่มคะแนน</string>
     <string name="match_status_move">เข้ามาในเฟรมเพื่อจับคู่</string>
     <string name="great_match">ตรงมาก!</string>
-    <string name="coach_title">Pose Match ทำงานอย่างไร</string>
-    <string name="coach_pick_title">เลือกท่าโพส</string>
-    <string name="coach_pick_description">เลือกหนึ่งท่าจากแถบด้านล่าง</string>
-    <string name="coach_match_title">จับคู่กับเส้นโครง</string>
-    <string name="coach_match_description">ขยับจนร่างกายเต็มเส้นโครง แล้วคะแนนจะเพิ่มขึ้น</string>
-    <string name="coach_snap_title">ถ่ายแล้วบันทึก</string>
-    <string name="coach_snap_description">แตะชัตเตอร์ ใส่ฟิลเตอร์ แล้วบันทึก</string>
-    <string name="coach_got_it">เข้าใจแล้ว</string>
     <string name="action_discard">ทิ้ง</string>
     <string name="captured_frame">ภาพที่ถ่าย</string>
     <string name="saved_photo">ภาพที่บันทึก</string>

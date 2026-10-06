@@ -66,16 +66,6 @@ class AppDataStore(private val context: Context) {
         }
     }
 
-    fun isCameraCoachSeen() = preferences.data.map { stored ->
-        stored[AppPreferencesKeys.CAMERA_COACH_SEEN] ?: false
-    }
-
-    suspend fun markCameraCoachSeen() {
-        preferences.edit { stored ->
-            stored[AppPreferencesKeys.CAMERA_COACH_SEEN] = true
-        }
-    }
-
     fun getCaptureTimerSeconds() = preferences.data.map { stored ->
         stored[AppPreferencesKeys.CAPTURE_TIMER_SECONDS] ?: 0
     }

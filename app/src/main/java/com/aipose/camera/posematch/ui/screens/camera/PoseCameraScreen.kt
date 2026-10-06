@@ -42,7 +42,6 @@ import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.navigateToTab
-import com.aipose.camera.posematch.ui.screens.camera.components.CameraCoachOverlay
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraGridOverlay
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraMatchCard
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraPermissionCard
@@ -246,10 +245,6 @@ fun PoseCameraScreen(
             modifier = Modifier.align(Alignment.Center),
         ) {
             GreatMatchBanner()
-        }
-
-        if (uiState.isCoachVisible && cameraPermission.isGranted) {
-            CameraCoachOverlay(onDismiss = viewModel::dismissCoach)
         }
 
         if (!cameraPermission.isGranted) {

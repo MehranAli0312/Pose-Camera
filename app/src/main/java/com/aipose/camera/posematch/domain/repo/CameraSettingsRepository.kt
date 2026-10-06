@@ -8,10 +8,6 @@ interface CameraSettingsRepository {
 
     suspend fun setKeepPoseOverlay(keepOverlay: Boolean)
 
-    fun isCameraCoachSeen(): Flow<Boolean>
-
-    suspend fun markCameraCoachSeen()
-
     fun getCaptureTimerSeconds(): Flow<Int>
 
     suspend fun setCaptureTimerSeconds(seconds: Int)

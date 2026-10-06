@@ -1,6 +1,7 @@
 package com.aipose.camera.posematch.ui.common
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,7 +25,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
-private var hasAskedLocation = false
+private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+private val LOCATION_PERMISSIONS = listOf(
+    Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.ACCESS_COARSE_LOCATION,
+)
 
 @Immutable
 data class CameraPermissionState(
@@ -39,53 +44,32 @@ fun rememberCameraPermissionState(): CameraPermissionState {
     val activity = getActivity()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    var isGranted by remember { mutableStateOf(context.isCameraGranted()) }
+    var isGranted by remember { mutableStateOf(context.isGranted(CAMERA_PERMISSION)) }
     var isBlocked by remember { mutableStateOf(false) }
     var hasAskedSystem by rememberSaveable { mutableStateOf(false) }
 
-    fun refreshBlocked() {
-        isBlocked = hasAskedSystem && !isGranted &&
-            activity?.let {
-                !ActivityCompat.shouldShowRequestPermissionRationale(it, Manifest.permission.CAMERA)
-            } == true
+    fun refresh() {
+        isGranted = context.isGranted(CAMERA_PERMISSION)
+        isBlocked = hasAskedSystem && !isGranted && activity?.isRationaleHidden(CAMERA_PERMISSION) == true
     }
 
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        isGranted = granted
-        hasAskedSystem = true
-        refreshBlocked()
-    }
-
-    val locationLauncher = rememberLauncherForActivityResult(
+    val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { }
+    ) { refresh() }
+
+    fun launch(permissions: List<String>) {
+        if (permissions.isEmpty()) return
+        hasAskedSystem = true
+        launcher.launch(permissions.toTypedArray())
+    }
 
     LaunchedEffect(Unit) {
-        if (!isGranted && !hasAskedSystem) {
-            hasAskedSystem = true
-            cameraLauncher.launch(Manifest.permission.CAMERA)
-        } else {
-            refreshBlocked()
-        }
-        if (!hasAskedLocation && !context.isLocationGranted()) {
-            hasAskedLocation = true
-            locationLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                )
-            )
-        }
+        if (hasAskedSystem) refresh() else launch(context.missingEntryPermissions(activity))
     }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                isGranted = context.isCameraGranted()
-                refreshBlocked()
-            }
+            if (event == Lifecycle.Event.ON_RESUME) refresh()
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
@@ -98,22 +82,26 @@ fun rememberCameraPermissionState(): CameraPermissionState {
             when {
                 isGranted -> Unit
                 isBlocked -> context.openAppSettings()
-                else -> {
-                    hasAskedSystem = true
-                    cameraLauncher.launch(Manifest.permission.CAMERA)
-                }
+                else -> launch(listOf(CAMERA_PERMISSION))
             }
         },
     )
 }
 
-private fun Context.isCameraGranted(): Boolean =
-    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-        PackageManager.PERMISSION_GRANTED
+private fun Context.missingEntryPermissions(activity: Activity?): List<String> = buildList {
+    if (!isGranted(CAMERA_PERMISSION)) add(CAMERA_PERMISSION)
+    if (shouldPromptLocation(activity)) addAll(LOCATION_PERMISSIONS)
+}
 
-private fun Context.isLocationGranted(): Boolean =
-    ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-        PackageManager.PERMISSION_GRANTED
+private fun Context.shouldPromptLocation(activity: Activity?): Boolean =
+    LOCATION_PERMISSIONS.none(::isGranted) &&
+        activity?.isRationaleHidden(Manifest.permission.ACCESS_FINE_LOCATION) != false
+
+private fun Activity.isRationaleHidden(permission: String): Boolean =
+    !ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
+
+private fun Context.isGranted(permission: String): Boolean =
+    ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
 private fun Context.openAppSettings() {
     runCatching {

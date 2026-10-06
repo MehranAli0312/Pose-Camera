@@ -138,14 +138,6 @@
     <string name="match_status_raise">स्कोर बढ़ाने के लिए पोज़ से मिलाएँ</string>
     <string name="match_status_move">मिलाने के लिए फ़्रेम में आएँ</string>
     <string name="great_match">शानदार मैच!</string>
-    <string name="coach_title">Pose Match कैसे काम करता है</string>
-    <string name="coach_pick_title">एक पोज़ चुनें</string>
-    <string name="coach_pick_description">नीचे की पट्टी से एक चुनें।</string>
-    <string name="coach_match_title">आउटलाइन से मिलाएँ</string>
-    <string name="coach_match_description">तब तक हिलें जब तक शरीर आउटलाइन न भर दे — आपका स्कोर बढ़ेगा।</string>
-    <string name="coach_snap_title">फ़ोटो लें और सेव करें</string>
-    <string name="coach_snap_description">शटर पर टैप करें, फ़िल्टर लगाएँ और सेव करें।</string>
-    <string name="coach_got_it">समझ गया</string>
     <string name="action_discard">छोड़ें</string>
     <string name="captured_frame">ली गई फ़ोटो</string>
     <string name="saved_photo">सेव की गई फ़ोटो</string>

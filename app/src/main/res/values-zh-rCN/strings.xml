@@ -136,14 +136,6 @@
     <string name="match_status_raise">对齐姿势以提高分数</string>
     <string name="match_status_move">进入画面开始匹配</string>
     <string name="great_match">匹配度很高！</string>
-    <string name="coach_title">Pose Match 如何使用</string>
-    <string name="coach_pick_title">选择姿势</string>
-    <string name="coach_pick_description">从底部列表中选一个。</string>
-    <string name="coach_match_title">对齐轮廓</string>
-    <string name="coach_match_description">移动身体直到填满轮廓，分数随之上升。</string>
-    <string name="coach_snap_title">拍摄并保存</string>
-    <string name="coach_snap_description">点按快门，添加滤镜，然后保存。</string>
-    <string name="coach_got_it">知道了</string>
     <string name="action_discard">放弃</string>
     <string name="captured_frame">已拍照片</string>
     <string name="saved_photo">已保存照片</string>

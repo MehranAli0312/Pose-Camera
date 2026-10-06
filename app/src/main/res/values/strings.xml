@@ -147,14 +147,6 @@
     <string name="match_status_raise">Match the pose to raise your score</string>
     <string name="match_status_move">Move into frame to match</string>
     <string name="great_match">Great match!</string>
-    <string name="coach_title">How Pose Match works</string>
-    <string name="coach_pick_title">Pick a pose</string>
-    <string name="coach_pick_description">Choose one from the strip at the bottom.</string>
-    <string name="coach_match_title">Match the outline</string>
-    <string name="coach_match_description">Move until your body fills the outline \u2014 your score rises.</string>
-    <string name="coach_snap_title">Snap &amp; save</string>
-    <string name="coach_snap_description">Tap the shutter, add a filter, and save it.</string>
-    <string name="coach_got_it">Got it</string>
     <string name="action_discard">Discard</string>
     <string name="captured_frame">Captured frame</string>
     <string name="saved_photo">Saved photo</string>

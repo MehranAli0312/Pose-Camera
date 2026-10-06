@@ -142,14 +142,6 @@
     <string name="match_status_raise">Dopasuj się do pozy, aby podnieść wynik</string>
     <string name="match_status_move">Wejdź w kadr, aby porównać</string>
     <string name="great_match">Świetne dopasowanie!</string>
-    <string name="coach_title">Jak działa Pose Match</string>
-    <string name="coach_pick_title">Wybierz pozę</string>
-    <string name="coach_pick_description">Wybierz jedną z paska na dole.</string>
-    <string name="coach_match_title">Dopasuj się do konturu</string>
-    <string name="coach_match_description">Ruszaj się, aż ciało wypełni kontur — wynik rośnie.</string>
-    <string name="coach_snap_title">Zrób zdjęcie i zapisz</string>
-    <string name="coach_snap_description">Naciśnij migawkę, dodaj filtr i zapisz.</string>
-    <string name="coach_got_it">Rozumiem</string>
     <string name="action_discard">Odrzuć</string>
     <string name="captured_frame">Zrobione zdjęcie</string>
     <string name="saved_photo">Zapisane zdjęcie</string>
