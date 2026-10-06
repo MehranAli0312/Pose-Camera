@@ -2,6 +2,7 @@ package com.aipose.camera.posematch.ads
 
 import android.app.Application
 import com.example.ads.AdPlacement
+import com.example.ads.AdResult
 import com.example.ads.AdsManager
 import com.example.ads.lifecycle.AdsAppLifecycleObserver
 import com.example.common.Constants
@@ -21,6 +22,7 @@ fun registerAppOpenAds(
     remoteConfigStore: AdsRemoteConfigStore,
     loaderState: AppOpenLoaderState,
     routeGate: AppOpenRouteGate,
+    innerInterstitialAds: InnerInterstitialAds,
 ) {
     lifecycleObserver.appOpenPlacement = AdPlacement.AppOpenResume
     lifecycleObserver.appOpenEnabled = {
@@ -30,5 +32,8 @@ fun registerAppOpenAds(
     }
     lifecycleObserver.appOpenLoadTimeoutMs = { remoteConfigStore.current.appOpenLoadTimeoutMs }
     lifecycleObserver.onAppOpenCoverChanged = loaderState::setVisible
+    lifecycleObserver.onAppOpenFinished = { result ->
+        if (result == AdResult.Shown) innerInterstitialAds.onOtherFullScreenAdShown()
+    }
     lifecycleObserver.register(application)
 }

@@ -27,9 +27,8 @@ internal fun OnboardNativeAdPage(
     OnboardFrame(modifier = modifier, bottomReserved = bottomReserved) {
         Spacer(modifier = Modifier.height(OnboardChromeMetrics.TopBarTop))
         OnboardTopBar(
-            showSkip = true,
-            onSkip = onContinue,
             labelRes = R.string.onboard_next,
+            onClick = onContinue,
         )
         Box(
             modifier = Modifier

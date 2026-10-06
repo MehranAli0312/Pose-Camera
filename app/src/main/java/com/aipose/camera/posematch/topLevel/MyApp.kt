@@ -56,7 +56,14 @@ class MyApp : Application() {
 
             splashAdsLoads(adsManager)
 
-            registerAppOpenAds(this, koin.get(), koin.get(), koin.get(), koin.get())
+            registerAppOpenAds(
+                application = this,
+                lifecycleObserver = koin.get(),
+                remoteConfigStore = koin.get(),
+                loaderState = koin.get(),
+                routeGate = koin.get(),
+                innerInterstitialAds = koin.get(),
+            )
 
             koin.get<AppFirebaseRemote>().create()
         }

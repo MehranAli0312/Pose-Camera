@@ -30,6 +30,7 @@ val appAdsModule = module {
     single { AppOpenLoaderState() }
     single { AppOpenRouteGate() }
     single { MissedSplashAd() }
+    single { InnerInterstitialAds(adsManager = get(), store = get()) }
 
     single { AppFirebaseRemote(store = get(), adsManager = get()) }
 

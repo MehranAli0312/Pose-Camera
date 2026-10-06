@@ -31,11 +31,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.rememberInnerInterstitial
 import com.aipose.camera.posematch.ui.common.CaptureFab
 import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.navigateOnClick
+import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateToTab
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
@@ -67,6 +68,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     val palette = LocalAppPalette.current
+    val innerInterstitial = rememberInnerInterstitial()
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -105,7 +107,10 @@ fun BottomNavigationBar(
         }
         CaptureFab(
             onClick = {
-                navController.navigateOnClick(NavRoute.CameraScreenRoute.routeWithoutPose())
+                if (navController.acceptNavigationClick()) {
+                    val route = NavRoute.CameraScreenRoute.routeWithoutPose()
+                    innerInterstitial.showThen { navController.navigate(route) }
+                }
             },
             glowColor = Violet,
             glowAlpha = FAB_GLOW_ALPHA,

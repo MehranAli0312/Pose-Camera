@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.rememberInnerInterstitial
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
@@ -22,6 +23,7 @@ import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.graph.NavRoute
+import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.screens.home.components.HomeFilterBar
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeader
@@ -48,6 +50,8 @@ fun HomeScreen(
     val importFailedMessage = stringResource(R.string.toast_reference_failed)
     val importTitle = stringResource(R.string.imported_pose_title)
 
+    val innerInterstitial = rememberInnerInterstitial()
+
     val posePicker = rememberPosePicker { pickedUri ->
         viewModel.importPose(importTitle, pickedUri)
     }
@@ -60,8 +64,17 @@ fun HomeScreen(
         navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(pose.id))
     }
 
+    fun openWithAd(route: String) {
+        if (!navController.acceptNavigationClick()) return
+        innerInterstitial.showThen { navController.navigate(route) }
+    }
+
+    fun startPosing(pose: Pose) {
+        openWithAd(NavRoute.CameraScreenRoute.routeFor(pose.id))
+    }
+
     fun openAlbum(category: String) {
-        navController.navigateOnClick(NavRoute.PoseAlbumScreenRoute.routeFor(category))
+        openWithAd(NavRoute.PoseAlbumScreenRoute.routeFor(category))
     }
 
     LaunchedEffect(importedPose) {
@@ -114,7 +127,7 @@ fun HomeScreen(
                 item(key = HOME_HERO_KEY) {
                     HomeHeroCard(
                         hero = hero,
-                        onStartPosing = { openCamera(hero.pose) },
+                        onStartPosing = { startPosing(hero.pose) },
                         modifier = Modifier.padding(top = 12.dp),
                     )
                 }
@@ -125,7 +138,7 @@ fun HomeScreen(
                     actions = content.quickActions,
                     onActionClick = { action ->
                         when (val id = action.id) {
-                            HomeQuickActionId.LivePose -> content.hero?.pose?.let(::openCamera)
+                            HomeQuickActionId.LivePose -> content.hero?.pose?.let(::startPosing)
                             HomeQuickActionId.Import -> posePicker()
                             HomeQuickActionId.Explore ->
                                 openAlbum(NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES)

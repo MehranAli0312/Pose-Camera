@@ -113,11 +113,9 @@ fun OnboardScreen(
         }
         if (isChromeVisible) {
             OnboardChrome(
-                showSkip = !isLastPage,
                 totalSteps = steps.size,
                 currentStep = currentStepIndex,
                 ctaText = stringResource(currentStep.ctaRes),
-                onSkip = ::finishOnboarding,
                 onCta = { if (isLastPage) finishOnboarding() else goToNextPage() },
                 modifier = Modifier.graphicsLayer { alpha = pagerState.chromeAlpha(adPageIndex) },
                 bottomReserved = bottomAdHeight,

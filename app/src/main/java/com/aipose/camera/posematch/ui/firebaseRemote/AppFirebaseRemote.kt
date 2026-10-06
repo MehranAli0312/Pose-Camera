@@ -152,6 +152,7 @@ class AppFirebaseRemote(
         const val ACTIVITY_INTER_AD_UNIT = "activity_inter_ad_unit"
         const val ACTIVITY_BANNER_AD_UNIT = "activity_banner_ad_unit"
         const val ACTIVITY_NATIVE_AD_UNIT = "activity_native_ad_unit"
+        const val ONBOARD_FULL_NATIVE_AD_UNIT = "onboard_full_native_ad_unit"
         const val APP_OPEN_ON_RESUME_AD_UNIT = "app_open_on_resume_ad_unit"
         const val REWARDED_AD_UNIT = "rewarded_ad_unit"
 

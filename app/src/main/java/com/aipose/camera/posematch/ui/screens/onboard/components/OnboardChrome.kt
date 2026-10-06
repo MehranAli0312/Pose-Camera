@@ -11,21 +11,14 @@ import com.aipose.camera.posematch.ui.common.PoseCtaButton
 
 @Composable
 internal fun OnboardChrome(
-    showSkip: Boolean,
     totalSteps: Int,
     currentStep: Int,
     ctaText: String,
-    onSkip: () -> Unit,
     onCta: () -> Unit,
     modifier: Modifier = Modifier,
     bottomReserved: Dp = 0.dp,
 ) {
     OnboardFrame(modifier = modifier, bottomReserved = bottomReserved) {
-        Spacer(modifier = Modifier.height(OnboardChromeMetrics.TopBarTop))
-        OnboardTopBar(
-            showSkip = showSkip,
-            onSkip = onSkip,
-        )
         Spacer(modifier = Modifier.weight(1f))
         Spacer(modifier = Modifier.height(OnboardChromeMetrics.IndicatorTop))
         OnboardPagerIndicator(

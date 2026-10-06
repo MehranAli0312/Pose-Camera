@@ -1,9 +1,5 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
-import com.example.ads.AdPlacement
-import com.example.ads.AdRemoteStyles
-import com.example.ads.AdSlotStyle
-import com.example.ads.NativeAdDesign
 import com.aipose.camera.posematch.ads.HomeScreenBottom
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
@@ -27,6 +23,10 @@ import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.SPLASH_AD_MAX_WAIT_SECONDS_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.SPLASH_INTERSTITIAL_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.SPLASH_TO_PREMIUM_KEY
+import com.example.ads.AdPlacement
+import com.example.ads.AdRemoteStyles
+import com.example.ads.AdSlotStyle
+import com.example.ads.NativeAdDesign
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,14 +57,17 @@ data class AdsRemoteConfig(
         AdPlacement.HomeScreenBottom -> AdRemoteStyles.bannerOrSmallNative(homeScreenBottomAd)
         AdPlacement.LanguageScreenBottom ->
             AdRemoteStyles.bannerOrSmallNative(languageScreenBottomAd)
+
         AdPlacement.OnboardScreenBottom ->
             AdRemoteStyles.bannerOrSmallNative(onboardScreenBottomAd)
+
         AdPlacement.OnboardingFullScreenNative ->
             if (onboardingNativeAd == OnboardingNativeAdPosition.Off) {
                 AdSlotStyle.Hidden
             } else {
                 AdSlotStyle.Native(NativeAdDesign.FULL_SCREEN)
             }
+
         else -> AdSlotStyle.Hidden
     }
 
@@ -110,91 +113,93 @@ class AdsRemoteConfigStore(
     val current: AdsRemoteConfig get() = _config.value
 
     suspend fun restore() {
-        _config.value = AdsRemoteConfig(
-            splashInterstitial = dataStore.getBoolean(
-                SPLASH_INTERSTITIAL_AD_KEY,
-                defaults.splashInterstitial,
-            ),
-            homeScreenBottomAd = dataStore.getLong(
-                HOME_SCREEN_BOTTOM_AD_KEY,
-                defaults.homeScreenBottomAd.toLong(),
-            ).toInt(),
-            homeScreenBottomAdPosition = BottomAdPosition.fromRemote(
-                dataStore.getLong(
-                    HOME_SCREEN_BOTTOM_AD_POSITION_KEY,
-                    defaults.homeScreenBottomAdPosition.remoteValue,
-                ),
-            ),
-            languageScreenBottomAd = dataStore.getLong(
-                LANGUAGE_SCREEN_BOTTOM_AD_KEY,
-                defaults.languageScreenBottomAd.toLong(),
-            ).toInt(),
-            onboardScreenBottomAd = dataStore.getLong(
-                ONBOARD_SCREEN_BOTTOM_AD_KEY,
-                defaults.onboardScreenBottomAd.toLong(),
-            ).toInt(),
-            appOpenOnResume = dataStore.getBoolean(
-                APP_OPEN_ON_RESUME_AD_KEY,
-                defaults.appOpenOnResume,
-            ),
-            appOpenLoadTimeoutSeconds = dataStore.getLong(
-                APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY,
-                defaults.appOpenLoadTimeoutSeconds,
-            ),
-            splashAdMaxWaitSeconds = dataStore.getLong(
-                SPLASH_AD_MAX_WAIT_SECONDS_KEY,
-                defaults.splashAdMaxWaitSeconds,
-            ),
-            innerInterstitial = dataStore.getBoolean(
-                INNER_INTERSTITIAL_AD_KEY,
-                defaults.innerInterstitial,
-            ),
-            innerInterstitialCappingSeconds = dataStore.getLong(
-                INNER_INTERSTITIAL_CAPPING_KEY,
-                defaults.innerInterstitialCappingSeconds,
-            ),
-            innerInterstitialSplashFallback = dataStore.getBoolean(
-                INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY,
-                defaults.innerInterstitialSplashFallback,
-            ),
-            premiumFeatureDialog = PremiumFeatureDialogMode.fromRemote(
-                dataStore.getLong(
-                    PREMIUM_FEATURE_DIALOG_KEY,
-                    defaults.premiumFeatureDialog.remoteValue,
-                ),
-            ),
-            premiumCloseDelaySeconds = dataStore.getLong(
-                PREMIUM_CLOSE_DELAY_SECONDS_KEY,
-                defaults.premiumCloseDelaySeconds,
-            ),
-            premiumClosePosition = PremiumCloseButtonPosition.fromRemote(
-                dataStore.getLong(
-                    PREMIUM_CLOSE_POSITION_KEY,
-                    defaults.premiumClosePosition.remoteValue,
-                ),
-            ),
-            premiumAnnualPlan = dataStore.getBoolean(
-                PREMIUM_ANNUAL_PLAN_KEY,
-                defaults.premiumAnnualPlan,
-            ),
-            showOnboardingScreen = dataStore.getBoolean(
-                SHOW_ONBOARDING_SCREEN_KEY,
-                defaults.showOnboardingScreen,
-            ),
-            splashToPremium = dataStore.getBoolean(
-                SPLASH_TO_PREMIUM_KEY,
-                defaults.splashToPremium,
-            ),
-            onboardingNativeAd = OnboardingNativeAdPosition.fromRemote(
-                dataStore.getLong(
-                    ONBOARDING_NATIVE_AD_KEY,
-                    defaults.onboardingNativeAd.remoteValue,
-                ),
-            ),
-            adUnits = AdUnitIds.read { key -> dataStore.getString(key, "") },
-            nativeAdColors = NativeAdColorHexes.read { key -> dataStore.getString(key, "") },
-        )
+        _config.value = buildRestoredConfig()
     }
+
+    private suspend fun buildRestoredConfig() = AdsRemoteConfig(
+        splashInterstitial = dataStore.getBoolean(
+            SPLASH_INTERSTITIAL_AD_KEY,
+            defaults.splashInterstitial,
+        ),
+        homeScreenBottomAd = dataStore.getLong(
+            HOME_SCREEN_BOTTOM_AD_KEY,
+            defaults.homeScreenBottomAd.toLong(),
+        ).toInt(),
+        homeScreenBottomAdPosition = BottomAdPosition.fromRemote(
+            dataStore.getLong(
+                HOME_SCREEN_BOTTOM_AD_POSITION_KEY,
+                defaults.homeScreenBottomAdPosition.remoteValue,
+            ),
+        ),
+        languageScreenBottomAd = dataStore.getLong(
+            LANGUAGE_SCREEN_BOTTOM_AD_KEY,
+            defaults.languageScreenBottomAd.toLong(),
+        ).toInt(),
+        onboardScreenBottomAd = dataStore.getLong(
+            ONBOARD_SCREEN_BOTTOM_AD_KEY,
+            defaults.onboardScreenBottomAd.toLong(),
+        ).toInt(),
+        appOpenOnResume = dataStore.getBoolean(
+            APP_OPEN_ON_RESUME_AD_KEY,
+            defaults.appOpenOnResume,
+        ),
+        appOpenLoadTimeoutSeconds = dataStore.getLong(
+            APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY,
+            defaults.appOpenLoadTimeoutSeconds,
+        ),
+        splashAdMaxWaitSeconds = dataStore.getLong(
+            SPLASH_AD_MAX_WAIT_SECONDS_KEY,
+            defaults.splashAdMaxWaitSeconds,
+        ),
+        innerInterstitial = dataStore.getBoolean(
+            INNER_INTERSTITIAL_AD_KEY,
+            defaults.innerInterstitial,
+        ),
+        innerInterstitialCappingSeconds = dataStore.getLong(
+            INNER_INTERSTITIAL_CAPPING_KEY,
+            defaults.innerInterstitialCappingSeconds,
+        ),
+        innerInterstitialSplashFallback = dataStore.getBoolean(
+            INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY,
+            defaults.innerInterstitialSplashFallback,
+        ),
+        premiumFeatureDialog = PremiumFeatureDialogMode.fromRemote(
+            dataStore.getLong(
+                PREMIUM_FEATURE_DIALOG_KEY,
+                defaults.premiumFeatureDialog.remoteValue,
+            ),
+        ),
+        premiumCloseDelaySeconds = dataStore.getLong(
+            PREMIUM_CLOSE_DELAY_SECONDS_KEY,
+            defaults.premiumCloseDelaySeconds,
+        ),
+        premiumClosePosition = PremiumCloseButtonPosition.fromRemote(
+            dataStore.getLong(
+                PREMIUM_CLOSE_POSITION_KEY,
+                defaults.premiumClosePosition.remoteValue,
+            ),
+        ),
+        premiumAnnualPlan = dataStore.getBoolean(
+            PREMIUM_ANNUAL_PLAN_KEY,
+            defaults.premiumAnnualPlan,
+        ),
+        showOnboardingScreen = dataStore.getBoolean(
+            SHOW_ONBOARDING_SCREEN_KEY,
+            defaults.showOnboardingScreen,
+        ),
+        splashToPremium = dataStore.getBoolean(
+            SPLASH_TO_PREMIUM_KEY,
+            defaults.splashToPremium,
+        ),
+        onboardingNativeAd = OnboardingNativeAdPosition.fromRemote(
+            dataStore.getLong(
+                ONBOARDING_NATIVE_AD_KEY,
+                defaults.onboardingNativeAd.remoteValue,
+            ),
+        ),
+        adUnits = AdUnitIds.read { key -> dataStore.getString(key, "") },
+        nativeAdColors = NativeAdColorHexes.read { key -> dataStore.getString(key, "") },
+    )
 
     suspend fun update(config: AdsRemoteConfig) {
         _config.value = config
@@ -226,3 +231,15 @@ class AdsRemoteConfigStore(
         config.nativeAdColors.byKey().forEach { (key, hex) -> dataStore.putString(key, hex) }
     }
 }
+
+private const val TEST_FORCED_BANNER_STYLE = 1
+
+private fun AdsRemoteConfig.withTestAdsForced() = copy(
+    languageScreenBottomAd = TEST_FORCED_BANNER_STYLE,
+    onboardScreenBottomAd = TEST_FORCED_BANNER_STYLE,
+    onboardingNativeAd = OnboardingNativeAdPosition.AfterFirstStep,
+    homeScreenBottomAd = TEST_FORCED_BANNER_STYLE,
+    homeScreenBottomAdPosition = BottomAdPosition.AboveBottomBar,
+    innerInterstitial = true,
+    showOnboardingScreen = true,
+)

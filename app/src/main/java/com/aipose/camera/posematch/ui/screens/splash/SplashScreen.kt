@@ -26,7 +26,6 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.MissedSplashAd
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
-import com.aipose.camera.posematch.ads.OnboardingFullScreenNative
 import com.aipose.camera.posematch.ads.prepareSplashAd
 import com.aipose.camera.posematch.ads.SplashAdTiming
 import com.aipose.camera.posematch.ads.SplashFullscreen
@@ -101,7 +100,6 @@ fun SplashScreen(
         if (isFirstSession) ads.preload(AdPlacement.LanguageScreenBottom)
         if (isFirstSession && remoteConfigStore.current.showOnboardingScreen) {
             ads.preload(AdPlacement.OnboardScreenBottom)
-            ads.prepareSlot(AdPlacement.OnboardingFullScreenNative)
         }
 
         creep.cancel()
