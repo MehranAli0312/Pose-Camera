@@ -1,6 +1,7 @@
 package com.aipose.camera.posematch.ui.screens.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashAmbientBackground
-import com.aipose.camera.posematch.ui.screens.splash.components.SplashBrandMark
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val BrandToTitleSpacing = 28.dp
@@ -49,10 +50,19 @@ fun AppOpenLoadingOverlay(modifier: Modifier = Modifier) {
                 alignment = Alignment.CenterVertically,
             ),
         ) {
-            SplashBrandMark()
+            Image(
+                painter = painterResource(R.drawable.pose_splash_logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(width = 112.dp, height = 150.dp),
+            )
             Text(
                 text = stringResource(R.string.app_open_welcome_back),
-                style = poseTextStyle(TitleSize, FontWeight.Bold, MaterialTheme.colorScheme.onBackground),
+                style = poseTextStyle(
+                    TitleSize,
+                    FontWeight.Bold,
+                    MaterialTheme.colorScheme.onBackground
+                ),
                 textAlign = TextAlign.Center,
             )
             CircularProgressIndicator(

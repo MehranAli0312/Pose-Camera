@@ -3,6 +3,7 @@ package com.aipose.camera.posematch.ui.screens.splash.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -50,7 +51,8 @@ internal fun SplashAmbientBackground(
             .drawBehind {
                 drawRect(backgroundBrush)
                 drawGlows()
-            },
+            }
+            .navigationBarsPadding(),
         content = content,
     )
 }

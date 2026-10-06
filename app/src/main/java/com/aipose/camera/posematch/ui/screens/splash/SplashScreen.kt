@@ -7,10 +7,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,27 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.ads.AdPlacement
-import com.example.common.Constants.splashEnd
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.HomeScreenBottom
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.MissedSplashAd
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
-import com.aipose.camera.posematch.ads.prepareSplashAd
 import com.aipose.camera.posematch.ads.SplashAdTiming
 import com.aipose.camera.posematch.ads.SplashFullscreen
+import com.aipose.camera.posematch.ads.prepareSplashAd
 import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashAmbientBackground
-import com.aipose.camera.posematch.ui.screens.splash.components.SplashBrandMark
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashProgressBar
-import com.aipose.camera.posematch.ui.screens.splash.components.SplashTagline
-import com.aipose.camera.posematch.ui.screens.splash.components.SplashWordmark
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
+import com.example.ads.AdPlacement
+import com.example.common.Constants.splashEnd
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -48,14 +42,6 @@ import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import kotlin.time.Duration.Companion.milliseconds
-
-private val WatermarkWidth = 220.dp
-private val WatermarkHeight = 262.dp
-private val WatermarkOffsetY = (-87).dp
-private val ContentOffsetY = (-22).dp
-private val BrandMarkToWordmark = 20.dp
-private val WordmarkToTagline = 13.dp
-private val TaglineToProgress = 48.dp
 
 @SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
@@ -133,24 +119,16 @@ fun SplashScreen(
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.Center)
-                .offset(y = WatermarkOffsetY)
-                .size(width = WatermarkWidth, height = WatermarkHeight),
+                .size(width = 112.dp, height = 150.dp),
         )
 
-        Column(
+        SplashProgressBar(
+            progress = progress.value,
             modifier = Modifier
-                .align(Alignment.Center)
-                .offset(y = ContentOffsetY),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SplashBrandMark()
-            Spacer(modifier = Modifier.height(BrandMarkToWordmark))
-            SplashWordmark()
-            Spacer(modifier = Modifier.height(WordmarkToTagline))
-            SplashTagline()
-            Spacer(modifier = Modifier.height(TaglineToProgress))
-            SplashProgressBar(progress = progress.value)
-        }
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 50.dp)
+        )
+
     }
 }
 
