@@ -26,7 +26,7 @@ internal object NativeAdTemplateRegistry {
     }
 
     fun placeholderHeightDp(design: NativeAdDesign): Int = when (design) {
-        NativeAdDesign.SMALL -> 72
+        NativeAdDesign.SMALL -> 96
         NativeAdDesign.MEDIUM -> 260
         NativeAdDesign.LARGE -> 320
         NativeAdDesign.FULL_SCREEN -> 480

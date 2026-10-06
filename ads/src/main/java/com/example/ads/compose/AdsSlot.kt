@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import com.example.ads.AdPlacement
 import com.example.ads.AdSlotStyle
 import com.example.ads.AdsManager
@@ -18,6 +19,7 @@ fun AdsSlot(
     modifier: Modifier = Modifier,
     style: AdSlotStyle? = null,
     showPlaceholderWhileLoading: Boolean = true,
+    topSpacing: Dp = AdSlotDefaults.topSpacing,
 ) {
     val adsManager: AdsManager = koinInject()
     val isPro by adsManager.isPro.collectAsState()
@@ -31,6 +33,7 @@ fun AdsSlot(
             modifier = modifier,
             style = resolved.style,
             showPlaceholderWhileLoading = showPlaceholderWhileLoading,
+            topSpacing = topSpacing,
         )
 
         is AdSlotStyle.Native -> AdsNative(
@@ -38,6 +41,7 @@ fun AdsSlot(
             modifier = modifier,
             design = resolved.design,
             showPlaceholderWhileLoading = showPlaceholderWhileLoading,
+            topSpacing = topSpacing,
         )
 
         is AdSlotStyle.BannerWithNativeBackfill -> {
@@ -48,6 +52,7 @@ fun AdsSlot(
                     modifier = modifier,
                     design = resolved.backfill,
                     showPlaceholderWhileLoading = showPlaceholderWhileLoading,
+                    topSpacing = topSpacing,
                 )
             } else {
                 AdsBanner(
@@ -55,6 +60,7 @@ fun AdsSlot(
                     modifier = modifier,
                     style = resolved.style,
                     showPlaceholderWhileLoading = showPlaceholderWhileLoading,
+                    topSpacing = topSpacing,
                     onFailed = { bannerFailed = true },
                 )
             }

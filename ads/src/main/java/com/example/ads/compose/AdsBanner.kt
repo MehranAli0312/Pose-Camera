@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.ads.AdPlacement
@@ -40,6 +42,7 @@ fun AdsBanner(
     style: BannerStyle? = null,
     showPlaceholderWhileLoading: Boolean = true,
     containerColor: Color = Color.Unspecified,
+    topSpacing: Dp = 0.dp,
     onFailed: () -> Unit = {},
 ) {
     val adsManager: AdsManager = koinInject()
@@ -90,6 +93,7 @@ fun AdsBanner(
 
             currentRequest != null -> Box(
                 modifier = Modifier
+                    .padding(top = topSpacing)
                     .fillMaxWidth()
                     .height(slotHeight)
                     .background(slotColor),
@@ -126,7 +130,10 @@ fun AdsBanner(
                 }
             }
 
-            showPlaceholderWhileLoading -> AdSlotPlaceholder(height = slotHeight)
+            showPlaceholderWhileLoading -> AdSlotPlaceholder(
+                height = slotHeight,
+                modifier = Modifier.padding(top = topSpacing),
+            )
         }
     }
 }

@@ -6,6 +6,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 /**
  * Host-app colors for everything the ads module draws itself: the banner slot behind the
@@ -24,6 +26,8 @@ data class AdSlotColors(
 val LocalAdSlotColors = staticCompositionLocalOf<AdSlotColors?> { null }
 
 object AdSlotDefaults {
+    val topSpacing: Dp = 8.dp
+
     val colors: AdSlotColors
         @Composable
         @ReadOnlyComposable

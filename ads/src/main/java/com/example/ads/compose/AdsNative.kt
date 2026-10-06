@@ -1,6 +1,7 @@
 package com.example.ads.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.ads.AdPlacement
 import com.example.ads.nativeDesignOr
@@ -29,6 +31,7 @@ fun AdsNative(
     modifier: Modifier = Modifier,
     design: NativeAdDesign? = null,
     showPlaceholderWhileLoading: Boolean = true,
+    topSpacing: Dp = 0.dp,
 ) {
     val adsManager: AdsManager = koinInject()
     val controller: NativeAdController = koinInject()
@@ -69,13 +72,15 @@ fun AdsNative(
                 design = resolvedDesign,
                 nativeAd = ad,
                 colors = adsManager.nativeAdColors(),
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier
+                    .padding(top = topSpacing)
+                    .fillMaxWidth(),
             )
         }
     } else if (showPlaceholderWhileLoading && !loadFailed) {
         AdSlotPlaceholder(
             height = NativeAdTemplateRegistry.placeholderHeightDp(resolvedDesign).dp,
-            modifier = modifier,
+            modifier = modifier.padding(top = topSpacing),
         )
     }
 }

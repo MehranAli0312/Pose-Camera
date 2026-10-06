@@ -49,8 +49,8 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import kotlin.time.Duration.Companion.milliseconds
 
-private val WatermarkWidth = 200.dp
-private val WatermarkHeight = 330.dp
+private val WatermarkWidth = 220.dp
+private val WatermarkHeight = 262.dp
 private val WatermarkOffsetY = (-87).dp
 private val ContentOffsetY = (-22).dp
 private val BrandMarkToWordmark = 20.dp
@@ -129,7 +129,7 @@ fun SplashScreen(
 
     SplashAmbientBackground {
         Image(
-            painter = painterResource(R.drawable.ic_splash_pose_watermark),
+            painter = painterResource(R.drawable.pose_splash_logo),
             contentDescription = null,
             modifier = Modifier
                 .align(Alignment.Center)

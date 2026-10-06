@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,11 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
@@ -43,49 +46,80 @@ internal fun SmallNativeTemplate(
     colors: NativeAdColors,
     modifier: Modifier = Modifier,
 ) {
-    NativeAdSurface(modifier) {
-        Row(
+    NativeAdSurface(modifier, cornerRadius = SmallCornerRadius) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(horizontal = 12.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            NativeAdIcon(nativeAd, size = 40.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                AdAttributionBadge(colors)
+                Spacer(modifier = Modifier.weight(1f))
+                NativeAdChoicesView()
+            }
 
-            Column(modifier = Modifier.weight(1f)) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                NativeAdIcon(nativeAd, size = 48.dp, cornerRadius = 12.dp)
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
-                    AdAttributionBadge(colors)
-                    NativeAdChoicesView()
-                }
-                NativeAdHeadlineView {
-                    Text(
-                        text = nativeAd.headline.orEmpty(),
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.SemiBold,
-                        color = AdSlotDefaults.colors.headline,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee()
-                    )
-                }
-                nativeAd.advertiser?.takeIf { it.isNotBlank() }?.let { advertiser ->
-                    NativeAdAdvertiserView {
+                    NativeAdHeadlineView {
                         Text(
-                            text = advertiser,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = AdSlotDefaults.colors.body,
+                            text = nativeAd.headline.orEmpty(),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = AdSlotDefaults.colors.headline,
                             maxLines = 1,
                             modifier = Modifier.basicMarquee()
                         )
                     }
+                    SmallNativeSupportingText(nativeAd)
                 }
-            }
 
-            NativeAdCta(nativeAd, colors)
+                NativeAdCta(
+                    nativeAd = nativeAd,
+                    colors = colors,
+                    verticalPadding = 10.dp,
+                    shape = CircleShape,
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun SmallNativeSupportingText(nativeAd: NativeAd) {
+    val body = nativeAd.body?.takeIf { it.isNotBlank() }
+    if (body != null) {
+        NativeAdBodyView {
+            Text(
+                text = body,
+                style = MaterialTheme.typography.bodySmall,
+                color = AdSlotDefaults.colors.body,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        return
+    }
+    val advertiser = nativeAd.advertiser?.takeIf { it.isNotBlank() } ?: return
+    NativeAdAdvertiserView {
+        Text(
+            text = advertiser,
+            style = MaterialTheme.typography.bodySmall,
+            color = AdSlotDefaults.colors.body,
+            maxLines = 1,
+            modifier = Modifier.basicMarquee()
+        )
     }
 }
 
@@ -301,11 +335,15 @@ internal fun FullScreenNativeTemplate(
 }
 
 @Composable
-private fun NativeAdSurface(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+private fun NativeAdSurface(
+    modifier: Modifier = Modifier,
+    cornerRadius: Dp = 8.dp,
+    content: @Composable () -> Unit,
+) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(cornerRadius))
             .background(AdSlotDefaults.colors.container)
             .consumeNonAssetTouches(),
     ) {
@@ -330,7 +368,7 @@ private fun AdAttributionBadge(colors: NativeAdColors) {
 }
 
 @Composable
-private fun NativeAdIcon(nativeAd: NativeAd, size: androidx.compose.ui.unit.Dp) {
+private fun NativeAdIcon(nativeAd: NativeAd, size: Dp, cornerRadius: Dp = 8.dp) {
     val iconDrawable = nativeAd.icon?.drawable ?: return
     NativeAdIconView(modifier = Modifier.size(size)) {
         androidx.compose.foundation.Image(
@@ -339,7 +377,7 @@ private fun NativeAdIcon(nativeAd: NativeAd, size: androidx.compose.ui.unit.Dp) 
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(size)
-                .clip(RoundedCornerShape(8.dp)),
+                .clip(RoundedCornerShape(cornerRadius)),
         )
     }
 }
@@ -350,6 +388,7 @@ private fun NativeAdCta(
     colors: NativeAdColors,
     fillWidth: Boolean = false,
     verticalPadding: Dp = 8.dp,
+    shape: Shape = RoundedCornerShape(8.dp),
 ) {
     val callToAction = nativeAd.callToAction?.takeIf { it.isNotBlank() } ?: return
     NativeAdCallToActionView(
@@ -358,7 +397,7 @@ private fun NativeAdCta(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
+                .clip(shape)
                 .background(colors.ctaBackground.orThemeColor(MaterialTheme.colorScheme.primary))
                 .padding(horizontal = 12.dp, vertical = verticalPadding),
             contentAlignment = Alignment.Center,
@@ -376,6 +415,7 @@ private fun NativeAdCta(
 
 private const val MEDIA_ASPECT_RATIO = 1.78f
 private val CtaWidth = 96.dp
+private val SmallCornerRadius = 12.dp
 
 /**
  * Claims touches on the template background so they never reach the enclosing NativeAdView,
