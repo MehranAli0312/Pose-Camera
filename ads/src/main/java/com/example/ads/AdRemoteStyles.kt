@@ -36,15 +36,6 @@ object AdRemoteStyles {
         else -> AdSlotStyle.Hidden
     }
 
-    fun rectBannerOrLargeNative(id: Int): AdSlotStyle = when (id) {
-        1 -> AdSlotStyle.BannerWithNativeBackfill(
-            style = BannerStyle.MEDIUM_RECTANGLE,
-            backfill = NativeAdDesign.LARGE,
-        )
-        2 -> AdSlotStyle.Native(NativeAdDesign.LARGE)
-        else -> AdSlotStyle.Hidden
-    }
-
     fun fullscreen(id: Int): FullscreenAdStyle = when (id) {
         1 -> FullscreenAdStyle.Interstitial
         2 -> FullscreenAdStyle.AppOpen

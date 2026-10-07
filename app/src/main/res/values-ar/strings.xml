@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">تخطي</string>
     <string name="item_settings">الإعدادات</string>
     <string name="close">إغلاق</string>
     <string name="settings_language">اللغة</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">يرجى التقييم</string>
     <string name="done">تم</string>
     <string name="error_not_found">غير موجود</string>
-    <string name="pro_restore">استعادة</string>
-    <string name="pro_feature_remove_ads">إزالة الإعلانات</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">تجربة خالية من الإعلانات 100%</string>
+    <string name="pro_restore">استعادة الشراء</string>
+    <string name="pro_terms">الشروط</string>
+    <string name="pro_privacy">الخصوصية</string>
+    <string name="pro_title_highlight">كل شيء</string>
+    <string name="pro_benefit_poses">افتح كل الوضعيات المميزة</string>
+    <string name="pro_benefit_no_ads">بدون إعلانات، أبدًا</string>
+    <string name="pro_benefit_updates">ادعم التحديثات القادمة</string>
+    <string name="pro_plan_lifetime">مدى الحياة</string>
+    <string name="pro_plan_lifetime_note">دفعة واحدة، ملكك إلى الأبد</string>
+    <string name="pro_plan_yearly_note">تُدفع مرة واحدة سنويًا</string>
+    <string name="pro_cta_lifetime">افتح مدى الحياة</string>
+    <string name="pro_cta_yearly">افتح الاشتراك السنوي</string>
+    <string name="pro_footnote_lifetime">دفعة واحدة · بدون اشتراك</string>
     <string name="pro_plan_yearly">سنوي</string>
-    <string name="pro_plan_monthly">شهري</string>
     <string name="pro_best_value">أفضل قيمة</string>
-    <string name="pro_save_percent">وفّر %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s تُدفع سنويًا</string>
-    <string name="pro_billed_monthly">يُدفع كل شهر</string>
-    <string name="pro_per_month">شهريًا</string>
-    <string name="pro_trust_note">يمكنك الإلغاء في أي وقت · دفع آمن عبر Google Play</string>
     <string name="pro_store_unavailable">تعذّر تحميل الخطط. تحقق من اتصالك وحاول مرة أخرى.</string>
     <string name="pro_retry">حاول مرة أخرى</string>
-    <string name="pro_upgrade_title">الترقية إلى Pro</string>
     <string name="pro_try_for_free">جرّب مجاناً</string>
-    <string name="pro_no_payment_now">لا دفع الآن!</string>
     <string name="pro_auto_renewal_note">اشتراك يتجدد تلقائياً. يمكنك الإلغاء في أي وقت</string>
     <string name="pro_purchase_success">تم الشراء بنجاح</string>
     <string name="pro_purchase_already_owned">أنت تملك هذه الخطة بالفعل</string>
@@ -53,8 +54,8 @@
         <item quantity="many">%1$d نجمة</item>
         <item quantity="other">%1$d نجمة</item>
     </plurals>
-    <string name="pro_title">افتح Pose Pro</string>
-    <string name="pro_subtitle">اتخذ الوضعيات وطابقها والتقط الصور دون إعلانات.</string>
+    <string name="pro_title">افتح كل شيء</string>
+    <string name="pro_subtitle">احصل على كل وضعية، بدون إعلانات — إلى الأبد.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="zero">%1$d يوم مجانًا، ثم %2$s</item>
         <item quantity="one">يوم واحد مجانًا، ثم %2$s</item>
@@ -63,15 +64,13 @@
         <item quantity="many">%1$d يومًا مجانًا، ثم %2$s</item>
         <item quantity="other">%1$d يوم مجانًا، ثم %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">ميزة PRO</string>
-    <string name="premium_feature_title">ميزة مميزة</string>
-    <string name="premium_feature_message">اشترك في الميزة المميزة أو شاهد إعلانًا</string>
-    <string name="premium_feature_free_access_title">احصل على وصول مجاني</string>
-    <string name="premium_feature_free_access_subtitle">شاهد إعلانًا قصيرًا</string>
     <string name="premium_feature_free_access_loading">جارٍ تحميل الإعلان…</string>
     <string name="premium_feature_go_premium_title">اشترك في Premium</string>
-    <string name="premium_feature_go_premium_subtitle">افتح جميع الميزات دون إعلانات</string>
-    <string name="premium_feature_maybe_later">ربما لاحقًا</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">وضعية مقفلة</string>
+    <string name="premium_pose_title">وضعية مميزة</string>
+    <string name="premium_pose_message">شاهد إعلانًا قصيرًا لفتح هذه الوضعية، أو اشترك في Premium لفتحها جميعًا.</string>
+    <string name="premium_pose_watch_ad">شاهد إعلانًا للفتح</string>
     <string name="nav_home">الرئيسية</string>
     <string name="nav_gallery">المجموعات</string>
     <string name="nav_settings">الإعدادات</string>
@@ -81,7 +80,6 @@
     <string name="action_delete">حذف</string>
     <string name="action_import">استيراد</string>
     <string name="action_save">حفظ</string>
-    <string name="splash_tagline">استوديو التناسق الجمالي</string>
     <string name="onboard_title_1">اختر وضعية</string>
     <string name="onboard_title_2">طابق الإطار</string>
     <string name="onboard_title_3">التقط واحفظ</string>
@@ -174,23 +172,10 @@
     <string name="perm_camera_title">مطلوب إذن الكاميرا</string>
     <string name="perm_camera_desc">اسمح بالوصول إلى الكاميرا لالتقاط الصور ومطابقة وضعياتك.</string>
     <string name="perm_allow">سماح</string>
+    <string name="perm_camera_blocked_desc">الوصول إلى الكاميرا متوقف. افتح الإعدادات وفعّل إذن الكاميرا لمواصلة التقاط الوضعيات.</string>
+    <string name="perm_open_settings">افتح الإعدادات</string>
     <string name="capture_untitled">صورة بلا عنوان</string>
-    <string name="home_tagline">طابِق · التقط · أتقِن</string>
-    <string name="home_day_streak">أيام متتالية</string>
-    <string name="home_filter_category">الفئة</string>
-    <string name="home_filter_level">المستوى</string>
-    <string name="home_shuffle">خلط الوضعيات</string>
-    <string name="home_hero_eyebrow">متابعة الجلسة</string>
-    <string name="home_hero_best_match">أفضل تطابق</string>
     <string name="home_hero_cta">ابدأ الوضعيات</string>
-    <plurals name="home_hero_meta">
-        <item quantity="zero">%1$s · %2$s · %3$d وضعية</item>
-        <item quantity="one">%1$s · %2$s · وضعية %3$d</item>
-        <item quantity="two">%1$s · %2$s · وضعيتان %3$d</item>
-        <item quantity="few">%1$s · %2$s · %3$d وضعيات</item>
-        <item quantity="many">%1$s · %2$s · %3$d وضعية</item>
-        <item quantity="other">%1$s · %2$s · %3$d وضعية</item>
-    </plurals>
     <string name="home_action_live_pose">وضعية مباشرة</string>
     <string name="home_action_open_camera">فتح الكاميرا</string>
     <string name="home_action_import">استيراد</string>
@@ -302,17 +287,7 @@
     <string name="collections_filter_recent">الأحدث</string>
     <string name="collections_sort_title">ترتيب الصور</string>
     <string name="explore_title">كل الوضعيات</string>
-    <string name="explore_total">%1$d إجمالًا</string>
     <string name="explore_search_hint">ابحث عن وضعيات أو أجواء أو وسوم</string>
-    <plurals name="explore_showing">
-        <item quantity="zero">عرض %1$d وضعية</item>
-        <item quantity="one">عرض وضعية %1$d</item>
-        <item quantity="two">عرض وضعيتين %1$d</item>
-        <item quantity="few">عرض %1$d وضعيات</item>
-        <item quantity="many">عرض %1$d وضعية</item>
-        <item quantity="other">عرض %1$d وضعية</item>
-    </plurals>
-    <string name="explore_sort">ترتيب</string>
     <string name="explore_sort_title">ترتيب الوضعيات</string>
     <string name="explore_sort_featured">المميزة</string>
     <string name="explore_sort_easiest">الأسهل أولًا</string>
@@ -372,15 +347,6 @@
         <item quantity="other">حققت %1$d%%+ في %2$d وضعية هذا الأسبوع</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · ذكاء اصطناعي على الجهاز · دون رفع</string>
-    <string name="settings_streak_subtitle">%1$d صورة · متوسط تطابق %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="zero">%1$d يوم متتالٍ</item>
-        <item quantity="one">يوم واحد متتالٍ</item>
-        <item quantity="two">يومان متتاليان</item>
-        <item quantity="few">%1$d أيام متتالية</item>
-        <item quantity="many">%1$d يومًا متتاليًا</item>
-        <item quantity="other">%1$d يوم متتالٍ</item>
-    </plurals>
     <string name="progress_title">تقدّمك</string>
     <string name="progress_tab_week">أسبوع</string>
     <string name="progress_tab_month">شهر</string>

@@ -53,6 +53,10 @@
         <value>45</value>
     </entry>
     <entry>
+        <key>phot_save_inter_ad</key>
+        <value>false</value>
+    </entry>
+    <entry>
         <key>premium_feature_dialog_key</key>
         <value>0</value>
     </entry>

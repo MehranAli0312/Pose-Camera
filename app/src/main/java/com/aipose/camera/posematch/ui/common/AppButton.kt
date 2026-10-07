@@ -18,12 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.aipose.camera.posematch.ui.theme.brandGradientBackground
+import com.aipose.camera.posematch.ui.theme.BrandGradient
 
 enum class IconPosition {
     Start, End
@@ -38,6 +39,7 @@ fun AppButton(
     iconPosition: IconPosition = IconPosition.Start,
     iconContentDescription: String? = null,
     useGradient: Boolean = true,
+    gradientBrush: Brush = BrandGradient.brush,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     cornerRadius: Dp = 50.dp,
@@ -56,7 +58,7 @@ fun AppButton(
         Modifier
     }
     val backgroundModifier = if (useGradient) {
-        Modifier.brandGradientBackground(shape)
+        Modifier.background(brush = gradientBrush, shape = shape)
     } else {
         Modifier.background(
             color = if (enabled) containerColor else containerColor.copy(alpha = 0.5f),

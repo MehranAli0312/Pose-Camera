@@ -6,6 +6,7 @@ import com.aipose.camera.posematch.data.repoImpl.CaptureRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.FavoritePoseRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.LanguageRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PhotoGradingRepositoryImpl
+import com.aipose.camera.posematch.data.repoImpl.PoseLockRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PoseRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PremiumRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.RateUsRepositoryImpl
@@ -16,6 +17,7 @@ import com.aipose.camera.posematch.domain.repo.CaptureRepository
 import com.aipose.camera.posematch.domain.repo.FavoritePoseRepository
 import com.aipose.camera.posematch.domain.repo.LanguageRepository
 import com.aipose.camera.posematch.domain.repo.PhotoGradingRepository
+import com.aipose.camera.posematch.domain.repo.PoseLockRepository
 import com.aipose.camera.posematch.domain.repo.PoseRepository
 import com.aipose.camera.posematch.domain.repo.PremiumRepository
 import com.aipose.camera.posematch.domain.repo.RateUsRepository
@@ -41,6 +43,7 @@ val repositoryModule = module {
             cutoutDataSource = get()
         )
     }
+    single<PoseLockRepository> { PoseLockRepositoryImpl(get()) }
     single<CaptureRepository> { CaptureRepositoryImpl(get(), get(), get(), get()) }
     single<CaptureLocationRepository> { CaptureLocationRepositoryImpl(get()) }
     single<PhotoGradingRepository> { PhotoGradingRepositoryImpl(get(), get(), get()) }

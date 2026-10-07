@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.CacheDrawScope
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import com.aipose.camera.posematch.ui.theme.Emerald
 import com.aipose.camera.posematch.ui.theme.Indigo
 import com.aipose.camera.posematch.ui.theme.PoseAmber
@@ -98,21 +98,28 @@ fun PoseGlowBackground(
         modifier = modifier
             .fillMaxSize()
             .clipToBounds()
-            .drawBehind {
-                drawRect(backgroundBrush)
-                drawGlows(glows)
+            .drawWithCache {
+                val glowCircles = glowCirclesFor(glows)
+                onDrawBehind {
+                    drawRect(backgroundBrush)
+                    glowCircles.forEach { glow ->
+                        drawCircle(brush = glow.brush, radius = glow.radius, center = glow.center)
+                    }
+                }
             },
         content = content,
     )
 }
 
-private fun DrawScope.drawGlows(glows: List<PoseGlow>) {
+private class GlowCircle(val brush: Brush, val radius: Float, val center: Offset)
+
+private fun CacheDrawScope.glowCirclesFor(glows: List<PoseGlow>): List<GlowCircle> {
     val scaleX = size.width / DESIGN_WIDTH
     val scaleY = size.height / DESIGN_HEIGHT
-    glows.forEach { glow ->
+    return glows.map { glow ->
         val radius = glow.radius * scaleX
         val center = Offset(glow.centerX * scaleX, glow.centerY * scaleY)
-        drawCircle(
+        GlowCircle(
             brush = Brush.radialGradient(
                 colors = listOf(glow.color.copy(alpha = glow.alpha), Color.Transparent),
                 center = center,

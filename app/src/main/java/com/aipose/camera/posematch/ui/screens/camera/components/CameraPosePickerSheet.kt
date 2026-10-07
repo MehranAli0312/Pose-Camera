@@ -34,6 +34,7 @@ private const val GRID_COLUMNS = 3
 internal fun CameraPosePickerSheet(
     poses: List<Pose>,
     selectedPoseId: Int?,
+    lockedPoseIds: Set<Int>,
     onPoseSelected: (Pose) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -63,6 +64,7 @@ internal fun CameraPosePickerSheet(
                 PoseThumbnail(
                     pose = pose,
                     isSaved = pose.id == selectedPoseId,
+                    isLocked = pose.id in lockedPoseIds,
                     onClick = { onPoseSelected(pose) },
                 )
             }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -24,8 +23,8 @@ import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.ProgressPeriod
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
-import com.aipose.camera.posematch.ui.common.PoseBackHeader
+import com.aipose.camera.posematch.ui.common.PoseTopBar
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.PoseSegmentedTabs
@@ -59,70 +58,75 @@ fun ProgressScreen(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
-                .safeTopSystemBarsPadding()
-                .verticalScroll(rememberScrollState())
-                .safeBottomSystemBarsPadding()
-                .padding(
-                    start = PoseScreenGutter,
-                    end = PoseScreenGutter,
-                    top = PoseScreenTopSpacing,
-                    bottom = 24.dp,
-                ),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .adaptiveWidth(),
         ) {
-            PoseBackHeader(
+            PoseTopBar(
                 title = stringResource(R.string.progress_title),
                 onBack = navController::popBackStackOnClick,
+                modifier = Modifier.poseScreenPadding(),
             )
-            PoseSegmentedTabs(
-                labels = ProgressPeriod.entries.map { stringResource(it.tabLabelRes) },
-                selectedIndex = period.ordinal,
-                pillBrush = TabsPillBrush,
-                onSelect = { index -> viewModel.selectPeriod(ProgressPeriod.entries[index]) },
-                height = 40.dp,
-                labelSize = 12.sp,
-            )
-            val stats = content?.stats ?: return@Column
-            ProgressAverageCard(
-                averageMatch = stats.averageMatch,
-                delta = stats.averageDelta,
-                deltaLabelRes = period.deltaLabelRes,
-            )
-            ProgressTrendCard(
-                period = period,
-                buckets = stats.trend,
-                averageMatch = stats.averageMatch,
-            )
-            ProgressCategoriesCard(categories = stats.topCategories)
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min)
-                    .padding(top = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .safeBottomSystemBarsPadding()
+                    .padding(
+                        start = PoseScreenGutter,
+                        end = PoseScreenGutter,
+                        top = 16.dp,
+                        bottom = 24.dp,
+                    ),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                ProgressStatTile(
-                    value = stats.perfectShots.toString(),
-                    label = stringResource(R.string.progress_stat_perfect),
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                PoseSegmentedTabs(
+                    labels = ProgressPeriod.entries.map { stringResource(it.tabLabelRes) },
+                    selectedIndex = period.ordinal,
+                    pillBrush = TabsPillBrush,
+                    onSelect = { index -> viewModel.selectPeriod(ProgressPeriod.entries[index]) },
+                    height = 40.dp,
+                    labelSize = 12.sp,
                 )
-                ProgressStatTile(
-                    value = stringResource(R.string.progress_streak_value, stats.bestStreak).bidiIsolate(),
-                    label = stringResource(R.string.progress_stat_streak),
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                val stats = content?.stats ?: return@Column
+                ProgressAverageCard(
+                    averageMatch = stats.averageMatch,
+                    delta = stats.averageDelta,
+                    deltaLabelRes = period.deltaLabelRes,
                 )
-                ProgressStatTile(
-                    value = stats.posesTried.toString(),
-                    label = stringResource(R.string.progress_stat_poses),
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
+                ProgressTrendCard(
+                    period = period,
+                    buckets = stats.trend,
+                    averageMatch = stats.averageMatch,
                 )
+                ProgressCategoriesCard(categories = stats.topCategories)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min)
+                        .padding(top = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    ProgressStatTile(
+                        value = stats.perfectShots.toString(),
+                        label = stringResource(R.string.progress_stat_perfect),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                    ProgressStatTile(
+                        value = stringResource(R.string.progress_streak_value, stats.bestStreak).bidiIsolate(),
+                        label = stringResource(R.string.progress_stat_streak),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                    ProgressStatTile(
+                        value = stats.posesTried.toString(),
+                        label = stringResource(R.string.progress_stat_poses),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                }
             }
         }
     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Overslaan</string>
     <string name="item_settings">Instellingen</string>
     <string name="close">Sluiten</string>
     <string name="settings_language">Taal</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Beoordeel ons</string>
     <string name="done">Klaar</string>
     <string name="error_not_found">Niet gevonden</string>
-    <string name="pro_restore">Herstellen</string>
-    <string name="pro_feature_remove_ads">Advertenties verwijderen</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">Een 100% advertentievrije ervaring</string>
+    <string name="pro_restore">Aankoop herstellen</string>
+    <string name="pro_terms">Voorwaarden</string>
+    <string name="pro_privacy">Privacy</string>
+    <string name="pro_title_highlight">alles</string>
+    <string name="pro_benefit_poses">Ontgrendel alle premium-poses</string>
+    <string name="pro_benefit_no_ads">Nooit meer advertenties</string>
+    <string name="pro_benefit_updates">Steun toekomstige updates</string>
+    <string name="pro_plan_lifetime">Levenslang</string>
+    <string name="pro_plan_lifetime_note">Eenmalige betaling, voor altijd van jou</string>
+    <string name="pro_plan_yearly_note">Eén keer per jaar gefactureerd</string>
+    <string name="pro_cta_lifetime">Levenslang ontgrendelen</string>
+    <string name="pro_cta_yearly">Jaarlijks ontgrendelen</string>
+    <string name="pro_footnote_lifetime">Eenmalige betaling · Geen abonnement</string>
     <string name="pro_plan_yearly">Jaarlijks</string>
-    <string name="pro_plan_monthly">Maandelijks</string>
     <string name="pro_best_value">BESTE DEAL</string>
-    <string name="pro_save_percent">BESPAAR %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s per jaar gefactureerd</string>
-    <string name="pro_billed_monthly">Elke maand gefactureerd</string>
-    <string name="pro_per_month">per maand</string>
-    <string name="pro_trust_note">Altijd opzegbaar · Veilig via Google Play</string>
     <string name="pro_store_unavailable">Kan abonnementen niet laden. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="pro_retry">Opnieuw proberen</string>
-    <string name="pro_upgrade_title">Upgrade naar Pro</string>
     <string name="pro_try_for_free">Gratis proberen</string>
-    <string name="pro_no_payment_now">Nu niets betalen!</string>
     <string name="pro_auto_renewal_note">Abonnement met automatische verlenging. Altijd opzegbaar</string>
     <string name="pro_purchase_success">Aankoop gelukt</string>
     <string name="pro_purchase_already_owned">Je hebt dit abonnement al</string>
@@ -49,21 +50,19 @@
         <item quantity="one">%1$d ster</item>
         <item quantity="other">%1$d sterren</item>
     </plurals>
-    <string name="pro_title">Ontgrendel Pose Pro</string>
-    <string name="pro_subtitle">Poseren, vergelijken en fotograferen zonder advertenties.</string>
+    <string name="pro_title">Ontgrendel alles</string>
+    <string name="pro_subtitle">Alle poses, zonder advertenties — voor altijd.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dag gratis, daarna %2$s</item>
         <item quantity="other">%1$d dagen gratis, daarna %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">PRO-functie</string>
-    <string name="premium_feature_title">Premiumfunctie</string>
-    <string name="premium_feature_message">Abonneer je op de premiumfunctie of bekijk een advertentie</string>
-    <string name="premium_feature_free_access_title">Gratis toegang</string>
-    <string name="premium_feature_free_access_subtitle">Bekijk een korte advertentie</string>
     <string name="premium_feature_free_access_loading">Advertentie laden…</string>
     <string name="premium_feature_go_premium_title">Neem Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Alle functies, geen advertenties</string>
-    <string name="premium_feature_maybe_later">Misschien later</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Vergrendelde pose</string>
+    <string name="premium_pose_title">Premium-pose</string>
+    <string name="premium_pose_message">Bekijk een korte advertentie om deze pose te ontgrendelen, of neem Premium om ze allemaal te ontgrendelen.</string>
+    <string name="premium_pose_watch_ad">Bekijk advertentie om te ontgrendelen</string>
     <string name="nav_home">Home</string>
     <string name="nav_gallery">Collecties</string>
     <string name="nav_settings">Instellingen</string>
@@ -73,7 +72,6 @@
     <string name="action_delete">Verwijderen</string>
     <string name="action_import">Importeren</string>
     <string name="action_save">Opslaan</string>
-    <string name="splash_tagline">STUDIO VOOR ESTHETISCHE UITLIJNING</string>
     <string name="onboard_title_1">Kies een pose</string>
     <string name="onboard_title_2">Volg de omtrek</string>
     <string name="onboard_title_3">Klik &amp; bewaar</string>
@@ -166,19 +164,10 @@
     <string name="perm_camera_title">Cameratoestemming nodig</string>
     <string name="perm_camera_desc">Geef toegang tot de camera om foto\'s te maken en je poses te vergelijken.</string>
     <string name="perm_allow">Toestaan</string>
+    <string name="perm_camera_blocked_desc">Cameratoegang staat uit. Open de instellingen en schakel de cameratoestemming in om verder te poseren.</string>
+    <string name="perm_open_settings">Instellingen openen</string>
     <string name="capture_untitled">Naamloze foto</string>
-    <string name="home_tagline">Vergelijk · Fotografeer · Perfectioneer</string>
-    <string name="home_day_streak">Dagen op rij</string>
-    <string name="home_filter_category">CATEGORIE</string>
-    <string name="home_filter_level">NIVEAU</string>
-    <string name="home_shuffle">Poses husselen</string>
-    <string name="home_hero_eyebrow">SESSIE HERVATTEN</string>
-    <string name="home_hero_best_match">BESTE MATCH</string>
     <string name="home_hero_cta">Begin met poseren</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d pose</item>
-        <item quantity="other">%1$s · %2$s · %3$d poses</item>
-    </plurals>
     <string name="home_action_live_pose">Live pose</string>
     <string name="home_action_open_camera">Camera openen</string>
     <string name="home_action_import">Importeren</string>
@@ -270,13 +259,7 @@
     <string name="collections_filter_recent">Recent</string>
     <string name="collections_sort_title">Foto\'s sorteren</string>
     <string name="explore_title">Alle poses</string>
-    <string name="explore_total">%1$d in totaal</string>
     <string name="explore_search_hint">Zoek poses, sferen of tags</string>
-    <plurals name="explore_showing">
-        <item quantity="one">%1$d pose getoond</item>
-        <item quantity="other">%1$d poses getoond</item>
-    </plurals>
-    <string name="explore_sort">Sorteren</string>
     <string name="explore_sort_title">Poses sorteren</string>
     <string name="explore_sort_featured">Uitgelicht</string>
     <string name="explore_sort_easiest">Makkelijkste eerst</string>
@@ -316,11 +299,6 @@
         <item quantity="other">Je scoorde deze week %1$d%%+ op %2$d poses</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI op het apparaat · Geen uploads</string>
-    <string name="settings_streak_subtitle">%1$d foto\'s · %2$d%% gem. match</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d dag op rij</item>
-        <item quantity="other">%1$d dagen op rij</item>
-    </plurals>
     <string name="progress_title">Jouw voortgang</string>
     <string name="progress_tab_week">Week</string>
     <string name="progress_tab_month">Maand</string>

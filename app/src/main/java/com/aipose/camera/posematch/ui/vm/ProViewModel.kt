@@ -61,7 +61,6 @@ class ProViewModel(
                     recommendedPlan = plans.firstOrNull {
                         subscriptionUseCase.isRecommended(it, plans)
                     },
-                    yearlySavePercent = subscriptionUseCase.yearlySavePercent(plans),
                     isPurchasing = false,
                 )
             }

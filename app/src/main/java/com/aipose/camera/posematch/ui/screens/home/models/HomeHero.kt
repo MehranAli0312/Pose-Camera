@@ -6,6 +6,5 @@ import com.aipose.camera.posematch.domain.models.Pose
 @Immutable
 data class HomeHero(
     val pose: Pose,
-    val categoryCount: Int,
-    val bestMatch: Int?
+    val isLocked: Boolean
 )

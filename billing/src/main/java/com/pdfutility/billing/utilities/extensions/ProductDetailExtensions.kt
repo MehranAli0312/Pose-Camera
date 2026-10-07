@@ -13,6 +13,3 @@ val ProductDetail.freeTrialPhase: PricingPhase?
 
 val ProductDetail.regularPrice: String?
     get() = regularPhase?.price?.takeIf { it.isNotBlank() }
-
-val ProductDetail.freeTrialPrice: String?
-    get() = freeTrialPhase?.price?.takeIf { it.isNotBlank() }

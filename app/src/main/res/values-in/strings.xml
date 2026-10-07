@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Lewati</string>
     <string name="item_settings">Setelan</string>
     <string name="close">Tutup</string>
     <string name="settings_language">Bahasa</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Beri Nilai</string>
     <string name="done">Selesai</string>
     <string name="error_not_found">Tidak ditemukan</string>
-    <string name="pro_restore">Pulihkan</string>
-    <string name="pro_feature_remove_ads">Hapus Iklan</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">Pengalaman 100% bebas iklan</string>
+    <string name="pro_restore">Pulihkan pembelian</string>
+    <string name="pro_terms">Ketentuan</string>
+    <string name="pro_privacy">Privasi</string>
+    <string name="pro_title_highlight">Semuanya</string>
+    <string name="pro_benefit_poses">Buka semua pose premium</string>
+    <string name="pro_benefit_no_ads">Tanpa iklan, selamanya</string>
+    <string name="pro_benefit_updates">Dukung pembaruan mendatang</string>
+    <string name="pro_plan_lifetime">Seumur hidup</string>
+    <string name="pro_plan_lifetime_note">Bayar sekali, milik Anda selamanya</string>
+    <string name="pro_plan_yearly_note">Ditagih sekali setahun</string>
+    <string name="pro_cta_lifetime">Buka Seumur Hidup</string>
+    <string name="pro_cta_yearly">Buka Tahunan</string>
+    <string name="pro_footnote_lifetime">Bayar sekali · Tanpa langganan</string>
     <string name="pro_plan_yearly">Tahunan</string>
-    <string name="pro_plan_monthly">Bulanan</string>
     <string name="pro_best_value">PALING HEMAT</string>
-    <string name="pro_save_percent">HEMAT %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s ditagih per tahun</string>
-    <string name="pro_billed_monthly">Ditagih setiap bulan</string>
-    <string name="pro_per_month">per bulan</string>
-    <string name="pro_trust_note">Batalkan kapan saja · Aman melalui Google Play</string>
     <string name="pro_store_unavailable">Tidak dapat memuat paket. Periksa koneksi Anda dan coba lagi.</string>
     <string name="pro_retry">Coba Lagi</string>
-    <string name="pro_upgrade_title">Upgrade ke Pro</string>
     <string name="pro_try_for_free">Coba Gratis</string>
-    <string name="pro_no_payment_now">Tanpa pembayaran sekarang!</string>
     <string name="pro_auto_renewal_note">Langganan dengan perpanjangan otomatis. Batalkan kapan saja</string>
     <string name="pro_purchase_success">Pembelian berhasil</string>
     <string name="pro_purchase_already_owned">Anda sudah memiliki paket ini</string>
@@ -48,20 +49,18 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d bintang</item>
     </plurals>
-    <string name="pro_title">Buka Pose Pro</string>
-    <string name="pro_subtitle">Berpose, cocokkan, dan potret tanpa iklan.</string>
+    <string name="pro_title">Buka Semuanya</string>
+    <string name="pro_subtitle">Dapatkan semua pose, bebas iklan — selamanya.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">Gratis %1$d hari, lalu %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Fitur PRO</string>
-    <string name="premium_feature_title">Fitur premium</string>
-    <string name="premium_feature_message">Berlangganan fitur premium atau tonton iklan</string>
-    <string name="premium_feature_free_access_title">Dapatkan akses gratis</string>
-    <string name="premium_feature_free_access_subtitle">Tonton iklan singkat</string>
     <string name="premium_feature_free_access_loading">Memuat iklan…</string>
     <string name="premium_feature_go_premium_title">Jadi Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Semua fitur, tanpa iklan</string>
-    <string name="premium_feature_maybe_later">Nanti saja</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Pose terkunci</string>
+    <string name="premium_pose_title">Pose premium</string>
+    <string name="premium_pose_message">Tonton iklan singkat untuk membuka pose ini, atau jadi Premium untuk membuka semuanya.</string>
+    <string name="premium_pose_watch_ad">Tonton iklan untuk membuka</string>
     <string name="nav_home">Beranda</string>
     <string name="nav_gallery">Koleksi</string>
     <string name="nav_settings">Setelan</string>
@@ -71,7 +70,6 @@
     <string name="action_delete">Hapus</string>
     <string name="action_import">Impor</string>
     <string name="action_save">Simpan</string>
-    <string name="splash_tagline">STUDIO PENYELARASAN ESTETIS</string>
     <string name="onboard_title_1">Pilih pose</string>
     <string name="onboard_title_2">Ikuti garis</string>
     <string name="onboard_title_3">Potret &amp; simpan</string>
@@ -164,18 +162,10 @@
     <string name="perm_camera_title">Izin kamera diperlukan</string>
     <string name="perm_camera_desc">Izinkan akses kamera untuk memotret dan mencocokkan posemu.</string>
     <string name="perm_allow">Izinkan</string>
+    <string name="perm_camera_blocked_desc">Akses kamera dinonaktifkan. Buka setelan dan aktifkan izin kamera untuk terus berpose.</string>
+    <string name="perm_open_settings">Buka Setelan</string>
     <string name="capture_untitled">Foto tanpa judul</string>
-    <string name="home_tagline">Cocokkan · Potret · Sempurnakan</string>
-    <string name="home_day_streak">Hari beruntun</string>
-    <string name="home_filter_category">KATEGORI</string>
-    <string name="home_filter_level">LEVEL</string>
-    <string name="home_shuffle">Acak pose</string>
-    <string name="home_hero_eyebrow">LANJUTKAN SESI</string>
-    <string name="home_hero_best_match">KECOCOKAN TERBAIK</string>
     <string name="home_hero_cta">Mulai berpose</string>
-    <plurals name="home_hero_meta">
-        <item quantity="other">%1$s · %2$s · %3$d pose</item>
-    </plurals>
     <string name="home_action_live_pose">Pose langsung</string>
     <string name="home_action_open_camera">Buka kamera</string>
     <string name="home_action_import">Impor</string>
@@ -262,12 +252,7 @@
     <string name="collections_filter_recent">Terbaru</string>
     <string name="collections_sort_title">Urutkan foto</string>
     <string name="explore_title">Semua pose</string>
-    <string name="explore_total">Total %1$d</string>
     <string name="explore_search_hint">Cari pose, suasana, atau tag</string>
-    <plurals name="explore_showing">
-        <item quantity="other">Menampilkan %1$d pose</item>
-    </plurals>
-    <string name="explore_sort">Urutkan</string>
     <string name="explore_sort_title">Urutkan pose</string>
     <string name="explore_sort_featured">Unggulan</string>
     <string name="explore_sort_easiest">Termudah dulu</string>
@@ -302,10 +287,6 @@
         <item quantity="other">Kamu meraih %1$d%%+ pada %2$d pose minggu ini</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI di perangkat · Tanpa unggahan</string>
-    <string name="settings_streak_subtitle">%1$d foto · rata-rata kecocokan %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="other">%1$d hari beruntun</item>
-    </plurals>
     <string name="progress_title">Progresmu</string>
     <string name="progress_tab_week">Minggu</string>
     <string name="progress_tab_month">Bulan</string>

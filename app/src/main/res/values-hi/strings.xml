@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">छोड़ें</string>
     <string name="item_settings">सेटिंग्स</string>
     <string name="close">बंद करें</string>
     <string name="settings_language">भाषा</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">कृपया रेट करें</string>
     <string name="done">हो गया</string>
     <string name="error_not_found">नहीं मिला</string>
-    <string name="pro_restore">रिस्टोर</string>
-    <string name="pro_feature_remove_ads">विज्ञापन हटाएँ</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">100% विज्ञापन-मुक्त अनुभव</string>
+    <string name="pro_restore">खरीद बहाल करें</string>
+    <string name="pro_terms">शर्तें</string>
+    <string name="pro_privacy">गोपनीयता</string>
+    <string name="pro_title_highlight">सब कुछ</string>
+    <string name="pro_benefit_poses">सभी प्रीमियम पोज़ अनलॉक करें</string>
+    <string name="pro_benefit_no_ads">कभी विज्ञापन नहीं</string>
+    <string name="pro_benefit_updates">भविष्य के अपडेट का समर्थन करें</string>
+    <string name="pro_plan_lifetime">लाइफ़टाइम</string>
+    <string name="pro_plan_lifetime_note">एक बार भुगतान, हमेशा के लिए आपका</string>
+    <string name="pro_plan_yearly_note">साल में एक बार बिल</string>
+    <string name="pro_cta_lifetime">लाइफ़टाइम अनलॉक करें</string>
+    <string name="pro_cta_yearly">सालाना अनलॉक करें</string>
+    <string name="pro_footnote_lifetime">एक बार भुगतान · कोई सदस्यता नहीं</string>
     <string name="pro_plan_yearly">वार्षिक</string>
-    <string name="pro_plan_monthly">मासिक</string>
     <string name="pro_best_value">सबसे किफ़ायती</string>
-    <string name="pro_save_percent">%1$d%% बचाएँ</string>
-    <string name="pro_billed_yearly">%1$s सालाना बिल किया जाता है</string>
-    <string name="pro_billed_monthly">हर महीने बिल किया जाता है</string>
-    <string name="pro_per_month">प्रति माह</string>
-    <string name="pro_trust_note">कभी भी रद्द करें · Google Play से सुरक्षित</string>
     <string name="pro_store_unavailable">प्लान लोड नहीं हो सके। अपना कनेक्शन जाँचें और फिर से कोशिश करें।</string>
     <string name="pro_retry">फिर से कोशिश करें</string>
-    <string name="pro_upgrade_title">Pro में अपग्रेड करें</string>
     <string name="pro_try_for_free">मुफ़्त आज़माएँ</string>
-    <string name="pro_no_payment_now">अभी कोई भुगतान नहीं!</string>
     <string name="pro_auto_renewal_note">ऑटो-रिन्यूअल वाला सब्सक्रिप्शन. कभी भी रद्द करें</string>
     <string name="pro_purchase_success">खरीद सफल</string>
     <string name="pro_purchase_already_owned">यह प्लान आपके पास पहले से है</string>
@@ -49,21 +50,19 @@
         <item quantity="one">%1$d स्टार</item>
         <item quantity="other">%1$d स्टार</item>
     </plurals>
-    <string name="pro_title">Pose Pro अनलॉक करें</string>
-    <string name="pro_subtitle">बिना विज्ञापनों के पोज़ दें, मिलाएँ और फ़ोटो लें।</string>
+    <string name="pro_title">सब कुछ अनलॉक करें</string>
+    <string name="pro_subtitle">हर पोज़ पाएँ, बिना विज्ञापन — हमेशा के लिए।</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d दिन मुफ़्त, फिर %2$s</item>
         <item quantity="other">%1$d दिन मुफ़्त, फिर %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">PRO फ़ीचर</string>
-    <string name="premium_feature_title">प्रीमियम फ़ीचर</string>
-    <string name="premium_feature_message">प्रीमियम फ़ीचर की सदस्यता लें या एक विज्ञापन देखें</string>
-    <string name="premium_feature_free_access_title">मुफ़्त एक्सेस पाएँ</string>
-    <string name="premium_feature_free_access_subtitle">एक छोटा विज्ञापन देखें</string>
     <string name="premium_feature_free_access_loading">विज्ञापन लोड हो रहा है…</string>
     <string name="premium_feature_go_premium_title">Premium लें</string>
-    <string name="premium_feature_go_premium_subtitle">सभी फ़ीचर, कोई विज्ञापन नहीं</string>
-    <string name="premium_feature_maybe_later">शायद बाद में</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">लॉक पोज़</string>
+    <string name="premium_pose_title">प्रीमियम पोज़</string>
+    <string name="premium_pose_message">यह पोज़ अनलॉक करने के लिए एक छोटा विज्ञापन देखें, या सभी अनलॉक करने के लिए Premium लें।</string>
+    <string name="premium_pose_watch_ad">अनलॉक करने के लिए विज्ञापन देखें</string>
     <string name="nav_home">होम</string>
     <string name="nav_gallery">कलेक्शन</string>
     <string name="nav_settings">सेटिंग्स</string>
@@ -73,7 +72,6 @@
     <string name="action_delete">हटाएँ</string>
     <string name="action_import">इंपोर्ट करें</string>
     <string name="action_save">सेव करें</string>
-    <string name="splash_tagline">सौंदर्यपूर्ण अलाइनमेंट स्टूडियो</string>
     <string name="onboard_title_1">एक पोज़ चुनें</string>
     <string name="onboard_title_2">आउटलाइन से मिलाएँ</string>
     <string name="onboard_title_3">फ़ोटो लें और सेव करें</string>
@@ -166,19 +164,10 @@
     <string name="perm_camera_title">कैमरा अनुमति ज़रूरी है</string>
     <string name="perm_camera_desc">फ़ोटो लेने और अपने पोज़ मिलाने के लिए कैमरा एक्सेस की अनुमति दें।</string>
     <string name="perm_allow">अनुमति दें</string>
+    <string name="perm_camera_blocked_desc">कैमरा एक्सेस बंद है। पोज़ देना जारी रखने के लिए सेटिंग्स खोलें और कैमरा अनुमति चालू करें।</string>
+    <string name="perm_open_settings">सेटिंग्स खोलें</string>
     <string name="capture_untitled">बिना नाम की फ़ोटो</string>
-    <string name="home_tagline">मिलाएँ · कैप्चर करें · परफ़ेक्ट बनाएँ</string>
-    <string name="home_day_streak">दिनों की स्ट्रीक</string>
-    <string name="home_filter_category">कैटेगरी</string>
-    <string name="home_filter_level">लेवल</string>
-    <string name="home_shuffle">पोज़ शफ़ल करें</string>
-    <string name="home_hero_eyebrow">सेशन जारी रखें</string>
-    <string name="home_hero_best_match">सर्वश्रेष्ठ मैच</string>
     <string name="home_hero_cta">पोज़ देना शुरू करें</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d पोज़</item>
-        <item quantity="other">%1$s · %2$s · %3$d पोज़</item>
-    </plurals>
     <string name="home_action_live_pose">लाइव पोज़</string>
     <string name="home_action_open_camera">कैमरा खोलें</string>
     <string name="home_action_import">इंपोर्ट करें</string>
@@ -270,13 +259,7 @@
     <string name="collections_filter_recent">हाल की</string>
     <string name="collections_sort_title">फ़ोटो को क्रम दें</string>
     <string name="explore_title">सभी पोज़</string>
-    <string name="explore_total">कुल %1$d</string>
     <string name="explore_search_hint">पोज़, मूड या टैग खोजें</string>
-    <plurals name="explore_showing">
-        <item quantity="one">%1$d पोज़ दिखाया जा रहा है</item>
-        <item quantity="other">%1$d पोज़ दिखाए जा रहे हैं</item>
-    </plurals>
-    <string name="explore_sort">क्रम</string>
     <string name="explore_sort_title">पोज़ को क्रम दें</string>
     <string name="explore_sort_featured">फ़ीचर्ड</string>
     <string name="explore_sort_easiest">आसान पहले</string>
@@ -316,11 +299,6 @@
         <item quantity="other">इस हफ़्ते आपने %2$d पोज़ पर %1$d%%+ पाया</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · डिवाइस पर AI · कोई अपलोड नहीं</string>
-    <string name="settings_streak_subtitle">%1$d फ़ोटो · %2$d%% औसत मैच</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d दिन की स्ट्रीक</item>
-        <item quantity="other">%1$d दिन की स्ट्रीक</item>
-    </plurals>
     <string name="progress_title">आपकी प्रगति</string>
     <string name="progress_tab_week">हफ़्ता</string>
     <string name="progress_tab_month">महीना</string>

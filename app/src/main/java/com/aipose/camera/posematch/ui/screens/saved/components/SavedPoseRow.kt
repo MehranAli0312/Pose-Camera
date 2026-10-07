@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.GlossyIconBadge
+import com.aipose.camera.posematch.ui.common.PoseProBadge
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.models.badgeForCategory
@@ -100,6 +101,9 @@ internal fun SavedPoseRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(0.dp),
         ) {
+            if (saved.isLocked) {
+                PoseProBadge(modifier = Modifier.padding(end = 4.dp))
+            }
             Box(
                 modifier = Modifier
                     .size(HeartTouchSize)

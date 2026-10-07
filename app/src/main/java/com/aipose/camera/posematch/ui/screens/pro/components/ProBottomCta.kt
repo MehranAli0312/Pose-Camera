@@ -1,8 +1,10 @@
 package com.aipose.camera.posematch.ui.screens.pro.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,88 +12,79 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.AppButton
-import com.aipose.camera.posematch.ui.common.PrivacyNote
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.rememberThrottledClick
-import com.aipose.camera.posematch.ui.theme.AppMainColor
-import com.aipose.camera.posematch.ui.theme.White
 import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
+import com.aipose.camera.posematch.ui.theme.Indigo
+import com.aipose.camera.posematch.ui.theme.PosePremiumCtaDeep
+
+private val CtaHeight = 56.dp
+private val CtaCornerRadius = 28.dp
+private val FooterDotSize = 3.dp
+private const val FOOTNOTE_ALPHA = 0.6f
+private const val FOOTER_LINK_ALPHA = 0.8f
+private const val FOOTER_DOT_ALPHA = 0.35f
+
+private val CtaBrush = Brush.verticalGradient(listOf(Indigo, PosePremiumCtaDeep))
 
 @Composable
 internal fun ProBottomCta(
     state: ProPlansState,
     isRestoring: Boolean,
+    canRestore: Boolean,
     onContinue: () -> Unit,
     onRetry: () -> Unit,
+    onRestore: () -> Unit,
+    onTerms: () -> Unit,
     onPrivacyPolicy: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ProBottomNote(state = state)
-
-        Spacer(Modifier.height(12.dp))
-
         ProContinueButton(
             state = state,
             isRestoring = isRestoring,
             onClick = if (state is ProPlansState.Unavailable) onRetry else onContinue,
         )
 
-        Spacer(Modifier.height(10.dp))
-
-        ProLegalText(text = stringResource(R.string.pro_auto_renewal_note))
+        Spacer(Modifier.height(16.dp))
 
         Text(
-            text = stringResource(R.string.settings_privacy_policy),
-            style = MaterialTheme.typography.labelMedium.copy(
+            text = proFootnote(state),
+            style = MaterialTheme.typography.bodySmall.copy(
                 fontSize = 12.sp,
-                lineHeight = 16.sp,
-                fontWeight = FontWeight.Medium,
-                textDecoration = TextDecoration.Underline,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                lineHeight = 15.sp,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = FOOTNOTE_ALPHA),
             ),
-            modifier = Modifier
-                .bounceClick(onClick = rememberThrottledClick(onPrivacyPolicy))
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-        )
-    }
-}
-
-@Composable
-private fun ProBottomNote(state: ProPlansState) {
-    when {
-        state is ProPlansState.Unavailable -> ProLegalText(
-            text = stringResource(R.string.pro_store_unavailable),
-            color = MaterialTheme.colorScheme.error,
+            textAlign = TextAlign.Center,
         )
 
-        state is ProPlansState.Content && state.startsWithTrial -> PrivacyNote(
-            text = stringResource(R.string.pro_no_payment_now),
-        )
+        Spacer(Modifier.height(26.dp))
 
-        else -> PrivacyNote(text = stringResource(R.string.pro_trust_note))
+        ProFooterLinks(
+            canRestore = canRestore,
+            onRestore = onRestore,
+            onTerms = onTerms,
+            onPrivacyPolicy = onPrivacyPolicy,
+        )
     }
 }
 
@@ -102,65 +95,87 @@ private fun ProContinueButton(
     onClick: () -> Unit,
 ) {
     val isPurchasing = state is ProPlansState.Content && state.isPurchasing
-    val enabled = !isRestoring && when (state) {
-        ProPlansState.Loading -> false
-        ProPlansState.Unavailable -> true
-        is ProPlansState.Content -> !state.isPurchasing
-    }
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.CenterEnd,
-    ) {
-        AppButton(
-            text = proCtaText(state),
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            cornerRadius = 28.dp,
-            verticalPadding = 0.dp,
-            horizontalPadding = 56.dp,
-            textStyle = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-            enabled = enabled,
-        )
-        Box(
-            modifier = Modifier
-                .padding(end = 8.dp)
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(White),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (isPurchasing || state is ProPlansState.Loading) {
+    val isBusy = isPurchasing || state is ProPlansState.Loading
+    val enabled = !isRestoring && !isBusy
+    AppButton(
+        text = proCtaText(state),
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(CtaHeight),
+        gradientBrush = CtaBrush,
+        cornerRadius = CtaCornerRadius,
+        verticalPadding = 0.dp,
+        textStyle = MaterialTheme.typography.titleMedium.copy(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+        ),
+        enabled = enabled,
+        trailingContent = if (isBusy) {
+            {
                 CircularProgressIndicator(
-                    color = AppMainColor,
+                    color = Color.White,
                     strokeWidth = 2.dp,
-                    modifier = Modifier.size(20.dp),
-                )
-            } else {
-                Icon(
-                    painter = painterResource(R.drawable.ic_arrow_forward),
-                    contentDescription = null,
-                    tint = AppMainColor,
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(18.dp),
                 )
             }
-        }
+        } else {
+            null
+        },
+    )
+}
+
+@Composable
+private fun ProFooterLinks(
+    canRestore: Boolean,
+    onRestore: () -> Unit,
+    onTerms: () -> Unit,
+    onPrivacyPolicy: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        ProFooterLink(
+            text = stringResource(R.string.pro_restore),
+            enabled = canRestore,
+            onClick = onRestore,
+        )
+        ProFooterDot()
+        ProFooterLink(text = stringResource(R.string.pro_terms), onClick = onTerms)
+        ProFooterDot()
+        ProFooterLink(text = stringResource(R.string.pro_privacy), onClick = onPrivacyPolicy)
     }
 }
 
 @Composable
-private fun ProLegalText(
+private fun ProFooterLink(
     text: String,
-    color: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
 ) {
     Text(
         text = text,
         style = MaterialTheme.typography.labelMedium.copy(
-            fontSize = 11.sp,
+            fontSize = 12.sp,
             lineHeight = 15.sp,
-            color = color,
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = FOOTER_LINK_ALPHA),
         ),
-        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .alpha(if (enabled) 1f else FOOTER_DOT_ALPHA)
+            .bounceClick(enabled = enabled, onClick = rememberThrottledClick(onClick))
+            .padding(vertical = 4.dp),
+    )
+}
+
+@Composable
+private fun ProFooterDot() {
+    Box(
+        modifier = Modifier
+            .size(FooterDotSize)
+            .clip(CircleShape)
+            .background(
+                MaterialTheme.colorScheme.onBackground.copy(alpha = FOOTER_DOT_ALPHA),
+            ),
     )
 }

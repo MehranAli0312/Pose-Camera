@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">跳过</string>
     <string name="item_settings">设置</string>
     <string name="close">关闭</string>
     <string name="settings_language">语言</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">请评分</string>
     <string name="done">完成</string>
     <string name="error_not_found">未找到</string>
-    <string name="pro_restore">恢复</string>
-    <string name="pro_feature_remove_ads">移除广告</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">100% 无广告体验</string>
+    <string name="pro_restore">恢复购买</string>
+    <string name="pro_terms">条款</string>
+    <string name="pro_privacy">隐私</string>
+    <string name="pro_title_highlight">全部功能</string>
+    <string name="pro_benefit_poses">解锁所有高级姿势</string>
+    <string name="pro_benefit_no_ads">永久无广告</string>
+    <string name="pro_benefit_updates">支持后续更新</string>
+    <string name="pro_plan_lifetime">永久版</string>
+    <string name="pro_plan_lifetime_note">一次付费，永久拥有</string>
+    <string name="pro_plan_yearly_note">每年收费一次</string>
+    <string name="pro_cta_lifetime">解锁永久版</string>
+    <string name="pro_cta_yearly">解锁年度版</string>
+    <string name="pro_footnote_lifetime">一次性付款 · 无需订阅</string>
     <string name="pro_plan_yearly">年度</string>
-    <string name="pro_plan_monthly">月度</string>
     <string name="pro_best_value">超值之选</string>
-    <string name="pro_save_percent">省 %1$d%%</string>
-    <string name="pro_billed_yearly">按年计费 %1$s</string>
-    <string name="pro_billed_monthly">按月计费</string>
-    <string name="pro_per_month">每月</string>
-    <string name="pro_trust_note">随时取消 · 通过 Google Play 安全支付</string>
     <string name="pro_store_unavailable">无法加载方案。请检查网络连接后重试。</string>
     <string name="pro_retry">重试</string>
-    <string name="pro_upgrade_title">升级到 Pro</string>
     <string name="pro_try_for_free">免费试用</string>
-    <string name="pro_no_payment_now">现在无需付款！</string>
     <string name="pro_auto_renewal_note">自动续订订阅。随时取消</string>
     <string name="pro_purchase_success">购买成功</string>
     <string name="pro_purchase_already_owned">您已拥有此方案</string>
@@ -48,20 +49,18 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d 星</item>
     </plurals>
-    <string name="pro_title">解锁 Pose Pro</string>
-    <string name="pro_subtitle">摆姿势、匹配、拍摄，全程无广告。</string>
+    <string name="pro_title">解锁全部功能</string>
+    <string name="pro_subtitle">解锁所有姿势，永久无广告。</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">免费 %1$d 天，之后 %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">PRO 功能</string>
-    <string name="premium_feature_title">高级功能</string>
-    <string name="premium_feature_message">订阅高级功能或观看一段广告</string>
-    <string name="premium_feature_free_access_title">免费使用</string>
-    <string name="premium_feature_free_access_subtitle">观看一段短广告</string>
     <string name="premium_feature_free_access_loading">正在加载广告…</string>
     <string name="premium_feature_go_premium_title">升级 Premium</string>
-    <string name="premium_feature_go_premium_subtitle">全部功能，无广告</string>
-    <string name="premium_feature_maybe_later">以后再说</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">已锁定的姿势</string>
+    <string name="premium_pose_title">高级姿势</string>
+    <string name="premium_pose_message">观看一段简短广告即可解锁此姿势，或升级 Premium 解锁全部姿势。</string>
+    <string name="premium_pose_watch_ad">观看广告解锁</string>
     <string name="nav_home">首页</string>
     <string name="nav_gallery">合集</string>
     <string name="nav_settings">设置</string>
@@ -71,7 +70,6 @@
     <string name="action_delete">删除</string>
     <string name="action_import">导入</string>
     <string name="action_save">保存</string>
-    <string name="splash_tagline">美学姿态对齐工作室</string>
     <string name="onboard_title_1">选择姿势</string>
     <string name="onboard_title_2">对齐轮廓</string>
     <string name="onboard_title_3">拍摄并保存</string>
@@ -164,18 +162,10 @@
     <string name="perm_camera_title">需要相机权限</string>
     <string name="perm_camera_desc">允许访问相机，以便拍照并匹配你的姿势。</string>
     <string name="perm_allow">允许</string>
+    <string name="perm_camera_blocked_desc">相机访问权限已关闭。请打开设置并开启相机权限以继续摆姿势。</string>
+    <string name="perm_open_settings">打开设置</string>
     <string name="capture_untitled">未命名照片</string>
-    <string name="home_tagline">匹配 · 拍摄 · 完美</string>
-    <string name="home_day_streak">连续天数</string>
-    <string name="home_filter_category">类别</string>
-    <string name="home_filter_level">难度</string>
-    <string name="home_shuffle">随机姿势</string>
-    <string name="home_hero_eyebrow">继续练习</string>
-    <string name="home_hero_best_match">最佳匹配</string>
     <string name="home_hero_cta">开始摆姿势</string>
-    <plurals name="home_hero_meta">
-        <item quantity="other">%1$s · %2$s · %3$d 个姿势</item>
-    </plurals>
     <string name="home_action_live_pose">实时姿势</string>
     <string name="home_action_open_camera">打开相机</string>
     <string name="home_action_import">导入</string>
@@ -262,12 +252,7 @@
     <string name="collections_filter_recent">最近</string>
     <string name="collections_sort_title">照片排序</string>
     <string name="explore_title">全部姿势</string>
-    <string name="explore_total">共 %1$d 个</string>
     <string name="explore_search_hint">搜索姿势、风格或标签</string>
-    <plurals name="explore_showing">
-        <item quantity="other">显示 %1$d 个姿势</item>
-    </plurals>
-    <string name="explore_sort">排序</string>
     <string name="explore_sort_title">姿势排序</string>
     <string name="explore_sort_featured">精选</string>
     <string name="explore_sort_easiest">简单优先</string>
@@ -302,10 +287,6 @@
         <item quantity="other">本周你在 %2$d 个姿势上达到 %1$d%%+</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · 设备端 AI · 不上传</string>
-    <string name="settings_streak_subtitle">%1$d 张照片 · 平均匹配 %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="other">连续 %1$d 天</item>
-    </plurals>
     <string name="progress_title">你的进步</string>
     <string name="progress_tab_week">周</string>
     <string name="progress_tab_month">月</string>

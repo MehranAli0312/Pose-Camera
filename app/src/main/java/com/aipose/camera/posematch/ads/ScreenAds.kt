@@ -62,9 +62,9 @@ class ScreenAds internal constructor(
         adsManager.releaseSlot(placement)
     }
 
-    suspend fun rewarded(placement: AdPlacement): AdResult {
+    suspend fun rewarded(placement: AdPlacement, onShown: (() -> Unit)? = null): AdResult {
         val activity = activity ?: return AdResult.NotAvailable
-        return runCatching { adsManager.loadAndShow(activity, placement) }
+        return runCatching { adsManager.loadAndShow(activity, placement, onShown) }
             .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
     }
 

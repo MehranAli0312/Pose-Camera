@@ -5,10 +5,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.provider.Settings
-import com.aipose.camera.posematch.domain.models.NetworkIssue
-import com.aipose.camera.posematch.domain.models.NetworkStatus
-import com.aipose.camera.posematch.domain.models.NetworkTransport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -24,14 +20,6 @@ class NetworkConnectivityChecker(
 
     suspend fun hasActiveInternet(): Boolean = withContext(Dispatchers.IO) {
         isCurrentlyConnected()
-    }
-
-    fun currentStatus(): NetworkStatus {
-        val manager = connectivityManager
-        val network = manager.activeNetwork
-        val capabilities = network?.let(manager::getNetworkCapabilities)
-
-        return capabilities.toStatus()
     }
 
     fun observeActiveInternet(): Flow<Boolean> = callbackFlow {
@@ -75,41 +63,4 @@ class NetworkConnectivityChecker(
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
                 capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
-
-    private fun NetworkCapabilities?.toStatus(): NetworkStatus {
-        if (this == null) {
-            return NetworkStatus.Unavailable(
-                if (isAirplaneModeOn()) NetworkIssue.AIRPLANE_MODE else NetworkIssue.NO_NETWORK,
-            )
-        }
-
-        if (!hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-            return NetworkStatus.Unavailable(NetworkIssue.NO_NETWORK)
-        }
-
-        if (hasCapability(NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL)) {
-            return NetworkStatus.Unavailable(NetworkIssue.CAPTIVE_PORTAL)
-        }
-
-        if (!hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-            return NetworkStatus.Unavailable(NetworkIssue.NO_INTERNET)
-        }
-
-        return NetworkStatus.Connected(
-            transport = transport(),
-            isMetered = !hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED),
-        )
-    }
-
-    private fun NetworkCapabilities.transport(): NetworkTransport = when {
-        hasTransport(NetworkCapabilities.TRANSPORT_VPN) -> NetworkTransport.VPN
-        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> NetworkTransport.WIFI
-        hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkTransport.CELLULAR
-        hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> NetworkTransport.ETHERNET
-        else -> NetworkTransport.OTHER
-    }
-
-    private fun isAirplaneModeOn(): Boolean = runCatching {
-        Settings.Global.getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON) != 0
-    }.getOrDefault(false)
 }

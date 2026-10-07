@@ -16,8 +16,3 @@ fun Modifier.poseScreenPadding(
 ): Modifier = this
     .safeTopSystemBarsPadding()
     .padding(start = horizontal, end = horizontal, top = top)
-
-@Composable
-fun Modifier.poseScreenInsets(top: Dp = PoseScreenTopSpacing): Modifier = this
-    .safeTopSystemBarsPadding()
-    .padding(top = top)

@@ -15,11 +15,13 @@ import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilt
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsSort
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsStats
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsUiState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -36,9 +38,10 @@ class CollectionsViewModel(
     private val _query = MutableStateFlow("")
     val query = _query.asStateFlow()
 
-    private val captures: StateFlow<List<CaptureUi>> = captureUseCase.observeCaptures()
+    private val captures: StateFlow<List<CaptureUi>?> = captureUseCase.observeCaptures()
         .map { items -> items.map { capture -> capture.toUi() } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), emptyList())
+        .flowOn(Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), null)
 
     private val _filter = MutableStateFlow(CollectionsFilter.All)
     private val _sort = MutableStateFlow(CollectionsSort.Newest)
@@ -51,6 +54,7 @@ class CollectionsViewModel(
         _sort,
         _isSortSheetVisible,
     ) { items, query, filter, sort, isSortSheetVisible ->
+        if (items == null) return@combine CollectionsUiState.Loading
         val domainCaptures = items.map { it.capture }
         CollectionsUiState.Content(
             totalCount = items.size,
@@ -75,7 +79,7 @@ class CollectionsViewModel(
     fun captureFor(captureId: Long): StateFlow<CaptureUi?> =
         captureFlows.getOrPut(captureId) {
             captures
-                .map { items -> items.firstOrNull { it.id == captureId } }
+                .map { items -> items?.firstOrNull { it.id == captureId } }
                 .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), null)
         }
 

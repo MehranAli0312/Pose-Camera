@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Bỏ qua</string>
     <string name="item_settings">Cài đặt</string>
     <string name="close">Đóng</string>
     <string name="settings_language">Ngôn ngữ</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Đánh giá</string>
     <string name="done">Xong</string>
     <string name="error_not_found">Không tìm thấy</string>
-    <string name="pro_restore">Khôi phục</string>
-    <string name="pro_feature_remove_ads">Xóa quảng cáo</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">Trải nghiệm 100% không quảng cáo</string>
+    <string name="pro_restore">Khôi phục giao dịch</string>
+    <string name="pro_terms">Điều khoản</string>
+    <string name="pro_privacy">Quyền riêng tư</string>
+    <string name="pro_title_highlight">tất cả</string>
+    <string name="pro_benefit_poses">Mở khóa mọi dáng pose cao cấp</string>
+    <string name="pro_benefit_no_ads">Không quảng cáo, mãi mãi</string>
+    <string name="pro_benefit_updates">Ủng hộ các bản cập nhật sau này</string>
+    <string name="pro_plan_lifetime">Trọn đời</string>
+    <string name="pro_plan_lifetime_note">Thanh toán một lần, của bạn mãi mãi</string>
+    <string name="pro_plan_yearly_note">Thanh toán mỗi năm một lần</string>
+    <string name="pro_cta_lifetime">Mở khóa Trọn đời</string>
+    <string name="pro_cta_yearly">Mở khóa Hằng năm</string>
+    <string name="pro_footnote_lifetime">Thanh toán một lần · Không đăng ký</string>
     <string name="pro_plan_yearly">Hằng năm</string>
-    <string name="pro_plan_monthly">Hằng tháng</string>
     <string name="pro_best_value">ĐÁNG GIÁ NHẤT</string>
-    <string name="pro_save_percent">TIẾT KIỆM %1$d%%</string>
-    <string name="pro_billed_yearly">Thanh toán %1$s mỗi năm</string>
-    <string name="pro_billed_monthly">Thanh toán mỗi tháng</string>
-    <string name="pro_per_month">mỗi tháng</string>
-    <string name="pro_trust_note">Hủy bất cứ lúc nào · Bảo mật qua Google Play</string>
     <string name="pro_store_unavailable">Không thể tải các gói. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="pro_retry">Thử lại</string>
-    <string name="pro_upgrade_title">Nâng cấp lên Pro</string>
     <string name="pro_try_for_free">Dùng thử miễn phí</string>
-    <string name="pro_no_payment_now">Không thanh toán ngay!</string>
     <string name="pro_auto_renewal_note">Gói đăng ký tự gia hạn. Hủy bất cứ lúc nào</string>
     <string name="pro_purchase_success">Mua thành công</string>
     <string name="pro_purchase_already_owned">Bạn đã sở hữu gói này</string>
@@ -48,20 +49,18 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d sao</item>
     </plurals>
-    <string name="pro_title">Mở khóa Pose Pro</string>
-    <string name="pro_subtitle">Tạo dáng, so khớp và chụp ảnh không quảng cáo.</string>
+    <string name="pro_title">Mở khóa tất cả</string>
+    <string name="pro_subtitle">Có mọi dáng pose, không quảng cáo — mãi mãi.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">Miễn phí %1$d ngày, sau đó %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Tính năng PRO</string>
-    <string name="premium_feature_title">Tính năng cao cấp</string>
-    <string name="premium_feature_message">Đăng ký tính năng cao cấp hoặc xem quảng cáo</string>
-    <string name="premium_feature_free_access_title">Nhận quyền truy cập miễn phí</string>
-    <string name="premium_feature_free_access_subtitle">Xem một quảng cáo ngắn</string>
     <string name="premium_feature_free_access_loading">Đang tải quảng cáo…</string>
     <string name="premium_feature_go_premium_title">Nâng cấp Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Mọi tính năng, không quảng cáo</string>
-    <string name="premium_feature_maybe_later">Để sau</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Dáng pose bị khóa</string>
+    <string name="premium_pose_title">Dáng pose cao cấp</string>
+    <string name="premium_pose_message">Xem một quảng cáo ngắn để mở khóa dáng pose này, hoặc nâng cấp Premium để mở khóa tất cả.</string>
+    <string name="premium_pose_watch_ad">Xem quảng cáo để mở khóa</string>
     <string name="nav_home">Trang chủ</string>
     <string name="nav_gallery">Bộ sưu tập</string>
     <string name="nav_settings">Cài đặt</string>
@@ -71,7 +70,6 @@
     <string name="action_delete">Xóa</string>
     <string name="action_import">Nhập</string>
     <string name="action_save">Lưu</string>
-    <string name="splash_tagline">STUDIO CĂN CHỈNH THẨM MỸ</string>
     <string name="onboard_title_1">Chọn một dáng</string>
     <string name="onboard_title_2">Khớp với đường viền</string>
     <string name="onboard_title_3">Chụp &amp; lưu</string>
@@ -164,18 +162,10 @@
     <string name="perm_camera_title">Cần quyền truy cập camera</string>
     <string name="perm_camera_desc">Cho phép truy cập camera để chụp ảnh và so khớp dáng.</string>
     <string name="perm_allow">Cho phép</string>
+    <string name="perm_camera_blocked_desc">Quyền truy cập camera đang tắt. Mở cài đặt và bật quyền camera để tiếp tục tạo dáng.</string>
+    <string name="perm_open_settings">Mở cài đặt</string>
     <string name="capture_untitled">Ảnh chưa đặt tên</string>
-    <string name="home_tagline">So khớp · Chụp · Hoàn thiện</string>
-    <string name="home_day_streak">Chuỗi ngày</string>
-    <string name="home_filter_category">DANH MỤC</string>
-    <string name="home_filter_level">CẤP ĐỘ</string>
-    <string name="home_shuffle">Xáo trộn dáng</string>
-    <string name="home_hero_eyebrow">TIẾP TỤC PHIÊN</string>
-    <string name="home_hero_best_match">KHỚP TỐT NHẤT</string>
     <string name="home_hero_cta">Bắt đầu tạo dáng</string>
-    <plurals name="home_hero_meta">
-        <item quantity="other">%1$s · %2$s · %3$d dáng</item>
-    </plurals>
     <string name="home_action_live_pose">Dáng trực tiếp</string>
     <string name="home_action_open_camera">Mở camera</string>
     <string name="home_action_import">Nhập</string>
@@ -262,12 +252,7 @@
     <string name="collections_filter_recent">Gần đây</string>
     <string name="collections_sort_title">Sắp xếp ảnh</string>
     <string name="explore_title">Tất cả dáng</string>
-    <string name="explore_total">Tổng %1$d</string>
     <string name="explore_search_hint">Tìm dáng, phong cách hoặc thẻ</string>
-    <plurals name="explore_showing">
-        <item quantity="other">Đang hiển thị %1$d dáng</item>
-    </plurals>
-    <string name="explore_sort">Sắp xếp</string>
     <string name="explore_sort_title">Sắp xếp dáng</string>
     <string name="explore_sort_featured">Nổi bật</string>
     <string name="explore_sort_easiest">Dễ nhất trước</string>
@@ -302,10 +287,6 @@
         <item quantity="other">Bạn đạt %1$d%%+ ở %2$d dáng tuần này</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI trên thiết bị · Không tải lên</string>
-    <string name="settings_streak_subtitle">%1$d ảnh · khớp trung bình %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="other">Chuỗi %1$d ngày</item>
-    </plurals>
     <string name="progress_title">Tiến độ của bạn</string>
     <string name="progress_tab_week">Tuần</string>
     <string name="progress_tab_month">Tháng</string>

@@ -10,7 +10,6 @@ sealed interface ProPlansState {
         val plans: List<PremiumPlan>,
         val selectedPlan: PremiumPlan,
         val recommendedPlan: PremiumPlan?,
-        val yearlySavePercent: Int?,
         val isPurchasing: Boolean,
     ) : ProPlansState {
         val startsWithTrial: Boolean get() = selectedPlan.hasTrial

@@ -7,8 +7,7 @@ import java.util.Locale
 data class LanguageItem(
     val name: String,
     val code: String,
-    @param:DrawableRes @get:DrawableRes val flag: Int,
-    val selection: Boolean = false
+    @param:DrawableRes @get:DrawableRes val flag: Int
 )
 
 private const val DEFAULT_LANGUAGE_CODE = "en"

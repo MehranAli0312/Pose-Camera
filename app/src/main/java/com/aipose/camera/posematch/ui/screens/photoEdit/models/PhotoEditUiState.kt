@@ -37,8 +37,6 @@ data class PhotoEditUiState(
 
     val activeToolValue: Float get() = adjustments.valueOf(activeTool)
 
-    val isAdjusted: Boolean get() = !adjustments.isNeutral
-
     val matchScore: Int?
         get() = draft?.takeIf { it.poseId != null && it.matchScore > 0 }?.matchScore
 

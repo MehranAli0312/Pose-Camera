@@ -40,6 +40,7 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.bounceClick
+import com.aipose.camera.posematch.ui.theme.PosePremiumGold
 import com.aipose.camera.posematch.ui.theme.PoseTextLavender
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.PoseVioletPale
@@ -53,15 +54,18 @@ private val ItemWidth = 56.dp
 private val ItemHeight = 72.dp
 private val BadgeSize = 18.dp
 private val BadgeGlyphSize = 9.dp
+private val LockGlyphSize = 10.dp
 private val ImportGlyphSize = 20.dp
 private const val IMPORT_FILL_ALPHA = 0.1f
 private const val IMPORT_BORDER_ALPHA = 0.24f
 private const val BORDER_ALPHA = 0.14f
+private const val LOCK_FILL_ALPHA = 0.6f
 
 @Composable
 internal fun PoseStrip(
     poses: List<Pose>,
     selectedPoseId: Int?,
+    lockedPoseIds: Set<Int>,
     onPoseSelected: (Pose) -> Unit,
     onImport: () -> Unit,
     modifier: Modifier = Modifier,
@@ -79,6 +83,7 @@ internal fun PoseStrip(
             PoseStripItem(
                 pose = pose,
                 isSelected = pose.id == selectedPoseId,
+                isLocked = pose.id in lockedPoseIds,
                 onClick = { onPoseSelected(pose) },
             )
         }
@@ -133,6 +138,7 @@ private fun ImportTile(
 private fun PoseStripItem(
     pose: Pose,
     isSelected: Boolean,
+    isLocked: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -156,6 +162,9 @@ private fun PoseStripItem(
             contentDescription = pose.title,
             modifier = Modifier.fillMaxSize(),
         )
+        if (isLocked) {
+            PoseStripLockBadge(modifier = Modifier.align(Alignment.TopStart))
+        }
         if (isSelected) {
             Box(
                 modifier = Modifier
@@ -174,6 +183,25 @@ private fun PoseStripItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun PoseStripLockBadge(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .padding(4.dp)
+            .size(BadgeSize)
+            .clip(CircleShape)
+            .background(Color.Black.copy(alpha = LOCK_FILL_ALPHA)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_hero_lock_small),
+            contentDescription = stringResource(R.string.pose_pro_badge),
+            colorFilter = ColorFilter.tint(PosePremiumGold),
+            modifier = Modifier.size(LockGlyphSize),
+        )
     }
 }
 

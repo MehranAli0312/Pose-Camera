@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Pose Match Camera</string>
-    <string name="skip">Skip</string>
     <string name="item_settings">Settings</string>
     <string name="close">Close</string>
     <string name="settings_language">Language</string>
@@ -24,28 +23,30 @@
     </plurals>
     <string name="done">Done</string>
     <string name="error_not_found">Not found</string>
-    <string name="pro_restore">Restore</string>
-    <string name="pro_title">Unlock Pose Pro</string>
-    <string name="pro_subtitle">Pose, match and capture with no ads in the way.</string>
-    <string name="pro_feature_remove_ads">Remove Ads</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">A 100% ad-free experience</string>
+    <string name="pro_restore">Restore purchase</string>
+    <string name="pro_terms">Terms</string>
+    <string name="pro_privacy">Privacy</string>
+    <string name="pro_title">Unlock Everything</string>
+    <string name="pro_title_highlight">Everything</string>
+    <string name="pro_subtitle">Get every pose, ad-free — forever.</string>
+    <string name="pro_benefit_poses">Unlock all premium poses</string>
+    <string name="pro_benefit_no_ads">No ads, ever</string>
+    <string name="pro_benefit_updates">Support future updates</string>
+    <string name="pro_plan_lifetime">Lifetime</string>
     <string name="pro_plan_yearly">Yearly</string>
-    <string name="pro_plan_monthly">Monthly</string>
+    <string name="pro_plan_lifetime_note">One-time payment, yours forever</string>
+    <string name="pro_plan_yearly_note">Billed once a year</string>
     <string name="pro_best_value">BEST VALUE</string>
-    <string name="pro_save_percent">SAVE %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s billed yearly</string>
-    <string name="pro_billed_monthly">Billed every month</string>
-    <string name="pro_per_month">per month</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d day free, then %2$s</item>
         <item quantity="other">%1$d days free, then %2$s</item>
     </plurals>
-    <string name="pro_trust_note">Cancel anytime · Secure via Google Play</string>
     <string name="pro_store_unavailable">Couldn\'t load plans. Check your connection and try again.</string>
     <string name="pro_retry">Try Again</string>
-    <string name="pro_upgrade_title">Upgrade to Pro</string>
+    <string name="pro_cta_lifetime">Unlock Lifetime</string>
+    <string name="pro_cta_yearly">Unlock Yearly</string>
     <string name="pro_try_for_free">Try for Free</string>
-    <string name="pro_no_payment_now">No payment now!</string>
+    <string name="pro_footnote_lifetime">One-time payment · No subscription</string>
     <string name="pro_auto_renewal_note">Subscription with auto-renewal. Cancel Anytime</string>
     <string name="pro_purchase_success">Purchase successful</string>
     <string name="pro_purchase_already_owned">You already own this plan</string>
@@ -56,15 +57,13 @@
     <string name="pro_restore_success">Purchase restored</string>
     <string name="pro_restore_nothing_found">No active purchase found for this Google account</string>
     <string name="pro_restore_failed">Couldn\'t reach Google Play. Try again</string>
-    <string name="premium_feature_tag">PRO Feature</string>
-    <string name="premium_feature_title">Premium Feature</string>
-    <string name="premium_feature_message">Subscribe to premium feature or watch an ad</string>
-    <string name="premium_feature_free_access_title">Get Free Access</string>
-    <string name="premium_feature_free_access_subtitle">Watch a short ad</string>
     <string name="premium_feature_free_access_loading">Loading ad…</string>
     <string name="premium_feature_go_premium_title">Go Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Unlock all features, no ads</string>
-    <string name="premium_feature_maybe_later">Maybe later</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Locked pose</string>
+    <string name="premium_pose_title">Premium Pose</string>
+    <string name="premium_pose_message">Watch a short ad to unlock this pose, or go premium to unlock them all.</string>
+    <string name="premium_pose_watch_ad">Watch ad to unlock</string>
     <string name="nav_home">Home</string>
     <string name="nav_gallery">Collections</string>
     <string name="nav_settings">Settings</string>
@@ -74,7 +73,6 @@
     <string name="action_delete">Delete</string>
     <string name="action_import">Import</string>
     <string name="action_save">Save</string>
-    <string name="splash_tagline">AESTHETIC ALIGNMENT STUDIO</string>
     <string name="onboard_title_1">Pick a Pose</string>
     <string name="onboard_title_2">Match the Outline</string>
     <string name="onboard_title_3">Snap &amp; Save</string>
@@ -172,7 +170,6 @@
     <string name="crop_four_by_five" translatable="false">4:5</string>
     <string name="crop_sixteen_by_nine" translatable="false">16:9</string>
     <string name="settings_retain_skeleton">Keep pose overlay after shot</string>
-    <string name="splash_brand_pose" translatable="false">Pose</string>
     <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
     <string name="toast_reference_failed">Reference alignment loading failed</string>
     <string name="toast_capture_failed">Capture failed: %1$s</string>
@@ -184,18 +181,7 @@
     <string name="capture_untitled">Untitled frame</string>
     <string name="home_title_pose" translatable="false">Pose</string>
     <string name="home_title_ai" translatable="false">AI</string>
-    <string name="home_tagline">Match · Capture · Perfect</string>
-    <string name="home_day_streak">Day Streak</string>
-    <string name="home_filter_category">CATEGORY</string>
-    <string name="home_filter_level">LEVEL</string>
-    <string name="home_shuffle">Shuffle poses</string>
-    <string name="home_hero_eyebrow">CONTINUE SESSION</string>
-    <string name="home_hero_best_match">BEST MATCH</string>
     <string name="home_hero_cta">Start Posing</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d pose</item>
-        <item quantity="other">%1$s · %2$s · %3$d poses</item>
-    </plurals>
     <string name="home_action_live_pose">Live Pose</string>
     <string name="home_action_open_camera">Open camera</string>
     <string name="home_action_import">Import</string>
@@ -290,13 +276,7 @@
     <string name="collections_filter_recent">Recent</string>
     <string name="collections_sort_title">Sort shots</string>
     <string name="explore_title">All Poses</string>
-    <string name="explore_total">%1$d total</string>
     <string name="explore_search_hint">Search poses, moods or tags</string>
-    <plurals name="explore_showing">
-        <item quantity="one">Showing %1$d pose</item>
-        <item quantity="other">Showing %1$d poses</item>
-    </plurals>
-    <string name="explore_sort">Sort</string>
     <string name="explore_sort_title">Sort poses</string>
     <string name="explore_sort_featured">Featured</string>
     <string name="explore_sort_easiest">Easiest first</string>
@@ -337,11 +317,6 @@
         <item quantity="other">You scored %1$d%%+ on %2$d poses this week</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · On-device AI · No uploads</string>
-    <string name="settings_streak_subtitle">%1$d shots · %2$d%% average match</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d-day streak</item>
-        <item quantity="other">%1$d-day streak</item>
-    </plurals>
     <string name="progress_title">Your Progress</string>
     <string name="progress_tab_week">Week</string>
     <string name="progress_tab_month">Month</string>

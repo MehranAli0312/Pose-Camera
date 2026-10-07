@@ -12,16 +12,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 internal class UseCaseQueryProducts(private val repository: BillingRepository) {
 
-    private val _productDetailList = mutableListOf<ProductDetail>()
-    private val productDetailList: List<ProductDetail> get() = _productDetailList.toList()
-
     private val mutex = Mutex()
-    private var isQueried = false
 
     suspend fun queryProducts(
         nonConsumableIds: List<String>,
@@ -43,7 +38,6 @@ internal class UseCaseQueryProducts(private val repository: BillingRepository) {
         /* ─── Ensure single flight using mutex ───────── */
         if (!mutex.tryLock()) return@withContext QueryResponse.Loading
         repository.currentState = BillingState.FETCHING_PRODUCTS
-        isQueried = true
 
         val result = runCatching {
             coroutineScope {
@@ -73,9 +67,6 @@ internal class UseCaseQueryProducts(private val repository: BillingRepository) {
 
         val response = result.fold(
             onSuccess = {
-                _productDetailList.clear()
-                _productDetailList.addAll(it)
-
                 repository.currentState = BillingState.FETCHING_PRODUCTS_SUCCESS
                 QueryResponse.Success(it)
             },
@@ -90,45 +81,29 @@ internal class UseCaseQueryProducts(private val repository: BillingRepository) {
         response
     }
 
-    suspend fun queryProducts(productId: String, planId: String?): QueryResponse<List<ProductDetail>> = withContext(Dispatchers.Default) {
-
-        if (!isQueried) {
-            return@withContext QueryResponse.Error("Product details haven’t been fetched yet. Call fetchProductDetails() first.")
-        }
-
-        mutex.withLock {
-            val found = productDetailList.firstOrNull { detail ->
-                detail.productId == productId &&
-                        (planId == null || detail.planId == planId)
-            }
-
-            return@withLock when (found) {
-                null -> QueryResponse.Error("Product not found")
-                else -> QueryResponse.Success(listOf(found))
-            }
-        }
-    }
-
     /* ─── mapping helpers ─────────────────────────────────── */
 
-    private fun ProductDetails.toDomain(type: ProductType) = ProductDetail(
-        productId = productId,
-        planId = "",
-        productTitle = title,
-        productType = type,
-        pricingDetails = listOf(
-            PricingPhase(
-                recurringMode = RecurringMode.ORIGINAL,
-                price = oneTimePurchaseOfferDetails?.formattedPrice.clean(),
-                currencyCode = oneTimePurchaseOfferDetails?.priceCurrencyCode.orEmpty(),
-                planTitle = "",
-                billingCycleCount = 0,
-                billingPeriod = "",
-                priceAmountMicros = oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0L,
-                freeTrialPeriod = 0
+    private fun ProductDetails.toDomain(type: ProductType): ProductDetail {
+        val oneTimeOffer = oneTimePurchaseOfferDetails ?: oneTimePurchaseOfferDetailsList?.firstOrNull()
+        return ProductDetail(
+            productId = productId,
+            planId = "",
+            productTitle = title,
+            productType = type,
+            pricingDetails = listOf(
+                PricingPhase(
+                    recurringMode = RecurringMode.ORIGINAL,
+                    price = oneTimeOffer?.formattedPrice.clean(),
+                    currencyCode = oneTimeOffer?.priceCurrencyCode.orEmpty(),
+                    planTitle = "",
+                    billingCycleCount = 0,
+                    billingPeriod = "",
+                    priceAmountMicros = oneTimeOffer?.priceAmountMicros ?: 0L,
+                    freeTrialPeriod = 0
+                )
             )
         )
-    )
+    }
 
     /** Subscriptions may contain multiple offers (weekly, monthly, etc.). */
     private fun ProductDetails.toDomainList(): List<ProductDetail> = subscriptionOfferDetails?.map { offer ->

@@ -12,14 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -32,9 +30,11 @@ import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.GlossyIconBadge
 import com.aipose.camera.posematch.ui.common.CaptureFab
 import com.aipose.camera.posematch.ui.common.PoseImage
+import com.aipose.camera.posematch.ui.common.PoseProBadge
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
+import com.aipose.camera.posematch.ui.screens.home.models.HomeDailyPose
 import com.aipose.camera.posematch.ui.theme.PoseDailyBottom
 import com.aipose.camera.posematch.ui.theme.PoseDailyMid
 import com.aipose.camera.posematch.ui.theme.PoseDailySubtitle
@@ -63,7 +63,7 @@ private const val GRADIENT_MID_STOP = 0.55f
 
 @Composable
 internal fun HomePoseOfTheDayCard(
-    pose: Pose,
+    daily: HomeDailyPose,
     onTryPose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -114,7 +114,7 @@ internal fun HomePoseOfTheDayCard(
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
-            DailyPoseRow(pose = pose)
+            DailyPoseRow(pose = daily.pose, isLocked = daily.isLocked)
         }
         CaptureFab(
             onClick = onTryPose,
@@ -131,7 +131,7 @@ internal fun HomePoseOfTheDayCard(
 }
 
 @Composable
-private fun DailyPoseRow(pose: Pose, modifier: Modifier = Modifier) {
+private fun DailyPoseRow(pose: Pose, isLocked: Boolean, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -150,7 +150,7 @@ private fun DailyPoseRow(pose: Pose, modifier: Modifier = Modifier) {
                 .size(ThumbSize)
                 .clip(ThumbShape),
         )
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = pose.title,
                 style = poseTextStyle(11.5.sp, FontWeight.Bold, Color.White),
@@ -167,6 +167,9 @@ private fun DailyPoseRow(pose: Pose, modifier: Modifier = Modifier) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
+        }
+        if (isLocked) {
+            PoseProBadge()
         }
     }
 }

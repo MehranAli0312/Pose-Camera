@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -19,8 +18,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
-import com.aipose.camera.posematch.ui.common.PoseBackHeader
+import com.aipose.camera.posematch.ui.common.PoseTopBar
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
@@ -45,43 +44,47 @@ fun AchievementsScreen(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
-                .safeTopSystemBarsPadding()
-                .verticalScroll(rememberScrollState())
-                .safeBottomSystemBarsPadding()
-                .padding(
-                    start = PoseScreenGutter,
-                    end = PoseScreenGutter,
-                    top = PoseScreenTopSpacing,
-                    bottom = 24.dp,
-                ),
+                .adaptiveWidth(),
         ) {
-            PoseBackHeader(
+            PoseTopBar(
                 title = stringResource(R.string.achievements_title),
                 onBack = navController::popBackStackOnClick,
+                modifier = Modifier.poseScreenPadding(),
             )
-            val summary = (uiState as? AchievementsUiState.Content)?.summary ?: return@Column
-            AchievementsStreakCard(
-                currentStreak = summary.currentStreak,
-                bestStreak = summary.bestStreak,
-                week = summary.week,
-                modifier = Modifier.padding(top = 18.dp),
-            )
-            Text(
-                text = stringResource(
-                    R.string.achievements_badges_label,
-                    summary.unlockedCount,
-                    summary.badges.size,
-                ),
-                style = poseTextStyle(9.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
-                modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
-            )
-            AchievementBadgeGrid(badges = summary.badges)
-            summary.nextStreakGoal?.let { goal ->
-                AchievementsNextGoalCard(
-                    goal = goal,
-                    modifier = Modifier.padding(top = 20.dp),
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .safeBottomSystemBarsPadding()
+                    .padding(
+                        start = PoseScreenGutter,
+                        end = PoseScreenGutter,
+                        bottom = 24.dp,
+                    ),
+            ) {
+                val summary = (uiState as? AchievementsUiState.Content)?.summary ?: return@Column
+                AchievementsStreakCard(
+                    currentStreak = summary.currentStreak,
+                    bestStreak = summary.bestStreak,
+                    week = summary.week,
+                    modifier = Modifier.padding(top = 18.dp),
                 )
+                Text(
+                    text = stringResource(
+                        R.string.achievements_badges_label,
+                        summary.unlockedCount,
+                        summary.badges.size,
+                    ),
+                    style = poseTextStyle(9.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
+                    modifier = Modifier.padding(top = 24.dp, bottom = 12.dp),
+                )
+                AchievementBadgeGrid(badges = summary.badges)
+                summary.nextStreakGoal?.let { goal ->
+                    AchievementsNextGoalCard(
+                        goal = goal,
+                        modifier = Modifier.padding(top = 20.dp),
+                    )
+                }
             }
         }
     }

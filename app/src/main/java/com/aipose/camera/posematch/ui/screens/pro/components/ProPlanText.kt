@@ -2,7 +2,6 @@ package com.aipose.camera.posematch.ui.screens.pro.components
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.aipose.camera.posematch.R
@@ -11,44 +10,32 @@ import com.aipose.camera.posematch.domain.models.ProPlan
 import com.aipose.camera.posematch.ui.screens.pro.models.ProEvent
 import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
 import com.aipose.camera.posematch.util.bidiIsolate
-import java.text.NumberFormat
-
-private const val MICROS_PER_UNIT = 1_000_000.0
-private const val MAX_PRICE_FRACTION_DIGITS = 2
-private val PlayPriceAmount = Regex("""\d(?:[\d.,'\s  ]*\d)?""")
 
 @Composable
 internal fun proPlanTitle(plan: ProPlan): String = stringResource(
     when (plan) {
+        ProPlan.LIFETIME -> R.string.pro_plan_lifetime
         ProPlan.YEARLY -> R.string.pro_plan_yearly
-        ProPlan.MONTHLY -> R.string.pro_plan_monthly
     },
 )
 
 @Composable
-internal fun proPlanSubtitle(details: PremiumPlan?): String {
+internal fun proPlanPrice(details: PremiumPlan): String = details.formattedPrice.bidiIsolate()
+
+@Composable
+internal fun proPlanSubtitle(plan: ProPlan, details: PremiumPlan?): String {
     if (details == null) return stringResource(R.string.pro_plan_unavailable)
-    val price = details.formattedPrice.bidiIsolate()
     return when {
         details.hasTrial -> pluralStringResource(
             R.plurals.pro_trial_then_price,
             details.trialDays,
             details.trialDays,
-            price,
+            details.formattedPrice.bidiIsolate(),
         )
 
-        details.plan == ProPlan.YEARLY -> stringResource(R.string.pro_billed_yearly, price)
-        else -> stringResource(R.string.pro_billed_monthly)
+        plan == ProPlan.LIFETIME -> stringResource(R.string.pro_plan_lifetime_note)
+        else -> stringResource(R.string.pro_plan_yearly_note)
     }
-}
-
-@Composable
-internal fun rememberMonthlyPrice(details: PremiumPlan): String? = remember(details) {
-    val price = when (details.plan.billingMonths) {
-        1 -> details.formattedPrice
-        else -> formatLikePlayPrice(details.formattedPrice, details.monthlyPriceMicros)
-    }
-    price?.bidiIsolate()
 }
 
 @Composable
@@ -56,7 +43,19 @@ internal fun proCtaText(state: ProPlansState): String = stringResource(
     when {
         state is ProPlansState.Unavailable -> R.string.pro_retry
         state is ProPlansState.Content && state.startsWithTrial -> R.string.pro_try_for_free
-        else -> R.string.pro_upgrade_title
+        state is ProPlansState.Content && !state.selectedPlan.isOneTime -> R.string.pro_cta_yearly
+        else -> R.string.pro_cta_lifetime
+    },
+)
+
+@Composable
+internal fun proFootnote(state: ProPlansState): String = stringResource(
+    when {
+        state is ProPlansState.Unavailable -> R.string.pro_store_unavailable
+        state is ProPlansState.Content && !state.selectedPlan.isOneTime ->
+            R.string.pro_auto_renewal_note
+
+        else -> R.string.pro_footnote_lifetime
     },
 )
 
@@ -69,13 +68,4 @@ internal fun Context.proEventMessage(event: ProEvent): String = when (event) {
     ProEvent.Restored -> getString(R.string.pro_restore_success)
     ProEvent.NothingToRestore -> getString(R.string.pro_restore_nothing_found)
     ProEvent.RestoreFailed -> getString(R.string.pro_restore_failed)
-}
-
-private fun formatLikePlayPrice(playPrice: String, micros: Long): String? {
-    if (micros <= 0) return null
-    val amountRange = PlayPriceAmount.find(playPrice)?.range ?: return null
-    val amount = NumberFormat.getNumberInstance().apply {
-        maximumFractionDigits = MAX_PRICE_FRACTION_DIGITS
-    }.format(micros / MICROS_PER_UNIT)
-    return playPrice.replaceRange(amountRange, amount)
 }

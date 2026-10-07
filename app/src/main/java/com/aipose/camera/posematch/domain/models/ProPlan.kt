@@ -1,19 +1,17 @@
 package com.aipose.camera.posematch.domain.models
 
-enum class ProPlan(
-    val basePlanId: String,
-    val billingMonths: Int,
-) {
-    YEARLY(basePlanId = "yearly", billingMonths = 12),
-    MONTHLY(basePlanId = "monthly", billingMonths = 1);
+private const val YEARLY_PRODUCT_ID = "yearly_pro"
+private const val LIFETIME_PRODUCT_ID = "lifetime_pro"
 
-    val productId: String get() = PRODUCT_ID
+enum class ProPlan(val productId: String, val isOneTime: Boolean) {
+    LIFETIME(productId = LIFETIME_PRODUCT_ID, isOneTime = true),
+    YEARLY(productId = YEARLY_PRODUCT_ID, isOneTime = false);
 
     companion object {
-        const val PRODUCT_ID = "premium"
+        val subscriptionProductIds: List<String> = listOf(YEARLY_PRODUCT_ID)
 
-        val subscriptionProductIds: List<String> = listOf(PRODUCT_ID)
+        val oneTimeProductIds: List<String> = listOf(LIFETIME_PRODUCT_ID)
 
-        val recommended: ProPlan = YEARLY
+        val recommended: ProPlan = LIFETIME
     }
 }

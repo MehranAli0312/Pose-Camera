@@ -4797,47 +4797,8 @@
     }
   },
   {
-    "id": 124,
-    "title": "Nature Pose 13",
-    "category": "Nature",
-    "description": "Nature pose reference.",
-    "difficulty": "Easy",
-    "tags": [
-      "nature"
-    ],
-    "image": "file:///android_asset/poses/nature_fourteen.webp",
-    "landmarks": {
-      "head_x": 0.5,
-      "head_y": 0.15,
-      "left_shoulder_x": 0.4,
-      "left_shoulder_y": 0.32,
-      "right_shoulder_x": 0.6,
-      "right_shoulder_y": 0.32,
-      "left_elbow_x": 0.35,
-      "left_elbow_y": 0.46,
-      "right_elbow_x": 0.65,
-      "right_elbow_y": 0.46,
-      "left_wrist_x": 0.33,
-      "left_wrist_y": 0.6,
-      "right_wrist_x": 0.67,
-      "right_wrist_y": 0.6,
-      "left_hip_x": 0.43,
-      "left_hip_y": 0.6,
-      "right_hip_x": 0.57,
-      "right_hip_y": 0.6,
-      "left_knee_x": 0.42,
-      "left_knee_y": 0.8,
-      "right_knee_x": 0.58,
-      "right_knee_y": 0.8,
-      "left_ankle_x": 0.42,
-      "left_ankle_y": 0.98,
-      "right_ankle_x": 0.58,
-      "right_ankle_y": 0.98
-    }
-  },
-  {
     "id": 125,
-    "title": "Nature Pose 14",
+    "title": "Nature Pose 13",
     "category": "Nature",
     "description": "Nature pose reference.",
     "difficulty": "Medium",
@@ -4876,7 +4837,7 @@
   },
   {
     "id": 126,
-    "title": "Nature Pose 15",
+    "title": "Nature Pose 14",
     "category": "Nature",
     "description": "Nature pose reference.",
     "difficulty": "Hard",
@@ -4915,7 +4876,7 @@
   },
   {
     "id": 127,
-    "title": "Nature Pose 16",
+    "title": "Nature Pose 15",
     "category": "Nature",
     "description": "Nature pose reference.",
     "difficulty": "Easy",
@@ -4954,7 +4915,7 @@
   },
   {
     "id": 128,
-    "title": "Nature Pose 17",
+    "title": "Nature Pose 16",
     "category": "Nature",
     "description": "Nature pose reference.",
     "difficulty": "Medium",

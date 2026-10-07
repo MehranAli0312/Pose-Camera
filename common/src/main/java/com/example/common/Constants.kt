@@ -14,5 +14,4 @@ object Constants {
             _splashEnded.value = value
         }
 
-    var SHOW_ONBOARD_AD_PAGE: Boolean = false
 }

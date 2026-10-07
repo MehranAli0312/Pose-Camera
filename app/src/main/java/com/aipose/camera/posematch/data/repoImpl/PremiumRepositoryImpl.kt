@@ -47,11 +47,18 @@ class PremiumRepositoryImpl(
         }
     }
 
-    override suspend fun restorePurchases(): ProRestoreResult = proStatusRefresher.refresh()
+    override suspend fun restorePurchases(): ProRestoreResult {
+        if (!awaitConnection()) return ProRestoreResult.Failed
+        return proStatusRefresher.refresh()
+    }
 
     private fun registerCatalog() {
-        if (billingManager.subscriptionIds == ProPlan.subscriptionProductIds) return
-        billingManager.setSubscriptions(ProPlan.subscriptionProductIds)
+        if (billingManager.subscriptionIds != ProPlan.subscriptionProductIds) {
+            billingManager.setSubscriptions(ProPlan.subscriptionProductIds)
+        }
+        if (billingManager.nonConsumableIds != ProPlan.oneTimeProductIds) {
+            billingManager.setNonConsumables(ProPlan.oneTimeProductIds)
+        }
     }
 
     private suspend fun awaitConnection(): Boolean {

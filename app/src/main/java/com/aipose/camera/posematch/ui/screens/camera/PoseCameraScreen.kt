@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.PremiumRewarded
+import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.rememberCameraPermissionState
 import com.aipose.camera.posematch.ui.common.rememberHapticPulse
@@ -42,6 +45,7 @@ import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.navigateToTab
+import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraGridOverlay
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraMatchCard
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraPermissionCard
@@ -58,7 +62,9 @@ import com.aipose.camera.posematch.ui.screens.camera.components.OverlayOpacitySl
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseOverlayImage
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseStrip
 import com.aipose.camera.posematch.ui.vm.PoseCameraViewModel
+import com.example.ads.AdPlacement
 import com.example.common.showToast
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private const val HIGH_MATCH_SCORE = 80
@@ -83,6 +89,13 @@ fun PoseCameraScreen(
     val importTitle = stringResource(R.string.imported_pose_title)
     var surfaceSize by remember { mutableStateOf(IntSize.Zero) }
     val posePicker = rememberPosePicker { pickedUri -> viewModel.importPose(importTitle, pickedUri) }
+    val screenAds = rememberScreenAds()
+    val scope = rememberCoroutineScope()
+    val hasLockedPoses = uiState.lockedPoseIds.isNotEmpty()
+
+    LaunchedEffect(hasLockedPoses) {
+        if (hasLockedPoses) screenAds.preload(AdPlacement.PremiumRewarded)
+    }
 
     LaunchedEffect(poseId) {
         if (poseId != null) viewModel.onPoseRequested(poseId)
@@ -223,7 +236,8 @@ fun PoseCameraScreen(
             PoseStrip(
                 poses = uiState.poses,
                 selectedPoseId = uiState.selectedPose?.id,
-                onPoseSelected = viewModel::selectPose,
+                lockedPoseIds = uiState.lockedPoseIds,
+                onPoseSelected = viewModel::onPoseTapped,
                 onImport = posePicker,
             )
             Spacer(modifier = Modifier.height(26.dp))
@@ -260,8 +274,32 @@ fun PoseCameraScreen(
         CameraPosePickerSheet(
             poses = uiState.poses,
             selectedPoseId = uiState.selectedPose?.id,
-            onPoseSelected = viewModel::selectPose,
+            lockedPoseIds = uiState.lockedPoseIds,
+            onPoseSelected = viewModel::onPoseTapped,
             onDismiss = viewModel::hidePosePicker,
+        )
+    }
+
+    uiState.unlockPrompt?.let { prompt ->
+        PremiumFeatureBottomSheet(
+            posePreviewPath = prompt.pose.imagePath,
+            poseTitle = prompt.pose.title,
+            isAdLoading = prompt.isAdLoading,
+            onWatchAdClick = {
+                viewModel.onUnlockAdStarted()
+                scope.launch {
+                    val result = screenAds.rewarded(
+                        placement = AdPlacement.PremiumRewarded,
+                        onShown = viewModel::onUnlockAdShown,
+                    )
+                    viewModel.onUnlockAdFinished(prompt.pose, result.wasRewarded)
+                }
+            },
+            onGoPremiumClick = {
+                viewModel.dismissLockedPose()
+                navController.navigateOnClick(NavRoute.ProScreenRoute.route)
+            },
+            onDismissRequest = viewModel::dismissLockedPose,
         )
     }
 

@@ -10,10 +10,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.isSpecified
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,8 +42,9 @@ import com.aipose.camera.posematch.ui.theme.PoseShadow
 import com.aipose.camera.posematch.ui.theme.Violet
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val ShotWidth = 200.dp
-private val ShotHeight = 250.dp
+private val ShotMaxWidth = 220.dp
+private val ShotMaxHeight = 300.dp
+private const val DEFAULT_SHOT_ASPECT_RATIO = 3f / 4f
 private val ShotShape = RoundedCornerShape(24.dp)
 private val ShotElevation = 16.dp
 private val ChipHeight = 30.dp
@@ -58,12 +66,19 @@ internal fun PhotoSuccessShot(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        var aspectRatio by remember(imagePath) { mutableFloatStateOf(DEFAULT_SHOT_ASPECT_RATIO) }
         PoseImage(
             imagePath = imagePath,
             contentDescription = stringResource(R.string.saved_photo),
             contentScale = ContentScale.Crop,
+            onImageSizeKnown = { size ->
+                if (size.isSpecified && size.width > 0f && size.height > 0f) {
+                    aspectRatio = size.width / size.height
+                }
+            },
             modifier = Modifier
-                .size(width = ShotWidth, height = ShotHeight)
+                .sizeIn(maxWidth = ShotMaxWidth, maxHeight = ShotMaxHeight)
+                .aspectRatio(aspectRatio)
                 .shadow(ShotElevation, ShotShape, ambientColor = PoseShadow, spotColor = PoseShadow)
                 .clip(ShotShape),
         )

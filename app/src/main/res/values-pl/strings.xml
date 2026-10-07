@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Pomiń</string>
     <string name="item_settings">Ustawienia</string>
     <string name="close">Zamknij</string>
     <string name="settings_language">Język</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Oceń nas</string>
     <string name="done">Gotowe</string>
     <string name="error_not_found">Nie znaleziono</string>
-    <string name="pro_restore">Przywróć</string>
-    <string name="pro_feature_remove_ads">Usuń reklamy</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">W 100% bez reklam</string>
+    <string name="pro_restore">Przywróć zakup</string>
+    <string name="pro_terms">Warunki</string>
+    <string name="pro_privacy">Prywatność</string>
+    <string name="pro_title_highlight">wszystko</string>
+    <string name="pro_benefit_poses">Odblokuj wszystkie pozy premium</string>
+    <string name="pro_benefit_no_ads">Żadnych reklam, nigdy</string>
+    <string name="pro_benefit_updates">Wspieraj przyszłe aktualizacje</string>
+    <string name="pro_plan_lifetime">Dożywotnio</string>
+    <string name="pro_plan_lifetime_note">Jednorazowa płatność, Twoje na zawsze</string>
+    <string name="pro_plan_yearly_note">Płatne raz w roku</string>
+    <string name="pro_cta_lifetime">Odblokuj dożywotnio</string>
+    <string name="pro_cta_yearly">Odblokuj rocznie</string>
+    <string name="pro_footnote_lifetime">Jednorazowa płatność · Bez subskrypcji</string>
     <string name="pro_plan_yearly">Rocznie</string>
-    <string name="pro_plan_monthly">Miesięcznie</string>
     <string name="pro_best_value">NAJLEPSZA OFERTA</string>
-    <string name="pro_save_percent">OSZCZĘDŹ %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s płatne rocznie</string>
-    <string name="pro_billed_monthly">Płatne co miesiąc</string>
-    <string name="pro_per_month">miesięcznie</string>
-    <string name="pro_trust_note">Anuluj w dowolnym momencie · Bezpiecznie przez Google Play</string>
     <string name="pro_store_unavailable">Nie udało się wczytać planów. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="pro_retry">Spróbuj ponownie</string>
-    <string name="pro_upgrade_title">Przejdź na Pro</string>
     <string name="pro_try_for_free">Wypróbuj za darmo</string>
-    <string name="pro_no_payment_now">Teraz nic nie płacisz!</string>
     <string name="pro_auto_renewal_note">Subskrypcja z automatycznym odnowieniem. Anuluj w każdej chwili</string>
     <string name="pro_purchase_success">Zakup udany</string>
     <string name="pro_purchase_already_owned">Masz już ten plan</string>
@@ -51,23 +52,21 @@
         <item quantity="many">%1$d gwiazdek</item>
         <item quantity="other">%1$d gwiazdki</item>
     </plurals>
-    <string name="pro_title">Odblokuj Pose Pro</string>
-    <string name="pro_subtitle">Pozuj, porównuj i fotografuj bez reklam.</string>
+    <string name="pro_title">Odblokuj wszystko</string>
+    <string name="pro_subtitle">Wszystkie pozy, bez reklam — na zawsze.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dzień za darmo, potem %2$s</item>
         <item quantity="few">%1$d dni za darmo, potem %2$s</item>
         <item quantity="many">%1$d dni za darmo, potem %2$s</item>
         <item quantity="other">%1$d dnia za darmo, potem %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Funkcja PRO</string>
-    <string name="premium_feature_title">Funkcja premium</string>
-    <string name="premium_feature_message">Wykup subskrypcję lub obejrzyj reklamę</string>
-    <string name="premium_feature_free_access_title">Darmowy dostęp</string>
-    <string name="premium_feature_free_access_subtitle">Obejrzyj krótką reklamę</string>
     <string name="premium_feature_free_access_loading">Ładowanie reklamy…</string>
     <string name="premium_feature_go_premium_title">Przejdź na Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Wszystkie funkcje, bez reklam</string>
-    <string name="premium_feature_maybe_later">Może później</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Zablokowana poza</string>
+    <string name="premium_pose_title">Poza premium</string>
+    <string name="premium_pose_message">Obejrzyj krótką reklamę, aby odblokować tę pozę, lub przejdź na Premium, aby odblokować wszystkie.</string>
+    <string name="premium_pose_watch_ad">Obejrzyj reklamę, aby odblokować</string>
     <string name="nav_home">Start</string>
     <string name="nav_gallery">Kolekcje</string>
     <string name="nav_settings">Ustawienia</string>
@@ -77,7 +76,6 @@
     <string name="action_delete">Usuń</string>
     <string name="action_import">Importuj</string>
     <string name="action_save">Zapisz</string>
-    <string name="splash_tagline">STUDIO ESTETYCZNEGO DOPASOWANIA</string>
     <string name="onboard_title_1">Wybierz pozę</string>
     <string name="onboard_title_2">Dopasuj się do konturu</string>
     <string name="onboard_title_3">Zrób zdjęcie i zapisz</string>
@@ -170,21 +168,10 @@
     <string name="perm_camera_title">Wymagane uprawnienie do aparatu</string>
     <string name="perm_camera_desc">Zezwól na dostęp do aparatu, aby robić zdjęcia i porównywać pozy.</string>
     <string name="perm_allow">Zezwól</string>
+    <string name="perm_camera_blocked_desc">Dostęp do aparatu jest wyłączony. Otwórz ustawienia i włącz uprawnienie do aparatu, aby dalej pozować.</string>
+    <string name="perm_open_settings">Otwórz ustawienia</string>
     <string name="capture_untitled">Zdjęcie bez tytułu</string>
-    <string name="home_tagline">Dopasuj · Uchwyć · Udoskonal</string>
-    <string name="home_day_streak">Dni z rzędu</string>
-    <string name="home_filter_category">KATEGORIA</string>
-    <string name="home_filter_level">POZIOM</string>
-    <string name="home_shuffle">Wymieszaj pozy</string>
-    <string name="home_hero_eyebrow">KONTYNUUJ SESJĘ</string>
-    <string name="home_hero_best_match">NAJLEPSZE DOPASOWANIE</string>
     <string name="home_hero_cta">Zacznij pozować</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d poza</item>
-        <item quantity="few">%1$s · %2$s · %3$d pozy</item>
-        <item quantity="many">%1$s · %2$s · %3$d póz</item>
-        <item quantity="other">%1$s · %2$s · %3$d pozy</item>
-    </plurals>
     <string name="home_action_live_pose">Poza na żywo</string>
     <string name="home_action_open_camera">Otwórz aparat</string>
     <string name="home_action_import">Importuj</string>
@@ -286,15 +273,7 @@
     <string name="collections_filter_recent">Ostatnie</string>
     <string name="collections_sort_title">Sortuj zdjęcia</string>
     <string name="explore_title">Wszystkie pozy</string>
-    <string name="explore_total">Łącznie %1$d</string>
     <string name="explore_search_hint">Szukaj póz, nastrojów lub tagów</string>
-    <plurals name="explore_showing">
-        <item quantity="one">Wyświetlono %1$d pozę</item>
-        <item quantity="few">Wyświetlono %1$d pozy</item>
-        <item quantity="many">Wyświetlono %1$d póz</item>
-        <item quantity="other">Wyświetlono %1$d pozy</item>
-    </plurals>
-    <string name="explore_sort">Sortuj</string>
     <string name="explore_sort_title">Sortuj pozy</string>
     <string name="explore_sort_featured">Polecane</string>
     <string name="explore_sort_easiest">Najłatwiejsze najpierw</string>
@@ -344,13 +323,6 @@
         <item quantity="other">W tym tygodniu %1$d%%+ w %2$d pozy</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI na urządzeniu · Bez przesyłania</string>
-    <string name="settings_streak_subtitle">Zdjęcia: %1$d · średnie dopasowanie %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d dzień z rzędu</item>
-        <item quantity="few">%1$d dni z rzędu</item>
-        <item quantity="many">%1$d dni z rzędu</item>
-        <item quantity="other">%1$d dnia z rzędu</item>
-    </plurals>
     <string name="progress_title">Twoje postępy</string>
     <string name="progress_tab_week">Tydzień</string>
     <string name="progress_tab_month">Miesiąc</string>

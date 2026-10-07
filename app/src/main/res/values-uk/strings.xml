@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Пропустити</string>
     <string name="item_settings">Налаштування</string>
     <string name="close">Закрити</string>
     <string name="settings_language">Мова</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Оцініть нас</string>
     <string name="done">Готово</string>
     <string name="error_not_found">Не знайдено</string>
-    <string name="pro_restore">Відновити</string>
-    <string name="pro_feature_remove_ads">Вимкнути рекламу</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">100% без реклами</string>
+    <string name="pro_restore">Відновити покупку</string>
+    <string name="pro_terms">Умови</string>
+    <string name="pro_privacy">Конфіденційність</string>
+    <string name="pro_title_highlight">все</string>
+    <string name="pro_benefit_poses">Відкрийте всі преміум-пози</string>
+    <string name="pro_benefit_no_ads">Жодної реклами</string>
+    <string name="pro_benefit_updates">Підтримайте майбутні оновлення</string>
+    <string name="pro_plan_lifetime">Назавжди</string>
+    <string name="pro_plan_lifetime_note">Одноразовий платіж, ваше назавжди</string>
+    <string name="pro_plan_yearly_note">Оплата раз на рік</string>
+    <string name="pro_cta_lifetime">Відкрити назавжди</string>
+    <string name="pro_cta_yearly">Відкрити на рік</string>
+    <string name="pro_footnote_lifetime">Одноразовий платіж · Без підписки</string>
     <string name="pro_plan_yearly">Річний</string>
-    <string name="pro_plan_monthly">Місячний</string>
     <string name="pro_best_value">НАЙВИГІДНІШЕ</string>
-    <string name="pro_save_percent">ЗНИЖКА %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s з оплатою раз на рік</string>
-    <string name="pro_billed_monthly">Оплата щомісяця</string>
-    <string name="pro_per_month">на місяць</string>
-    <string name="pro_trust_note">Скасування будь-коли · Безпечно через Google Play</string>
     <string name="pro_store_unavailable">Не вдалося завантажити тарифи. Перевірте з’єднання та спробуйте ще раз.</string>
     <string name="pro_retry">Спробувати ще раз</string>
-    <string name="pro_upgrade_title">Перейти на Pro</string>
     <string name="pro_try_for_free">Спробувати безкоштовно</string>
-    <string name="pro_no_payment_now">Зараз платити не потрібно!</string>
     <string name="pro_auto_renewal_note">Підписка з автопродовженням. Скасуйте будь-коли</string>
     <string name="pro_purchase_success">Покупку виконано</string>
     <string name="pro_purchase_already_owned">Цей план уже ваш</string>
@@ -51,23 +52,21 @@
         <item quantity="many">%1$d зірок</item>
         <item quantity="other">%1$d зірки</item>
     </plurals>
-    <string name="pro_title">Відкрийте Pose Pro</string>
-    <string name="pro_subtitle">Позуйте, порівнюйте й знімайте без реклами.</string>
+    <string name="pro_title">Відкрийте все</string>
+    <string name="pro_subtitle">Усі пози без реклами — назавжди.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d день безкоштовно, потім %2$s</item>
         <item quantity="few">%1$d дні безкоштовно, потім %2$s</item>
         <item quantity="many">%1$d днів безкоштовно, потім %2$s</item>
         <item quantity="other">%1$d дня безкоштовно, потім %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Функція PRO</string>
-    <string name="premium_feature_title">Преміум-функція</string>
-    <string name="premium_feature_message">Оформіть підписку або перегляньте рекламу</string>
-    <string name="premium_feature_free_access_title">Безкоштовний доступ</string>
-    <string name="premium_feature_free_access_subtitle">Перегляньте коротку рекламу</string>
     <string name="premium_feature_free_access_loading">Завантаження реклами…</string>
     <string name="premium_feature_go_premium_title">Перейти на Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Усі функції без реклами</string>
-    <string name="premium_feature_maybe_later">Можливо, пізніше</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Заблокована поза</string>
+    <string name="premium_pose_title">Преміум-поза</string>
+    <string name="premium_pose_message">Перегляньте коротку рекламу, щоб відкрити цю позу, або перейдіть на Premium, щоб відкрити всі.</string>
+    <string name="premium_pose_watch_ad">Дивитися рекламу й відкрити</string>
     <string name="nav_home">Головна</string>
     <string name="nav_gallery">Колекції</string>
     <string name="nav_settings">Налаштування</string>
@@ -77,7 +76,6 @@
     <string name="action_delete">Видалити</string>
     <string name="action_import">Імпорт</string>
     <string name="action_save">Зберегти</string>
-    <string name="splash_tagline">СТУДІЯ ЕСТЕТИЧНИХ ПОЗ</string>
     <string name="onboard_title_1">Оберіть позу</string>
     <string name="onboard_title_2">Повторіть контур</string>
     <string name="onboard_title_3">Зніміть і збережіть</string>
@@ -170,21 +168,10 @@
     <string name="perm_camera_title">Потрібен доступ до камери</string>
     <string name="perm_camera_desc">Дозвольте доступ до камери, щоб знімати й порівнювати пози.</string>
     <string name="perm_allow">Дозволити</string>
+    <string name="perm_camera_blocked_desc">Доступ до камери вимкнено. Відкрийте налаштування та ввімкніть дозвіл на камеру, щоб продовжити позувати.</string>
+    <string name="perm_open_settings">Відкрити налаштування</string>
     <string name="capture_untitled">Знімок без назви</string>
-    <string name="home_tagline">Порівнюй · Знімай · Вдосконалюй</string>
-    <string name="home_day_streak">Днів поспіль</string>
-    <string name="home_filter_category">КАТЕГОРІЯ</string>
-    <string name="home_filter_level">РІВЕНЬ</string>
-    <string name="home_shuffle">Перемішати пози</string>
-    <string name="home_hero_eyebrow">ПРОДОВЖИТИ СЕАНС</string>
-    <string name="home_hero_best_match">НАЙКРАЩИЙ ЗБІГ</string>
     <string name="home_hero_cta">Почати позувати</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d поза</item>
-        <item quantity="few">%1$s · %2$s · %3$d пози</item>
-        <item quantity="many">%1$s · %2$s · %3$d поз</item>
-        <item quantity="other">%1$s · %2$s · %3$d пози</item>
-    </plurals>
     <string name="home_action_live_pose">Поза наживо</string>
     <string name="home_action_open_camera">Відкрити камеру</string>
     <string name="home_action_import">Імпорт</string>
@@ -286,15 +273,7 @@
     <string name="collections_filter_recent">Нещодавні</string>
     <string name="collections_sort_title">Сортування знімків</string>
     <string name="explore_title">Усі пози</string>
-    <string name="explore_total">Усього %1$d</string>
     <string name="explore_search_hint">Пошук поз, настроїв або тегів</string>
-    <plurals name="explore_showing">
-        <item quantity="one">Показано %1$d позу</item>
-        <item quantity="few">Показано %1$d пози</item>
-        <item quantity="many">Показано %1$d поз</item>
-        <item quantity="other">Показано %1$d пози</item>
-    </plurals>
-    <string name="explore_sort">Сортування</string>
     <string name="explore_sort_title">Сортування поз</string>
     <string name="explore_sort_featured">Рекомендовані</string>
     <string name="explore_sort_easiest">Спочатку прості</string>
@@ -344,13 +323,6 @@
         <item quantity="other">Цього тижня %1$d%%+ у %2$d пози</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · ШІ на пристрої · Без завантажень</string>
-    <string name="settings_streak_subtitle">Знімків: %1$d · середній збіг %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d день поспіль</item>
-        <item quantity="few">%1$d дні поспіль</item>
-        <item quantity="many">%1$d днів поспіль</item>
-        <item quantity="other">%1$d дня поспіль</item>
-    </plurals>
     <string name="progress_title">Ваш прогрес</string>
     <string name="progress_tab_week">Тиждень</string>
     <string name="progress_tab_month">Місяць</string>

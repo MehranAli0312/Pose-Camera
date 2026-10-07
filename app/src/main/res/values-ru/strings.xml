@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Пропустить</string>
     <string name="item_settings">Настройки</string>
     <string name="close">Закрыть</string>
     <string name="settings_language">Язык</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Пожалуйста, оцените</string>
     <string name="done">Готово</string>
     <string name="error_not_found">Не найдено</string>
-    <string name="pro_restore">Восстановить</string>
-    <string name="pro_feature_remove_ads">Отключить рекламу</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">100% без рекламы</string>
+    <string name="pro_restore">Восстановить покупку</string>
+    <string name="pro_terms">Условия</string>
+    <string name="pro_privacy">Конфиденциальность</string>
+    <string name="pro_title_highlight">всё</string>
+    <string name="pro_benefit_poses">Откройте все премиум-позы</string>
+    <string name="pro_benefit_no_ads">Никакой рекламы</string>
+    <string name="pro_benefit_updates">Поддержите будущие обновления</string>
+    <string name="pro_plan_lifetime">Навсегда</string>
+    <string name="pro_plan_lifetime_note">Разовый платёж, ваше навсегда</string>
+    <string name="pro_plan_yearly_note">Оплата раз в год</string>
+    <string name="pro_cta_lifetime">Открыть навсегда</string>
+    <string name="pro_cta_yearly">Открыть на год</string>
+    <string name="pro_footnote_lifetime">Разовый платёж · Без подписки</string>
     <string name="pro_plan_yearly">Годовой</string>
-    <string name="pro_plan_monthly">Месячный</string>
     <string name="pro_best_value">ЛУЧШАЯ ЦЕНА</string>
-    <string name="pro_save_percent">СКИДКА %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s с оплатой раз в год</string>
-    <string name="pro_billed_monthly">Оплата каждый месяц</string>
-    <string name="pro_per_month">в месяц</string>
-    <string name="pro_trust_note">Отмена в любое время · Безопасно через Google Play</string>
     <string name="pro_store_unavailable">Не удалось загрузить тарифы. Проверьте подключение и повторите попытку.</string>
     <string name="pro_retry">Повторить</string>
-    <string name="pro_upgrade_title">Перейти на Pro</string>
     <string name="pro_try_for_free">Попробовать бесплатно</string>
-    <string name="pro_no_payment_now">Сейчас платить не нужно!</string>
     <string name="pro_auto_renewal_note">Подписка с автопродлением. Отмена в любой момент</string>
     <string name="pro_purchase_success">Покупка успешна</string>
     <string name="pro_purchase_already_owned">Этот план уже ваш</string>
@@ -51,23 +52,21 @@
         <item quantity="many">%1$d звёзд</item>
         <item quantity="other">%1$d звезды</item>
     </plurals>
-    <string name="pro_title">Откройте Pose Pro</string>
-    <string name="pro_subtitle">Позируйте, сравнивайте и снимайте без рекламы.</string>
+    <string name="pro_title">Откройте всё</string>
+    <string name="pro_subtitle">Все позы без рекламы — навсегда.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d день бесплатно, затем %2$s</item>
         <item quantity="few">%1$d дня бесплатно, затем %2$s</item>
         <item quantity="many">%1$d дней бесплатно, затем %2$s</item>
         <item quantity="other">%1$d дня бесплатно, затем %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Функция PRO</string>
-    <string name="premium_feature_title">Премиум-функция</string>
-    <string name="premium_feature_message">Оформите подписку или посмотрите рекламу</string>
-    <string name="premium_feature_free_access_title">Бесплатный доступ</string>
-    <string name="premium_feature_free_access_subtitle">Посмотрите короткую рекламу</string>
     <string name="premium_feature_free_access_loading">Загрузка рекламы…</string>
     <string name="premium_feature_go_premium_title">Перейти на Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Все функции без рекламы</string>
-    <string name="premium_feature_maybe_later">Может, позже</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Заблокированная поза</string>
+    <string name="premium_pose_title">Премиум-поза</string>
+    <string name="premium_pose_message">Посмотрите короткую рекламу, чтобы открыть эту позу, или перейдите на Premium, чтобы открыть все.</string>
+    <string name="premium_pose_watch_ad">Смотреть рекламу и открыть</string>
     <string name="nav_home">Главная</string>
     <string name="nav_gallery">Коллекции</string>
     <string name="nav_settings">Настройки</string>
@@ -77,7 +76,6 @@
     <string name="action_delete">Удалить</string>
     <string name="action_import">Импорт</string>
     <string name="action_save">Сохранить</string>
-    <string name="splash_tagline">СТУДИЯ ЭСТЕТИЧНЫХ ПОЗ</string>
     <string name="onboard_title_1">Выберите позу</string>
     <string name="onboard_title_2">Повторите контур</string>
     <string name="onboard_title_3">Снимите и сохраните</string>
@@ -170,21 +168,10 @@
     <string name="perm_camera_title">Нужен доступ к камере</string>
     <string name="perm_camera_desc">Разрешите доступ к камере, чтобы снимать и сравнивать позы.</string>
     <string name="perm_allow">Разрешить</string>
+    <string name="perm_camera_blocked_desc">Доступ к камере отключён. Откройте настройки и включите разрешение на камеру, чтобы продолжить позировать.</string>
+    <string name="perm_open_settings">Открыть настройки</string>
     <string name="capture_untitled">Снимок без названия</string>
-    <string name="home_tagline">Сравнивай · Снимай · Совершенствуй</string>
-    <string name="home_day_streak">Дней подряд</string>
-    <string name="home_filter_category">КАТЕГОРИЯ</string>
-    <string name="home_filter_level">УРОВЕНЬ</string>
-    <string name="home_shuffle">Перемешать позы</string>
-    <string name="home_hero_eyebrow">ПРОДОЛЖИТЬ СЕАНС</string>
-    <string name="home_hero_best_match">ЛУЧШЕЕ СОВПАДЕНИЕ</string>
     <string name="home_hero_cta">Начать позировать</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d поза</item>
-        <item quantity="few">%1$s · %2$s · %3$d позы</item>
-        <item quantity="many">%1$s · %2$s · %3$d поз</item>
-        <item quantity="other">%1$s · %2$s · %3$d позы</item>
-    </plurals>
     <string name="home_action_live_pose">Поза вживую</string>
     <string name="home_action_open_camera">Открыть камеру</string>
     <string name="home_action_import">Импорт</string>
@@ -286,15 +273,7 @@
     <string name="collections_filter_recent">Недавние</string>
     <string name="collections_sort_title">Сортировка снимков</string>
     <string name="explore_title">Все позы</string>
-    <string name="explore_total">Всего %1$d</string>
     <string name="explore_search_hint">Поиск поз, настроений или тегов</string>
-    <plurals name="explore_showing">
-        <item quantity="one">Показана %1$d поза</item>
-        <item quantity="few">Показано %1$d позы</item>
-        <item quantity="many">Показано %1$d поз</item>
-        <item quantity="other">Показано %1$d позы</item>
-    </plurals>
-    <string name="explore_sort">Сортировка</string>
     <string name="explore_sort_title">Сортировка поз</string>
     <string name="explore_sort_featured">Рекомендуемые</string>
     <string name="explore_sort_easiest">Сначала простые</string>
@@ -344,13 +323,6 @@
         <item quantity="other">На этой неделе %1$d%%+ в %2$d позы</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · ИИ на устройстве · Без загрузок</string>
-    <string name="settings_streak_subtitle">Снимков: %1$d · среднее совпадение %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d день подряд</item>
-        <item quantity="few">%1$d дня подряд</item>
-        <item quantity="many">%1$d дней подряд</item>
-        <item quantity="other">%1$d дня подряд</item>
-    </plurals>
     <string name="progress_title">Ваш прогресс</string>
     <string name="progress_tab_week">Неделя</string>
     <string name="progress_tab_month">Месяц</string>

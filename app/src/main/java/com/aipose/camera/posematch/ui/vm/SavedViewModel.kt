@@ -9,6 +9,8 @@ import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
+import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
+import com.aipose.camera.posematch.ui.models.PoseUnlockPrompt
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedPose
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedShot
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedSort
@@ -26,8 +28,20 @@ class SavedViewModel(
     private val context: Context,
     private val captureUseCase: CaptureUseCase,
     private val favoritePoseUseCase: FavoritePoseUseCase,
+    private val poseLockUseCase: PoseLockUseCase,
     poseLibraryUseCase: PoseLibraryUseCase
 ) : ViewModel() {
+
+    private val _unlockPrompt = MutableStateFlow<PoseUnlockPrompt?>(null)
+    val unlockPrompt = _unlockPrompt.asStateFlow()
+
+    private val _unlockedPoseToOpen = MutableStateFlow<Int?>(null)
+    val unlockedPoseToOpen = _unlockedPoseToOpen.asStateFlow()
+
+    private val posesWithLocks = combine(
+        poseLibraryUseCase.observePoses(),
+        poseLockUseCase.observeAccess(),
+    ) { poses, access -> poses to access.lockedIdsIn(poses) }
 
     private val selectedTab = MutableStateFlow(SavedTab.Shots)
 
@@ -39,16 +53,16 @@ class SavedViewModel(
 
     val uiState: StateFlow<SavedUiState> = combine(
         captureUseCase.observeCaptures(),
-        poseLibraryUseCase.observePoses(),
+        posesWithLocks,
         favoritePoseUseCase.observeFavorites(),
         selectedTab,
         _sort
-    ) { captures, poses, favorites, tab, sort ->
+    ) { captures, (poses, lockedIds), favorites, tab, sort ->
         SavedUiState.Content(
             selectedTab = tab,
             sort = sort,
             shots = captures.filter { it.isFavorite }.map { it.toSavedShot() }.sortedBy(sort),
-            poses = poses.toSavedPoses(favorites).sortedBy(sort)
+            poses = poses.toSavedPoses(favorites, lockedIds).sortedBy(sort)
         )
     }.stateIn(
         viewModelScope,
@@ -78,6 +92,37 @@ class SavedViewModel(
         viewModelScope.launch { captureUseCase.toggleFavorite(shot.capture) }
     }
 
+    fun showLockedPose(saved: SavedPose) {
+        _unlockPrompt.value = PoseUnlockPrompt(saved.pose)
+    }
+
+    fun dismissLockedPose() {
+        if (_unlockPrompt.value?.isAdLoading == true) return
+        _unlockPrompt.value = null
+    }
+
+    fun onUnlockAdStarted() {
+        _unlockPrompt.value = _unlockPrompt.value?.copy(isAdLoading = true)
+    }
+
+    fun onUnlockAdShown() {
+        _unlockPrompt.value = null
+    }
+
+    fun onUnlockAdFinished(pose: Pose, wasRewarded: Boolean) {
+        _unlockPrompt.value = _unlockPrompt.value?.copy(isAdLoading = false)
+        if (!wasRewarded) return
+        viewModelScope.launch {
+            poseLockUseCase.unlockWithRewardedAd(pose.id)
+            _unlockPrompt.value = null
+            _unlockedPoseToOpen.value = pose.id
+        }
+    }
+
+    fun consumeUnlockedPose() {
+        _unlockedPoseToOpen.value = null
+    }
+
     fun unsavePose(saved: SavedPose) {
         viewModelScope.launch { favoritePoseUseCase.setFavorite(saved.pose.id, false) }
     }
@@ -87,10 +132,14 @@ class SavedViewModel(
         locationLabel = location.name ?: context.getString(R.string.unknown_location)
     )
 
-    private fun List<Pose>.toSavedPoses(favorites: Map<Int, Long>): List<SavedPose> =
-        mapNotNull { pose ->
-            favorites[pose.id]?.let { savedAt -> SavedPose(pose = pose, savedAtMillis = savedAt) }
+    private fun List<Pose>.toSavedPoses(
+        favorites: Map<Int, Long>,
+        lockedIds: Set<Int>,
+    ): List<SavedPose> = mapNotNull { pose ->
+        favorites[pose.id]?.let { savedAt ->
+            SavedPose(pose = pose, savedAtMillis = savedAt, isLocked = pose.id in lockedIds)
         }
+    }
 
     @JvmName("sortShots")
     private fun List<SavedShot>.sortedBy(sort: SavedSort): List<SavedShot> = when (sort) {

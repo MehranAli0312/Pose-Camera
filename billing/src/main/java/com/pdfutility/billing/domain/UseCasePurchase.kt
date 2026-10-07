@@ -40,8 +40,8 @@ internal class UseCasePurchase(private val repository: BillingRepository) {
         }
 
         val productDetails = response[0]
-        val offerToken = null
-        //val offerToken = productDetails.oneTimePurchaseOfferDetailsList?.get(0)?.offerToken      // for Billing V8.0.0
+        val offerToken = (productDetails.oneTimePurchaseOfferDetails
+            ?: productDetails.oneTimePurchaseOfferDetailsList?.firstOrNull())?.offerToken
 
         val productDetailsParamsList = listOf(
             when (offerToken != null) {

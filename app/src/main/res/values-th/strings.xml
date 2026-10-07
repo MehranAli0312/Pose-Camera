@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">ข้าม</string>
     <string name="item_settings">การตั้งค่า</string>
     <string name="close">ปิด</string>
     <string name="settings_language">ภาษา</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">ให้คะแนนเรา</string>
     <string name="done">เสร็จสิ้น</string>
     <string name="error_not_found">ไม่พบ</string>
-    <string name="pro_restore">คืนค่า</string>
-    <string name="pro_feature_remove_ads">ลบโฆษณา</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">ไม่มีโฆษณา 100%</string>
+    <string name="pro_restore">กู้คืนการซื้อ</string>
+    <string name="pro_terms">ข้อกำหนด</string>
+    <string name="pro_privacy">ความเป็นส่วนตัว</string>
+    <string name="pro_title_highlight">ทุกอย่าง</string>
+    <string name="pro_benefit_poses">ปลดล็อกท่าโพสพรีเมียมทั้งหมด</string>
+    <string name="pro_benefit_no_ads">ไม่มีโฆษณาตลอดไป</string>
+    <string name="pro_benefit_updates">สนับสนุนการอัปเดตในอนาคต</string>
+    <string name="pro_plan_lifetime">ตลอดชีพ</string>
+    <string name="pro_plan_lifetime_note">จ่ายครั้งเดียว เป็นของคุณตลอดไป</string>
+    <string name="pro_plan_yearly_note">เรียกเก็บปีละครั้ง</string>
+    <string name="pro_cta_lifetime">ปลดล็อกตลอดชีพ</string>
+    <string name="pro_cta_yearly">ปลดล็อกรายปี</string>
+    <string name="pro_footnote_lifetime">จ่ายครั้งเดียว · ไม่มีการสมัครสมาชิก</string>
     <string name="pro_plan_yearly">รายปี</string>
-    <string name="pro_plan_monthly">รายเดือน</string>
     <string name="pro_best_value">คุ้มที่สุด</string>
-    <string name="pro_save_percent">ประหยัด %1$d%%</string>
-    <string name="pro_billed_yearly">เรียกเก็บ %1$s ต่อปี</string>
-    <string name="pro_billed_monthly">เรียกเก็บทุกเดือน</string>
-    <string name="pro_per_month">ต่อเดือน</string>
-    <string name="pro_trust_note">ยกเลิกได้ทุกเมื่อ · ปลอดภัยผ่าน Google Play</string>
     <string name="pro_store_unavailable">โหลดแพ็กเกจไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
     <string name="pro_retry">ลองอีกครั้ง</string>
-    <string name="pro_upgrade_title">อัปเกรดเป็น Pro</string>
     <string name="pro_try_for_free">ลองใช้ฟรี</string>
-    <string name="pro_no_payment_now">ยังไม่ต้องชำระตอนนี้!</string>
     <string name="pro_auto_renewal_note">สมัครสมาชิกต่ออายุอัตโนมัติ ยกเลิกได้ทุกเมื่อ</string>
     <string name="pro_purchase_success">ซื้อสำเร็จ</string>
     <string name="pro_purchase_already_owned">คุณมีแผนนี้อยู่แล้ว</string>
@@ -48,20 +49,18 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d ดาว</item>
     </plurals>
-    <string name="pro_title">ปลดล็อก Pose Pro</string>
-    <string name="pro_subtitle">โพส จับคู่ และถ่ายภาพโดยไม่มีโฆษณา</string>
+    <string name="pro_title">ปลดล็อกทุกอย่าง</string>
+    <string name="pro_subtitle">ได้ทุกท่าโพส ไม่มีโฆษณา — ตลอดไป</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">ฟรี %1$d วัน จากนั้น %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">ฟีเจอร์ PRO</string>
-    <string name="premium_feature_title">ฟีเจอร์พรีเมียม</string>
-    <string name="premium_feature_message">สมัครฟีเจอร์พรีเมียมหรือดูโฆษณา</string>
-    <string name="premium_feature_free_access_title">รับสิทธิ์ใช้งานฟรี</string>
-    <string name="premium_feature_free_access_subtitle">ดูโฆษณาสั้นๆ</string>
     <string name="premium_feature_free_access_loading">กำลังโหลดโฆษณา…</string>
     <string name="premium_feature_go_premium_title">อัปเกรดเป็น Premium</string>
-    <string name="premium_feature_go_premium_subtitle">ทุกฟีเจอร์ ไม่มีโฆษณา</string>
-    <string name="premium_feature_maybe_later">ไว้ทีหลัง</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">ท่าโพสที่ล็อกอยู่</string>
+    <string name="premium_pose_title">ท่าโพสพรีเมียม</string>
+    <string name="premium_pose_message">ดูโฆษณาสั้นๆ เพื่อปลดล็อกท่าโพสนี้ หรืออัปเกรดเป็น Premium เพื่อปลดล็อกทั้งหมด</string>
+    <string name="premium_pose_watch_ad">ดูโฆษณาเพื่อปลดล็อก</string>
     <string name="nav_home">หน้าแรก</string>
     <string name="nav_gallery">คอลเลกชัน</string>
     <string name="nav_settings">การตั้งค่า</string>
@@ -71,7 +70,6 @@
     <string name="action_delete">ลบ</string>
     <string name="action_import">นำเข้า</string>
     <string name="action_save">บันทึก</string>
-    <string name="splash_tagline">สตูดิโอจัดท่าทางอย่างสวยงาม</string>
     <string name="onboard_title_1">เลือกท่าโพส</string>
     <string name="onboard_title_2">จับคู่กับเส้นโครง</string>
     <string name="onboard_title_3">ถ่ายแล้วบันทึก</string>
@@ -164,18 +162,10 @@
     <string name="perm_camera_title">ต้องการสิทธิ์เข้าถึงกล้อง</string>
     <string name="perm_camera_desc">อนุญาตให้เข้าถึงกล้องเพื่อถ่ายภาพและจับคู่ท่าโพส</string>
     <string name="perm_allow">อนุญาต</string>
+    <string name="perm_camera_blocked_desc">การเข้าถึงกล้องถูกปิดอยู่ เปิดการตั้งค่าและเปิดสิทธิ์กล้องเพื่อโพสต่อ</string>
+    <string name="perm_open_settings">เปิดการตั้งค่า</string>
     <string name="capture_untitled">ภาพไม่มีชื่อ</string>
-    <string name="home_tagline">จับคู่ · ถ่าย · สมบูรณ์แบบ</string>
-    <string name="home_day_streak">วันต่อเนื่อง</string>
-    <string name="home_filter_category">หมวดหมู่</string>
-    <string name="home_filter_level">ระดับ</string>
-    <string name="home_shuffle">สุ่มท่าโพส</string>
-    <string name="home_hero_eyebrow">ทำต่อจากเดิม</string>
-    <string name="home_hero_best_match">ตรงที่สุด</string>
     <string name="home_hero_cta">เริ่มโพส</string>
-    <plurals name="home_hero_meta">
-        <item quantity="other">%1$s · %2$s · %3$d ท่า</item>
-    </plurals>
     <string name="home_action_live_pose">โพสสด</string>
     <string name="home_action_open_camera">เปิดกล้อง</string>
     <string name="home_action_import">นำเข้า</string>
@@ -262,12 +252,7 @@
     <string name="collections_filter_recent">ล่าสุด</string>
     <string name="collections_sort_title">จัดเรียงภาพ</string>
     <string name="explore_title">ท่าโพสทั้งหมด</string>
-    <string name="explore_total">ทั้งหมด %1$d</string>
     <string name="explore_search_hint">ค้นหาท่าโพส อารมณ์ หรือแท็ก</string>
-    <plurals name="explore_showing">
-        <item quantity="other">แสดง %1$d ท่า</item>
-    </plurals>
-    <string name="explore_sort">จัดเรียง</string>
     <string name="explore_sort_title">จัดเรียงท่าโพส</string>
     <string name="explore_sort_featured">แนะนำ</string>
     <string name="explore_sort_easiest">ง่ายสุดก่อน</string>
@@ -302,10 +287,6 @@
         <item quantity="other">สัปดาห์นี้คุณได้ %1$d%%+ ใน %2$d ท่า</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI บนอุปกรณ์ · ไม่มีการอัปโหลด</string>
-    <string name="settings_streak_subtitle">%1$d ภาพ · ตรงเฉลี่ย %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="other">ต่อเนื่อง %1$d วัน</item>
-    </plurals>
     <string name="progress_title">ความคืบหน้าของคุณ</string>
     <string name="progress_tab_week">สัปดาห์</string>
     <string name="progress_tab_month">เดือน</string>

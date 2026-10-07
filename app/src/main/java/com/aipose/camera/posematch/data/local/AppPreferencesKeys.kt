@@ -9,8 +9,6 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 internal object AppPreferencesKeys {
     val IS_ON_SPLASH_FIRST_RUN = booleanPreferencesKey("IS_ON_SPLASH_FIRST_RUN")
     val LANGUAGE = stringPreferencesKey("Language")
-    val NOTIFICATIONS_ENABLED = booleanPreferencesKey("NOTIFICATIONS_ENABLED")
-    val NOTIFICATION_PERMISSION_ASKED = booleanPreferencesKey("NOTIFICATION_PERMISSION_ASKED")
     val RATE_US_SUBMITTED = booleanPreferencesKey("RATE_US_SUBMITTED")
     val RATE_US_PROMPT_COUNT = intPreferencesKey("RATE_US_PROMPT_COUNT")
     val PRO_ENTITLED = booleanPreferencesKey("pro_entitled")
@@ -20,4 +18,5 @@ internal object AppPreferencesKeys {
     val CAPTURE_TIMER_SECONDS = intPreferencesKey("capture_timer_seconds")
     val LEGACY_PREFERENCES_IMPORTED = booleanPreferencesKey("legacy_preferences_imported")
     val FAVORITE_POSES = stringSetPreferencesKey("favorite_poses")
+    val UNLOCKED_POSES = stringSetPreferencesKey("unlocked_poses")
 }

@@ -1,6 +1,9 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
 import com.google.firebase.Firebase
+import com.google.firebase.remoteconfig.ConfigUpdate
+import com.google.firebase.remoteconfig.ConfigUpdateListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
 import com.aipose.camera.posematch.BuildConfig
@@ -23,6 +26,7 @@ class AppFirebaseRemote(
 
     private val remoteConfig = Firebase.remoteConfig
     private val started = AtomicBoolean(false)
+    private val liveUpdatesStarted = AtomicBoolean(false)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private val _resolution = MutableStateFlow(RemoteConfigResolution.Pending)
@@ -54,6 +58,7 @@ class AppFirebaseRemote(
                     _appUpdateConfig.value = readAppUpdateConfig()
                     publish(RemoteConfigResolution.DefaultsOrPreviouslyActivatedApplied)
                     fetch()
+                    observeLiveUpdates()
                 }
             }
     }
@@ -63,16 +68,33 @@ class AppFirebaseRemote(
         fetch()
     }
 
+    private fun observeLiveUpdates() {
+        if (!liveUpdatesStarted.compareAndSet(false, true)) return
+        remoteConfig.addOnConfigUpdateListener(
+            object : ConfigUpdateListener {
+                override fun onUpdate(configUpdate: ConfigUpdate) {
+                    remoteConfig.activate().addOnSuccessListener { activated ->
+                        if (activated) applyActivatedConfig()
+                    }
+                }
+
+                override fun onError(error: FirebaseRemoteConfigException) = Unit
+            },
+        )
+    }
+
     private fun fetch() {
         remoteConfig.fetchAndActivate()
-            .addOnSuccessListener {
-                scope.launch {
-                    store.update(readRemoteConfig())
-                    _appUpdateConfig.value = readAppUpdateConfig()
-                    publish(RemoteConfigResolution.FetchResolved)
-                }
-            }
+            .addOnSuccessListener { applyActivatedConfig() }
             .addOnFailureListener { _resolution.value = RemoteConfigResolution.FetchFailed }
+    }
+
+    private fun applyActivatedConfig() {
+        scope.launch {
+            store.update(readRemoteConfig())
+            _appUpdateConfig.value = readAppUpdateConfig()
+            publish(RemoteConfigResolution.FetchResolved)
+        }
     }
 
     private fun readRemoteConfig() = AdsRemoteConfig(
@@ -90,6 +112,7 @@ class AppFirebaseRemote(
         innerInterstitialSplashFallback = remoteConfig.getBoolean(
             INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY,
         ),
+        photoSaveInterstitial = remoteConfig.getBoolean(PHOTO_SAVE_INTERSTITIAL_AD_KEY),
         premiumFeatureDialog = PremiumFeatureDialogMode.fromRemote(
             remoteConfig.getLong(PREMIUM_FEATURE_DIALOG_KEY),
         ),
@@ -127,6 +150,7 @@ class AppFirebaseRemote(
         const val INNER_INTERSTITIAL_AD_KEY = "inner_interstitial_ad_key"
         const val INNER_INTERSTITIAL_CAPPING_KEY = "inner_interstitial_capping_sec"
         const val INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY = "inner_inter_splash_fallback"
+        const val PHOTO_SAVE_INTERSTITIAL_AD_KEY = "phot_save_inter_ad"
 
         const val APP_OPEN_ON_RESUME_AD_KEY = "app_open_on_resume_ad_key"
         const val APP_OPEN_LOAD_TIMEOUT_SECONDS_KEY = "app_open_load_timeout_sec"
@@ -157,6 +181,6 @@ class AppFirebaseRemote(
         const val APP_UPDATE_VERSION_CODE_KEY = "app_update_version_code"
         const val APP_UPDATE_FORCE_KEY = "app_update_force"
 
-        private const val RELEASE_MIN_FETCH_INTERVAL_SECONDS = 3600L
+        private const val RELEASE_MIN_FETCH_INTERVAL_SECONDS = 300L
     }
 }

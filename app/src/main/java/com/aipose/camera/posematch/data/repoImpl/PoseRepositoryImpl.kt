@@ -22,6 +22,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -38,9 +40,13 @@ class PoseRepositoryImpl(
 ) : PoseRepository {
 
     private val json = Json { ignoreUnknownKeys = true }
+    private val bundledPosesLock = Mutex()
+
+    @Volatile
+    private var cachedBundledPoses: List<Pose>? = null
 
     override fun observePoses(): Flow<List<Pose>> = combine(
-        flow { emit(assetDataSource.readTemplates().map { it.toDomain() }) },
+        flow { emit(bundledPoses()) },
         customPoseDao.observeAll()
     ) { bundled, custom ->
         custom.map { entity -> entity.toDomain(decodeLandmarks(entity.landmarksJson)) } + bundled
@@ -81,6 +87,12 @@ class PoseRepositoryImpl(
             }
         }.getOrDefault(false)
         if (written) cached.absolutePath else null
+    }
+
+    private suspend fun bundledPoses(): List<Pose> = cachedBundledPoses ?: bundledPosesLock.withLock {
+        cachedBundledPoses ?: assetDataSource.readTemplates()
+            .map { it.toDomain() }
+            .also { poses -> if (poses.isNotEmpty()) cachedBundledPoses = poses }
     }
 
     private fun decodeLandmarks(landmarksJson: String): Map<String, Float> =

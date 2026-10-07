@@ -7,12 +7,9 @@ lifecycle = "2.11.0"
 activity = "1.13.0"
 composeBom = "2026.09.00"
 navVersion = "2.10.2"
-lottie = "6.7.1"
 datastore = "1.2.1"
 koin = "4.2.2"
 coil = "2.7.0"
-gson = "2.14.0"
-okhttp = "5.5.0"
 shimmer = "1.5.0"
 firebase = "34.19.0"
 crashlytic = "3.0.8"
@@ -56,7 +53,6 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navVersion" }
 
-androidx-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
@@ -72,9 +68,6 @@ mlkit-segmentation-selfie = { group = "com.google.mlkit", name = "segmentation-s
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
-
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
@@ -110,7 +103,6 @@ play-app-update = { group = "com.google.android.play", name = "app-update", vers
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "googleDevtoolsKsp" }
 gms-services = { id = "com.google.gms.google-services", version.ref = "gms" }

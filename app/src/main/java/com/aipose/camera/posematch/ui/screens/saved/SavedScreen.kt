@@ -13,18 +13,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.PremiumRewarded
+import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
+import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedEmptyState
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedHeader
 import com.aipose.camera.posematch.ui.screens.saved.components.SavedPoseRow
@@ -36,6 +41,8 @@ import com.aipose.camera.posematch.ui.screens.saved.models.SavedShot
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedTab
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedUiState
 import com.aipose.camera.posematch.ui.vm.SavedViewModel
+import com.example.ads.AdPlacement
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private const val SHOTS_PER_ROW = 2
@@ -47,7 +54,22 @@ fun SavedScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isSortSheetVisible by viewModel.isSortSheetVisible.collectAsStateWithLifecycle()
+    val unlockPrompt by viewModel.unlockPrompt.collectAsStateWithLifecycle()
+    val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? SavedUiState.Content
+    val screenAds = rememberScreenAds()
+    val scope = rememberCoroutineScope()
+    val hasLockedPoses = content?.poses?.any { it.isLocked } == true
+
+    LaunchedEffect(hasLockedPoses) {
+        if (hasLockedPoses) screenAds.preload(AdPlacement.PremiumRewarded)
+    }
+
+    LaunchedEffect(unlockedPoseToOpen) {
+        val poseId = unlockedPoseToOpen ?: return@LaunchedEffect
+        viewModel.consumeUnlockedPose()
+        navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(poseId))
+    }
 
     fun openShot(shot: SavedShot) {
         navController.navigateOnClick(
@@ -56,6 +78,10 @@ fun SavedScreen(
     }
 
     fun openPose(saved: SavedPose) {
+        if (saved.isLocked) {
+            viewModel.showLockedPose(saved)
+            return
+        }
         navController.navigateOnClick(
             NavRoute.PoseDetailScreenRoute.routeFor(saved.pose.id)
         )
@@ -115,6 +141,29 @@ fun SavedScreen(
                 }
             }
         }
+    }
+
+    unlockPrompt?.let { prompt ->
+        PremiumFeatureBottomSheet(
+            posePreviewPath = prompt.pose.imagePath,
+            poseTitle = prompt.pose.title,
+            isAdLoading = prompt.isAdLoading,
+            onWatchAdClick = {
+                viewModel.onUnlockAdStarted()
+                scope.launch {
+                    val result = screenAds.rewarded(
+                        placement = AdPlacement.PremiumRewarded,
+                        onShown = viewModel::onUnlockAdShown,
+                    )
+                    viewModel.onUnlockAdFinished(prompt.pose, result.wasRewarded)
+                }
+            },
+            onGoPremiumClick = {
+                viewModel.dismissLockedPose()
+                navController.navigateOnClick(NavRoute.ProScreenRoute.route)
+            },
+            onDismissRequest = viewModel::dismissLockedPose,
+        )
     }
 
     if (isSortSheetVisible && content != null) {

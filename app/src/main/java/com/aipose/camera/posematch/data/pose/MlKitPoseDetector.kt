@@ -9,6 +9,7 @@ import com.aipose.camera.posematch.domain.models.PoseJoint
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseDetection
+import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.defaults.PoseDetectorOptions
 import kotlin.coroutines.resume
@@ -16,21 +17,16 @@ import kotlin.coroutines.suspendCoroutine
 
 class MlKitPoseDetector {
 
-    private val streamDetector by lazy {
-        PoseDetection.getClient(
-            PoseDetectorOptions.Builder()
-                .setDetectorMode(PoseDetectorOptions.STREAM_MODE)
-                .build()
-        )
-    }
+    private val streamDetector by lazy { cpuOnlyDetector(PoseDetectorOptions.STREAM_MODE) }
 
-    private val singleImageDetector by lazy {
-        PoseDetection.getClient(
-            PoseDetectorOptions.Builder()
-                .setDetectorMode(PoseDetectorOptions.SINGLE_IMAGE_MODE)
-                .build()
-        )
-    }
+    private val singleImageDetector by lazy { cpuOnlyDetector(PoseDetectorOptions.SINGLE_IMAGE_MODE) }
+
+    private fun cpuOnlyDetector(detectorMode: Int): PoseDetector = PoseDetection.getClient(
+        PoseDetectorOptions.Builder()
+            .setDetectorMode(detectorMode)
+            .setPreferredHardwareConfigs(PoseDetectorOptions.CPU)
+            .build()
+    )
 
     suspend fun detect(bitmap: Bitmap): Map<PoseJoint, NormalizedPoint> =
         suspendCoroutine { continuation ->

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -16,20 +15,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.BuildConfig
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
+import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.RateUsDialog
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
@@ -41,7 +39,6 @@ import com.aipose.camera.posematch.ui.screens.settings.components.SettingSection
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingToggle
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingsFooter
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingsHeader
-import com.aipose.camera.posematch.ui.screens.settings.components.SettingsStreakCard
 import com.aipose.camera.posematch.ui.vm.CameraSettingsViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.SettingsViewModel
@@ -77,95 +74,90 @@ fun SettingScreen(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
-                .safeTopSystemBarsPadding()
-                .verticalScroll(rememberScrollState())
-                .padding(
-                    start = PoseScreenGutter,
-                    end = PoseScreenGutter,
-                    top = PoseScreenTopSpacing,
-                    bottom = 24.dp,
-                ),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .adaptiveWidth(),
         ) {
-            SettingsHeader()
-            SettingsStreakCard(
-                title = pluralStringResource(R.plurals.settings_streak_title, progress.dayStreak, progress.dayStreak),
-                subtitle = stringResource(
-                    R.string.settings_streak_subtitle,
-                    progress.shotsTaken,
-                    progress.averageMatch,
-                ),
-                modifier = Modifier.padding(top = 7.dp),
-            )
-            SettingSectionLabel(
-                text = stringResource(R.string.settings_preferences),
-                modifier = Modifier.padding(top = 20.dp),
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_globe,
-                palette = GlossyBadgePalette.Violet,
-                title = stringResource(R.string.settings_language),
-                value = languageName,
-                onClick = { navController.navigateOnClick(NavRoute.LanguageScreenRoute.route) },
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_overlay,
-                palette = GlossyBadgePalette.Cyan,
-                title = stringResource(R.string.settings_retain_skeleton),
-                onClick = { cameraSettingsViewModel.setKeepPoseOverlay(!keepPoseOverlay) },
-                trailing = {
-                    SettingToggle(
-                        checked = keepPoseOverlay,
-                        onCheckedChange = cameraSettingsViewModel::setKeepPoseOverlay,
-                    )
-                },
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_timer,
-                palette = GlossyBadgePalette.Amber,
-                title = stringResource(R.string.settings_capture_timer),
-                value = captureTimerLabel(captureTimer),
-                onClick = { isTimerSheetVisible = true },
-            )
-            SettingSectionLabel(
-                text = stringResource(R.string.settings_about),
-                modifier = Modifier.padding(top = 20.dp),
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_rate_us,
-                palette = GlossyBadgePalette.Amber,
-                title = stringResource(R.string.settings_rate_us),
-                onClick = { isRateUsVisible.value = true },
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_share_app,
-                palette = GlossyBadgePalette.Emerald,
-                title = stringResource(R.string.settings_share_app),
-                onClick = {
-                    if (navController.acceptNavigationClick()) {
-                        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                            type = TEXT_MIME_TYPE
-                            putExtra(Intent.EXTRA_TEXT, context.shareApp())
+            SettingsHeader(modifier = Modifier.poseScreenPadding())
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(
+                        start = PoseScreenGutter,
+                        end = PoseScreenGutter,
+                        top = 10.dp,
+                        bottom = 24.dp,
+                    ),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                SettingSectionLabel(
+                    text = stringResource(R.string.settings_preferences),
+                    modifier = Modifier.padding(top = 20.dp),
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_globe,
+                    palette = GlossyBadgePalette.Violet,
+                    title = stringResource(R.string.settings_language),
+                    value = languageName,
+                    onClick = { navController.navigateOnClick(NavRoute.LanguageScreenRoute.route) },
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_overlay,
+                    palette = GlossyBadgePalette.Cyan,
+                    title = stringResource(R.string.settings_retain_skeleton),
+                    onClick = { cameraSettingsViewModel.setKeepPoseOverlay(!keepPoseOverlay) },
+                    trailing = {
+                        SettingToggle(
+                            checked = keepPoseOverlay,
+                            onCheckedChange = cameraSettingsViewModel::setKeepPoseOverlay,
+                        )
+                    },
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_timer,
+                    palette = GlossyBadgePalette.Amber,
+                    title = stringResource(R.string.settings_capture_timer),
+                    value = captureTimerLabel(captureTimer),
+                    onClick = { isTimerSheetVisible = true },
+                )
+                SettingSectionLabel(
+                    text = stringResource(R.string.settings_about),
+                    modifier = Modifier.padding(top = 20.dp),
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_rate_us,
+                    palette = GlossyBadgePalette.Amber,
+                    title = stringResource(R.string.settings_rate_us),
+                    onClick = { isRateUsVisible.value = true },
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_share_app,
+                    palette = GlossyBadgePalette.Emerald,
+                    title = stringResource(R.string.settings_share_app),
+                    onClick = {
+                        if (navController.acceptNavigationClick()) {
+                            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                                type = TEXT_MIME_TYPE
+                                putExtra(Intent.EXTRA_TEXT, context.shareApp())
+                            }
+                            context.startActivity(Intent.createChooser(sendIntent, shareChooserTitle))
                         }
-                        context.startActivity(Intent.createChooser(sendIntent, shareChooserTitle))
-                    }
-                },
-            )
-            SettingRow(
-                iconRes = R.drawable.ic_pose_shield,
-                palette = GlossyBadgePalette.Blue,
-                title = stringResource(R.string.settings_privacy_policy),
-                onClick = {
-                    if (PRIVACY_POLICY.isNotEmpty() && navController.acceptNavigationClick()) {
-                        uriHandler.openUri(PRIVACY_POLICY)
-                    }
-                },
-            )
-            SettingsFooter(
-                versionName = BuildConfig.VERSION_NAME,
-                modifier = Modifier.padding(top = 16.dp),
-            )
+                    },
+                )
+                SettingRow(
+                    iconRes = R.drawable.ic_pose_shield,
+                    palette = GlossyBadgePalette.Blue,
+                    title = stringResource(R.string.settings_privacy_policy),
+                    onClick = {
+                        if (PRIVACY_POLICY.isNotEmpty() && navController.acceptNavigationClick()) {
+                            uriHandler.openUri(PRIVACY_POLICY)
+                        }
+                    },
+                )
+                SettingsFooter(
+                    versionName = BuildConfig.VERSION_NAME,
+                    modifier = Modifier.padding(top = 16.dp),
+                )
+            }
         }
     }
 

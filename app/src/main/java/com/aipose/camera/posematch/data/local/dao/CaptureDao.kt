@@ -13,9 +13,6 @@ interface CaptureDao {
     @Query("SELECT * FROM captured_photos ORDER BY dateTimestamp DESC")
     fun observeAll(): Flow<List<CapturedPhotoEntity>>
 
-    @Query("SELECT * FROM captured_photos WHERE id = :id")
-    suspend fun findById(id: Long): CapturedPhotoEntity?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(capture: CapturedPhotoEntity): Long
 

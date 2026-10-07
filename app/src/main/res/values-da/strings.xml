@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Spring over</string>
     <string name="item_settings">Indstillinger</string>
     <string name="close">Luk</string>
     <string name="settings_language">Sprog</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Bedøm venligst</string>
     <string name="done">Færdig</string>
     <string name="error_not_found">Ikke fundet</string>
-    <string name="pro_restore">Gendan</string>
-    <string name="pro_feature_remove_ads">Fjern reklamer</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">En 100% reklamefri oplevelse</string>
+    <string name="pro_restore">Gendan køb</string>
+    <string name="pro_terms">Vilkår</string>
+    <string name="pro_privacy">Privatliv</string>
+    <string name="pro_title_highlight">alt</string>
+    <string name="pro_benefit_poses">Lås alle premium-positurer op</string>
+    <string name="pro_benefit_no_ads">Ingen reklamer, nogensinde</string>
+    <string name="pro_benefit_updates">Støt fremtidige opdateringer</string>
+    <string name="pro_plan_lifetime">Livstid</string>
+    <string name="pro_plan_lifetime_note">Engangsbetaling, din for altid</string>
+    <string name="pro_plan_yearly_note">Faktureres én gang om året</string>
+    <string name="pro_cta_lifetime">Lås Livstid op</string>
+    <string name="pro_cta_yearly">Lås Årligt op</string>
+    <string name="pro_footnote_lifetime">Engangsbetaling · Intet abonnement</string>
     <string name="pro_plan_yearly">Årligt</string>
-    <string name="pro_plan_monthly">Månedligt</string>
     <string name="pro_best_value">BEDSTE VÆRDI</string>
-    <string name="pro_save_percent">SPAR %1$d%%</string>
-    <string name="pro_billed_yearly">%1$s faktureres årligt</string>
-    <string name="pro_billed_monthly">Faktureres hver måned</string>
-    <string name="pro_per_month">pr. måned</string>
-    <string name="pro_trust_note">Opsig når som helst · Sikker betaling via Google Play</string>
     <string name="pro_store_unavailable">Kunne ikke indlæse abonnementer. Tjek din forbindelse, og prøv igen.</string>
     <string name="pro_retry">Prøv igen</string>
-    <string name="pro_upgrade_title">Opgrader til Pro</string>
     <string name="pro_try_for_free">Prøv gratis</string>
-    <string name="pro_no_payment_now">Ingen betaling nu!</string>
     <string name="pro_auto_renewal_note">Abonnement med automatisk fornyelse. Opsig når som helst</string>
     <string name="pro_purchase_success">Købet er gennemført</string>
     <string name="pro_purchase_already_owned">Du har allerede dette abonnement</string>
@@ -49,21 +50,19 @@
         <item quantity="one">%1$d stjerne</item>
         <item quantity="other">%1$d stjerner</item>
     </plurals>
-    <string name="pro_title">Lås op for Pose Pro</string>
-    <string name="pro_subtitle">Posér, match og tag billeder uden reklamer.</string>
+    <string name="pro_title">Lås alt op</string>
+    <string name="pro_subtitle">Få alle positurer, uden reklamer — for altid.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dag gratis, derefter %2$s</item>
         <item quantity="other">%1$d dage gratis, derefter %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">PRO-funktion</string>
-    <string name="premium_feature_title">Premiumfunktion</string>
-    <string name="premium_feature_message">Abonnér på premiumfunktionen, eller se en reklame</string>
-    <string name="premium_feature_free_access_title">Få gratis adgang</string>
-    <string name="premium_feature_free_access_subtitle">Se en kort reklame</string>
     <string name="premium_feature_free_access_loading">Indlæser reklame…</string>
     <string name="premium_feature_go_premium_title">Få Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Alle funktioner, ingen reklamer</string>
-    <string name="premium_feature_maybe_later">Måske senere</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Låst positur</string>
+    <string name="premium_pose_title">Premium-positur</string>
+    <string name="premium_pose_message">Se en kort reklame for at låse denne positur op, eller få Premium for at låse dem alle op.</string>
+    <string name="premium_pose_watch_ad">Se reklame for at låse op</string>
     <string name="nav_home">Hjem</string>
     <string name="nav_gallery">Samlinger</string>
     <string name="nav_settings">Indstillinger</string>
@@ -73,7 +72,6 @@
     <string name="action_delete">Slet</string>
     <string name="action_import">Importér</string>
     <string name="action_save">Gem</string>
-    <string name="splash_tagline">STUDIE I ÆSTETISK JUSTERING</string>
     <string name="onboard_title_1">Vælg en pose</string>
     <string name="onboard_title_2">Følg omridset</string>
     <string name="onboard_title_3">Tag og gem</string>
@@ -166,19 +164,10 @@
     <string name="perm_camera_title">Kameratilladelse påkrævet</string>
     <string name="perm_camera_desc">Giv adgang til kameraet for at tage billeder og matche dine poser.</string>
     <string name="perm_allow">Tillad</string>
+    <string name="perm_camera_blocked_desc">Kameraadgang er slået fra. Åbn indstillingerne, og aktivér kameratilladelsen for at fortsætte med at posere.</string>
+    <string name="perm_open_settings">Åbn indstillinger</string>
     <string name="capture_untitled">Unavngivet billede</string>
-    <string name="home_tagline">Match · Fang · Perfektionér</string>
-    <string name="home_day_streak">Dage i træk</string>
-    <string name="home_filter_category">KATEGORI</string>
-    <string name="home_filter_level">NIVEAU</string>
-    <string name="home_shuffle">Bland poser</string>
-    <string name="home_hero_eyebrow">FORTSÆT SESSION</string>
-    <string name="home_hero_best_match">BEDSTE MATCH</string>
     <string name="home_hero_cta">Begynd at posere</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d pose</item>
-        <item quantity="other">%1$s · %2$s · %3$d poser</item>
-    </plurals>
     <string name="home_action_live_pose">Live-pose</string>
     <string name="home_action_open_camera">Åbn kamera</string>
     <string name="home_action_import">Importér</string>
@@ -270,13 +259,7 @@
     <string name="collections_filter_recent">Seneste</string>
     <string name="collections_sort_title">Sortér billeder</string>
     <string name="explore_title">Alle poser</string>
-    <string name="explore_total">%1$d i alt</string>
     <string name="explore_search_hint">Søg efter poser, stemninger eller tags</string>
-    <plurals name="explore_showing">
-        <item quantity="one">Viser %1$d pose</item>
-        <item quantity="other">Viser %1$d poser</item>
-    </plurals>
-    <string name="explore_sort">Sortér</string>
     <string name="explore_sort_title">Sortér poser</string>
     <string name="explore_sort_featured">Udvalgte</string>
     <string name="explore_sort_easiest">Nemmeste først</string>
@@ -316,11 +299,6 @@
         <item quantity="other">Du scorede %1$d%%+ på %2$d poser i denne uge</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · AI på enheden · Ingen upload</string>
-    <string name="settings_streak_subtitle">%1$d billeder · %2$d%% gns. match</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d dag i træk</item>
-        <item quantity="other">%1$d dage i træk</item>
-    </plurals>
     <string name="progress_title">Dine fremskridt</string>
     <string name="progress_tab_week">Uge</string>
     <string name="progress_tab_month">Måned</string>

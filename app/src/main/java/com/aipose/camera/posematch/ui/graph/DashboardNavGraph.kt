@@ -21,7 +21,7 @@ import com.aipose.camera.posematch.ui.screens.progress.ProgressScreen
 import com.aipose.camera.posematch.ui.screens.achievements.AchievementsScreen
 import com.aipose.camera.posematch.ui.screens.poseAlbum.PoseAlbumScreen
 import com.aipose.camera.posematch.ui.screens.poseDetail.PoseDetailScreen
-import com.aipose.camera.posematch.ui.screens.pro.ProScreen
+import com.aipose.camera.posematch.ui.screens.pro.PremiumScreen
 import com.aipose.camera.posematch.ui.screens.saved.SavedScreen
 import com.aipose.camera.posematch.ui.screens.settings.SettingScreen
 
@@ -119,7 +119,7 @@ private fun addProScreen(
     navGraphBuilder.addScreenWithTransitions(
         route = NavRoute.ProScreenRoute.route
     ) {
-        ProScreen(navController = navController)
+        PremiumScreen(navController = navController)
     }
 }
 

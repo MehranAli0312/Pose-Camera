@@ -13,14 +13,17 @@ import com.aipose.camera.posematch.domain.usecase.CameraSettingsUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
+import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
 import com.aipose.camera.posematch.ui.models.CaptureTimer
+import com.aipose.camera.posematch.ui.models.PoseUnlockPrompt
 import com.aipose.camera.posematch.ui.screens.camera.models.PoseCameraUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,6 +33,7 @@ class PoseCameraViewModel(
     private val captureUseCase: CaptureUseCase,
     private val cameraSettingsUseCase: CameraSettingsUseCase,
     private val photoEditUseCase: PhotoEditUseCase,
+    private val poseLockUseCase: PoseLockUseCase,
     private val poseFrameAnalyzer: PoseFrameAnalyzer
 ) : ViewModel() {
 
@@ -42,6 +46,7 @@ class PoseCameraViewModel(
     private var greatMatchJob: Job? = null
     private var bestScoreJob: Job? = null
     private var requestedPoseId: Int? = null
+    private var promptedRequestedPoseId: Int? = null
 
     val frameAnalyzer: ImageAnalysis.Analyzer = poseFrameAnalyzer
 
@@ -56,7 +61,54 @@ class PoseCameraViewModel(
     fun onPoseRequested(poseId: Int) {
         if (requestedPoseId == poseId) return
         requestedPoseId = poseId
-        _uiState.value.poses.firstOrNull { it.id == poseId }?.let(::selectPose)
+        _uiState.value.poses.firstOrNull { it.id == poseId }?.let(::openRequestedPose)
+    }
+
+    fun onPoseTapped(pose: Pose) {
+        if (pose.id in _uiState.value.lockedPoseIds) showLockedPose(pose) else selectPose(pose)
+    }
+
+    fun dismissLockedPose() {
+        if (_uiState.value.unlockPrompt?.isAdLoading == true) return
+        _uiState.update { state -> state.copy(unlockPrompt = null) }
+    }
+
+    fun onUnlockAdStarted() {
+        _uiState.update { state ->
+            state.copy(unlockPrompt = state.unlockPrompt?.copy(isAdLoading = true))
+        }
+    }
+
+    fun onUnlockAdShown() {
+        _uiState.update { state -> state.copy(unlockPrompt = null) }
+    }
+
+    fun onUnlockAdFinished(pose: Pose, wasRewarded: Boolean) {
+        _uiState.update { state ->
+            state.copy(unlockPrompt = state.unlockPrompt?.copy(isAdLoading = false))
+        }
+        if (!wasRewarded) return
+        viewModelScope.launch {
+            poseLockUseCase.unlockWithRewardedAd(pose.id)
+            _uiState.update { state -> state.copy(unlockPrompt = null) }
+            selectPose(pose)
+        }
+    }
+
+    private fun showLockedPose(pose: Pose) {
+        _uiState.update { state ->
+            state.copy(unlockPrompt = PoseUnlockPrompt(pose), isPosePickerVisible = false)
+        }
+    }
+
+    private fun openRequestedPose(pose: Pose) {
+        if (pose.id !in _uiState.value.lockedPoseIds) {
+            selectPose(pose)
+            return
+        }
+        if (promptedRequestedPoseId == pose.id) return
+        promptedRequestedPoseId = pose.id
+        showLockedPose(pose)
     }
 
     fun selectPose(pose: Pose) {
@@ -242,15 +294,17 @@ class PoseCameraViewModel(
 
     private fun observePoses() {
         viewModelScope.launch {
-            poseLibraryUseCase.observePoses().collect { poses ->
-                _uiState.update { state -> state.copy(poses = poses) }
+            combine(
+                poseLibraryUseCase.observePoses(),
+                poseLockUseCase.observeAccess(),
+            ) { poses, access -> poses to access.lockedIdsIn(poses) }.collect { (poses, lockedIds) ->
+                _uiState.update { state -> state.copy(poses = poses, lockedPoseIds = lockedIds) }
                 val requested = requestedPoseId
-                val current = _uiState.value.selectedPose
-                when {
-                    requested != null && current?.id != requested ->
-                        poses.firstOrNull { it.id == requested }?.let(::selectPose)
-
-                    current == null -> poses.firstOrNull()?.let(::selectPose)
+                if (requested != null && _uiState.value.selectedPose?.id != requested) {
+                    poses.firstOrNull { it.id == requested }?.let(::openRequestedPose)
+                }
+                if (_uiState.value.selectedPose == null) {
+                    poses.firstOrNull { it.id !in lockedIds }?.let(::selectPose)
                 }
             }
         }

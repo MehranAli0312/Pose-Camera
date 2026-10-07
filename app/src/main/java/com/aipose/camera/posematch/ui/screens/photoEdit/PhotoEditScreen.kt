@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.rememberPhotoSaveInterstitial
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
@@ -35,16 +36,20 @@ fun PhotoEditScreen(
     viewModel: PhotoEditViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val saveInterstitial = rememberPhotoSaveInterstitial()
+    val draft = uiState.draft ?: return
+
+    LaunchedEffect(draft.poseId) { saveInterstitial.prepare(draft.poseId) }
 
     LaunchedEffect(uiState.savedCaptureId) {
         val captureId = uiState.savedCaptureId ?: return@LaunchedEffect
         viewModel.onSavedCaptureHandled()
-        navController.navigate(NavRoute.PhotoSuccessScreenRoute.routeFor(captureId)) {
-            popUpTo(NavRoute.PhotoEditScreenRoute.route) { inclusive = true }
+        saveInterstitial.showThen(draft.poseId) {
+            navController.navigate(NavRoute.PhotoSuccessScreenRoute.routeFor(captureId)) {
+                popUpTo(NavRoute.PhotoEditScreenRoute.route) { inclusive = true }
+            }
         }
     }
-
-    val draft = uiState.draft ?: return
 
     PoseGlowBackground(glows = PoseGlows.PhotoEdit) {
         Column(

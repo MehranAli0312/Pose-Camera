@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">スキップ</string>
     <string name="item_settings">設定</string>
     <string name="close">閉じる</string>
     <string name="settings_language">言語</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">評価をお願いします</string>
     <string name="done">完了</string>
     <string name="error_not_found">見つかりません</string>
-    <string name="pro_restore">復元</string>
-    <string name="pro_feature_remove_ads">広告を削除</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">100%広告なしの快適な体験</string>
+    <string name="pro_restore">購入を復元</string>
+    <string name="pro_terms">利用規約</string>
+    <string name="pro_privacy">プライバシー</string>
+    <string name="pro_title_highlight">すべて</string>
+    <string name="pro_benefit_poses">プレミアムポーズをすべて解放</string>
+    <string name="pro_benefit_no_ads">広告は一切なし</string>
+    <string name="pro_benefit_updates">今後のアップデートを応援</string>
+    <string name="pro_plan_lifetime">買い切り</string>
+    <string name="pro_plan_lifetime_note">一度の支払いでずっと使える</string>
+    <string name="pro_plan_yearly_note">年に1回請求</string>
+    <string name="pro_cta_lifetime">買い切りを購入</string>
+    <string name="pro_cta_yearly">年額を購入</string>
+    <string name="pro_footnote_lifetime">一度の支払い · サブスクなし</string>
     <string name="pro_plan_yearly">年間</string>
-    <string name="pro_plan_monthly">月間</string>
     <string name="pro_best_value">一番お得</string>
-    <string name="pro_save_percent">%1$d%%オフ</string>
-    <string name="pro_billed_yearly">年額 %1$s</string>
-    <string name="pro_billed_monthly">毎月請求</string>
-    <string name="pro_per_month">月あたり</string>
-    <string name="pro_trust_note">いつでも解約可能 · Google Playで安全に決済</string>
     <string name="pro_store_unavailable">プランを読み込めませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="pro_retry">再試行</string>
-    <string name="pro_upgrade_title">Pro にアップグレード</string>
     <string name="pro_try_for_free">無料で試す</string>
-    <string name="pro_no_payment_now">今はお支払い不要！</string>
     <string name="pro_auto_renewal_note">自動更新のサブスクリプションです。いつでも解約できます</string>
     <string name="pro_purchase_success">購入が完了しました</string>
     <string name="pro_purchase_already_owned">このプランはすでに購入済みです</string>
@@ -48,20 +49,18 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">星%1$d</item>
     </plurals>
-    <string name="pro_title">Pose Pro を解放</string>
-    <string name="pro_subtitle">広告なしでポーズ、マッチ、撮影を。</string>
+    <string name="pro_title">すべてをアンロック</string>
+    <string name="pro_subtitle">すべてのポーズを広告なしで — ずっと。</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">%1$d日間無料、その後 %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">PRO機能</string>
-    <string name="premium_feature_title">プレミアム機能</string>
-    <string name="premium_feature_message">プレミアム機能に登録するか、広告を視聴してください</string>
-    <string name="premium_feature_free_access_title">無料で利用する</string>
-    <string name="premium_feature_free_access_subtitle">短い広告を見る</string>
     <string name="premium_feature_free_access_loading">広告を読み込み中…</string>
     <string name="premium_feature_go_premium_title">Premium にする</string>
-    <string name="premium_feature_go_premium_subtitle">すべての機能、広告なし</string>
-    <string name="premium_feature_maybe_later">あとで</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">ロック中のポーズ</string>
+    <string name="premium_pose_title">プレミアムポーズ</string>
+    <string name="premium_pose_message">短い広告を見てこのポーズを解放するか、Premium にしてすべて解放しましょう。</string>
+    <string name="premium_pose_watch_ad">広告を見て解放</string>
     <string name="nav_home">ホーム</string>
     <string name="nav_gallery">コレクション</string>
     <string name="nav_settings">設定</string>
@@ -71,7 +70,6 @@
     <string name="action_delete">削除</string>
     <string name="action_import">インポート</string>
     <string name="action_save">保存</string>
-    <string name="splash_tagline">エステティック・アライメント・スタジオ</string>
     <string name="onboard_title_1">ポーズを選ぶ</string>
     <string name="onboard_title_2">輪郭に合わせる</string>
     <string name="onboard_title_3">撮って保存</string>
@@ -164,18 +162,10 @@
     <string name="perm_camera_title">カメラへのアクセスが必要です</string>
     <string name="perm_camera_desc">写真を撮ってポーズをマッチさせるには、カメラへのアクセスを許可してください。</string>
     <string name="perm_allow">許可</string>
+    <string name="perm_camera_blocked_desc">カメラへのアクセスがオフになっています。設定を開いてカメラの権限を有効にすると、ポーズを続けられます。</string>
+    <string name="perm_open_settings">設定を開く</string>
     <string name="capture_untitled">無題の写真</string>
-    <string name="home_tagline">マッチ · キャプチャ · パーフェクト</string>
-    <string name="home_day_streak">連続日数</string>
-    <string name="home_filter_category">カテゴリ</string>
-    <string name="home_filter_level">レベル</string>
-    <string name="home_shuffle">ポーズをシャッフル</string>
-    <string name="home_hero_eyebrow">セッションを続ける</string>
-    <string name="home_hero_best_match">ベストマッチ</string>
     <string name="home_hero_cta">ポーズを始める</string>
-    <plurals name="home_hero_meta">
-        <item quantity="other">%1$s · %2$s · %3$d ポーズ</item>
-    </plurals>
     <string name="home_action_live_pose">ライブポーズ</string>
     <string name="home_action_open_camera">カメラを開く</string>
     <string name="home_action_import">インポート</string>
@@ -262,12 +252,7 @@
     <string name="collections_filter_recent">最近</string>
     <string name="collections_sort_title">写真を並べ替え</string>
     <string name="explore_title">すべてのポーズ</string>
-    <string name="explore_total">合計 %1$d</string>
     <string name="explore_search_hint">ポーズ、雰囲気、タグで検索</string>
-    <plurals name="explore_showing">
-        <item quantity="other">%1$d 件のポーズを表示</item>
-    </plurals>
-    <string name="explore_sort">並べ替え</string>
     <string name="explore_sort_title">ポーズを並べ替え</string>
     <string name="explore_sort_featured">おすすめ</string>
     <string name="explore_sort_easiest">やさしい順</string>
@@ -302,10 +287,6 @@
         <item quantity="other">今週 %2$d 件のポーズで %1$d%%+ を達成</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · 端末内AI · アップロードなし</string>
-    <string name="settings_streak_subtitle">%1$d 枚 · 平均マッチ %2$d%%</string>
-    <plurals name="settings_streak_title">
-        <item quantity="other">%1$d日連続</item>
-    </plurals>
     <string name="progress_title">あなたの成長</string>
     <string name="progress_tab_week">週</string>
     <string name="progress_tab_month">月</string>

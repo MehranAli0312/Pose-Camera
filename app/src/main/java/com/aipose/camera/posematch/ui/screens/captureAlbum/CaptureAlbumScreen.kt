@@ -1,13 +1,13 @@
 package com.aipose.camera.posematch.ui.screens.captureAlbum
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -21,8 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseDeleteDialog
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
@@ -35,6 +34,7 @@ import com.aipose.camera.posematch.ui.models.PoseStat
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.ALBUM_COLUMNS
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumActions
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumHeader
+import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumSummary
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumShotRow
 import com.aipose.camera.posematch.ui.screens.captureAlbum.models.CaptureAlbumUiState
 import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsFilterChips
@@ -67,87 +67,95 @@ fun CaptureAlbumScreen(
         if (uiState is CaptureAlbumUiState.Removed) navController.popBackStack()
     }
 
-    val content = uiState as? CaptureAlbumUiState.Content ?: return
-    val accent = AlbumAccent.forLabel(content.locationLabel)
+    val content = uiState as? CaptureAlbumUiState.Content
 
     PoseGlowBackground(glows = PoseGlows.LocationAlbum) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
                 .adaptiveWidth()
-                .safeTopSystemBarsPadding()
                 .safeBottomSystemBarsPadding(),
-            contentPadding = PaddingValues(top = PoseScreenTopSpacing, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            item(key = HEADER_KEY) {
-                AlbumHeader(
-                    locationLabel = content.locationLabel,
-                    summary = albumSummary(content),
-                    onBack = navController::popBackStackOnClick,
-                    onOpenSort = viewModel::showSortSheet,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-            item(key = FILTERS_KEY) {
-                CollectionsFilterChips(
-                    selected = content.filter,
-                    onSelect = viewModel::selectFilter,
-                    filters = AlbumFilters,
-                    selectedPalette = accent.palette,
-                    allCount = content.totalCount,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                )
-            }
-            itemsIndexed(
-                items = content.shots.chunked(ALBUM_COLUMNS),
-                key = { index, _ -> ROW_KEY + index },
-            ) { _, rowShots ->
-                AlbumShotRow(
-                    shots = rowShots,
-                    onShotClick = { shot ->
-                        navController.navigateOnClick(NavRoute.CaptureDetailScreenRoute.routeFor(shot.id))
-                    },
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-            item(key = STATS_KEY) {
-                PoseStatsCard(
-                    title = stringResource(R.string.album_this_place),
-                    stats = listOf(
-                        PoseStat(
-                            value = content.totalCount.toString(),
-                            label = stringResource(R.string.collections_stat_shots),
-                            valueColor = Color.White,
-                        ),
-                        PoseStat(
-                            value = stringResource(R.string.score_percent, content.averageMatch).bidiIsolate(),
-                            label = stringResource(R.string.album_stat_average),
-                            valueColor = PoseCyanLight,
-                        ),
-                        PoseStat(
-                            value = stringResource(R.string.score_percent, content.bestMatch).bidiIsolate(),
-                            label = stringResource(R.string.album_stat_best),
-                            valueColor = PoseEmerald400,
-                        ),
-                    ),
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
-                )
-            }
-            item(key = ACTIONS_KEY) {
-                Spacer(modifier = Modifier.height(20.dp))
-                AlbumActions(
-                    onShootAgain = {
-                        navController.navigateOnClick(NavRoute.CameraScreenRoute.routeWithoutPose())
-                    },
-                    onRemoveAll = viewModel::showRemoveDialog,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
+            AlbumHeader(
+                locationLabel = content?.locationLabel ?: locationLabel,
+                onBack = navController::popBackStackOnClick,
+                onOpenSort = viewModel::showSortSheet,
+                modifier = Modifier.poseScreenPadding(),
+            )
+            if (content != null) {
+                val accent = AlbumAccent.forLabel(content.locationLabel)
+                LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(top = 18.dp, bottom = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    item(key = SUMMARY_KEY) {
+                        AlbumSummary(
+                            summary = albumSummary(content),
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                        )
+                    }
+                    item(key = FILTERS_KEY) {
+                        CollectionsFilterChips(
+                            selected = content.filter,
+                            onSelect = viewModel::selectFilter,
+                            filters = AlbumFilters,
+                            selectedPalette = accent.palette,
+                            allCount = content.totalCount,
+                            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                        )
+                    }
+                    itemsIndexed(
+                        items = content.shots.chunked(ALBUM_COLUMNS),
+                        key = { index, _ -> ROW_KEY + index },
+                    ) { _, rowShots ->
+                        AlbumShotRow(
+                            shots = rowShots,
+                            onShotClick = { shot ->
+                                navController.navigateOnClick(NavRoute.CaptureDetailScreenRoute.routeFor(shot.id))
+                            },
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                        )
+                    }
+                    item(key = STATS_KEY) {
+                        PoseStatsCard(
+                            title = stringResource(R.string.album_this_place),
+                            stats = listOf(
+                                PoseStat(
+                                    value = content.totalCount.toString(),
+                                    label = stringResource(R.string.collections_stat_shots),
+                                    valueColor = Color.White,
+                                ),
+                                PoseStat(
+                                    value = stringResource(R.string.score_percent, content.averageMatch).bidiIsolate(),
+                                    label = stringResource(R.string.album_stat_average),
+                                    valueColor = PoseCyanLight,
+                                ),
+                                PoseStat(
+                                    value = stringResource(R.string.score_percent, content.bestMatch).bidiIsolate(),
+                                    label = stringResource(R.string.album_stat_best),
+                                    valueColor = PoseEmerald400,
+                                ),
+                            ),
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                        )
+                    }
+                    item(key = ACTIONS_KEY) {
+                        Spacer(modifier = Modifier.height(20.dp))
+                        AlbumActions(
+                            onShootAgain = {
+                                navController.navigateOnClick(NavRoute.CameraScreenRoute.routeWithoutPose())
+                            },
+                            onRemoveAll = viewModel::showRemoveDialog,
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                        )
+                    }
+                }
             }
         }
     }
 
-    if (content.isSortSheetVisible) {
+    if (content?.isSortSheetVisible == true) {
         CollectionsSortSheet(
             selected = content.sort,
             onSelect = viewModel::selectSort,
@@ -155,7 +163,7 @@ fun CaptureAlbumScreen(
         )
     }
 
-    if (content.isRemoveDialogVisible) {
+    if (content?.isRemoveDialogVisible == true) {
         PoseDeleteDialog(
             title = stringResource(R.string.album_remove_title),
             message = pluralStringResource(
@@ -189,7 +197,7 @@ private fun albumSummary(content: CaptureAlbumUiState.Content): String {
     )
 }
 
-private const val HEADER_KEY = "album_header"
+private const val SUMMARY_KEY = "album_summary"
 private const val FILTERS_KEY = "album_filters"
 private const val STATS_KEY = "album_stats"
 private const val ACTIONS_KEY = "album_actions"

@@ -16,11 +16,6 @@ class CaptureUseCase(private val captureRepository: CaptureRepository) {
     fun observeCaptureCount(): Flow<Int> =
         captureRepository.observeCaptures().map { captures -> captures.size }
 
-    fun observeCapture(id: Long): Flow<Capture?> =
-        captureRepository.observeCaptures().map { captures ->
-            captures.firstOrNull { capture -> capture.id == id }
-        }
-
     fun observeBestScore(poseId: Int?): Flow<Int> =
         captureRepository.observeCaptures().map { captures ->
             captures.filter { capture -> poseId == null || capture.poseId == poseId }

@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,7 +24,6 @@ private const val ALL_CHIP_OFFSET = 1
 
 @Composable
 internal fun ExploreCategoryChips(
-    totalCount: Int,
     categories: List<PoseCategoryCount>,
     selectedCategory: String?,
     onSelect: (String?) -> Unit,
@@ -35,8 +36,11 @@ internal fun ExploreCategoryChips(
         ?.plus(ALL_CHIP_OFFSET)
         ?: 0
 
+    val hasCentered = remember { mutableStateOf(false) }
+
     LaunchedEffect(selectedIndex, categories.size) {
-        listState.centerItem(selectedIndex)
+        listState.centerItem(selectedIndex, animated = hasCentered.value)
+        hasCentered.value = true
     }
 
     LazyRow(
@@ -47,7 +51,7 @@ internal fun ExploreCategoryChips(
     ) {
         item(key = ALL_KEY) {
             PoseFilterChip(
-                label = stringResource(R.string.album_filter_all, totalCount),
+                label = stringResource(R.string.collections_filter_all),
                 isSelected = selectedCategory == null,
                 onClick = { onSelect(null) },
             )

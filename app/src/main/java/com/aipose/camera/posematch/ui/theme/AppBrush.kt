@@ -16,10 +16,3 @@ fun studioBackgroundBrush(): Brush {
         1f to palette.backgroundBottom,
     )
 }
-
-@Composable
-@ReadOnlyComposable
-fun accentBrush(): Brush {
-    val palette = LocalAppPalette.current
-    return Brush.horizontalGradient(listOf(palette.accent, palette.accentSecondary))
-}

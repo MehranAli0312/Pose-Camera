@@ -14,6 +14,7 @@ import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.LANGUAGE_SCREEN_BOTTOM_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.ONBOARDING_NATIVE_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.ONBOARD_SCREEN_BOTTOM_AD_KEY
+import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.PHOTO_SAVE_INTERSTITIAL_AD_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.PREMIUM_ANNUAL_PLAN_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.PREMIUM_CLOSE_DELAY_SECONDS_KEY
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.PREMIUM_CLOSE_POSITION_KEY
@@ -41,6 +42,7 @@ data class AdsRemoteConfig(
     val innerInterstitial: Boolean = false,
     val innerInterstitialCappingSeconds: Long = DEFAULT_INNER_INTERSTITIAL_CAPPING_SECONDS,
     val innerInterstitialSplashFallback: Boolean = true,
+    val photoSaveInterstitial: Boolean = false,
     val premiumFeatureDialog: PremiumFeatureDialogMode = PremiumFeatureDialogMode.Off,
     val premiumCloseDelaySeconds: Long = DEFAULT_PREMIUM_CLOSE_DELAY_SECONDS,
     val premiumClosePosition: PremiumCloseButtonPosition = PremiumCloseButtonPosition.Right,
@@ -157,6 +159,10 @@ class AdsRemoteConfigStore(
             INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY,
             defaults.innerInterstitialSplashFallback,
         ),
+        photoSaveInterstitial = dataStore.getBoolean(
+            PHOTO_SAVE_INTERSTITIAL_AD_KEY,
+            defaults.photoSaveInterstitial,
+        ),
         premiumFeatureDialog = PremiumFeatureDialogMode.fromRemote(
             dataStore.getLong(
                 PREMIUM_FEATURE_DIALOG_KEY,
@@ -210,6 +216,7 @@ class AdsRemoteConfigStore(
             INNER_INTERSTITIAL_SPLASH_FALLBACK_KEY,
             config.innerInterstitialSplashFallback,
         )
+        dataStore.putBoolean(PHOTO_SAVE_INTERSTITIAL_AD_KEY, config.photoSaveInterstitial)
         dataStore.putLong(PREMIUM_FEATURE_DIALOG_KEY, config.premiumFeatureDialog.remoteValue)
         dataStore.putLong(PREMIUM_CLOSE_DELAY_SECONDS_KEY, config.premiumCloseDelaySeconds)
         dataStore.putLong(PREMIUM_CLOSE_POSITION_KEY, config.premiumClosePosition.remoteValue)
@@ -221,14 +228,3 @@ class AdsRemoteConfigStore(
         config.nativeAdColors.byKey().forEach { (key, hex) -> dataStore.putString(key, hex) }
     }
 }
-
-private const val TEST_FORCED_BANNER_STYLE = 1
-
-private fun AdsRemoteConfig.withTestAdsForced() = copy(
-    languageScreenBottomAd = TEST_FORCED_BANNER_STYLE,
-    onboardScreenBottomAd = TEST_FORCED_BANNER_STYLE,
-    onboardingNativeAd = OnboardingNativeAdPosition.AfterFirstStep,
-    homeScreenBottomAd = BottomAdPosition.AboveBottomBar,
-    innerInterstitial = true,
-    showOnboardingScreen = true,
-)

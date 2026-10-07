@@ -6,5 +6,6 @@ import com.aipose.camera.posematch.domain.models.Pose
 @Immutable
 data class SavedPose(
     val pose: Pose,
-    val savedAtMillis: Long
+    val savedAtMillis: Long,
+    val isLocked: Boolean
 )

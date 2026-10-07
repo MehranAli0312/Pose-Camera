@@ -31,6 +31,14 @@ val appAdsModule = module {
     single { AppOpenRouteGate() }
     single { MissedSplashAd() }
     single { InnerInterstitialAds(adsManager = get(), store = get()) }
+    single { RewardedUnlockSession() }
+    single {
+        PhotoSaveInterstitialAds(
+            adsManager = get(),
+            innerInterstitialAds = get(),
+            rewardedUnlockSession = get(),
+        )
+    }
 
     single { AppFirebaseRemote(store = get(), adsManager = get()) }
 
@@ -64,6 +72,8 @@ internal class AppAdSlotStyleProvider(
             AdPlacement.SplashFullscreen -> store.current.splashInterstitial.toInterstitialStyle()
             AdPlacement.AppOpenResume -> store.current.appOpenOnResume.toAppOpenStyle()
             AdPlacement.InnerInterstitial -> store.current.innerInterstitial.toInterstitialStyle()
+            AdPlacement.PhotoSaveInterstitial ->
+                store.current.photoSaveInterstitial.toInterstitialStyle()
             AdPlacement.PremiumRewarded -> FullscreenAdStyle.Rewarded
             else -> FullscreenAdStyle.Hidden
         }

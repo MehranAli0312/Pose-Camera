@@ -17,8 +17,6 @@ import com.pdfutility.billing.domain.UseCasePurchase
 import com.pdfutility.billing.domain.UseCaseQueryProducts
 import com.pdfutility.billing.domain.UseCaseQueryPurchases
 import com.pdfutility.billing.presentation.interfaces.BillingConnectionListener
-import com.pdfutility.billing.presentation.interfaces.BillingProductDetailsListener
-import com.pdfutility.billing.presentation.interfaces.BillingPurchaseHistoryListener
 import com.pdfutility.billing.presentation.interfaces.BillingPurchaseListener
 import com.pdfutility.billing.presentation.states.BillingState
 import com.pdfutility.billing.presentation.states.PurchaseResult
@@ -111,9 +109,6 @@ class BillingManager(
     suspend fun queryProducts(): QueryResponse<List<ProductDetail>> =
         useCaseQueryProducts.queryProducts(nonConsumableIds, consumableIds, subscriptionIds)
 
-    suspend fun queryProduct(productId: String, planId: String?): QueryResponse<List<ProductDetail>> =
-        useCaseQueryProducts.queryProducts(productId, planId)
-
     suspend fun queryPurchases(): QueryResponse<List<PurchaseDetail>> =
         useCaseQueryPurchases.queryPurchases()
 
@@ -135,36 +130,6 @@ class BillingManager(
             if (launchError != null) {
                 finishPurchaseFlow()
                 _purchaseResults.tryEmit(PurchaseResult.Error(launchError))
-            }
-        }
-    }
-
-    fun fetchPurchaseHistory(listener: BillingPurchaseHistoryListener) {
-        scope.launch {
-            when (val response = useCaseQueryPurchases.queryPurchases()) {
-                is QueryResponse.Loading -> {}
-                is QueryResponse.Success -> listener.onSuccess(response.data)
-                is QueryResponse.Error -> listener.onError(response.errorMessage)
-            }
-        }
-    }
-
-    fun fetchProductDetails(listener: BillingProductDetailsListener) {
-        scope.launch {
-            when (val response = useCaseQueryProducts.queryProducts(nonConsumableIds, consumableIds, subscriptionIds)) {
-                is QueryResponse.Loading -> {}
-                is QueryResponse.Success -> listener.onSuccess(response.data)
-                is QueryResponse.Error -> listener.onError(response.errorMessage)
-            }
-        }
-    }
-
-    fun getProductDetail(productId: String, planId: String?, listener: BillingProductDetailsListener) {
-        scope.launch {
-            when (val response = useCaseQueryProducts.queryProducts(productId, planId)) {
-                is QueryResponse.Loading -> {}
-                is QueryResponse.Success -> listener.onSuccess(response.data)
-                is QueryResponse.Error -> listener.onError(response.errorMessage)
             }
         }
     }

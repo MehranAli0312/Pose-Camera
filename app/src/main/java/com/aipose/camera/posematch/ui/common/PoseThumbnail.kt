@@ -44,6 +44,7 @@ fun PoseThumbnail(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSaved: Boolean = false,
+    isLocked: Boolean = false,
     onToggleSaved: (() -> Unit)? = null,
 ) {
     val palette = LocalAppPalette.current
@@ -59,6 +60,13 @@ fun PoseThumbnail(
             contentDescription = pose.title,
             modifier = Modifier.fillMaxSize(),
         )
+        if (isLocked) {
+            PoseProBadge(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(6.dp),
+            )
+        }
         if (onToggleSaved != null) {
             Box(
                 modifier = Modifier

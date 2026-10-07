@@ -25,3 +25,6 @@ val AdPlacement.Companion.InnerInterstitial: AdPlacement
 
 val AdPlacement.Companion.PremiumRewarded: AdPlacement
     get() = AdPlacement("premium_rewarded")
+
+val AdPlacement.Companion.PhotoSaveInterstitial: AdPlacement
+    get() = AdPlacement("photo_save_interstitial")

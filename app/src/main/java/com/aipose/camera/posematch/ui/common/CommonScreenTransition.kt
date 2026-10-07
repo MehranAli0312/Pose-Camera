@@ -3,7 +3,11 @@ package com.aipose.camera.posematch.ui.common
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
@@ -57,8 +61,11 @@ fun NavGraphBuilder.addScreenWithTransitions(
                 animationSpec = tween(popExitDuration)
             )
         },
-        content = contentBack
-    )
+    ) { backStackEntry ->
+        Box(modifier = Modifier.fillMaxSize().graphicsLayer()) {
+            contentBack(backStackEntry)
+        }
+    }
 }
 
 private fun resolveSlideDirection(

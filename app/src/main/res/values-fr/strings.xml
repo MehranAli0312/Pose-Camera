@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="skip">Ignorer</string>
     <string name="item_settings">Paramètres</string>
     <string name="close">Fermer</string>
     <string name="settings_language">Langue</string>
@@ -15,22 +14,24 @@
     <string name="please_rate">Merci de nous noter</string>
     <string name="done">Terminé</string>
     <string name="error_not_found">Introuvable</string>
-    <string name="pro_restore">Restaurer</string>
-    <string name="pro_feature_remove_ads">Supprimer les pubs</string>
-    <string name="pro_feature_remove_ads_desc" formatted="false">Une expérience 100 % sans pub</string>
+    <string name="pro_restore">Restaurer l\'achat</string>
+    <string name="pro_terms">Conditions</string>
+    <string name="pro_privacy">Confidentialité</string>
+    <string name="pro_title_highlight">Tout</string>
+    <string name="pro_benefit_poses">Débloquez toutes les poses premium</string>
+    <string name="pro_benefit_no_ads">Plus jamais de pub</string>
+    <string name="pro_benefit_updates">Soutenez les futures mises à jour</string>
+    <string name="pro_plan_lifetime">À vie</string>
+    <string name="pro_plan_lifetime_note">Paiement unique, à vous pour toujours</string>
+    <string name="pro_plan_yearly_note">Facturé une fois par an</string>
+    <string name="pro_cta_lifetime">Débloquer à vie</string>
+    <string name="pro_cta_yearly">Débloquer l\'offre annuelle</string>
+    <string name="pro_footnote_lifetime">Paiement unique · Sans abonnement</string>
     <string name="pro_plan_yearly">Annuel</string>
-    <string name="pro_plan_monthly">Mensuel</string>
     <string name="pro_best_value">MEILLEURE OFFRE</string>
-    <string name="pro_save_percent">ÉCONOMISEZ %1$d %%</string>
-    <string name="pro_billed_yearly">%1$s facturé chaque année</string>
-    <string name="pro_billed_monthly">Facturé chaque mois</string>
-    <string name="pro_per_month">par mois</string>
-    <string name="pro_trust_note">Résiliable à tout moment · Paiement sécurisé via Google Play</string>
     <string name="pro_store_unavailable">Impossible de charger les offres. Vérifiez votre connexion et réessayez.</string>
     <string name="pro_retry">Réessayer</string>
-    <string name="pro_upgrade_title">Passer à Pro</string>
     <string name="pro_try_for_free">Essayer gratuitement</string>
-    <string name="pro_no_payment_now">Aucun paiement maintenant !</string>
     <string name="pro_auto_renewal_note">Abonnement à renouvellement automatique. Résiliable à tout moment</string>
     <string name="pro_purchase_success">Achat réussi</string>
     <string name="pro_purchase_already_owned">Vous possédez déjà cette offre</string>
@@ -49,21 +50,19 @@
         <item quantity="one">%1$d étoile</item>
         <item quantity="other">%1$d étoiles</item>
     </plurals>
-    <string name="pro_title">Débloquez Pose Pro</string>
-    <string name="pro_subtitle">Posez, comparez et capturez sans publicité.</string>
+    <string name="pro_title">Tout débloquer</string>
+    <string name="pro_subtitle">Toutes les poses, sans pub — pour toujours.</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d jour gratuit, puis %2$s</item>
         <item quantity="other">%1$d jours gratuits, puis %2$s</item>
     </plurals>
-    <string name="premium_feature_tag">Fonction PRO</string>
-    <string name="premium_feature_title">Fonction premium</string>
-    <string name="premium_feature_message">Abonnez-vous à la fonction premium ou regardez une pub</string>
-    <string name="premium_feature_free_access_title">Accès gratuit</string>
-    <string name="premium_feature_free_access_subtitle">Regardez une courte pub</string>
     <string name="premium_feature_free_access_loading">Chargement de la pub…</string>
     <string name="premium_feature_go_premium_title">Passer à Premium</string>
-    <string name="premium_feature_go_premium_subtitle">Toutes les fonctions, sans pub</string>
-    <string name="premium_feature_maybe_later">Plus tard</string>
+    <string name="pose_pro_badge">PRO</string>
+    <string name="pose_locked">Pose verrouillée</string>
+    <string name="premium_pose_title">Pose premium</string>
+    <string name="premium_pose_message">Regardez une courte pub pour débloquer cette pose, ou passez à Premium pour toutes les débloquer.</string>
+    <string name="premium_pose_watch_ad">Regarder une pub pour débloquer</string>
     <string name="nav_home">Accueil</string>
     <string name="nav_gallery">Collections</string>
     <string name="nav_settings">Paramètres</string>
@@ -73,7 +72,6 @@
     <string name="action_delete">Supprimer</string>
     <string name="action_import">Importer</string>
     <string name="action_save">Enregistrer</string>
-    <string name="splash_tagline">STUDIO D\'ALIGNEMENT ESTHÉTIQUE</string>
     <string name="onboard_title_1">Choisissez une pose</string>
     <string name="onboard_title_2">Suivez la silhouette</string>
     <string name="onboard_title_3">Photographiez et enregistrez</string>
@@ -166,19 +164,10 @@
     <string name="perm_camera_title">Autorisation caméra requise</string>
     <string name="perm_camera_desc">Autorisez l\'accès à la caméra pour prendre des photos et comparer vos poses.</string>
     <string name="perm_allow">Autoriser</string>
+    <string name="perm_camera_blocked_desc">L\'accès à la caméra est désactivé. Ouvrez les paramètres et activez l\'autorisation caméra pour continuer à poser.</string>
+    <string name="perm_open_settings">Ouvrir les paramètres</string>
     <string name="capture_untitled">Photo sans titre</string>
-    <string name="home_tagline">Comparer · Capturer · Parfaire</string>
-    <string name="home_day_streak">Jours d\'affilée</string>
-    <string name="home_filter_category">CATÉGORIE</string>
-    <string name="home_filter_level">NIVEAU</string>
-    <string name="home_shuffle">Mélanger les poses</string>
-    <string name="home_hero_eyebrow">REPRENDRE LA SÉANCE</string>
-    <string name="home_hero_best_match">MEILLEUR SCORE</string>
     <string name="home_hero_cta">Commencer à poser</string>
-    <plurals name="home_hero_meta">
-        <item quantity="one">%1$s · %2$s · %3$d pose</item>
-        <item quantity="other">%1$s · %2$s · %3$d poses</item>
-    </plurals>
     <string name="home_action_live_pose">Pose en direct</string>
     <string name="home_action_open_camera">Ouvrir la caméra</string>
     <string name="home_action_import">Importer</string>
@@ -270,13 +259,7 @@
     <string name="collections_filter_recent">Récentes</string>
     <string name="collections_sort_title">Trier les photos</string>
     <string name="explore_title">Toutes les poses</string>
-    <string name="explore_total">%1$d au total</string>
     <string name="explore_search_hint">Rechercher poses, ambiances ou tags</string>
-    <plurals name="explore_showing">
-        <item quantity="one">%1$d pose affichée</item>
-        <item quantity="other">%1$d poses affichées</item>
-    </plurals>
-    <string name="explore_sort">Trier</string>
     <string name="explore_sort_title">Trier les poses</string>
     <string name="explore_sort_featured">En vedette</string>
     <string name="explore_sort_easiest">Plus faciles d\'abord</string>
@@ -316,11 +299,6 @@
         <item quantity="other">Vous avez obtenu %1$d%%+ sur %2$d poses cette semaine</item>
     </plurals>
     <string name="settings_footer">PoseAI %1$s · IA sur l\'appareil · Aucun envoi</string>
-    <string name="settings_streak_subtitle">%1$d photos · %2$d%% de score moyen</string>
-    <plurals name="settings_streak_title">
-        <item quantity="one">%1$d jour d\'affilée</item>
-        <item quantity="other">%1$d jours d\'affilée</item>
-    </plurals>
     <string name="progress_title">Votre progression</string>
     <string name="progress_tab_week">Semaine</string>
     <string name="progress_tab_month">Mois</string>

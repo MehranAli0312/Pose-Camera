@@ -54,12 +54,6 @@ class AdsAppLifecycleObserver internal constructor(
         application.registerActivityLifecycleCallbacks(this)
     }
 
-    fun unregister(application: Application) {
-        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
-        application.unregisterActivityLifecycleCallbacks(this)
-        currentActivity = null
-    }
-
     /**
      * Call right before the app itself opens another app's screen (system settings, share sheet,
      * store page, ...). Returning from that screen is part of the user's task, so the next

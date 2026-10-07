@@ -76,28 +76,6 @@ class AppDataStore(private val context: Context) {
         }
     }
 
-    fun getNotificationsEnabled() = preferences.data.map { stored ->
-        stored[AppPreferencesKeys.NOTIFICATIONS_ENABLED] ?: true
-    }
-
-    suspend fun isNotificationsEnabled(): Boolean = getNotificationsEnabled().first()
-
-    suspend fun setNotificationsEnabled(enabled: Boolean) {
-        preferences.edit { stored ->
-            stored[AppPreferencesKeys.NOTIFICATIONS_ENABLED] = enabled
-        }
-    }
-
-    fun getNotificationPermissionAsked() = preferences.data.map { stored ->
-        stored[AppPreferencesKeys.NOTIFICATION_PERMISSION_ASKED] ?: false
-    }
-
-    suspend fun setNotificationPermissionAsked(asked: Boolean) {
-        preferences.edit { stored ->
-            stored[AppPreferencesKeys.NOTIFICATION_PERMISSION_ASKED] = asked
-        }
-    }
-
     fun getRateUsSubmitted() = preferences.data.map { stored ->
         stored[AppPreferencesKeys.RATE_US_SUBMITTED] ?: false
     }
@@ -132,6 +110,17 @@ class AppDataStore(private val context: Context) {
             } else {
                 current.toSet()
             }
+        }
+    }
+
+    fun getUnlockedPoses() = preferences.data.map { stored ->
+        stored[AppPreferencesKeys.UNLOCKED_POSES].orEmpty().mapNotNull { it.toIntOrNull() }.toSet()
+    }
+
+    suspend fun unlockPose(poseId: Int) {
+        preferences.edit { stored ->
+            stored[AppPreferencesKeys.UNLOCKED_POSES] =
+                stored[AppPreferencesKeys.UNLOCKED_POSES].orEmpty() + poseId.toString()
         }
     }
 

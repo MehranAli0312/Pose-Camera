@@ -17,10 +17,7 @@ enum class CropHandle(
     Left(movesLeft = true),
     Top(movesTop = true),
     Right(movesRight = true),
-    Bottom(movesBottom = true);
-
-    val isCorner: Boolean
-        get() = this == TopLeft || this == TopRight || this == BottomLeft || this == BottomRight
+    Bottom(movesBottom = true)
 }
 
 fun PhotoCropRect.dragged(

@@ -1,12 +1,12 @@
 package com.aipose.camera.posematch.ui.screens.collections
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
@@ -62,85 +61,88 @@ fun CollectionsScreen(
         onDispose { viewModel.clearQuery() }
     }
 
-    val content = uiState as? CollectionsUiState.Content ?: return
+    val content = uiState as? CollectionsUiState.Content
 
     PoseGlowBackground(glows = PoseGlows.Collections) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
-                .safeTopSystemBarsPadding(),
-            contentPadding = PaddingValues(top = PoseScreenTopSpacing, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+                .adaptiveWidth(),
         ) {
-            item(key = HEADER_KEY) {
-                CollectionsHeader(
-                    onOpenSort = viewModel::showSortSheet,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-            item(key = SEARCH_KEY) {
-                StudioSearchField(
-                    query = query,
-                    hint = stringResource(R.string.collections_search_hint),
-                    onQueryChange = viewModel::setQuery,
-                    onSearchSubmitted = { dismissKeyboard() },
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-            item(key = STATS_KEY) {
-                CollectionsStatsCard(
-                    stats = content.stats,
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                )
-            }
-            item(key = FILTERS_KEY) {
-                CollectionsFilterChips(
-                    selected = content.filter,
-                    onSelect = viewModel::selectFilter,
-                )
-            }
-            if (content.isEmpty) {
-                item(key = EMPTY_KEY) {
-                    CollectionsEmptyState(
+            CollectionsHeader(
+                onOpenSort = viewModel::showSortSheet,
+                modifier = Modifier.poseScreenPadding(),
+            )
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(top = 14.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+            ) {
+                item(key = SEARCH_KEY) {
+                    StudioSearchField(
                         query = query,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(EmptyStateHeight),
-                    )
-                }
-            }
-            items(content.albums, key = { album -> ALBUM_KEY + album.locationLabel }) { album ->
-                CaptureAlbumSection(
-                    album = album,
-                    accent = AlbumAccent.forLabel(album.locationLabel),
-                    onShowAll = {
-                        dismissKeyboard()
-                        navController.navigateOnClick(
-                            NavRoute.CaptureAlbumScreenRoute.routeFor(album.locationLabel)
-                        )
-                    },
-                    onCaptureClick = { captureUi ->
-                        dismissKeyboard()
-                        navController.navigateOnClick(
-                            NavRoute.CaptureDetailScreenRoute.routeFor(captureUi.id)
-                        )
-                    },
-                )
-            }
-            if (content.recentPerfectShots > 0) {
-                item(key = PERFECT_KEY) {
-                    PerfectShotsCard(
-                        count = content.recentPerfectShots,
-                        onClick = { viewModel.selectFilter(CollectionsFilter.TopMatch) },
+                        hint = stringResource(R.string.collections_search_hint),
+                        onQueryChange = viewModel::setQuery,
+                        onSearchSubmitted = { dismissKeyboard() },
                         modifier = Modifier.padding(horizontal = 20.dp),
                     )
+                }
+                if (content != null) {
+                    item(key = STATS_KEY) {
+                        CollectionsStatsCard(
+                            stats = content.stats,
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                        )
+                    }
+                    item(key = FILTERS_KEY) {
+                        CollectionsFilterChips(
+                            selected = content.filter,
+                            onSelect = viewModel::selectFilter,
+                        )
+                    }
+                    if (content.isEmpty) {
+                        item(key = EMPTY_KEY) {
+                            CollectionsEmptyState(
+                                query = query,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(EmptyStateHeight),
+                            )
+                        }
+                    }
+                    items(content.albums, key = { album -> ALBUM_KEY + album.locationLabel }) { album ->
+                        CaptureAlbumSection(
+                            album = album,
+                            accent = AlbumAccent.forLabel(album.locationLabel),
+                            onShowAll = {
+                                dismissKeyboard()
+                                navController.navigateOnClick(
+                                    NavRoute.CaptureAlbumScreenRoute.routeFor(album.locationLabel)
+                                )
+                            },
+                            onCaptureClick = { captureUi ->
+                                dismissKeyboard()
+                                navController.navigateOnClick(
+                                    NavRoute.CaptureDetailScreenRoute.routeFor(captureUi.id)
+                                )
+                            },
+                        )
+                    }
+                    if (content.recentPerfectShots > 0) {
+                        item(key = PERFECT_KEY) {
+                            PerfectShotsCard(
+                                count = content.recentPerfectShots,
+                                onClick = { viewModel.selectFilter(CollectionsFilter.TopMatch) },
+                                modifier = Modifier.padding(horizontal = 20.dp),
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 
-    if (content.isSortSheetVisible) {
+    if (content?.isSortSheetVisible == true) {
         CollectionsSortSheet(
             selected = content.sort,
             onSelect = viewModel::selectSort,
@@ -149,7 +151,6 @@ fun CollectionsScreen(
     }
 }
 
-private const val HEADER_KEY = "collections_header"
 private const val SEARCH_KEY = "collections_search"
 private const val STATS_KEY = "collections_stats"
 private const val FILTERS_KEY = "collections_filters"

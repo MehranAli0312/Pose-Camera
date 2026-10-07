@@ -35,9 +35,9 @@ val viewModelModule = module {
             purchaseLauncher = get(),
         )
     }
-    viewModel { HomeViewModel(get(), get(), get()) }
-    viewModel { SavedViewModel(androidContext(), get(), get(), get()) }
-    viewModel { PoseAlbumViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
+    viewModel { SavedViewModel(androidContext(), get(), get(), get(), get()) }
+    viewModel { PoseAlbumViewModel(get(), get(), get()) }
     viewModel { PoseDetailViewModel(get(), get(), get(), get()) }
     viewModel { CollectionsViewModel(androidContext(), get(), get()) }
     viewModel { CaptureAlbumViewModel(androidContext(), get(), get()) }
@@ -54,6 +54,7 @@ val viewModelModule = module {
             captureUseCase = get(),
             cameraSettingsUseCase = get(),
             photoEditUseCase = get(),
+            poseLockUseCase = get(),
             poseFrameAnalyzer = get()
         )
     }

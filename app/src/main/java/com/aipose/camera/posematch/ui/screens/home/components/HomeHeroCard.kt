@@ -2,22 +2,18 @@ package com.aipose.camera.posematch.ui.screens.home.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,41 +28,32 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseImage
+import com.aipose.camera.posematch.ui.common.PoseProBadge
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
-import com.aipose.camera.posematch.ui.theme.Indigo
-import com.aipose.camera.posematch.ui.theme.LocalAppPalette
-import com.aipose.camera.posematch.ui.theme.PoseCyanBright
 import com.aipose.camera.posematch.ui.theme.PoseHeroBottom
 import com.aipose.camera.posematch.ui.theme.PoseHeroMid
 import com.aipose.camera.posematch.ui.theme.PoseHeroScrimMid
 import com.aipose.camera.posematch.ui.theme.PoseHeroScrimStart
 import com.aipose.camera.posematch.ui.theme.PoseHeroTop
-import com.aipose.camera.posematch.ui.theme.PoseIndigoLight
 import com.aipose.camera.posematch.ui.theme.PoseShadow
-import com.aipose.camera.posematch.ui.theme.PoseVioletBright
-import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
-import com.aipose.camera.posematch.util.bidiIsolate
 
 private val CardCorner = 26.dp
 private val CardHeight = 172.dp
 private const val PHOTO_WIDTH_FRACTION = 164f / 350f
 private const val CONTENT_WIDTH_FRACTION = 1f - PHOTO_WIDTH_FRACTION
-private val PlaySize = 20.dp
-private val TrackWidth = 140.dp
-private val TrackHeight = 6.dp
 private val CtaWidth = 152.dp
 private val CtaHeight = 42.dp
 private val CtaShape = RoundedCornerShape(21.dp)
@@ -77,16 +64,12 @@ private val CtaGlossTop = 3.dp
 
 private const val CARD_BORDER_ALPHA = 0.10f
 private const val CARD_SHADOW_ALPHA = 0.55f
-private const val PLAY_RING_ALPHA = 0.40f
-private const val PLAY_FILL_ALPHA = 0.10f
-private const val TRACK_ALPHA = 0.12f
 private const val SCRIM_MID_ALPHA = 0.6f
 private const val SCRIM_END_STOP = 0.744f
 private const val CTA_SHADOW_ALPHA = 0.55f
 private const val CTA_GLOSS_ALPHA = 0.4f
 private const val CTA_GLOSS_HEIGHT_RATIO = 0.45f
 private const val GRADIENT_MID_STOP = 0.55f
-private const val PERCENT_SCALE = 100f
 
 @Composable
 internal fun HomeHeroCard(
@@ -94,7 +77,6 @@ internal fun HomeHeroCard(
     onStartPosing: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val palette = LocalAppPalette.current
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -113,7 +95,7 @@ internal fun HomeHeroCard(
     ) {
         Box(
             modifier = Modifier.matchParentSize(),
-            contentAlignment = Alignment.CenterEnd,
+            contentAlignment = Alignment.CenterStart,
         ) {
             HeroPhoto(
                 imagePath = hero.pose.imagePath,
@@ -122,108 +104,35 @@ internal fun HomeHeroCard(
                     .fillMaxWidth(PHOTO_WIDTH_FRACTION),
             )
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(CONTENT_WIDTH_FRACTION)
-                .heightIn(min = CardHeight)
-                .padding(start = 16.dp, top = 16.dp, bottom = 12.dp, end = 4.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(7.dp),
-                ) {
-                    PlayBadge()
-                    Text(
-                        text = stringResource(R.string.home_hero_eyebrow),
-                        style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseIndigoLight),
-                    )
-                }
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = hero.pose.title,
-                    style = poseTextStyle(19.sp, FontWeight.Bold, Color.White),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Spacer(modifier = Modifier.height(3.dp))
-                Text(
-                    text = pluralStringResource(
-                        R.plurals.home_hero_meta,
-                        hero.categoryCount,
-                        hero.pose.category,
-                        hero.pose.difficulty,
-                        hero.categoryCount,
-                    ),
-                    style = poseTextStyle(10.5.sp, FontWeight.Normal, palette.textMuted),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                if (hero.bestMatch != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    BestMatchMeter(percent = hero.bestMatch)
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            StartPosingButton(onClick = onStartPosing)
-        }
-    }
-}
 
-@Composable
-private fun PlayBadge(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .size(PlaySize)
-            .clip(CircleShape)
-            .background(Color.White.copy(alpha = PLAY_FILL_ALPHA))
-            .border(1.dp, PoseIndigoLight.copy(alpha = PLAY_RING_ALPHA), CircleShape),
-        contentAlignment = Alignment.Center,
-    ) {
-        Image(
-            painter = painterResource(R.drawable.ic_pose_play),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-        )
-    }
-}
-
-@Composable
-private fun BestMatchMeter(percent: Int, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.widthIn(max = TrackWidth).fillMaxWidth()) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(R.string.home_hero_best_match),
-                style = poseTextStyle(8.sp, FontWeight.Bold, LocalAppPalette.current.textFaint),
-            )
-            Text(
-                text = stringResource(R.string.score_percent, percent).bidiIsolate(),
-                style = poseTextStyle(10.5.sp, FontWeight.Bold, PoseVioletLight),
+        if (hero.isLocked) {
+            PoseProBadge(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(12.dp),
             )
         }
-        Spacer(modifier = Modifier.height(3.dp))
+
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(TrackHeight)
-                .clip(CircleShape)
-                .background(Color.White.copy(alpha = TRACK_ALPHA)),
+                .align(Alignment.BottomEnd)
+                .fillMaxWidth(CONTENT_WIDTH_FRACTION)
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
-            Box(
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth(percent / PERCENT_SCALE)
-                    .fillMaxHeight()
-                    .clip(CircleShape)
-                    .background(
-                        Brush.horizontalGradient(
-                            listOf(PoseCyanBright, Indigo, PoseVioletBright)
-                        )
-                    ),
+                    .align(Alignment.TopCenter)
+                    .padding(top = 20.dp),
+                text = hero.pose.category,
+                style = poseTextStyle(19.sp, FontWeight.Bold, Color.White),
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            StartPosingButton(
+                onClick = onStartPosing,
+                modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
     }
@@ -291,7 +200,7 @@ private fun StartPosingButton(onClick: () -> Unit, modifier: Modifier = Modifier
 
 @Composable
 private fun HeroPhoto(imagePath: String, modifier: Modifier = Modifier) {
-    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Ltr
     Box(
         modifier = modifier
     ) {

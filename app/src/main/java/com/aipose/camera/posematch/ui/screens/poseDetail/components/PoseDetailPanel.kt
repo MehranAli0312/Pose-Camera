@@ -67,7 +67,6 @@ private val CtaHeight = 58.dp
 private val CtaCorner = 29.dp
 
 private const val PANEL_BORDER_ALPHA = 0.12f
-private const val PANEL_GLOSS_ALPHA = 0.12f
 private const val HANDLE_ALPHA = 0.28f
 private const val CHIP_BORDER_ALPHA = 0.1f
 private const val RING_TRACK_ALPHA = 0.14f

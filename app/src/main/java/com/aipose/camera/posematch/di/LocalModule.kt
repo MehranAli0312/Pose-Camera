@@ -28,6 +28,7 @@ val localModule = module {
     single {
         BillingManager(androidContext())
             .setSubscriptions(ProPlan.subscriptionProductIds)
+            .setNonConsumables(ProPlan.oneTimeProductIds)
     }
     single { PremiumPurchaseLauncher(get()) }
     single { AppDataStore(get()) }

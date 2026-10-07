@@ -22,6 +22,9 @@ class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
     suspend fun shareableImagePath(pose: Pose): String? =
         poseRepository.shareableImagePath(pose)
 
+    fun nextHeroPose(poses: List<Pose>, currentPoseId: Int?): Pose? =
+        poses.filter { it.id != currentPoseId }.randomOrNull() ?: poses.firstOrNull()
+
     fun poseOfTheDay(poses: List<Pose>): Pose? {
         if (poses.isEmpty()) return null
         val index = localDayIndex(System.currentTimeMillis()).mod(poses.size)
