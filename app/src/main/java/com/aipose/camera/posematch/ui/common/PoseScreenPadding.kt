@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-val PoseScreenGutter = 20.dp
-val PoseScreenTopSpacing = 22.dp
+val PoseScreenGutter = 12.dp
+val PoseScreenTopSpacing = 1.dp
 
 @Composable
 fun Modifier.poseScreenPadding(

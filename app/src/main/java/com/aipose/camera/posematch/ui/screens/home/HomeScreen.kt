@@ -8,23 +8,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.PremiumRewarded
+import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ads.rememberInnerInterstitial
-import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
-import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
@@ -41,9 +35,6 @@ import com.aipose.camera.posematch.ui.screens.home.models.HomeDailyPose
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
-import com.example.ads.AdPlacement
-import com.example.common.showToast
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -52,27 +43,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val importedPose by viewModel.importedPose.collectAsStateWithLifecycle()
-    val importFailed by viewModel.importFailed.collectAsStateWithLifecycle()
     val showProBadge by viewModel.showProBadge.collectAsStateWithLifecycle()
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? HomeUiState.Content
-    val context = LocalContext.current
-    val importedMessage = stringResource(R.string.toast_reference_imported)
-    val importFailedMessage = stringResource(R.string.toast_reference_failed)
-    val importTitle = stringResource(R.string.imported_pose_title)
-
     val innerInterstitial = rememberInnerInterstitial()
-    val screenAds = rememberScreenAds()
-    val scope = rememberCoroutineScope()
-
-    val posePicker = rememberPosePicker { pickedUri ->
-        viewModel.importPose(importTitle, pickedUri)
-    }
-
-    fun openCamera(pose: Pose) {
-        navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(pose.id))
-    }
 
     fun openPoseDetail(pose: Pose) {
         navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(pose.id))
@@ -107,14 +81,6 @@ fun HomeScreen(
         openWithAd(NavRoute.PoseAlbumScreenRoute.routeFor(category))
     }
 
-    LaunchedEffect(importedPose) {
-        importedPose?.let { pose ->
-            viewModel.consumeImportedPose()
-            context.showToast(importedMessage)
-            openCamera(pose)
-        }
-    }
-
     LaunchedEffect(unlockedPoseToOpen) {
         val unlocked = unlockedPoseToOpen ?: return@LaunchedEffect
         viewModel.consumeUnlockedPose()
@@ -127,16 +93,7 @@ fun HomeScreen(
 
     val hasLockedPose = content?.hero?.isLocked == true || content?.poseOfTheDay?.isLocked == true
 
-    LaunchedEffect(hasLockedPose) {
-        if (hasLockedPose) screenAds.preload(AdPlacement.PremiumRewarded)
-    }
-
-    LaunchedEffect(importFailed) {
-        if (importFailed) {
-            viewModel.consumeImportFailure()
-            context.showToast(importFailedMessage)
-        }
-    }
+    PremiumRewardedPreloadEffect(hasLockedPose)
 
     PoseGlowBackground {
         Column(
@@ -150,7 +107,7 @@ fun HomeScreen(
                 onProClick = { navController.navigateOnClick(NavRoute.ProScreenRoute.route) },
                 modifier = Modifier
                     .safeTopSystemBarsPadding()
-                    .padding(top = PoseScreenTopSpacing),
+                    .padding(),
             )
             LazyColumn(
                 modifier = Modifier.weight(1f),
@@ -173,8 +130,6 @@ fun HomeScreen(
                         actions = content.quickActions,
                         onActionClick = { action ->
                             when (val id = action.id) {
-                                HomeQuickActionId.LivePose -> content.hero?.let(::startHeroPosing)
-                                HomeQuickActionId.Import -> posePicker()
                                 HomeQuickActionId.Explore ->
                                     openAlbum(NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES)
 
@@ -208,19 +163,9 @@ fun HomeScreen(
 
     content?.lockedPose?.let { lockedPose ->
         PremiumFeatureBottomSheet(
-            posePreviewPath = lockedPose.imagePath,
-            poseTitle = lockedPose.title,
-            isAdLoading = content.isUnlockAdLoading,
-            onWatchAdClick = {
-                val target = content.unlockTarget
-                viewModel.onUnlockAdStarted()
-                scope.launch {
-                    val result = screenAds.rewarded(
-                        placement = AdPlacement.PremiumRewarded,
-                        onShown = viewModel::onUnlockAdShown,
-                    )
-                    viewModel.onUnlockAdFinished(lockedPose, target, result.wasRewarded)
-                }
+            pose = lockedPose,
+            onRewardEarned = {
+                viewModel.unlockAfterRewardedAd(lockedPose, content.unlockTarget)
             },
             onGoPremiumClick = {
                 viewModel.dismissLockedPose()

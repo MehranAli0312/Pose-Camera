@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -52,11 +53,12 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val CardCorner = 26.dp
 private val CardHeight = 172.dp
-private const val PHOTO_WIDTH_FRACTION = 164f / 350f
+private const val PHOTO_WIDTH_FRACTION = 164f / 300f
 private const val CONTENT_WIDTH_FRACTION = 1f - PHOTO_WIDTH_FRACTION
 private val CtaWidth = 152.dp
 private val CtaHeight = 42.dp
 private val CtaShape = RoundedCornerShape(21.dp)
+private val TitleCtaSpacing = 10.dp
 private val CtaShadowOffset = 5.dp
 private val CtaShadowInset = 2.dp
 private val CtaGlossInset = 6.dp
@@ -91,7 +93,8 @@ internal fun HomeHeroCard(
                 shadowColor = PoseShadow,
                 shadowAlpha = CARD_SHADOW_ALPHA,
                 borderColor = Color.White.copy(alpha = CARD_BORDER_ALPHA),
-            ),
+            )
+            .bounceClick(onClick = onStartPosing),
     ) {
         Box(
             modifier = Modifier.matchParentSize(),
@@ -113,33 +116,30 @@ internal fun HomeHeroCard(
             )
         }
 
-        Box(
+        Column(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.CenterEnd)
                 .fillMaxWidth(CONTENT_WIDTH_FRACTION)
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(TitleCtaSpacing),
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 20.dp),
                 text = hero.pose.category,
-                style = poseTextStyle(19.sp, FontWeight.Bold, Color.White),
+                style = poseTextStyle(22.sp, FontWeight.ExtraBold, Color.White),
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            StartPosingButton(
-                onClick = onStartPosing,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
+            Spacer(modifier = Modifier.height(20.dp))
+            StartPosingButton()
         }
     }
 }
 
 @Composable
-private fun StartPosingButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun StartPosingButton(modifier: Modifier = Modifier) {
     val palette = GlossyBadgePalette.HeroCta
     Row(
         modifier = modifier
@@ -180,7 +180,6 @@ private fun StartPosingButton(onClick: () -> Unit, modifier: Modifier = Modifier
                     cornerRadius = CornerRadius(glossHeight / 2f),
                 )
             }
-            .bounceClick(onClick = onClick)
             .padding(horizontal = 11.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(11.dp),

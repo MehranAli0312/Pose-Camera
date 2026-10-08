@@ -26,7 +26,7 @@ internal fun CaptureAlbumSection(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 6.dp),
+            .padding(start = 12.dp, end = 12.dp, top = 6.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         CaptureAlbumHeader(

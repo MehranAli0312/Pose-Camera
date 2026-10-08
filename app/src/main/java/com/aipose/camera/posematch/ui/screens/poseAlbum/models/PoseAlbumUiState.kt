@@ -13,7 +13,6 @@ sealed interface PoseAlbumUiState {
         val savedPoseIds: Set<Int>,
         val lockedPoseIds: Set<Int>,
         val lockedPose: Pose?,
-        val isUnlockAdLoading: Boolean,
         val sort: PoseSort,
         val isSortSheetVisible: Boolean
     ) : PoseAlbumUiState

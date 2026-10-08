@@ -30,12 +30,12 @@ import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickAction
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private const val TILES_PER_ROW = 4
-private val TileShape = RoundedCornerShape(22.dp)
-private val TileMinHeight = 102.dp
-private val TileGap = 10.dp
-private val RowGap = 10.dp
-private val BadgeSize = 44.dp
+private const val TILES_PER_ROW = 3
+private val TileShape = RoundedCornerShape(26.dp)
+private val TileMinHeight = 136.dp
+private val TileGap = 12.dp
+private val RowGap = 12.dp
+private val BadgeSize = 60.dp
 
 @Composable
 internal fun HomeQuickActionGrid(
@@ -68,7 +68,7 @@ private fun RowScope.QuickActionTile(
             .heightIn(min = TileMinHeight)
             .poseCard(TileShape)
             .bounceClick(onClick = onClick)
-            .padding(start = 4.dp, end = 4.dp, top = 14.dp, bottom = 12.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 18.dp, bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         GlossyIconBadge(
@@ -76,18 +76,18 @@ private fun RowScope.QuickActionTile(
             palette = action.id.palette,
             size = BadgeSize,
         )
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(9.dp))
         Text(
             text = stringResource(action.id.titleRes),
-            style = poseTextStyle(10.5.sp, FontWeight.Bold, Color.White),
+            style = poseTextStyle(13.sp, FontWeight.Bold, Color.White),
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-        Spacer(modifier = Modifier.height(2.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         Text(
             text = action.subtitleText(),
-            style = poseTextStyle(8.5.sp, FontWeight.Normal, LocalAppPalette.current.textFaint),
+            style = poseTextStyle(10.5.sp, FontWeight.Normal, LocalAppPalette.current.textFaint),
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

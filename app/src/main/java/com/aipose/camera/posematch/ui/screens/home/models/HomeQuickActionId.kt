@@ -13,20 +13,6 @@ enum class HomeQuickActionId(
     val subtitle: HomeActionSubtitle,
     val category: String?
 ) {
-    LivePose(
-        iconRes = R.drawable.ic_pose_camera,
-        palette = GlossyBadgePalette.Indigo,
-        titleRes = R.string.home_action_live_pose,
-        subtitle = HomeActionSubtitle.Label(R.string.home_action_open_camera),
-        category = null
-    ),
-    Import(
-        iconRes = R.drawable.ic_pose_import,
-        palette = GlossyBadgePalette.Orange,
-        titleRes = R.string.home_action_import,
-        subtitle = HomeActionSubtitle.Label(R.string.home_action_your_photo),
-        category = null
-    ),
     Trending(
         iconRes = R.drawable.ic_pose_trending,
         palette = GlossyBadgePalette.Rose,

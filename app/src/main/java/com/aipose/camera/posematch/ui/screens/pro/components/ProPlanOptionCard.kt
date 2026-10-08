@@ -34,12 +34,11 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.PremiumPlan
 import com.aipose.camera.posematch.domain.models.ProPlan
 import com.aipose.camera.posematch.ui.common.bounceClick
+import com.aipose.camera.posematch.ui.theme.AppTheme
 import com.aipose.camera.posematch.ui.theme.PosePremiumGold
 import com.aipose.camera.posematch.ui.theme.PosePremiumGoldInk
-import com.aipose.camera.posematch.ui.theme.AppTheme
 
 private val CardShape = RoundedCornerShape(20.dp)
-private val BadgeShape = RoundedCornerShape(11.dp)
 private val BadgeHeight = 22.dp
 private val BadgeEndInset = 20.dp
 private val CardPadding = 18.dp

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -75,7 +76,7 @@ internal fun CaptureAlbumHeader(
         }
         Box(modifier = Modifier.weight(1f))
         Row(
-            modifier = Modifier
+            modifier = Modifier.wrapContentWidth()
                 .bounceClick(onClick = onShowAll)
                 .padding(vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,

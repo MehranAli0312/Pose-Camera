@@ -5,12 +5,11 @@ import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseMatch
-import com.aipose.camera.posematch.ui.models.PoseUnlockPrompt
 
 data class PoseCameraUiState(
     val poses: List<Pose> = emptyList(),
     val lockedPoseIds: Set<Int> = emptySet(),
-    val unlockPrompt: PoseUnlockPrompt? = null,
+    val lockedPose: Pose? = null,
     val selectedPose: Pose? = null,
     val overlayCutoutPath: String? = null,
     val overlay: OverlayTransform = OverlayTransform(),

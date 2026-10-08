@@ -40,10 +40,10 @@ import com.aipose.camera.posematch.ui.theme.PosePremiumGoldLight
 private val BadgeSize = 88.dp
 private const val OUTER_HALO_RADIUS_RATIO = 120f / 88f
 private const val INNER_HALO_RADIUS_RATIO = 84f / 88f
-private val BadgeShape = RoundedCornerShape(28.dp)
+val BadgeShape = RoundedCornerShape(28.dp)
 private const val OUTER_HALO_ALPHA = 0.04f
 private const val INNER_HALO_ALPHA = 0.07f
-private const val BADGE_SHADOW_ALPHA = 0.45f
+const val BADGE_SHADOW_ALPHA = 0.45f
 
 @Composable
 internal fun ProHeader(modifier: Modifier = Modifier) {

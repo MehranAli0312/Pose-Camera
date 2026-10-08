@@ -13,7 +13,6 @@ sealed interface HomeUiState {
         val progress: CaptureProgress,
         val poseOfTheDay: HomeDailyPose?,
         val lockedPose: Pose?,
-        val unlockTarget: HomeUnlockTarget,
-        val isUnlockAdLoading: Boolean
+        val unlockTarget: HomeUnlockTarget
     ) : HomeUiState
 }

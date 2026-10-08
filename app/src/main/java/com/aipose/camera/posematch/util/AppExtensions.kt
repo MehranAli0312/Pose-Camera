@@ -11,7 +11,7 @@ fun Context.getAppLink() = "https://play.google.com/store/apps/details?id=${this
 fun Context.shareApp() = "${resources.getString(R.string.app_name)}: ${getAppLink()}"
 
 const val PRIVACY_POLICY = "https://sites.google.com/view/posematchcamera"
-const val TERMS_OF_SERVICE = PRIVACY_POLICY
+const val TERMS_OF_SERVICE = "https://sites.google.com/view/pose-match-terms?usp=sharing"
 
 fun Context.contact() {
     try {

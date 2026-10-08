@@ -19,7 +19,7 @@ import com.aipose.camera.posematch.ui.common.PoseTopBar
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val FilterGlyphSize = DpSize(18.dp, 17.dp)
+private val FilterGlyphSize = DpSize(15.dp, 14.dp)
 
 @Composable
 internal fun SavedHeader(

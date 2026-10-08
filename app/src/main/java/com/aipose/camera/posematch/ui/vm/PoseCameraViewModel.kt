@@ -17,7 +17,6 @@ import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
 import com.aipose.camera.posematch.ui.models.CaptureTimer
-import com.aipose.camera.posematch.ui.models.PoseUnlockPrompt
 import com.aipose.camera.posematch.ui.screens.camera.models.PoseCameraUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -69,35 +68,20 @@ class PoseCameraViewModel(
     }
 
     fun dismissLockedPose() {
-        if (_uiState.value.unlockPrompt?.isAdLoading == true) return
-        _uiState.update { state -> state.copy(unlockPrompt = null) }
+        _uiState.update { state -> state.copy(lockedPose = null) }
     }
 
-    fun onUnlockAdStarted() {
-        _uiState.update { state ->
-            state.copy(unlockPrompt = state.unlockPrompt?.copy(isAdLoading = true))
-        }
-    }
-
-    fun onUnlockAdShown() {
-        _uiState.update { state -> state.copy(unlockPrompt = null) }
-    }
-
-    fun onUnlockAdFinished(pose: Pose, wasRewarded: Boolean) {
-        _uiState.update { state ->
-            state.copy(unlockPrompt = state.unlockPrompt?.copy(isAdLoading = false))
-        }
-        if (!wasRewarded) return
+    fun unlockAfterRewardedAd(pose: Pose) {
+        _uiState.update { state -> state.copy(lockedPose = null) }
         viewModelScope.launch {
             poseLockUseCase.unlockWithRewardedAd(pose.id)
-            _uiState.update { state -> state.copy(unlockPrompt = null) }
             selectPose(pose)
         }
     }
 
     private fun showLockedPose(pose: Pose) {
         _uiState.update { state ->
-            state.copy(unlockPrompt = PoseUnlockPrompt(pose), isPosePickerVisible = false)
+            state.copy(lockedPose = pose, isPosePickerVisible = false)
         }
     }
 

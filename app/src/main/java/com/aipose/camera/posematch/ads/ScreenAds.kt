@@ -62,10 +62,17 @@ class ScreenAds internal constructor(
         adsManager.releaseSlot(placement)
     }
 
-    suspend fun rewarded(placement: AdPlacement, onShown: (() -> Unit)? = null): AdResult {
-        val activity = activity ?: return AdResult.NotAvailable
-        return runCatching { adsManager.loadAndShow(activity, placement, onShown) }
-            .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+    fun rewarded(placement: AdPlacement, onFinished: (AdResult) -> Unit) {
+        val activity = activity
+        if (activity == null) {
+            onFinished(AdResult.NotAvailable)
+            return
+        }
+        activity.lifecycleScope.launch {
+            val result = runCatching { adsManager.showFullscreen(activity, placement) }
+                .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+            onFinished(result)
+        }
     }
 
     fun fullscreen(

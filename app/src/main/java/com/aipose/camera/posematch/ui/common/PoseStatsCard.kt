@@ -43,8 +43,7 @@ fun PoseStatsCard(
                 borderAlpha = CARD_BORDER_ALPHA,
                 glossAlpha = if (title != null) TITLED_GLOSS_ALPHA else 0f,
             )
-            .padding(vertical = 18.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
+            .padding(vertical = 12.dp)
     ) {
         if (title != null) {
             Text(

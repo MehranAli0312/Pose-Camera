@@ -9,7 +9,7 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseRaisedIconButton
 import com.aipose.camera.posematch.ui.common.PoseTopBar
 
-private val FilterGlyphSize = DpSize(18.dp, 17.dp)
+private val FilterGlyphSize = DpSize(15.dp, 14.dp)
 
 @Composable
 internal fun AlbumHeader(

@@ -10,7 +10,6 @@ import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
-import com.aipose.camera.posematch.ui.models.PoseUnlockPrompt
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedPose
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedShot
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedSort
@@ -32,8 +31,8 @@ class SavedViewModel(
     poseLibraryUseCase: PoseLibraryUseCase
 ) : ViewModel() {
 
-    private val _unlockPrompt = MutableStateFlow<PoseUnlockPrompt?>(null)
-    val unlockPrompt = _unlockPrompt.asStateFlow()
+    private val _lockedPose = MutableStateFlow<Pose?>(null)
+    val lockedPose = _lockedPose.asStateFlow()
 
     private val _unlockedPoseToOpen = MutableStateFlow<Int?>(null)
     val unlockedPoseToOpen = _unlockedPoseToOpen.asStateFlow()
@@ -93,28 +92,17 @@ class SavedViewModel(
     }
 
     fun showLockedPose(saved: SavedPose) {
-        _unlockPrompt.value = PoseUnlockPrompt(saved.pose)
+        _lockedPose.value = saved.pose
     }
 
     fun dismissLockedPose() {
-        if (_unlockPrompt.value?.isAdLoading == true) return
-        _unlockPrompt.value = null
+        _lockedPose.value = null
     }
 
-    fun onUnlockAdStarted() {
-        _unlockPrompt.value = _unlockPrompt.value?.copy(isAdLoading = true)
-    }
-
-    fun onUnlockAdShown() {
-        _unlockPrompt.value = null
-    }
-
-    fun onUnlockAdFinished(pose: Pose, wasRewarded: Boolean) {
-        _unlockPrompt.value = _unlockPrompt.value?.copy(isAdLoading = false)
-        if (!wasRewarded) return
+    fun unlockAfterRewardedAd(pose: Pose) {
+        _lockedPose.value = null
         viewModelScope.launch {
             poseLockUseCase.unlockWithRewardedAd(pose.id)
-            _unlockPrompt.value = null
             _unlockedPoseToOpen.value = pose.id
         }
     }

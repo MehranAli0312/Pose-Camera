@@ -15,14 +15,12 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.ads.PremiumRewarded
-import com.aipose.camera.posematch.ads.rememberScreenAds
+import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
@@ -41,8 +39,6 @@ import com.aipose.camera.posematch.ui.screens.saved.models.SavedShot
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedTab
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedUiState
 import com.aipose.camera.posematch.ui.vm.SavedViewModel
-import com.example.ads.AdPlacement
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private const val SHOTS_PER_ROW = 2
@@ -54,16 +50,12 @@ fun SavedScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isSortSheetVisible by viewModel.isSortSheetVisible.collectAsStateWithLifecycle()
-    val unlockPrompt by viewModel.unlockPrompt.collectAsStateWithLifecycle()
+    val lockedPose by viewModel.lockedPose.collectAsStateWithLifecycle()
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? SavedUiState.Content
-    val screenAds = rememberScreenAds()
-    val scope = rememberCoroutineScope()
     val hasLockedPoses = content?.poses?.any { it.isLocked } == true
 
-    LaunchedEffect(hasLockedPoses) {
-        if (hasLockedPoses) screenAds.preload(AdPlacement.PremiumRewarded)
-    }
+    PremiumRewardedPreloadEffect(hasLockedPoses)
 
     LaunchedEffect(unlockedPoseToOpen) {
         val poseId = unlockedPoseToOpen ?: return@LaunchedEffect
@@ -143,21 +135,10 @@ fun SavedScreen(
         }
     }
 
-    unlockPrompt?.let { prompt ->
+    lockedPose?.let { pose ->
         PremiumFeatureBottomSheet(
-            posePreviewPath = prompt.pose.imagePath,
-            poseTitle = prompt.pose.title,
-            isAdLoading = prompt.isAdLoading,
-            onWatchAdClick = {
-                viewModel.onUnlockAdStarted()
-                scope.launch {
-                    val result = screenAds.rewarded(
-                        placement = AdPlacement.PremiumRewarded,
-                        onShown = viewModel::onUnlockAdShown,
-                    )
-                    viewModel.onUnlockAdFinished(prompt.pose, result.wasRewarded)
-                }
-            },
+            pose = pose,
+            onRewardEarned = { viewModel.unlockAfterRewardedAd(pose) },
             onGoPremiumClick = {
                 viewModel.dismissLockedPose()
                 navController.navigateOnClick(NavRoute.ProScreenRoute.route)

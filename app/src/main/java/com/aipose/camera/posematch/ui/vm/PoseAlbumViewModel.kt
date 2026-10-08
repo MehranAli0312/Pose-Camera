@@ -27,8 +27,7 @@ private data class ExploreControls(
     val category: String? = null,
     val sort: PoseSort = PoseSort.Featured,
     val isSortSheetVisible: Boolean = false,
-    val lockedPose: Pose? = null,
-    val isUnlockAdLoading: Boolean = false
+    val lockedPose: Pose? = null
 )
 
 class PoseAlbumViewModel(
@@ -71,7 +70,6 @@ class PoseAlbumViewModel(
             savedPoseIds = saved,
             lockedPoseIds = access.lockedIdsIn(poses),
             lockedPose = controls.lockedPose,
-            isUnlockAdLoading = controls.isUnlockAdLoading,
             sort = controls.sort,
             isSortSheetVisible = controls.isSortSheetVisible,
         )
@@ -105,28 +103,17 @@ class PoseAlbumViewModel(
     }
 
     fun showLockedPose(pose: Pose) {
-        controls.value = controls.value.copy(lockedPose = pose, isUnlockAdLoading = false)
+        controls.value = controls.value.copy(lockedPose = pose)
     }
 
     fun dismissLockedPose() {
-        if (controls.value.isUnlockAdLoading) return
         controls.value = controls.value.copy(lockedPose = null)
     }
 
-    fun onUnlockAdStarted() {
-        controls.value = controls.value.copy(isUnlockAdLoading = true)
-    }
-
-    fun onUnlockAdShown() {
-        controls.value = controls.value.copy(lockedPose = null, isUnlockAdLoading = false)
-    }
-
-    fun onUnlockAdFinished(pose: Pose, wasRewarded: Boolean) {
-        controls.value = controls.value.copy(isUnlockAdLoading = false)
-        if (!wasRewarded) return
+    fun unlockAfterRewardedAd(pose: Pose) {
+        controls.value = controls.value.copy(lockedPose = null)
         viewModelScope.launch {
             poseLockUseCase.unlockWithRewardedAd(pose.id)
-            controls.value = controls.value.copy(lockedPose = null)
             _unlockedPoseToOpen.value = pose.id
         }
     }

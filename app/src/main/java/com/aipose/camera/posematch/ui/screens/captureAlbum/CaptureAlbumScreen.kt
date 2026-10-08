@@ -3,10 +3,7 @@ package com.aipose.camera.posematch.ui.screens.captureAlbum
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
-import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -21,20 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseDeleteDialog
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
-import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.PoseStatsCard
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.models.PoseStat
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.ALBUM_COLUMNS
-import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumActions
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumHeader
-import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumSummary
 import com.aipose.camera.posematch.ui.screens.captureAlbum.components.AlbumShotRow
 import com.aipose.camera.posematch.ui.screens.captureAlbum.models.CaptureAlbumUiState
 import com.aipose.camera.posematch.ui.screens.collections.components.CollectionsFilterChips
@@ -86,15 +82,38 @@ fun CaptureAlbumScreen(
                 val accent = AlbumAccent.forLabel(content.locationLabel)
                 LazyColumn(
                     modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(top = 18.dp, bottom = 24.dp),
+                    contentPadding = PaddingValues(top = 12.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    item(key = SUMMARY_KEY) {
-                        AlbumSummary(
-                            summary = albumSummary(content),
-                            modifier = Modifier.padding(horizontal = 20.dp),
+                    item(key = STATS_KEY) {
+                        PoseStatsCard(
+                            stats = listOf(
+                                PoseStat(
+                                    value = content.totalCount.toString(),
+                                    label = stringResource(R.string.collections_stat_shots),
+                                    valueColor = Color.White,
+                                ),
+                                PoseStat(
+                                    value = stringResource(
+                                        R.string.score_percent,
+                                        content.averageMatch
+                                    ).bidiIsolate(),
+                                    label = stringResource(R.string.album_stat_average),
+                                    valueColor = PoseCyanLight,
+                                ),
+                                PoseStat(
+                                    value = stringResource(
+                                        R.string.score_percent,
+                                        content.bestMatch
+                                    ).bidiIsolate(),
+                                    label = stringResource(R.string.album_stat_best),
+                                    valueColor = PoseEmerald400,
+                                ),
+                            ),
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
                         )
                     }
+
                     item(key = FILTERS_KEY) {
                         CollectionsFilterChips(
                             selected = content.filter,
@@ -112,41 +131,12 @@ fun CaptureAlbumScreen(
                         AlbumShotRow(
                             shots = rowShots,
                             onShotClick = { shot ->
-                                navController.navigateOnClick(NavRoute.CaptureDetailScreenRoute.routeFor(shot.id))
+                                navController.navigateOnClick(
+                                    NavRoute.CaptureDetailScreenRoute.routeFor(
+                                        shot.id
+                                    )
+                                )
                             },
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                        )
-                    }
-                    item(key = STATS_KEY) {
-                        PoseStatsCard(
-                            title = stringResource(R.string.album_this_place),
-                            stats = listOf(
-                                PoseStat(
-                                    value = content.totalCount.toString(),
-                                    label = stringResource(R.string.collections_stat_shots),
-                                    valueColor = Color.White,
-                                ),
-                                PoseStat(
-                                    value = stringResource(R.string.score_percent, content.averageMatch).bidiIsolate(),
-                                    label = stringResource(R.string.album_stat_average),
-                                    valueColor = PoseCyanLight,
-                                ),
-                                PoseStat(
-                                    value = stringResource(R.string.score_percent, content.bestMatch).bidiIsolate(),
-                                    label = stringResource(R.string.album_stat_best),
-                                    valueColor = PoseEmerald400,
-                                ),
-                            ),
-                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
-                        )
-                    }
-                    item(key = ACTIONS_KEY) {
-                        Spacer(modifier = Modifier.height(20.dp))
-                        AlbumActions(
-                            onShootAgain = {
-                                navController.navigateOnClick(NavRoute.CameraScreenRoute.routeWithoutPose())
-                            },
-                            onRemoveAll = viewModel::showRemoveDialog,
                             modifier = Modifier.padding(horizontal = 20.dp),
                         )
                     }

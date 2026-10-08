@@ -40,8 +40,7 @@ private data class PosesWithHero(
 
 private data class HeroUnlock(
     val lockedPose: Pose? = null,
-    val target: HomeUnlockTarget = HomeUnlockTarget.Camera,
-    val isAdLoading: Boolean = false
+    val target: HomeUnlockTarget = HomeUnlockTarget.Camera
 )
 
 class HomeViewModel(
@@ -102,24 +101,13 @@ class HomeViewModel(
     }
 
     fun dismissLockedPose() {
-        if (heroUnlock.value.isAdLoading) return
         heroUnlock.value = HeroUnlock()
     }
 
-    fun onUnlockAdStarted() {
-        heroUnlock.value = heroUnlock.value.copy(isAdLoading = true)
-    }
-
-    fun onUnlockAdShown() {
+    fun unlockAfterRewardedAd(pose: Pose, target: HomeUnlockTarget) {
         heroUnlock.value = HeroUnlock()
-    }
-
-    fun onUnlockAdFinished(pose: Pose, target: HomeUnlockTarget, wasRewarded: Boolean) {
-        heroUnlock.value = heroUnlock.value.copy(isAdLoading = false)
-        if (!wasRewarded) return
         viewModelScope.launch {
             poseLockUseCase.unlockWithRewardedAd(pose.id)
-            heroUnlock.value = HeroUnlock()
             _unlockedPoseToOpen.value = HomeUnlockedPose(poseId = pose.id, target = target)
         }
     }
@@ -170,8 +158,7 @@ class HomeViewModel(
                 HomeDailyPose(pose = pose, isLocked = pose.id in lockedIds)
             },
             lockedPose = unlock.lockedPose,
-            unlockTarget = unlock.target,
-            isUnlockAdLoading = unlock.isAdLoading
+            unlockTarget = unlock.target
         )
     }
 

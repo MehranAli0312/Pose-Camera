@@ -12,6 +12,11 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +26,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.PremiumRewarded
+import com.aipose.camera.posematch.ads.rememberScreenAds
+import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.ImmersiveDialogWindowEffect
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.aipose.camera.posematch.ui.screens.bottomSheet.components.GoPremiumButton
@@ -29,25 +37,38 @@ import com.aipose.camera.posematch.ui.screens.bottomSheet.components.WatchAdToUn
 import com.aipose.camera.posematch.ui.theme.PosePremiumSheet
 import com.aipose.camera.posematch.ui.theme.PoseSheetShape
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
+import com.example.ads.AdPlacement
+import kotlinx.coroutines.delay
 
 private val TitleSize = 20.sp
 private val MessageSize = 14.sp
 private const val MESSAGE_ALPHA = 0.7f
+private const val LOADER_VISIBLE_BEFORE_AD_MS = 600L
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PremiumFeatureBottomSheet(
-    posePreviewPath: String,
-    poseTitle: String,
-    isAdLoading: Boolean,
-    onWatchAdClick: () -> Unit,
+    pose: Pose,
+    onRewardEarned: () -> Unit,
     onGoPremiumClick: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
+    val ads = rememberScreenAds()
+    var isAdLoading by remember(pose.id) { mutableStateOf(false) }
+
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
         confirmValueChange = { !isAdLoading },
     )
+
+    LaunchedEffect(isAdLoading) {
+        if (!isAdLoading) return@LaunchedEffect
+        delay(LOADER_VISIBLE_BEFORE_AD_MS)
+        ads.rewarded(AdPlacement.PremiumRewarded) { result ->
+            isAdLoading = false
+            if (result.wasRewarded) onRewardEarned()
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = { if (!isAdLoading) onDismissRequest() },
@@ -66,8 +87,8 @@ fun PremiumFeatureBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             PremiumPosePreview(
-                imagePath = posePreviewPath,
-                contentDescription = poseTitle,
+                imagePath = pose.imagePath,
+                contentDescription = pose.title,
                 modifier = Modifier.padding(top = 8.dp),
             )
 
@@ -93,7 +114,7 @@ fun PremiumFeatureBottomSheet(
 
             WatchAdToUnlockButton(
                 isLoading = isAdLoading,
-                onClick = onWatchAdClick,
+                onClick = { isAdLoading = true },
             )
 
             Spacer(modifier = Modifier.height(12.dp))

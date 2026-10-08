@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -27,8 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.PremiumRewarded
-import com.aipose.camera.posematch.ads.rememberScreenAds
+import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
@@ -48,8 +46,6 @@ import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseAlbumUiState
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.aipose.camera.posematch.ui.vm.PoseAlbumViewModel
-import com.example.ads.AdPlacement
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private val CardMinWidth = 150.dp
@@ -66,8 +62,6 @@ fun PoseAlbumScreen(
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
-    val screenAds = rememberScreenAds()
-    val scope = rememberCoroutineScope()
 
     LaunchedEffect(category) { viewModel.onCategoryRequested(category) }
 
@@ -80,9 +74,7 @@ fun PoseAlbumScreen(
     val content = uiState as? PoseAlbumUiState.Content
     val hasLockedPoses = content?.lockedPoseIds?.isNotEmpty() == true
 
-    LaunchedEffect(hasLockedPoses) {
-        if (hasLockedPoses) screenAds.preload(AdPlacement.PremiumRewarded)
-    }
+    PremiumRewardedPreloadEffect(hasLockedPoses)
 
     PoseGlowBackground(glows = PoseGlows.Collections) {
         Column(
@@ -169,19 +161,8 @@ fun PoseAlbumScreen(
 
     content?.lockedPose?.let { lockedPose ->
         PremiumFeatureBottomSheet(
-            posePreviewPath = lockedPose.imagePath,
-            poseTitle = lockedPose.title,
-            isAdLoading = content.isUnlockAdLoading,
-            onWatchAdClick = {
-                viewModel.onUnlockAdStarted()
-                scope.launch {
-                    val result = screenAds.rewarded(
-                        placement = AdPlacement.PremiumRewarded,
-                        onShown = viewModel::onUnlockAdShown,
-                    )
-                    viewModel.onUnlockAdFinished(lockedPose, result.wasRewarded)
-                }
-            },
+            pose = lockedPose,
+            onRewardEarned = { viewModel.unlockAfterRewardedAd(lockedPose) },
             onGoPremiumClick = {
                 viewModel.dismissLockedPose()
                 navController.navigateOnClick(NavRoute.ProScreenRoute.route)
