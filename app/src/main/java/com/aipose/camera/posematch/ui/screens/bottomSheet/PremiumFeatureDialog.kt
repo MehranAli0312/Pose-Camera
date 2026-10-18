@@ -38,12 +38,10 @@ import com.aipose.camera.posematch.ui.theme.PosePremiumSheet
 import com.aipose.camera.posematch.ui.theme.PoseSheetShape
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.example.ads.AdPlacement
-import kotlinx.coroutines.delay
 
 private val TitleSize = 20.sp
 private val MessageSize = 14.sp
 private const val MESSAGE_ALPHA = 0.7f
-private const val LOADER_VISIBLE_BEFORE_AD_MS = 600L
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +61,6 @@ fun PremiumFeatureBottomSheet(
 
     LaunchedEffect(isAdLoading) {
         if (!isAdLoading) return@LaunchedEffect
-        delay(LOADER_VISIBLE_BEFORE_AD_MS)
         ads.rewarded(AdPlacement.PremiumRewarded) { result ->
             isAdLoading = false
             if (result.wasRewarded) onRewardEarned()

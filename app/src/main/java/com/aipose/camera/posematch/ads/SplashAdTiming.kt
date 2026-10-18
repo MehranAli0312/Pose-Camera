@@ -4,6 +4,8 @@ object SplashAdTiming {
 
     const val MIN_SPLASH_MS = 1000L
 
+    const val AD_LOAD_GRACE_MS = 5000L
+
     const val AD_READY_POLL_INTERVAL_MS = 100L
 
     const val PROGRESS_FINISH_MS = 220

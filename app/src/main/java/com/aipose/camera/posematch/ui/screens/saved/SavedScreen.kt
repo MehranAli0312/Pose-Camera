@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
@@ -53,9 +52,6 @@ fun SavedScreen(
     val lockedPose by viewModel.lockedPose.collectAsStateWithLifecycle()
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? SavedUiState.Content
-    val hasLockedPoses = content?.poses?.any { it.isLocked } == true
-
-    PremiumRewardedPreloadEffect(hasLockedPoses)
 
     LaunchedEffect(unlockedPoseToOpen) {
         val poseId = unlockedPoseToOpen ?: return@LaunchedEffect

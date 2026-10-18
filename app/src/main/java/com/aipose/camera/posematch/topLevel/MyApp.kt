@@ -9,8 +9,8 @@ import com.aipose.camera.posematch.ads.ProStatusForegroundObserver
 import com.aipose.camera.posematch.ads.ProStatusRefresher
 import com.aipose.camera.posematch.ads.ProStatusStore
 import com.aipose.camera.posematch.ads.appAdsModule
+import com.aipose.camera.posematch.ads.loadSplashAdOnSdkReady
 import com.aipose.camera.posematch.ads.registerAppOpenAds
-import com.aipose.camera.posematch.ads.splashAdsLoads
 import com.aipose.camera.posematch.di.localModule
 import com.aipose.camera.posematch.di.repositoryModule
 import com.aipose.camera.posematch.di.useCaseModule
@@ -54,7 +54,11 @@ class MyApp : Application() {
 
             adsManager.initialize()
 
-            splashAdsLoads(adsManager)
+            loadSplashAdOnSdkReady(
+                adsManager = adsManager,
+                remoteConfigStore = koin.get(),
+                scope = applicationScope,
+            )
 
             registerAppOpenAds(
                 application = this,

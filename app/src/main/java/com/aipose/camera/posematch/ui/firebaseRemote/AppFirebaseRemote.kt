@@ -8,6 +8,7 @@ import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
 import com.aipose.camera.posematch.BuildConfig
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.SplashAdLog
 import com.aipose.camera.posematch.ads.onPlacementConfigChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -84,9 +85,16 @@ class AppFirebaseRemote(
     }
 
     private fun fetch() {
+        SplashAdLog.d("remote config: fetch started")
         remoteConfig.fetchAndActivate()
-            .addOnSuccessListener { applyActivatedConfig() }
-            .addOnFailureListener { _resolution.value = RemoteConfigResolution.FetchFailed }
+            .addOnSuccessListener { activated ->
+                SplashAdLog.d("remote config: fetch success, activated=$activated")
+                applyActivatedConfig()
+            }
+            .addOnFailureListener { error ->
+                SplashAdLog.d("remote config: fetch FAILED ${error.message}")
+                _resolution.value = RemoteConfigResolution.FetchFailed
+            }
     }
 
     private fun applyActivatedConfig() {
@@ -136,6 +144,10 @@ class AppFirebaseRemote(
     )
 
     private fun publish(target: RemoteConfigResolution) {
+        SplashAdLog.d(
+            "remote config: $target splashInterstitial=${store.current.splashInterstitial} " +
+                "splashMaxWaitMs=${store.current.splashAdMaxWaitMs}",
+        )
         _resolution.value = target
         onPlacementConfigChanged(adsManager)
     }

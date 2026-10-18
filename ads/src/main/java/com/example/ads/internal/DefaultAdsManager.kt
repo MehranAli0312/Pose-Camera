@@ -14,6 +14,8 @@ import com.example.ads.ProStatus
 import com.example.ads.ProStatusProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -72,23 +74,31 @@ internal class DefaultAdsManager(
                 return@launch
             }
 
-            initializer.initialize()
-            state.setCanRequestAds(true)
-            log.d("Cached consent already permits ad requests")
+            enableAds("Cached consent already permits ad requests")
         }
     }
 
     override suspend fun requestConsent(activity: Activity): ConsentResult {
-        val result = consentManager.requestConsent(activity)
+        var cachedConsentStart: Job? = null
+        val result = consentManager.requestConsent(activity) {
+            cachedConsentStart = scope.launch {
+                enableAds("Cached consent permits ad requests, starting before consent update")
+            }
+        }
         if (result is ConsentResult.CanRequestAds) {
-            initializer.initialize()
-            state.setCanRequestAds(true)
-            log.d("Consent resolved, ads enabled")
+            enableAds("Consent resolved, ads enabled")
         } else {
+            cachedConsentStart?.cancelAndJoin()
             state.setCanRequestAds(false)
             log.d("Consent did not permit ad requests: $result")
         }
         return result
+    }
+
+    private suspend fun enableAds(reason: String) {
+        initializer.initialize()
+        state.setCanRequestAds(true)
+        log.d(reason)
     }
 
     override fun preload(vararg formats: AdFormat, placement: AdPlacement) {
@@ -103,7 +113,7 @@ internal class DefaultAdsManager(
 
     private fun startPreload(format: AdFormat, placement: AdPlacement) {
         when (format) {
-            AdFormat.NATIVE -> nativeAds.preload(placement)
+            AdFormat.NATIVE -> scope.launch { nativeAds.preload(placement) }
             AdFormat.BANNER -> Unit
             else -> fullScreenAds.startPreloading(format, placement)
         }
@@ -138,6 +148,7 @@ internal class DefaultAdsManager(
             }.collect { (ready, placements) ->
                 (warmed - placements).forEach(fullScreenAds::stopPreloading)
                 warmed = placements
+                log.d("Warm-up pass: ready=$ready placements=${placements.joinToString { it.id }}")
                 if (!ready) return@collect
                 stopHiddenPreloads(placements.toList())
                 placements.forEach(::startPreloadFor)
@@ -148,6 +159,7 @@ internal class DefaultAdsManager(
     private fun stopHiddenPreloads(placements: List<AdPlacement>) {
         placements
             .filter { placement -> fullscreenStyleFor(placement).format == null }
+            .onEach { placement -> log.d("Warm-up skipped for ${placement.id}: style is hidden") }
             .forEach(fullScreenAds::stopPreloading)
     }
 

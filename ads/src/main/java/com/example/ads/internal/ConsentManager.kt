@@ -24,7 +24,10 @@ internal class ConsentManager(
         .onFailure { log.w("Cached consent check failed", it) }
         .getOrDefault(false)
 
-    suspend fun requestConsent(activity: Activity): ConsentResult =
+    suspend fun requestConsent(
+        activity: Activity,
+        onCachedConsentAllowsAds: () -> Unit,
+    ): ConsentResult =
         withContext(Dispatchers.Main.immediate) {
             suspendCancellableCoroutine { continuation ->
                 val params = ConsentRequestParameters.Builder()
@@ -63,6 +66,7 @@ internal class ConsentManager(
                         )
                     },
                 )
+                if (information.canRequestAds()) onCachedConsentAllowsAds()
             }
         }
 }

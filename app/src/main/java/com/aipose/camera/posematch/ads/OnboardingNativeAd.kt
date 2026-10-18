@@ -11,7 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.example.ads.AdPlacement
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import org.koin.compose.koinInject
 
@@ -27,17 +27,19 @@ class OnboardingNativeAd internal constructor(
     var pageIndex: Int? by mutableStateOf(initialPageIndex)
         private set
 
-    suspend fun insertWhenReady(isStillAhead: (pageIndex: Int) -> Boolean) {
+    suspend fun insertWhenReady(lastStepIndex: Int, settledPage: () -> Int?) {
         if (pageIndex != null) return
-        val candidate = store.current.onboardingNativeAd.afterStepCount ?: return
+        val preferredIndex = store.current.onboardingNativeAd.afterStepCount ?: return
         if (!ads.awaitAdsAllowed()) return
         ads.prepareSlot(AdPlacement.OnboardingFullScreenNative)
-        combine(
-            ads.isSlotPrepared(AdPlacement.OnboardingFullScreenNative),
-            snapshotFlow { isStillAhead(candidate) },
-        ) { prepared, ahead -> prepared && ahead }.first { it }
-        pageIndex = candidate
+        ads.isSlotPrepared(AdPlacement.OnboardingFullScreenNative).first { it }
+        pageIndex = snapshotFlow {
+            settledPage()?.let { page -> insertionIndex(preferredIndex, page, lastStepIndex) }
+        }.filterNotNull().first()
     }
+
+    private fun insertionIndex(preferredIndex: Int, currentPage: Int, lastStepIndex: Int): Int? =
+        maxOf(preferredIndex, currentPage + 1).takeIf { it <= lastStepIndex }
 
     fun release() = ads.releaseSlot(AdPlacement.OnboardingFullScreenNative)
 }

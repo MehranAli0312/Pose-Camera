@@ -14,15 +14,23 @@ class MissedSplashAd {
             !wasShown &&
             ads.isAdsAllowedNow() &&
             ads.styleFor(AdPlacement.SplashFullscreen).format != null
+        SplashAdLog.d(
+            "missed-check: wasShown=$wasShown isFirstSession=$isFirstSession " +
+                "adsAllowed=${ads.isAdsAllowedNow()} " +
+                "format=${ads.styleFor(AdPlacement.SplashFullscreen).format} -> pending=$missed",
+        )
         pending.set(missed)
-        if (!missed) ads.coolDown(AdPlacement.SplashFullscreen)
     }
 
     fun showThen(ads: ScreenAds, continueWhenShown: Boolean, onContinue: () -> Unit) {
         if (isShowing.get()) return
         val canShow = pending.get() &&
             ads.isAdsAllowedNow() &&
-            ads.isAvailable(AdPlacement.SplashFullscreen)
+            ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)
+        SplashAdLog.d(
+            "missed-retry: pending=${pending.get()} adsAllowed=${ads.isAdsAllowedNow()} " +
+                "loaded=${ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)} -> canShow=$canShow",
+        )
         if (!canShow) {
             onContinue()
             return
@@ -31,15 +39,17 @@ class MissedSplashAd {
         ads.fullscreen(
             placement = AdPlacement.SplashFullscreen,
             continueWhenShown = continueWhenShown,
-            preloadedOnly = true,
-            onResult = { result -> if (result.wasShown) clear(ads) },
+            onResult = { result ->
+                SplashAdLog.d("missed-retry result=$result")
+                if (result.wasShown) clear()
+            },
         ) {
             isShowing.set(false)
             onContinue()
         }
     }
 
-    fun clear(ads: ScreenAds) {
-        if (pending.getAndSet(false)) ads.coolDown(AdPlacement.SplashFullscreen)
+    fun clear() {
+        pending.set(false)
     }
 }

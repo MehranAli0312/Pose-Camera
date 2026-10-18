@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ads.rememberInnerInterstitial
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
@@ -90,10 +89,6 @@ fun HomeScreen(
         }
         navController.navigateOnClick(route)
     }
-
-    val hasLockedPose = content?.hero?.isLocked == true || content?.poseOfTheDay?.isLocked == true
-
-    PremiumRewardedPreloadEffect(hasLockedPose)
 
     PoseGlowBackground {
         Column(

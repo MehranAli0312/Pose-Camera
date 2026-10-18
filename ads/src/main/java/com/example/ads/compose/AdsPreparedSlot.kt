@@ -31,6 +31,7 @@ import org.koin.compose.koinInject
 fun AdsPreparedSlot(
     placement: AdPlacement,
     modifier: Modifier = Modifier,
+    keepUntilReleased: Boolean = false,
 ) {
     val adsManager: AdsManager = koinInject()
     val controller: PreparedSlotController = koinInject()
@@ -57,12 +58,12 @@ fun AdsPreparedSlot(
         is PreparedSlotAd.Loading -> AdSlotPlaceholder(height = ad.heightDp.dp, modifier = modifier)
 
         is PreparedSlotAd.Banner -> {
-            ConsumeWhenHidden(controller, placement, ad)
+            if (!keepUntilReleased) ConsumeWhenHidden(controller, placement, ad)
             PreparedBanner(ad, modifier)
         }
 
         is PreparedSlotAd.Native -> {
-            ConsumeWhenHidden(controller, placement, ad)
+            if (!keepUntilReleased) ConsumeWhenHidden(controller, placement, ad)
             NativeAdTemplateRegistry.Render(
                 design = ad.design,
                 nativeAd = ad.ad,

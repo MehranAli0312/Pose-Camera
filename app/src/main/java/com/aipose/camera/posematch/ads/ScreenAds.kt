@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
+private const val REWARDED_LOAD_TIMEOUT_MS = 15_000L
+
 class ScreenAds internal constructor(
     private val adsManager: AdsManager,
     private val activity: ComponentActivity?,
@@ -32,23 +34,17 @@ class ScreenAds internal constructor(
         adsManager.isReady.first { it }
     }
 
-    fun isAvailable(placement: AdPlacement): Boolean {
-        val format = styleFor(placement).format ?: return false
-        return adsManager.isAvailable(format, placement)
+    fun loadOnDemand(placement: AdPlacement) {
+        adsManager.loadOnDemand(placement)
     }
+
+    fun isLoadedOnDemand(placement: AdPlacement): Boolean =
+        adsManager.isLoadedOnDemand(placement)
 
     fun isAdsAllowedNow(): Boolean = adsManager.proStatus.value.isEligibleForAds
 
-    fun keepWarm(placement: AdPlacement) {
-        adsManager.keepWarm(listOf(placement))
-    }
-
     fun preload(placement: AdPlacement) {
         adsManager.preloadFor(listOf(placement))
-    }
-
-    fun coolDown(placement: AdPlacement) {
-        adsManager.coolDown(placement)
     }
 
     fun prepareSlot(placement: AdPlacement) {
@@ -69,8 +65,13 @@ class ScreenAds internal constructor(
             return
         }
         activity.lifecycleScope.launch {
-            val result = runCatching { adsManager.showFullscreen(activity, placement) }
-                .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+            val result = runCatching {
+                adsManager.loadAndShow(
+                    activity = activity,
+                    placement = placement,
+                    loadTimeoutMs = REWARDED_LOAD_TIMEOUT_MS,
+                )
+            }.getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
             onFinished(result)
         }
     }
@@ -78,7 +79,6 @@ class ScreenAds internal constructor(
     fun fullscreen(
         placement: AdPlacement,
         continueWhenShown: Boolean = false,
-        preloadedOnly: Boolean = false,
         onResult: (AdResult) -> Unit = {},
         onDone: () -> Unit,
     ) {
@@ -97,11 +97,7 @@ class ScreenAds internal constructor(
 
             val onShown = if (continueWhenShown) ({ doneOnce() }) else null
             val result = runCatching {
-                if (preloadedOnly) {
-                    adsManager.showPreloaded(activity, placement, onShown)
-                } else {
-                    adsManager.showFullscreen(activity, placement, onShown)
-                }
+                adsManager.showOnDemand(activity, placement, onShown)
             }.getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
             onResult(result)
             doneOnce()

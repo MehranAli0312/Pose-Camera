@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.rememberCameraPermissionState
 import com.aipose.camera.posematch.ui.common.rememberHapticPulse
@@ -85,9 +84,6 @@ fun PoseCameraScreen(
     val importTitle = stringResource(R.string.imported_pose_title)
     var surfaceSize by remember { mutableStateOf(IntSize.Zero) }
     val posePicker = rememberPosePicker { pickedUri -> viewModel.importPose(importTitle, pickedUri) }
-    val hasLockedPoses = uiState.lockedPoseIds.isNotEmpty()
-
-    PremiumRewardedPreloadEffect(hasLockedPoses)
 
     LaunchedEffect(poseId) {
         if (poseId != null) viewModel.onPoseRequested(poseId)

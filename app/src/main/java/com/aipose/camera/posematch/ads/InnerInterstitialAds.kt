@@ -68,7 +68,7 @@ class InnerInterstitialAds(
         requestLoad()
         if (canUseSplashFallback()) {
             present(activity, onContinue) { onShown ->
-                adsManager.showPreloaded(activity, AdPlacement.SplashFullscreen, onShown)
+                adsManager.showOnDemand(activity, AdPlacement.SplashFullscreen, onShown)
             }
             return
         }
@@ -77,9 +77,7 @@ class InnerInterstitialAds(
 
     private fun canUseSplashFallback(): Boolean {
         if (!store.current.innerInterstitialSplashFallback) return false
-        val format = adsManager.fullscreenStyleFor(AdPlacement.SplashFullscreen).format
-            ?: return false
-        return adsManager.isAvailable(format, AdPlacement.SplashFullscreen)
+        return adsManager.isLoadedOnDemand(AdPlacement.SplashFullscreen)
     }
 
     private fun present(

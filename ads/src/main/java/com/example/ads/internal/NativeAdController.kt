@@ -1,34 +1,41 @@
 package com.example.ads.internal
 
+import android.os.SystemClock
 import com.example.ads.AdFormat
 import com.example.ads.AdPlacement
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
-import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
-import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoadResult
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
-import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdPreloader
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.coroutines.resume
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 internal class NativeAdController(
     private val gate: AdGate,
-    private val config: com.example.ads.AdsConfig,
     private val log: AdsLog,
 ) {
 
-    private val preloadingUnits = ConcurrentHashMap.newKeySet<String>()
+    private val cachedAds = ConcurrentHashMap<String, CachedNativeAd>()
+
+    private val preloading = ConcurrentHashMap<String, CompletableDeferred<Unit>>()
 
     suspend fun load(placement: AdPlacement): NativeAd? {
         val adUnitId = gate.resolveRequestableUnit(AdFormat.NATIVE, placement) ?: return null
 
-        startPreloadingIfNeeded(adUnitId)
-
-        pollPreloaded(adUnitId)?.let { ad ->
-            log.d("Native served from preload buffer for ${placement.id}")
+        takeCached(adUnitId)?.let { ad ->
+            log.d("Native served from cache for ${placement.id}")
             return ad
+        }
+
+        preloading[adUnitId]?.let { inFlight ->
+            log.d("Native waiting for in-flight preload for ${placement.id}")
+            inFlight.await()
+            takeCached(adUnitId)?.let { ad ->
+                log.d("Native served from finished preload for ${placement.id}")
+                return ad
+            }
         }
 
         return loadDirect(adUnitId, placement)
@@ -39,27 +46,36 @@ internal class NativeAdController(
         return loadDirect(adUnitId, placement)
     }
 
-    fun preload(placement: AdPlacement) {
+    suspend fun preload(placement: AdPlacement) {
         val adUnitId = gate.resolveRequestableUnit(AdFormat.NATIVE, placement) ?: return
-        startPreloadingIfNeeded(adUnitId)
-    }
-
-    fun startPreloadingIfNeeded(adUnitId: String) {
-        if (!preloadingUnits.add(adUnitId)) return
-        runCatching {
-            NativeAdPreloader.start(
-                adUnitId,
-                PreloadConfiguration(AdRequests.native(adUnitId), config.preloadBufferSize),
-            )
-        }.onFailure {
-            preloadingUnits.remove(adUnitId)
-            log.w("Native preload could not start for $adUnitId", it)
+        if (hasFreshCached(adUnitId)) return
+        val loading = CompletableDeferred<Unit>()
+        if (preloading.putIfAbsent(adUnitId, loading) != null) return
+        try {
+            val ad = loadDirect(adUnitId, placement) ?: return
+            cachedAds.put(adUnitId, CachedNativeAd(ad, SystemClock.elapsedRealtime()))
+                ?.ad?.destroy()
+            log.d("Native cached for ${placement.id}")
+        } finally {
+            preloading.remove(adUnitId, loading)
+            loading.complete(Unit)
         }
     }
 
-    private fun pollPreloaded(adUnitId: String): NativeAd? = runCatching {
-        (NativeAdPreloader.pollAd(adUnitId) as? NativeAdLoadResult.NativeAdSuccess)?.ad
-    }.getOrNull()
+    private fun hasFreshCached(adUnitId: String): Boolean {
+        val cached = cachedAds[adUnitId] ?: return false
+        if (cached.isFresh()) return true
+        if (cachedAds.remove(adUnitId, cached)) cached.ad.destroy()
+        return false
+    }
+
+    private fun takeCached(adUnitId: String): NativeAd? {
+        val cached = cachedAds.remove(adUnitId) ?: return null
+        if (cached.isFresh()) return cached.ad
+        cached.ad.destroy()
+        log.d("Cached native expired for $adUnitId")
+        return null
+    }
 
     private suspend fun loadDirect(adUnitId: String, placement: AdPlacement): NativeAd? =
         suspendCancellableCoroutine { continuation ->
@@ -92,7 +108,16 @@ internal class NativeAdController(
         }
 
     fun destroy() {
-        runCatching { NativeAdPreloader.destroyAll() }
-        preloadingUnits.clear()
+        cachedAds.values.forEach { cached -> runCatching { cached.ad.destroy() } }
+        cachedAds.clear()
+    }
+
+    private class CachedNativeAd(val ad: NativeAd, val loadedAt: Long) {
+        fun isFresh(): Boolean =
+            SystemClock.elapsedRealtime() - loadedAt < CACHED_NATIVE_AD_TTL_MS
+    }
+
+    private companion object {
+        const val CACHED_NATIVE_AD_TTL_MS = 55L * 60L * 1000L
     }
 }

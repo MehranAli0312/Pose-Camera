@@ -30,6 +30,8 @@ import com.example.ads.NativeAdDesign
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 data class AdsRemoteConfig(
     val splashInterstitial: Boolean = false,
@@ -112,8 +114,16 @@ class AdsRemoteConfigStore(
 
     val current: AdsRemoteConfig get() = _config.value
 
+    private val stateLock = Mutex()
+
+    private var hasLoadedState = false
+
     suspend fun restore() {
-        _config.value = buildRestoredConfig()
+        stateLock.withLock {
+            if (hasLoadedState) return
+            _config.value = buildRestoredConfig()
+            hasLoadedState = true
+        }
     }
 
     private suspend fun buildRestoredConfig() = AdsRemoteConfig(
@@ -202,7 +212,10 @@ class AdsRemoteConfigStore(
     )
 
     suspend fun update(config: AdsRemoteConfig) {
-        _config.value = config
+        stateLock.withLock {
+            _config.value = config
+            hasLoadedState = true
+        }
         dataStore.putBoolean(SPLASH_INTERSTITIAL_AD_KEY, config.splashInterstitial)
         dataStore.putLong(HOME_SCREEN_BOTTOM_AD_KEY, config.homeScreenBottomAd.remoteValue)
         dataStore.putLong(LANGUAGE_SCREEN_BOTTOM_AD_KEY, config.languageScreenBottomAd.toLong())

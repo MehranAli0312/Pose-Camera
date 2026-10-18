@@ -66,8 +66,8 @@ fun OnboardScreen(
     )
 
     LaunchedEffect(nativeAd, pagerState) {
-        nativeAd.insertWhenReady { candidate ->
-            pagerState.currentPage < candidate && !pagerState.isScrollInProgress
+        nativeAd.insertWhenReady(lastStepIndex = steps.lastIndex) {
+            pagerState.currentPage.takeUnless { pagerState.isScrollInProgress }
         }
     }
 

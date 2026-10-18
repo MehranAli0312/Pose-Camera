@@ -22,6 +22,7 @@ import com.aipose.camera.posematch.ads.HomeScreenBottom
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.MissedSplashAd
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
+import com.aipose.camera.posematch.ads.SplashAdLog
 import com.aipose.camera.posematch.ads.SplashAdTiming
 import com.aipose.camera.posematch.ads.SplashFullscreen
 import com.aipose.camera.posematch.ads.prepareSplashAd
@@ -60,24 +61,30 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         val startedAt = SystemClock.elapsedRealtime()
         val maxWaitMs = remoteConfigStore.current.splashAdMaxWaitMs
-
-        ads.keepWarm(AdPlacement.SplashFullscreen)
+        val waitLimitMs = maxWaitMs + SplashAdTiming.AD_LOAD_GRACE_MS
+        SplashAdLog.d(
+            "splash start: maxWaitMs=$maxWaitMs waitLimitMs=$waitLimitMs " +
+                "splashInterstitial=${remoteConfigStore.current.splashInterstitial} " +
+                "loadedAlready=${ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)}",
+        )
 
         val creep = launch {
             progress.animateTo(
                 targetValue = SplashAdTiming.PROGRESS_CREEP_TARGET,
                 animationSpec = tween(
-                    durationMillis = maxWaitMs.toInt(),
+                    durationMillis = waitLimitMs.toInt(),
                     easing = LinearEasing,
                 ),
             )
         }
 
         val isFirstSession = viewModel.getSplashStatus().first()
+        SplashAdLog.d("isFirstSession=$isFirstSession")
 
-        withTimeoutOrNull(maxWaitMs.milliseconds) {
+        val prepared = withTimeoutOrNull(waitLimitMs.milliseconds) {
             prepareSplashAd(ads, appFirebaseRemote, network)
         }
+        if (prepared == null) SplashAdLog.d("prepare: TIMEOUT after ${waitLimitMs}ms")
 
         val elapsed = SystemClock.elapsedRealtime() - startedAt
         if (elapsed < SplashAdTiming.MIN_SPLASH_MS) {
@@ -97,17 +104,20 @@ fun SplashScreen(
             if (isFirstSession) goToLanguage(navParentController) else goToHome(navParentController)
         }
 
-        if (ads.isAvailable(AdPlacement.SplashFullscreen)) {
+        val availableAtDecision = ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)
+        SplashAdLog.d("decision: availableAtDecision=$availableAtDecision")
+        if (availableAtDecision) {
             ads.fullscreen(
                 placement = AdPlacement.SplashFullscreen,
                 continueWhenShown = true,
-                preloadedOnly = true,
                 onResult = { result ->
+                    SplashAdLog.d("show result=$result wasShown=${result.wasShown}")
                     missedSplashAd.onSplashAdResult(ads, result.wasShown, isFirstSession)
                 },
                 onDone = finishSplash,
             )
         } else {
+            SplashAdLog.d("MISSED: no splash ad available, navigating without ad")
             missedSplashAd.onSplashAdResult(ads, wasShown = false, isFirstSession = isFirstSession)
             finishSplash()
         }

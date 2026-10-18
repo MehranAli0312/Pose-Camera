@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.PremiumRewardedPreloadEffect
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
@@ -72,9 +71,6 @@ fun PoseAlbumScreen(
     }
 
     val content = uiState as? PoseAlbumUiState.Content
-    val hasLockedPoses = content?.lockedPoseIds?.isNotEmpty() == true
-
-    PremiumRewardedPreloadEffect(hasLockedPoses)
 
     PoseGlowBackground(glows = PoseGlows.Collections) {
         Column(

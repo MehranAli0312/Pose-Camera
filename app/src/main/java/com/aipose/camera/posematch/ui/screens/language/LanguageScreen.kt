@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
+import com.aipose.camera.posematch.ads.OnboardingNativeAdPreloadEffect
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.example.ads.AdPlacement
@@ -78,6 +79,8 @@ fun LocalizeScreen(
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val missedSplashAd = rememberMissedSplashAd()
+
+    OnboardingNativeAdPreloadEffect(isFirstSession)
 
     var selectedLanguage by rememberSaveable {
         mutableStateOf(

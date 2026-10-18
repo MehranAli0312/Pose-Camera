@@ -11,7 +11,10 @@ import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAdEventCallbac
 import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAdPreloader
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadResult
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
+import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
+import com.google.android.libraries.ads.mobile.sdk.common.PreloadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration
+import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
@@ -42,6 +45,23 @@ internal class FullScreenAdController(
     // Which preloader each placement relies on, so it can be released when the placement turns off.
     private val preloadTargets = ConcurrentHashMap<String, PreloadTarget>()
 
+    private val preloadCallback = object : PreloadCallback {
+        override fun onAdPreloaded(preloadId: String, responseInfo: ResponseInfo) {
+            log.d(
+                "Preload READY on $preloadId via ${responseInfo.loadedAdSourceResponseInfo?.name} " +
+                    "(${responseInfo.loadedAdSourceResponseInfo?.latencyMillis}ms)",
+            )
+        }
+
+        override fun onAdFailedToPreload(preloadId: String, adError: LoadAdError) {
+            log.w("Preload FAILED on $preloadId: ${adError.code} ${adError.message}")
+        }
+
+        override fun onAdsExhausted(preloadId: String) {
+            log.d("Preload EXHAUSTED on $preloadId, waiting for refill")
+        }
+    }
+
     fun startPreloading(format: AdFormat, placement: AdPlacement) {
         val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return
         val target = PreloadTarget(format, adUnitId)
@@ -54,12 +74,15 @@ internal class FullScreenAdController(
 
         val started = runCatching {
             when (format) {
-                AdFormat.INTERSTITIAL -> InterstitialAdPreloader.start(adUnitId, configuration)
-                AdFormat.REWARDED -> RewardedAdPreloader.start(adUnitId, configuration)
+                AdFormat.INTERSTITIAL ->
+                    InterstitialAdPreloader.start(adUnitId, configuration, preloadCallback)
+                AdFormat.REWARDED ->
+                    RewardedAdPreloader.start(adUnitId, configuration, preloadCallback)
                 AdFormat.REWARDED_INTERSTITIAL ->
-                    RewardedInterstitialAdPreloader.start(adUnitId, configuration)
+                    RewardedInterstitialAdPreloader.start(adUnitId, configuration, preloadCallback)
 
-                AdFormat.APP_OPEN -> AppOpenAdPreloader.start(adUnitId, configuration)
+                AdFormat.APP_OPEN ->
+                    AppOpenAdPreloader.start(adUnitId, configuration, preloadCallback)
                 AdFormat.BANNER, AdFormat.NATIVE -> false
             }
         }.getOrElse { error ->
@@ -71,7 +94,7 @@ internal class FullScreenAdController(
             preloadingUnits.remove(key(format, adUnitId))
             preloadTargets.remove(placement.id, target)
         }
-        log.d("Preloading $format on $adUnitId: $started")
+        log.d("Preloading $format on $adUnitId for ${placement.id}: $started")
     }
 
     fun stopPreloading(placement: AdPlacement) {
@@ -172,16 +195,24 @@ internal class FullScreenAdController(
         onShown: (() -> Unit)? = null,
     ): AdResult {
         val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return AdResult.NotEligible
-        if (!isAvailable(format, placement)) return AdResult.NotAvailable
+        if (!isAvailable(format, placement)) {
+            log.d("showPreloaded ${placement.id}: nothing preloaded")
+            return AdResult.NotAvailable
+        }
 
         if (format == AdFormat.INTERSTITIAL && !gate.passesInterstitialFrequency()) {
+            log.d("showPreloaded ${placement.id}: blocked by interstitial frequency")
             return AdResult.NotEligible
         }
 
         if (!gate.tryAcquireFullScreen(format)) return AdResult.NotEligible
 
         return try {
-            val ad = pollPreloaded(format, adUnitId) ?: return AdResult.NotAvailable
+            val ad = pollPreloaded(format, adUnitId) ?: run {
+                log.d("showPreloaded ${placement.id}: pollAd returned null")
+                return AdResult.NotAvailable
+            }
+            log.d("showPreloaded ${placement.id}: presenting $format")
             present(ad, activity, format, onShown)
         } catch (error: Throwable) {
             log.w("Showing preloaded $format failed", error)

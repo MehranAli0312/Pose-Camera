@@ -39,6 +39,7 @@ internal fun OnboardNativeAdPage(
             AdsPreparedSlot(
                 placement = AdPlacement.OnboardingFullScreenNative,
                 modifier = Modifier.fillMaxSize(),
+                keepUntilReleased = true,
             )
         }
     }

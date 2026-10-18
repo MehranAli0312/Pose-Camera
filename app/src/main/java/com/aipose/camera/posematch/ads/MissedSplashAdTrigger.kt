@@ -13,7 +13,7 @@ class MissedSplashAdTrigger internal constructor(
     fun showThen(continueWhenShown: Boolean = true, onContinue: () -> Unit) =
         missedSplashAd.showThen(ads, continueWhenShown, onContinue)
 
-    fun clear() = missedSplashAd.clear(ads)
+    fun clear() = missedSplashAd.clear()
 }
 
 @Composable

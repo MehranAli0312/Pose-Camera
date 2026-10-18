@@ -7,9 +7,22 @@ import com.example.ads.AdsManager
 import com.example.ads.lifecycle.AdsAppLifecycleObserver
 import com.example.common.Constants
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-fun splashAdsLoads(adsManager: AdsManager) {
-    adsManager.keepWarm(listOf(AdPlacement.SplashFullscreen))
+fun loadSplashAdOnSdkReady(
+    adsManager: AdsManager,
+    remoteConfigStore: AdsRemoteConfigStore,
+    scope: CoroutineScope,
+) {
+    scope.launch {
+        remoteConfigStore.restore()
+        if (!adsManager.proStatus.first { it.isResolved }.isEligibleForAds) return@launch
+        adsManager.isReady.first { it }
+        SplashAdLog.d("sdk ready: loading splash ad on demand from app start")
+        adsManager.loadOnDemand(AdPlacement.SplashFullscreen)
+    }
 }
 
 fun onPlacementConfigChanged(adsManager: AdsManager) {
