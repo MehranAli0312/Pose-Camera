@@ -12,15 +12,13 @@ import com.aipose.camera.posematch.ui.theme.PosePinkDeep
 @Composable
 internal fun SavedTabs(
     selected: SavedTab,
-    shotsCount: Int,
-    posesCount: Int,
     onSelect: (SavedTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     PoseSegmentedTabs(
         labels = listOf(
-            stringResource(SavedTab.Shots.labelRes, shotsCount),
-            stringResource(SavedTab.Poses.labelRes, posesCount),
+            stringResource(SavedTab.Shots.labelRes),
+            stringResource(SavedTab.Poses.labelRes),
         ),
         selectedIndex = selected.ordinal,
         pillBrush = Brush.linearGradient(listOf(PosePink, PosePinkDeep)),

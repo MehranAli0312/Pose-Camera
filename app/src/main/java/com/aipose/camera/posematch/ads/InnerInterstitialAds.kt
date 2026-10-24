@@ -2,14 +2,10 @@ package com.aipose.camera.posematch.ads
 
 import android.os.SystemClock
 import androidx.activity.ComponentActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.withResumed
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.example.ads.AdPlacement
-import com.example.ads.AdResult
 import com.example.ads.AdsManager
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -20,11 +16,10 @@ import kotlinx.coroutines.launch
 class InnerInterstitialAds(
     private val adsManager: AdsManager,
     private val store: AdsRemoteConfigStore,
+    private val commercialBreakAds: CommercialBreakAds,
 ) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-
-    private val isShowing = AtomicBoolean(false)
 
     private var loadJob: Job? = null
 
@@ -54,54 +49,16 @@ class InnerInterstitialAds(
     }
 
     fun showThen(activity: ComponentActivity?, onContinue: () -> Unit) {
-        if (isShowing.get()) return
         if (activity == null || !isEnabled || !isCappingDone) {
             onContinue()
             return
         }
-        if (adsManager.isLoadedOnDemand(placement)) {
-            present(activity, onContinue) { onShown ->
-                adsManager.showOnDemand(activity, placement, onShown)
-            }
-            return
-        }
-        requestLoad()
-        if (canUseSplashFallback()) {
-            present(activity, onContinue) { onShown ->
-                adsManager.showOnDemand(activity, AdPlacement.SplashFullscreen, onShown)
-            }
-            return
-        }
-        onContinue()
-    }
-
-    private fun canUseSplashFallback(): Boolean {
-        if (!store.current.innerInterstitialSplashFallback) return false
-        return adsManager.isLoadedOnDemand(AdPlacement.SplashFullscreen)
-    }
-
-    private fun present(
-        activity: ComponentActivity,
-        onContinue: () -> Unit,
-        show: suspend (onShown: () -> Unit) -> AdResult,
-    ) {
-        if (!isShowing.compareAndSet(false, true)) return
-        activity.lifecycleScope.launch {
-            val continued = AtomicBoolean(false)
-            fun continueOnce() {
-                if (!continued.compareAndSet(false, true)) return
-                activity.runOnUiThread(onContinue)
-            }
-
-            val result = try {
-                runCatching { show { continueOnce() } }
-                    .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
-            } finally {
-                isShowing.set(false)
-            }
-            if (result.wasShown) restartCapping() else requestLoad()
-            activity.lifecycle.withResumed { continueOnce() }
-        }
+        commercialBreakAds.showThen(
+            activity = activity,
+            placement = placement,
+            onResult = { result -> if (result.wasShown) restartCapping() else requestLoad() },
+            onContinue = onContinue,
+        )
     }
 
     private fun restartCapping() {

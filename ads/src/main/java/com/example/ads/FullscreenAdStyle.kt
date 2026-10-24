@@ -22,7 +22,4 @@ sealed interface FullscreenAdStyle {
         override val format: AdFormat get() = AdFormat.REWARDED
     }
 
-    data object RewardedInterstitial : FullscreenAdStyle {
-        override val format: AdFormat get() = AdFormat.REWARDED_INTERSTITIAL
-    }
 }

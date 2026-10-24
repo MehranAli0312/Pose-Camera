@@ -3,12 +3,14 @@ package com.example.ads.compose.nativead
 import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +32,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -39,6 +43,7 @@ import com.example.ads.NativeAdColors
 import com.example.ads.R
 import com.example.ads.compose.AdSlotDefaults
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
+import kotlin.math.roundToInt
 
 @Composable
 internal fun SmallNativeTemplate(
@@ -129,61 +134,106 @@ internal fun MediumNativeTemplate(
     colors: NativeAdColors,
     modifier: Modifier = Modifier,
 ) {
-    NativeAdSurface(modifier) {
-        Column(
+    NativeAdSurface(modifier, cornerRadius = MediumCornerRadius) {
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .height(MediumContentHeight + MediumPadding * 2)
+                .padding(MediumPadding),
+            horizontalArrangement = Arrangement.spacedBy(MediumPadding),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                NativeAdIcon(nativeAd, size = 40.dp)
-
-                Column(modifier = Modifier.weight(1f)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        AdAttributionBadge(colors)
-                        NativeAdChoicesView()
-                    }
-                    NativeAdHeadlineView {
-                        Text(
-                            text = nativeAd.headline.orEmpty(),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.SemiBold,
-                            color = AdSlotDefaults.colors.headline,
-                            maxLines = 1,
-                            modifier = Modifier.basicMarquee()
-                        )
-                    }
-                    nativeAd.body?.takeIf { it.isNotBlank() }?.let { body ->
-                        NativeAdBodyView {
-                            Text(
-                                text = body,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = AdSlotDefaults.colors.body,
-                                maxLines = 2,
-                                modifier = Modifier.basicMarquee()
-                            )
-                        }
-                    }
-                }
-            }
-
             if (nativeAd.hasMedia()) {
                 NativeAdMediaView(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(120.dp)
-                        .clip(RoundedCornerShape(8.dp)),
+                        .fillMaxHeight()
+                        .weight(MEDIUM_MEDIA_WEIGHT)
+                        .clip(RoundedCornerShape(10.dp)),
                 )
             }
 
-            NativeAdCta(nativeAd, colors, fillWidth = true)
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(MEDIUM_DETAILS_WEIGHT),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Top,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    NativeAdIcon(nativeAd, size = 36.dp)
+                    Spacer(modifier = Modifier.weight(1f))
+                    AdAttributionBadge(colors)
+                    NativeAdChoicesView()
+                }
+
+                NativeAdHeadlineView {
+                    Text(
+                        text = nativeAd.headline.orEmpty(),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = AdSlotDefaults.colors.headline,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee()
+                    )
+                }
+
+                MediumNativeRatingOrAdvertiser(nativeAd)
+
+                nativeAd.body?.takeIf { it.isNotBlank() }?.let { body ->
+                    NativeAdBodyView {
+                        Text(
+                            text = body,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = AdSlotDefaults.colors.body,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                NativeAdCta(nativeAd, colors, fillWidth = true, verticalPadding = 10.dp)
+            }
+        }
+    }
+}
+
+@Composable
+private fun MediumNativeRatingOrAdvertiser(nativeAd: NativeAd) {
+    val rating = nativeAd.starRating?.takeIf { it > 0.0 }
+    if (rating != null) {
+        NativeAdStarRatingView {
+            NativeAdStars(rating)
+        }
+        return
+    }
+    val advertiser = nativeAd.advertiser?.takeIf { it.isNotBlank() } ?: return
+    NativeAdAdvertiserView {
+        Text(
+            text = advertiser,
+            style = MaterialTheme.typography.labelSmall,
+            color = AdSlotDefaults.colors.body,
+            maxLines = 1,
+            modifier = Modifier.basicMarquee()
+        )
+    }
+}
+
+@Composable
+private fun NativeAdStars(rating: Double) {
+    val filledStars = rating.roundToInt().coerceIn(0, MAX_STARS)
+    val emptyStarColor = AdSlotDefaults.colors.body.copy(alpha = EMPTY_STAR_ALPHA)
+    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+        repeat(MAX_STARS) { index ->
+            Icon(
+                painter = painterResource(R.drawable.ads_ic_star),
+                contentDescription = null,
+                tint = if (index < filledStars) FilledStarColor else emptyStarColor,
+                modifier = Modifier.size(14.dp),
+            )
         }
     }
 }
@@ -260,76 +310,82 @@ internal fun FullScreenNativeTemplate(
     colors: NativeAdColors,
     modifier: Modifier = Modifier,
 ) {
-    NativeAdSurface(modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                AdAttributionBadge(colors)
-                NativeAdChoicesView()
-            }
+    NativeAdSurface(modifier.fillMaxSize(), cornerRadius = 0.dp, strokeWidth = 0.dp) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            FullScreenNativeHeader(colors)
 
             if (nativeAd.hasMedia()) {
                 NativeAdMediaView(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
-                        .clip(RoundedCornerShape(12.dp)),
+                        .weight(1f),
                     scaleType = ImageView.ScaleType.FIT_CENTER,
                 )
             } else {
                 Spacer(modifier = Modifier.weight(1f))
             }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                NativeAdIcon(nativeAd, size = 56.dp)
-
-                Column(modifier = Modifier.weight(1f)) {
-                    NativeAdHeadlineView {
-                        Text(
-                            text = nativeAd.headline.orEmpty(),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = AdSlotDefaults.colors.headline,
-                            maxLines = 1,
-                            modifier = Modifier.basicMarquee()
-                        )
-                    }
-                    nativeAd.advertiser?.takeIf { it.isNotBlank() }?.let { advertiser ->
-                        NativeAdAdvertiserView {
-                            Text(
-                                text = advertiser,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = AdSlotDefaults.colors.body,
-                                maxLines = 1,
-                                modifier = Modifier.basicMarquee()
-                            )
-                        }
-                    }
-                }
-            }
-
-            nativeAd.body?.takeIf { it.isNotBlank() }?.let { body ->
-                NativeAdBodyView {
+                NativeAdHeadlineView {
                     Text(
-                        text = body,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = AdSlotDefaults.colors.body,
-                        maxLines = 3,
+                        text = nativeAd.headline.orEmpty(),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = AdSlotDefaults.colors.headline,
+                        maxLines = 1,
+                        modifier = Modifier.basicMarquee()
+                    )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    NativeAdIcon(nativeAd, size = 32.dp, cornerRadius = 16.dp)
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        SmallNativeSupportingText(nativeAd)
+                    }
+
+                    NativeAdCta(
+                        nativeAd = nativeAd,
+                        colors = colors,
+                        verticalPadding = 12.dp,
+                        shape = RoundedCornerShape(10.dp),
                     )
                 }
             }
+        }
+    }
+}
 
-            NativeAdCta(nativeAd, colors, fillWidth = true, verticalPadding = 14.dp)
+@Composable
+private fun FullScreenNativeHeader(colors: NativeAdColors) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(FullScreenHeaderHeight),
+    ) {
+        Text(
+            text = stringResource(R.string.ads_advertisement_label),
+            style = MaterialTheme.typography.titleSmall,
+            color = AdSlotDefaults.colors.headline,
+            modifier = Modifier.align(Alignment.Center),
+        )
+        Row(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 6.dp, end = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            AdAttributionBadge(colors)
+            NativeAdChoicesView()
         }
     }
 }
@@ -338,13 +394,16 @@ internal fun FullScreenNativeTemplate(
 private fun NativeAdSurface(
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 8.dp,
+    strokeWidth: Dp = NativeStrokeWidth,
     content: @Composable () -> Unit,
 ) {
+    val shape = RoundedCornerShape(cornerRadius)
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(cornerRadius))
+            .clip(shape)
             .background(AdSlotDefaults.colors.container)
+            .border(strokeWidth, AdSlotDefaults.colors.nativeStroke, shape)
             .consumeNonAssetTouches(),
     ) {
         content()
@@ -416,6 +475,16 @@ private fun NativeAdCta(
 private const val MEDIA_ASPECT_RATIO = 1.78f
 private val CtaWidth = 96.dp
 private val SmallCornerRadius = 12.dp
+private val MediumCornerRadius = 12.dp
+private val MediumPadding = 8.dp
+private val MediumContentHeight = 164.dp
+private const val MEDIUM_MEDIA_WEIGHT = 0.42f
+private const val MEDIUM_DETAILS_WEIGHT = 0.58f
+private val NativeStrokeWidth = 1.5.dp
+private val FullScreenHeaderHeight = 48.dp
+private const val MAX_STARS = 5
+private const val EMPTY_STAR_ALPHA = 0.35f
+private val FilledStarColor = Color(0xFFFFB300)
 
 /**
  * Claims touches on the template background so they never reach the enclosing NativeAdView,

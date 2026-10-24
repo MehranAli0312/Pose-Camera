@@ -16,8 +16,8 @@ android {
         minSdk = 24
         targetSdk = 37
 
-        versionCode = 11
-        versionName = "0.1.1"
+        versionCode = 13
+        versionName = "0.1.3"
     }
 
     buildTypes {
@@ -58,11 +58,8 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.process)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -71,7 +68,6 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
-    implementation(libs.material)
 
     implementation(libs.koin)
     implementation(libs.koin.android)
@@ -88,21 +84,20 @@ dependencies {
     implementation(libs.mlkit.segmentation.selfie)
 
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
     "ksp"(libs.androidx.room.compiler)
 
     implementation(libs.androidx.datastore)
-    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.work.runtime)
 
     implementation(libs.coil.compose)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
+    implementation(libs.firebase.messaging)
 
     testImplementation(libs.junit)
 }

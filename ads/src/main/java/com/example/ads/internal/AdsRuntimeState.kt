@@ -41,6 +41,8 @@ internal class AdsRuntimeState {
 
     fun tryAcquireFullScreen(): Boolean = fullScreenLock.compareAndSet(false, true)
 
+    fun isFullScreenBusy(): Boolean = fullScreenLock.get()
+
     fun markFullScreenVisible() {
         _fullScreenAdVisible.value = true
         lastFullScreenShownAt = SystemClock.elapsedRealtime()
@@ -61,5 +63,10 @@ internal class AdsRuntimeState {
     fun passesInterstitialFrequency(frequency: Int): Boolean {
         if (frequency <= 1) return true
         return (interstitialAttempts.getAndIncrement() % frequency) == 0
+    }
+
+    fun wouldPassInterstitialFrequency(frequency: Int): Boolean {
+        if (frequency <= 1) return true
+        return (interstitialAttempts.get() % frequency) == 0
     }
 }

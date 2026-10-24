@@ -48,9 +48,7 @@ class ProViewModel(
         loadJob?.cancel()
         loadJob = viewModelScope.launch {
             _uiState.update { it.copy(plans = ProPlansState.Loading) }
-            val plans = subscriptionUseCase
-                .loadPlans(includeYearly = remoteConfigStore.current.premiumAnnualPlan)
-                .getOrDefault(emptyList())
+            val plans = subscriptionUseCase.loadPlans().getOrDefault(emptyList())
             val selected = subscriptionUseCase.defaultSelection(plans)
             val plansState = if (selected == null) {
                 ProPlansState.Unavailable

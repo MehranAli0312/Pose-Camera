@@ -175,6 +175,8 @@
     <string name="home_action_sunset">日落</string>
     <string name="home_action_nature">自然</string>
     <string name="home_action_mirror">镜子</string>
+    <string name="home_action_beach">海滩</string>
+    <string name="home_action_cafe">咖啡馆</string>
     <string name="home_action_explore">探索</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">%1$d 个姿势</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">已拍照片</string>
     <string name="home_progress_perfect">完美照片</string>
     <string name="home_progress_day_goal">今日目标</string>
-    <string name="home_daily_title">每日姿势</string>
-    <string name="home_daily_subtitle">点按试试</string>
+    <string name="home_daily_title">当下姿势</string>
     <string name="nav_saved">已收藏</string>
     <string name="nav_capture">打开相机</string>
     <string name="onboard_next">下一步</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">匹配 %1$d%%</string>
     <string name="onboard_filters_label">滤镜</string>
     <string name="onboard_saved_label">已保存到合集</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">你点赞的 %1$d 张照片和姿势</item>
-    </plurals>
-    <string name="saved_tab_shots">照片 · %1$d</string>
-    <string name="saved_tab_poses">姿势 · %1$d</string>
+    <string name="saved_tab_shots">照片</string>
+    <string name="saved_tab_poses">姿势</string>
     <string name="saved_add">添加到收藏</string>
     <string name="saved_remove">从收藏中移除</string>
     <string name="saved_sort_title">收藏排序</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 张完美</string>
     <string name="achievements_badge_fifty_poses">50 个姿势</string>
     <string name="app_open_welcome_back">欢迎回来</string>
+    <string name="ad_commercial_break">广告时间</string>
+    <string name="notification_channel_memories">回忆</string>
+    <string name="notification_channel_reminders">提醒和姿势灵感</string>
+    <string name="notification_channel_updates">资讯与更新</string>
+    <string name="notification_memory_title">%1$s，你摆出了这个姿势…</string>
+    <string name="notification_memory_title_place">%1$s，你在%2$s摆出了这个姿势…</string>
+    <string name="notification_memory_text">还记得这一刻吗？📸</string>
+    <string name="notification_streak_title">🔥 %1$s，今天别断了！</string>
+    <string name="notification_streak_text">今天只需拍一张照片就能继续保持。</string>
+    <string name="notification_first_photo_title">你的第一个完美姿势正在等你 📸</string>
+    <string name="notification_first_photo_text">选一个姿势，跟着摆，几秒钟就能看到你的得分。</string>
+    <string name="notification_pose_idea_title">今日姿势灵感 ✨</string>
+    <string name="notification_pose_idea_text">你能摆出这个姿势吗？点按立即试试。</string>
+    <string name="notification_action_view">查看</string>
+    <string name="notification_action_not_interested">不感兴趣</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.aipose.camera.posematch.ui.screens.poseAlbum
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.rememberPoseAlbumNativeAds
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
@@ -37,11 +40,13 @@ import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
 import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExploreCategoryChips
-import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExplorePoseCard
 import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExplorePosePlaceholderCard
 import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExploreHeader
 import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExploreSortSheet
+import com.aipose.camera.posematch.ui.screens.poseAlbum.components.poseAlbumPoseItems
+import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseAlbumAdLayout
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseAlbumUiState
+import com.aipose.camera.posematch.ui.screens.poseAlbum.models.adaptiveColumnCount
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.aipose.camera.posematch.ui.vm.PoseAlbumViewModel
@@ -61,6 +66,7 @@ fun PoseAlbumScreen(
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+    val nativeAds = rememberPoseAlbumNativeAds()
 
     LaunchedEffect(category) { viewModel.onCategoryRequested(category) }
 
@@ -84,61 +90,69 @@ fun PoseAlbumScreen(
                 onOpenSort = viewModel::showSortSheet,
                 modifier = Modifier.poseScreenPadding(),
             )
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(CardMinWidth),
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(
-                    start = PoseScreenGutter,
-                    end = PoseScreenGutter,
-                    top = GridGap,
-                    bottom = 24.dp,
-                ),
-                horizontalArrangement = Arrangement.spacedBy(GridGap),
-                verticalArrangement = Arrangement.spacedBy(GridGap),
-            ) {
-                item(key = SEARCH_KEY, span = { GridItemSpan(maxLineSpan) }) {
-                    StudioSearchField(
-                        query = query,
-                        hint = stringResource(R.string.explore_search_hint),
-                        onQueryChange = viewModel::setQuery,
-                        onSearchSubmitted = {
-                            keyboardController?.hide()
-                            focusManager.clearFocus()
-                        },
-                        modifier = Modifier.padding(top = 2.dp),
-                    )
-                }
-                if (content == null) {
-                    items(PLACEHOLDER_CARD_COUNT, key = { index -> PLACEHOLDER_KEY + index }) {
-                        ExplorePosePlaceholderCard()
-                    }
+            BoxWithConstraints(modifier = Modifier.weight(1f)) {
+                val columns = adaptiveColumnCount(
+                    availableWidth = maxWidth - PoseScreenGutter * 2,
+                    minCellWidth = CardMinWidth,
+                    gap = GridGap,
+                )
+                val adLayout = if (content != null && query.isBlank() && nativeAds.isEnabled) {
+                    PoseAlbumAdLayout.of(columns, content.poses.size)
                 } else {
-                    item(key = CHIPS_KEY, span = { GridItemSpan(maxLineSpan) }) {
-                        ExploreCategoryChips(
-                            categories = content.categories,
-                            selectedCategory = content.selectedCategory,
-                            onSelect = viewModel::selectCategory,
+                    PoseAlbumAdLayout.None
+                }
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(columns),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        start = PoseScreenGutter,
+                        end = PoseScreenGutter,
+                        top = GridGap,
+                        bottom = 24.dp,
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(GridGap),
+                    verticalArrangement = Arrangement.spacedBy(GridGap),
+                ) {
+                    item(key = SEARCH_KEY, span = { GridItemSpan(maxLineSpan) }) {
+                        StudioSearchField(
+                            query = query,
+                            hint = stringResource(R.string.explore_search_hint),
+                            onQueryChange = viewModel::setQuery,
+                            onSearchSubmitted = {
+                                keyboardController?.hide()
+                                focusManager.clearFocus()
+                            },
+                            modifier = Modifier.padding(top = 2.dp),
                         )
                     }
-                    if (content.poses.isEmpty()) {
-                        item(key = EMPTY_KEY, span = { GridItemSpan(maxLineSpan) }) {
-                            Text(
-                                text = stringResource(R.string.explore_empty),
-                                style = poseTextStyle(12.5.sp, FontWeight.Normal, LocalAppPalette.current.textMuted),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 48.dp),
+                    if (content == null) {
+                        items(PLACEHOLDER_CARD_COUNT, key = { index -> PLACEHOLDER_KEY + index }) {
+                            ExplorePosePlaceholderCard()
+                        }
+                    } else {
+                        item(key = CHIPS_KEY, span = { GridItemSpan(maxLineSpan) }) {
+                            ExploreCategoryChips(
+                                categories = content.categories,
+                                selectedCategory = content.selectedCategory,
+                                onSelect = viewModel::selectCategory,
                             )
                         }
-                    }
-                    items(content.poses, key = { pose -> pose.id }) { pose ->
-                        val isLocked = pose.id in content.lockedPoseIds
-                        ExplorePoseCard(
-                            pose = pose,
-                            isSaved = pose.id in content.savedPoseIds,
-                            isLocked = isLocked,
-                            onClick = {
+                        if (content.poses.isEmpty()) {
+                            item(key = EMPTY_KEY, span = { GridItemSpan(maxLineSpan) }) {
+                                Text(
+                                    text = stringResource(R.string.explore_empty),
+                                    style = poseTextStyle(12.5.sp, FontWeight.Normal, LocalAppPalette.current.textMuted),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 48.dp),
+                                )
+                            }
+                        }
+                        poseAlbumPoseItems(
+                            content = content,
+                            adLayout = adLayout,
+                            onPoseClick = { pose, isLocked ->
                                 if (isLocked) {
                                     viewModel.showLockedPose(pose)
                                 } else {
@@ -147,7 +161,8 @@ fun PoseAlbumScreen(
                                     )
                                 }
                             },
-                            onToggleSaved = { viewModel.toggleSaved(pose) },
+                            onToggleSaved = viewModel::toggleSaved,
+                            prepareSecondAd = nativeAds::prepareSecond,
                         )
                     }
                 }

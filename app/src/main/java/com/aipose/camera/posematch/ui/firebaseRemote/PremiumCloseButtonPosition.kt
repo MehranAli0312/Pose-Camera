@@ -1,12 +1,17 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
+import kotlinx.serialization.Serializable
+
+@Serializable(with = PremiumCloseButtonPosition.Serializer::class)
 enum class PremiumCloseButtonPosition(val remoteValue: Long) {
     Right(0L),
     Left(1L),
     ;
 
-    companion object {
-        fun fromRemote(value: Long): PremiumCloseButtonPosition =
-            entries.firstOrNull { it.remoteValue == value } ?: Right
-    }
+    object Serializer : RemoteValueEnumSerializer<PremiumCloseButtonPosition>(
+        serialName = "PremiumCloseButtonPosition",
+        entries = PremiumCloseButtonPosition.entries,
+        fallback = Right,
+        remoteValueOf = PremiumCloseButtonPosition::remoteValue,
+    )
 }

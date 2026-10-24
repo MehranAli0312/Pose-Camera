@@ -28,10 +28,6 @@ class CaptureUseCase(private val captureRepository: CaptureRepository) {
         captureRepository.delete(capture.id)
     }
 
-    suspend fun deleteAll(captures: List<Capture>) {
-        captures.forEach { capture -> captureRepository.delete(capture.id) }
-    }
-
     suspend fun toggleFavorite(capture: Capture) {
         captureRepository.setFavorite(capture.id, !capture.isFavorite)
     }

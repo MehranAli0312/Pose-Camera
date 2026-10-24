@@ -12,13 +12,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.PoseDeleteDialog
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.PoseStatsCard
@@ -152,43 +150,8 @@ fun CaptureAlbumScreen(
             onDismiss = viewModel::dismissSortSheet,
         )
     }
-
-    if (content?.isRemoveDialogVisible == true) {
-        PoseDeleteDialog(
-            title = stringResource(R.string.album_remove_title),
-            message = pluralStringResource(
-                R.plurals.album_remove_message,
-                content.totalCount,
-                content.totalCount,
-                content.locationLabel,
-            ),
-            onConfirm = viewModel::removeAll,
-            onDismiss = viewModel::dismissRemoveDialog,
-        )
-    }
 }
 
-@Composable
-private fun albumSummary(content: CaptureAlbumUiState.Content): String {
-    val lastShot = when (content.lastShotDaysAgo) {
-        0 -> stringResource(R.string.album_last_today)
-        1 -> stringResource(R.string.album_last_yesterday)
-        else -> pluralStringResource(
-            R.plurals.album_last_days_ago,
-            content.lastShotDaysAgo,
-            content.lastShotDaysAgo,
-        )
-    }
-    return stringResource(
-        R.string.album_summary,
-        pluralStringResource(R.plurals.album_shot_count, content.totalCount, content.totalCount),
-        stringResource(R.string.score_percent, content.averageMatch).bidiIsolate(),
-        lastShot,
-    )
-}
-
-private const val SUMMARY_KEY = "album_summary"
 private const val FILTERS_KEY = "album_filters"
 private const val STATS_KEY = "album_stats"
-private const val ACTIONS_KEY = "album_actions"
 private const val ROW_KEY = "album_row_"

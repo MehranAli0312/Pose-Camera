@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Ηλιοβασίλεμα</string>
     <string name="home_action_nature">Φύση</string>
     <string name="home_action_mirror">Καθρέφτης</string>
+    <string name="home_action_beach">Παραλία</string>
+    <string name="home_action_cafe">Καφέ</string>
     <string name="home_action_explore">Εξερεύνηση</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d πόζα</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Λήψεις</string>
     <string name="home_progress_perfect">Τέλειες λήψεις</string>
     <string name="home_progress_day_goal">Στόχος ημέρας</string>
-    <string name="home_daily_title">Πόζα της ημέρας</string>
-    <string name="home_daily_subtitle">Πατήστε για δοκιμή</string>
+    <string name="home_daily_title">Πόζα της στιγμής</string>
     <string name="nav_saved">Αποθηκευμένα</string>
     <string name="nav_capture">Άνοιγμα κάμερας</string>
     <string name="onboard_next">Επόμενο</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">ΤΑΙΡΙΑΣΜΑ %1$d%%</string>
     <string name="onboard_filters_label">ΦΙΛΤΡΑ</string>
     <string name="onboard_saved_label">Αποθηκεύτηκε στις Συλλογές</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d λήψη ή πόζα που σας άρεσε</item>
-        <item quantity="other">%1$d λήψεις και πόζες που σας άρεσαν</item>
-    </plurals>
-    <string name="saved_tab_shots">Λήψεις · %1$d</string>
-    <string name="saved_tab_poses">Πόζες · %1$d</string>
+    <string name="saved_tab_shots">Λήψεις</string>
+    <string name="saved_tab_poses">Πόζες</string>
     <string name="saved_add">Προσθήκη στα αγαπημένα</string>
     <string name="saved_remove">Αφαίρεση από τα αγαπημένα</string>
     <string name="saved_sort_title">Ταξινόμηση αποθηκευμένων</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 τέλειες</string>
     <string name="achievements_badge_fifty_poses">50 πόζες</string>
     <string name="app_open_welcome_back">Καλώς ήρθατε ξανά</string>
+    <string name="ad_commercial_break">Διαφημιστικό διάλειμμα</string>
+    <string name="notification_channel_memories">Αναμνήσεις</string>
+    <string name="notification_channel_reminders">Υπενθυμίσεις και ιδέες πόζας</string>
+    <string name="notification_channel_updates">Νέα και ενημερώσεις</string>
+    <string name="notification_memory_title">Στις %1$s έκανες αυτή την πόζα…</string>
+    <string name="notification_memory_title_place">Στις %1$s, %2$s, έκανες αυτή την πόζα…</string>
+    <string name="notification_memory_text">Θυμάσαι αυτή τη στιγμή; 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – κράτα τη σειρά σου ζωντανή σήμερα!</string>
+    <string name="notification_streak_text">Τράβηξε μόνο μία φωτογραφία σήμερα για να συνεχίσεις.</string>
+    <string name="notification_first_photo_title">Η πρώτη σου τέλεια πόζα σε περιμένει 📸</string>
+    <string name="notification_first_photo_text">Διάλεξε μια πόζα, ταίριαξέ τη και δες το σκορ σου σε δευτερόλεπτα.</string>
+    <string name="notification_pose_idea_title">Η ιδέα πόζας της ημέρας ✨</string>
+    <string name="notification_pose_idea_text">Μπορείς να ταιριάξεις αυτή την πόζα; Πάτησε για να τη δοκιμάσεις τώρα.</string>
+    <string name="notification_action_view">Προβολή</string>
+    <string name="notification_action_not_interested">Δεν ενδιαφέρομαι</string>
 </resources>

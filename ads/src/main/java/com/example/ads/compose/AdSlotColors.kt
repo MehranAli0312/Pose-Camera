@@ -20,6 +20,7 @@ data class AdSlotColors(
     val headline: Color,
     val body: Color,
     val placeholderBone: Color = body.copy(alpha = PLACEHOLDER_BONE_ALPHA),
+    val nativeStroke: Color = headline.copy(alpha = NATIVE_STROKE_ALPHA),
 )
 
 /** Provide from the app theme; when absent, colors are derived from [MaterialTheme]. */
@@ -39,3 +40,4 @@ object AdSlotDefaults {
 }
 
 private const val PLACEHOLDER_BONE_ALPHA = 0.25f
+private const val NATIVE_STROKE_ALPHA = 0.85f

@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Atardecer</string>
     <string name="home_action_nature">Naturaleza</string>
     <string name="home_action_mirror">Espejo</string>
+    <string name="home_action_beach">Playa</string>
+    <string name="home_action_cafe">Café</string>
     <string name="home_action_explore">Explorar</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d pose</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Fotos tomadas</string>
     <string name="home_progress_perfect">Fotos perfectas</string>
     <string name="home_progress_day_goal">Meta diaria</string>
-    <string name="home_daily_title">Pose del día</string>
-    <string name="home_daily_subtitle">Toca para probar</string>
+    <string name="home_daily_title">Pose del momento</string>
     <string name="nav_saved">Guardados</string>
     <string name="nav_capture">Abrir cámara</string>
     <string name="onboard_next">Siguiente</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%1$d%% COINCIDENCIA</string>
     <string name="onboard_filters_label">FILTROS</string>
     <string name="onboard_saved_label">Guardada en Colecciones</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d foto o pose marcada con corazón</item>
-        <item quantity="other">%1$d fotos y poses marcadas con corazón</item>
-    </plurals>
-    <string name="saved_tab_shots">Fotos · %1$d</string>
-    <string name="saved_tab_poses">Poses · %1$d</string>
+    <string name="saved_tab_shots">Fotos</string>
+    <string name="saved_tab_poses">Poses</string>
     <string name="saved_add">Guardar en favoritos</string>
     <string name="saved_remove">Quitar de favoritos</string>
     <string name="saved_sort_title">Ordenar guardados</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 perfectas</string>
     <string name="achievements_badge_fifty_poses">50 poses</string>
     <string name="app_open_welcome_back">Bienvenido de nuevo</string>
+    <string name="ad_commercial_break">Pausa publicitaria</string>
+    <string name="notification_channel_memories">Recuerdos</string>
+    <string name="notification_channel_reminders">Recordatorios e ideas de poses</string>
+    <string name="notification_channel_updates">Novedades y actualizaciones</string>
+    <string name="notification_memory_title">El %1$s hiciste esta pose…</string>
+    <string name="notification_memory_title_place">El %1$s en %2$s hiciste esta pose…</string>
+    <string name="notification_memory_text">¿Recuerdas este momento? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s: ¡no la pierdas hoy!</string>
+    <string name="notification_streak_text">Haz solo una foto hoy para mantenerla.</string>
+    <string name="notification_first_photo_title">Tu primera pose perfecta te espera 📸</string>
+    <string name="notification_first_photo_text">Elige una pose, imítala y descubre tu puntuación en segundos.</string>
+    <string name="notification_pose_idea_title">Idea de pose del día ✨</string>
+    <string name="notification_pose_idea_text">¿Puedes imitar esta pose? Toca para probarla ahora.</string>
+    <string name="notification_action_view">Ver</string>
+    <string name="notification_action_not_interested">No me interesa</string>
 </resources>

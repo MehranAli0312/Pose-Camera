@@ -12,7 +12,6 @@ internal class BuildConfigAdUnitProvider : AdUnitProvider {
         AdFormat.NATIVE -> BuildConfig.AD_UNIT_NATIVE
         AdFormat.INTERSTITIAL -> BuildConfig.AD_UNIT_INTERSTITIAL
         AdFormat.REWARDED -> BuildConfig.AD_UNIT_REWARDED
-        AdFormat.REWARDED_INTERSTITIAL -> BuildConfig.AD_UNIT_REWARDED_INTERSTITIAL
         AdFormat.APP_OPEN -> BuildConfig.AD_UNIT_APP_OPEN
     }.takeIf { it.isNotBlank() }
 }

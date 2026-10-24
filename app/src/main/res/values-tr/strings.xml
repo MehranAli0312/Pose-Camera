@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Gün batımı</string>
     <string name="home_action_nature">Doğa</string>
     <string name="home_action_mirror">Ayna</string>
+    <string name="home_action_beach">Plaj</string>
+    <string name="home_action_cafe">Kafe</string>
     <string name="home_action_explore">Keşfet</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d poz</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Çekimler</string>
     <string name="home_progress_perfect">Kusursuz çekimler</string>
     <string name="home_progress_day_goal">Günlük hedef</string>
-    <string name="home_daily_title">Günün pozu</string>
-    <string name="home_daily_subtitle">Denemek için dokun</string>
+    <string name="home_daily_title">Anın pozu</string>
     <string name="nav_saved">Kaydedilenler</string>
     <string name="nav_capture">Kamerayı aç</string>
     <string name="onboard_next">İleri</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%%%1$d EŞLEŞME</string>
     <string name="onboard_filters_label">FİLTRELER</string>
     <string name="onboard_saved_label">Koleksiyonlara kaydedildi</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">Kalp verdiğin %1$d çekim veya poz</item>
-        <item quantity="other">Kalp verdiğin %1$d çekim ve poz</item>
-    </plurals>
-    <string name="saved_tab_shots">Çekimler · %1$d</string>
-    <string name="saved_tab_poses">Pozlar · %1$d</string>
+    <string name="saved_tab_shots">Çekimler</string>
+    <string name="saved_tab_poses">Pozlar</string>
     <string name="saved_add">Favorilere ekle</string>
     <string name="saved_remove">Favorilerden kaldır</string>
     <string name="saved_sort_title">Kaydedilenleri sırala</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 kusursuz</string>
     <string name="achievements_badge_fifty_poses">50 poz</string>
     <string name="app_open_welcome_back">Tekrar hoş geldiniz</string>
+    <string name="ad_commercial_break">Reklam arası</string>
+    <string name="notification_channel_memories">Anılar</string>
+    <string name="notification_channel_reminders">Hatırlatıcılar ve poz fikirleri</string>
+    <string name="notification_channel_updates">Haberler ve güncellemeler</string>
+    <string name="notification_memory_title">%1$s tarihinde bu pozu verdin…</string>
+    <string name="notification_memory_title_place">%1$s tarihinde %2$s konumunda bu pozu verdin…</string>
+    <string name="notification_memory_text">Bu anı hatırlıyor musun? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – bugün serini bozma!</string>
+    <string name="notification_streak_text">Devam etmek için bugün sadece bir fotoğraf çek.</string>
+    <string name="notification_first_photo_title">İlk mükemmel pozun seni bekliyor 📸</string>
+    <string name="notification_first_photo_text">Bir poz seç, ona uy ve puanını saniyeler içinde gör.</string>
+    <string name="notification_pose_idea_title">Günün poz fikri ✨</string>
+    <string name="notification_pose_idea_text">Bu pozu yakalayabilir misin? Hemen denemek için dokun.</string>
+    <string name="notification_action_view">Görüntüle</string>
+    <string name="notification_action_not_interested">İlgilenmiyorum</string>
 </resources>

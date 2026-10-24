@@ -9,9 +9,7 @@ sealed interface HomeUiState {
 
     data class Content(
         val hero: HomeHero?,
-        val quickActions: List<HomeQuickAction>,
         val progress: CaptureProgress,
-        val poseOfTheDay: HomeDailyPose?,
         val lockedPose: Pose?,
         val unlockTarget: HomeUnlockTarget
     ) : HomeUiState

@@ -13,7 +13,6 @@ import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
 import org.koin.dsl.module
 
-private const val PRELOAD_BUFFER_SIZE = 1
 private const val INTERSTITIAL_FREQUENCY = 1
 
 val appAdsModule = module {
@@ -27,25 +26,26 @@ val appAdsModule = module {
         )
     }
     single { AdsRemoteConfigStore(get()) }
-    single { AppOpenLoaderState() }
+    single { AdLoadingCoverState() }
     single { AppOpenRouteGate() }
     single { MissedSplashAd() }
-    single { InnerInterstitialAds(adsManager = get(), store = get()) }
+    single { CommercialBreakAds(adsManager = get(), store = get(), coverState = get()) }
+    single { InnerInterstitialAds(adsManager = get(), store = get(), commercialBreakAds = get()) }
     single { RewardedUnlockSession() }
     single {
         PhotoSaveInterstitialAds(
             adsManager = get(),
+            commercialBreakAds = get(),
             innerInterstitialAds = get(),
             rewardedUnlockSession = get(),
         )
     }
 
-    single { AppFirebaseRemote(store = get(), adsManager = get()) }
+    single { AppFirebaseRemote(store = get()) }
 
     single {
         AdsConfig(
             isDebugBuild = BuildConfig.DEBUG,
-            preloadBufferSize = PRELOAD_BUFFER_SIZE,
             interstitialFrequency = INTERSTITIAL_FREQUENCY,
         )
     }

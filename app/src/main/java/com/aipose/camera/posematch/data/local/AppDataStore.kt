@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.aipose.camera.posematch.domain.models.EngagementHistory
 import com.aipose.camera.posematch.domain.models.ProEntitlement
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -121,6 +122,36 @@ class AppDataStore(private val context: Context) {
         preferences.edit { stored ->
             stored[AppPreferencesKeys.UNLOCKED_POSES] =
                 stored[AppPreferencesKeys.UNLOCKED_POSES].orEmpty() + poseId.toString()
+        }
+    }
+
+    suspend fun getEngagementHistory(): EngagementHistory =
+        preferences.data.map { stored ->
+            EngagementHistory(
+                lastAppOpenAtMillis = stored[AppPreferencesKeys.LAST_APP_OPEN_AT] ?: 0L,
+                lastSentAtMillis = stored[AppPreferencesKeys.ENGAGEMENT_LAST_SENT_AT] ?: 0L,
+                unopenedInARow = stored[AppPreferencesKeys.ENGAGEMENT_UNOPENED_IN_A_ROW] ?: 0,
+            )
+        }.first()
+
+    suspend fun setLastAppOpenAt(millis: Long) {
+        preferences.edit { stored ->
+            stored[AppPreferencesKeys.LAST_APP_OPEN_AT] = millis
+            stored[AppPreferencesKeys.ENGAGEMENT_UNOPENED_IN_A_ROW] = 0
+        }
+    }
+
+    suspend fun recordEngagementSent(millis: Long) {
+        preferences.edit { stored ->
+            val unopened = stored[AppPreferencesKeys.ENGAGEMENT_UNOPENED_IN_A_ROW] ?: 0
+            stored[AppPreferencesKeys.ENGAGEMENT_LAST_SENT_AT] = millis
+            stored[AppPreferencesKeys.ENGAGEMENT_UNOPENED_IN_A_ROW] = unopened + 1
+        }
+    }
+
+    suspend fun resetEngagementUnopened() {
+        preferences.edit { stored ->
+            stored[AppPreferencesKeys.ENGAGEMENT_UNOPENED_IN_A_ROW] = 0
         }
     }
 

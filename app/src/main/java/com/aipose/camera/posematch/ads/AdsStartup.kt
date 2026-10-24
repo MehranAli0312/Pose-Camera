@@ -25,15 +25,11 @@ fun loadSplashAdOnSdkReady(
     }
 }
 
-fun onPlacementConfigChanged(adsManager: AdsManager) {
-    adsManager.revalidateWarmUp()
-}
-
 fun registerAppOpenAds(
     application: Application,
     lifecycleObserver: AdsAppLifecycleObserver,
     remoteConfigStore: AdsRemoteConfigStore,
-    loaderState: AppOpenLoaderState,
+    coverState: AdLoadingCoverState,
     routeGate: AppOpenRouteGate,
     innerInterstitialAds: InnerInterstitialAds,
 ) {
@@ -44,7 +40,13 @@ fun registerAppOpenAds(
             routeGate.allowsAppOpen()
     }
     lifecycleObserver.appOpenLoadTimeoutMs = { remoteConfigStore.current.appOpenLoadTimeoutMs }
-    lifecycleObserver.onAppOpenCoverChanged = loaderState::setVisible
+    lifecycleObserver.onAppOpenCoverChanged = { covered ->
+        if (covered) {
+            coverState.show(AdLoadingCover.WelcomeBack)
+        } else {
+            coverState.hide(AdLoadingCover.WelcomeBack)
+        }
+    }
     lifecycleObserver.onAppOpenFinished = { result ->
         if (result == AdResult.Shown) innerInterstitialAds.onOtherFullScreenAdShown()
     }

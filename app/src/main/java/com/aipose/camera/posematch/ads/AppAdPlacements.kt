@@ -14,6 +14,18 @@ val AdPlacement.Companion.LanguageScreenBottom: AdPlacement
 val AdPlacement.Companion.OnboardScreenBottom: AdPlacement
     get() = AdPlacement("onboard_screen_bottom")
 
+val AdPlacement.Companion.SuccessScreenBottom: AdPlacement
+    get() = AdPlacement("success_screen_bottom")
+
+val AdPlacement.Companion.HomeInlineNative: AdPlacement
+    get() = AdPlacement("home_inline_native")
+
+val AdPlacement.Companion.PoseAlbumInlineFirst: AdPlacement
+    get() = AdPlacement("pose_album_inline_first")
+
+val AdPlacement.Companion.PoseAlbumInlineSecond: AdPlacement
+    get() = AdPlacement("pose_album_inline_second")
+
 val AdPlacement.Companion.OnboardingFullScreenNative: AdPlacement
     get() = AdPlacement("onboarding_full_screen_native")
 

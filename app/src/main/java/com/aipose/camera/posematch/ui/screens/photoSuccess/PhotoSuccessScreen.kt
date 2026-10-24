@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.SuccessScreenBottom
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.shareImageFile
@@ -32,6 +33,8 @@ import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSucce
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessShot
 import com.aipose.camera.posematch.ui.screens.photoSuccess.models.PhotoSuccessUiState
 import com.aipose.camera.posematch.ui.vm.PhotoSuccessViewModel
+import com.example.ads.AdPlacement
+import com.example.ads.compose.AdsSlot
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -56,35 +59,41 @@ fun PhotoSuccessScreen(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
                 .safeTopSystemBarsPadding()
-                .safeBottomSystemBarsPadding()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .safeBottomSystemBarsPadding(),
         ) {
-            Spacer(modifier = Modifier.height(62.dp))
-            PhotoSuccessHeader(
-                subtitle = if (content.isPersonalBest) {
-                    stringResource(R.string.saved_subtitle_best, title)
-                } else {
-                    stringResource(R.string.saved_subtitle, title)
-                },
-            )
-            Spacer(modifier = Modifier.height(28.dp))
-            PhotoSuccessShot(
-                imagePath = capture.imagePath,
-                matchScore = capture.matchScore.takeIf { capture.poseId != null && it > 0 },
-                placeLabel = stringResource(R.string.saved_place_now, place),
-            )
-            Spacer(modifier = Modifier.height(30.dp))
-            PhotoSuccessActions(
-                onShare = { context.shareImageFile(capture.imagePath, shareChooserTitle) },
-                onShootAgain = navController::popBackStackOnClick,
-                onViewCollections = {
-                    navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
-                },
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .adaptiveWidth()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.height(30.dp))
+                PhotoSuccessHeader(
+                    subtitle = if (content.isPersonalBest) {
+                        stringResource(R.string.saved_subtitle_best, title)
+                    } else {
+                        stringResource(R.string.saved_subtitle, title)
+                    },
+                )
+                Spacer(modifier = Modifier.height(28.dp))
+                PhotoSuccessShot(
+                    imagePath = capture.imagePath,
+                    matchScore = capture.matchScore.takeIf { capture.poseId != null && it > 0 },
+                    placeLabel = stringResource(R.string.saved_place_now, place),
+                )
+                Spacer(modifier = Modifier.height(30.dp))
+                PhotoSuccessActions(
+                    onShare = { context.shareImageFile(capture.imagePath, shareChooserTitle) },
+                    onShootAgain = navController::popBackStackOnClick,
+                    onViewCollections = {
+                        navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
+                    },
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+            AdsSlot(placement = AdPlacement.SuccessScreenBottom)
         }
         RateUsPrompt(
             savedShotCount = content.savedShotCount,

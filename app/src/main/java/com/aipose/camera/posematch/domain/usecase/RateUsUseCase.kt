@@ -6,7 +6,7 @@ import com.aipose.camera.posematch.domain.repo.RateUsRepository
 
 private const val MAX_PROMPTS = 3
 private const val MIN_SAVED_SHOTS = 3
-private const val POSITIVE_RATING = 4f
+private const val POSITIVE_RATING = 5f
 
 class RateUsUseCase(private val rateUsRepository: RateUsRepository) {
 

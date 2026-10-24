@@ -23,7 +23,7 @@ class PremiumSubscriptionUseCaseTest {
     fun showsBothPlansWithLifetimeSelectedAndRecommended() = runBlocking {
         val useCase = PremiumSubscriptionUseCase(FakeRepository(listOf(yearly, lifetime)))
 
-        val plans = useCase.loadPlans(includeYearly = true).getOrThrow()
+        val plans = useCase.loadPlans().getOrThrow()
 
         assertEquals(listOf(lifetime, yearly), plans)
         assertEquals(lifetime, useCase.defaultSelection(plans))
@@ -32,20 +32,10 @@ class PremiumSubscriptionUseCaseTest {
     }
 
     @Test
-    fun hidesYearlyWhenRemoteConfigTurnsItOff() = runBlocking {
-        val useCase = PremiumSubscriptionUseCase(FakeRepository(listOf(yearly, lifetime)))
-
-        val plans = useCase.loadPlans(includeYearly = false).getOrThrow()
-
-        assertEquals(listOf(lifetime), plans)
-        assertFalse(useCase.isRecommended(lifetime, plans))
-    }
-
-    @Test
     fun selectsYearlyWhenLifetimeIsMissing() = runBlocking {
         val useCase = PremiumSubscriptionUseCase(FakeRepository(listOf(yearly)))
 
-        val plans = useCase.loadPlans(includeYearly = true).getOrThrow()
+        val plans = useCase.loadPlans().getOrThrow()
 
         assertEquals(yearly, useCase.defaultSelection(plans))
     }

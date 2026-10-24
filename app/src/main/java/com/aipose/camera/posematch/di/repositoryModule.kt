@@ -3,6 +3,7 @@ package com.aipose.camera.posematch.di
 import com.aipose.camera.posematch.data.repoImpl.CameraSettingsRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.CaptureLocationRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.CaptureRepositoryImpl
+import com.aipose.camera.posematch.data.repoImpl.EngagementNotificationRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.FavoritePoseRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.LanguageRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PhotoGradingRepositoryImpl
@@ -14,6 +15,7 @@ import com.aipose.camera.posematch.data.repoImpl.SplashStatusRepositoryImpl
 import com.aipose.camera.posematch.domain.repo.CameraSettingsRepository
 import com.aipose.camera.posematch.domain.repo.CaptureLocationRepository
 import com.aipose.camera.posematch.domain.repo.CaptureRepository
+import com.aipose.camera.posematch.domain.repo.EngagementNotificationRepository
 import com.aipose.camera.posematch.domain.repo.FavoritePoseRepository
 import com.aipose.camera.posematch.domain.repo.LanguageRepository
 import com.aipose.camera.posematch.domain.repo.PhotoGradingRepository
@@ -46,6 +48,9 @@ val repositoryModule = module {
     single<PoseLockRepository> { PoseLockRepositoryImpl(get()) }
     single<CaptureRepository> { CaptureRepositoryImpl(get(), get(), get(), get()) }
     single<CaptureLocationRepository> { CaptureLocationRepositoryImpl(get()) }
+    single<EngagementNotificationRepository> {
+        EngagementNotificationRepositoryImpl(get(), get(), get())
+    }
     single<PhotoGradingRepository> { PhotoGradingRepositoryImpl(get(), get(), get()) }
     single<PremiumRepository> {
         PremiumRepositoryImpl(

@@ -9,7 +9,5 @@ sealed interface SavedUiState {
         val sort: SavedSort,
         val shots: List<SavedShot>,
         val poses: List<SavedPose>
-    ) : SavedUiState {
-        val totalCount: Int get() = shots.size + poses.size
-    }
+    ) : SavedUiState
 }

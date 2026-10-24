@@ -14,6 +14,10 @@ import com.example.ads.lifecycle.AdsAppLifecycleObserver
 import com.example.common.Constants
 import com.example.common.update.InAppUpdateManager
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
+import com.aipose.camera.posematch.data.notification.NotificationLaunchStore
+import com.aipose.camera.posematch.data.notification.clearNotificationTarget
+import com.aipose.camera.posematch.data.notification.notificationTarget
+import com.aipose.camera.posematch.domain.usecase.EngagementNotificationUseCase
 import com.aipose.camera.posematch.ui.common.AppSystemBars
 import com.aipose.camera.posematch.ui.common.LocalAppSystemBars
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
@@ -32,17 +36,37 @@ class MainActivity : AppCompatActivity() {
     private val adsLifecycleObserver: AdsAppLifecycleObserver by inject()
     private val appFirebaseRemote: AppFirebaseRemote by inject()
     private val networkConnectivityChecker: NetworkConnectivityChecker by inject()
+    private val notificationLaunchStore: NotificationLaunchStore by inject()
+    private val engagementNotificationUseCase: EngagementNotificationUseCase by inject()
     private val inAppUpdateManager = InAppUpdateManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) Constants.splashEnd = false
+        if (savedInstanceState == null) {
+            Constants.splashEnd = false
+            handleNotificationLaunch(intent)
+        }
         enableEdgeToEdge()
         systemBars.applyImmersiveBehavior()
         startAdsForFirstActivity()
         observeAppUpdateConfig()
 
         goToNext()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleNotificationLaunch(intent)
+    }
+
+    private fun handleNotificationLaunch(intent: Intent) {
+        val target = intent.notificationTarget() ?: return
+        intent.clearNotificationTarget()
+        notificationLaunchStore.put(target)
+        lifecycleScope.launch {
+            runCatching { engagementNotificationUseCase.onNotificationOpened() }
+        }
     }
 
     private fun observeAppUpdateConfig() {

@@ -30,12 +30,11 @@ import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
-import com.aipose.camera.posematch.ui.graph.NavRoute
+import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashAmbientBackground
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashProgressBar
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import com.example.ads.AdPlacement
-import com.example.common.Constants.splashEnd
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -100,8 +99,16 @@ fun SplashScreen(
         creep.cancel()
         progress.animateTo(1f, tween(SplashAdTiming.PROGRESS_FINISH_MS))
 
+        val showPremium = viewModel.showPremiumAfterSplash(isFirstSession)
+        SplashAdLog.d("decision: showPremium=$showPremium")
         val finishSplash = {
-            if (isFirstSession) goToLanguage(navParentController) else goToHome(navParentController)
+            val nextStep =
+                if (isFirstSession) StartPremiumNextStep.Language else StartPremiumNextStep.Home
+            when {
+                showPremium -> goToStartPremium(navParentController, nextStep)
+                isFirstSession -> goToLanguage(navParentController)
+                else -> goToHome(navParentController)
+            }
         }
 
         val availableAtDecision = ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)
@@ -139,34 +146,5 @@ fun SplashScreen(
                 .padding(bottom = 50.dp)
         )
 
-    }
-}
-
-fun goToLanguage(navController: NavHostController) {
-    splashEnd = true
-    navController.navigate(NavRoute.LanguageScreenRoute.route) {
-        popUpTo(NavRoute.SplashScreenRoute.route) { inclusive = true }
-    }
-}
-
-fun goToHome(navController: NavHostController) {
-    splashEnd = true
-    navController.navigate(NavRoute.DashboardScreenRoute.route) {
-        popUpTo(navController.graph.id) { inclusive = true }
-        launchSingleTop = true
-    }
-}
-
-fun goToOnboardOrNext(
-    navController: NavHostController,
-    showOnboarding: Boolean,
-) {
-    if (showOnboarding) goToOnboard(navController) else goToHome(navController)
-}
-
-fun goToOnboard(navController: NavHostController) {
-    navController.navigate(NavRoute.OnboardScreenRoute.route) {
-        popUpTo(NavRoute.LanguageScreenRoute.route) { inclusive = true }
-        launchSingleTop = true
     }
 }

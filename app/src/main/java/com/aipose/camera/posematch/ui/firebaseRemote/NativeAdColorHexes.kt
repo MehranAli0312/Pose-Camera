@@ -1,16 +1,15 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
-import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.NATIVE_AD_CTA_BG_COLOR
-import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.NATIVE_AD_CTA_TEXT_COLOR
-import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.NATIVE_AD_LABEL_BG_COLOR
-import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote.Companion.NATIVE_AD_LABEL_TEXT_COLOR
 import com.example.ads.NativeAdColors
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class NativeAdColorHexes(
-    val ctaBackground: String = "",
-    val ctaText: String = "",
-    val labelBackground: String = "",
-    val labelText: String = "",
+    @SerialName("cta_bg") val ctaBackground: String = WHITE_HEX,
+    @SerialName("cta_text") val ctaText: String = BRAND_BLUE_HEX,
+    @SerialName("label_bg") val labelBackground: String = BRAND_BLUE_HEX,
+    @SerialName("label_text") val labelText: String = WHITE_HEX,
 ) {
     fun toNativeAdColors(): NativeAdColors = NativeAdColors(
         ctaBackground = NativeAdColors.parseHex(ctaBackground),
@@ -19,19 +18,8 @@ data class NativeAdColorHexes(
         labelText = NativeAdColors.parseHex(labelText),
     )
 
-    fun byKey(): Map<String, String> = mapOf(
-        NATIVE_AD_CTA_BG_COLOR to ctaBackground,
-        NATIVE_AD_CTA_TEXT_COLOR to ctaText,
-        NATIVE_AD_LABEL_BG_COLOR to labelBackground,
-        NATIVE_AD_LABEL_TEXT_COLOR to labelText,
-    )
-
-    companion object {
-        inline fun read(valueOf: (key: String) -> String): NativeAdColorHexes = NativeAdColorHexes(
-            ctaBackground = valueOf(NATIVE_AD_CTA_BG_COLOR).trim(),
-            ctaText = valueOf(NATIVE_AD_CTA_TEXT_COLOR).trim(),
-            labelBackground = valueOf(NATIVE_AD_LABEL_BG_COLOR).trim(),
-            labelText = valueOf(NATIVE_AD_LABEL_TEXT_COLOR).trim(),
-        )
+    private companion object {
+        const val WHITE_HEX = "#FFFFFF"
+        const val BRAND_BLUE_HEX = "#077EFC"
     }
 }

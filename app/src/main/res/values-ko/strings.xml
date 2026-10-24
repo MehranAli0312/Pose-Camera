@@ -175,6 +175,8 @@
     <string name="home_action_sunset">일몰</string>
     <string name="home_action_nature">자연</string>
     <string name="home_action_mirror">거울</string>
+    <string name="home_action_beach">해변</string>
+    <string name="home_action_cafe">카페</string>
     <string name="home_action_explore">둘러보기</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">포즈 %1$d개</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">촬영 수</string>
     <string name="home_progress_perfect">완벽한 사진</string>
     <string name="home_progress_day_goal">오늘 목표</string>
-    <string name="home_daily_title">오늘의 포즈</string>
-    <string name="home_daily_subtitle">탭해서 도전</string>
+    <string name="home_daily_title">이 순간의 포즈</string>
     <string name="nav_saved">저장됨</string>
     <string name="nav_capture">카메라 열기</string>
     <string name="onboard_next">다음</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">%1$d%% 일치</string>
     <string name="onboard_filters_label">필터</string>
     <string name="onboard_saved_label">컬렉션에 저장됨</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">하트를 누른 사진과 포즈 %1$d개</item>
-    </plurals>
-    <string name="saved_tab_shots">사진 · %1$d</string>
-    <string name="saved_tab_poses">포즈 · %1$d</string>
+    <string name="saved_tab_shots">사진</string>
+    <string name="saved_tab_poses">포즈</string>
     <string name="saved_add">즐겨찾기에 추가</string>
     <string name="saved_remove">즐겨찾기에서 삭제</string>
     <string name="saved_sort_title">저장 항목 정렬</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">완벽 25장</string>
     <string name="achievements_badge_fifty_poses">포즈 50개</string>
     <string name="app_open_welcome_back">다시 오신 것을 환영합니다</string>
+    <string name="ad_commercial_break">광고 시간</string>
+    <string name="notification_channel_memories">추억</string>
+    <string name="notification_channel_reminders">알림 및 포즈 아이디어</string>
+    <string name="notification_channel_updates">소식 및 업데이트</string>
+    <string name="notification_memory_title">%1$s, 이 포즈를 찍었어요…</string>
+    <string name="notification_memory_title_place">%1$s, %2$s에서 이 포즈를 찍었어요…</string>
+    <string name="notification_memory_text">이 순간 기억나세요? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s, 오늘 끊기지 않게 하세요!</string>
+    <string name="notification_streak_text">오늘 사진 한 장만 찍으면 계속 이어갈 수 있어요.</string>
+    <string name="notification_first_photo_title">첫 번째 완벽한 포즈가 기다리고 있어요 📸</string>
+    <string name="notification_first_photo_text">포즈를 고르고 따라 하면 몇 초 만에 점수를 확인할 수 있어요.</string>
+    <string name="notification_pose_idea_title">오늘의 포즈 아이디어 ✨</string>
+    <string name="notification_pose_idea_text">이 포즈를 따라 할 수 있나요? 지금 탭해서 해보세요.</string>
+    <string name="notification_action_view">보기</string>
+    <string name="notification_action_not_interested">관심 없음</string>
 </resources>

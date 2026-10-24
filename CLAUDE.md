@@ -55,13 +55,12 @@ Shared UI → `ui/common/`. Feature-only → feature `components/` / `models/`. 
 
 ---
 
-**Remote Config keys:** every new key follows the same path as the existing ones. Never read `remoteConfig.getX(...)` directly outside `readRemoteConfig()`, and never add a one-off getter on `AppFirebaseRemote`.
-1. `const val <NAME>_KEY` in `AppFirebaseRemote` companion.
-2. Default `<entry>` in `res/xml/remote_config_defaults.xml`.
-3. Field with the same default in `AdsRemoteConfig` (use a `fromRemote` enum/value class for multi-value `Long` keys, like `BottomAdPosition`).
-4. Read it in `AppFirebaseRemote.readRemoteConfig()`.
-5. Persist in `AdsRemoteConfigStore`: `getX(KEY, defaults.field)` in `restore()` and `putX(KEY, config.field)` in `update()`.
-6. Consumers inject `AdsRemoteConfigStore` (Koin) and read `store.current.<field>` (or collect `store.config` when the UI must react to changes).
+**Remote Config values:** all values live in one Firebase JSON parameter, `remote_confiq_json_key` (`AppFirebaseRemote.REMOTE_CONFIG_JSON_KEY`). Never add a separate Firebase key, never read `remoteConfig.getX(...)` outside `AppFirebaseRemote.readRemoteConfig()`, and never add a one-off getter on `AppFirebaseRemote`.
+1. Add a field with a default and a snake_case `@SerialName` to the `@Serializable` `AdsRemoteConfig` (or to its nested `AdUnitIds` / `NativeAdColorHexes` / `AppUpdateRemoteConfig`).
+2. Multi-value `Long` keys use an enum with `remoteValue` and a nested `Serializer : RemoteValueEnumSerializer`, like `BottomAdPosition`.
+3. Add the same key and value to the Firebase JSON. A key missing from the JSON falls back to the data class default, and `res/xml/remote_config_defaults.xml` stays `{}`.
+4. Parsing (`AdsRemoteConfig.fromJsonOrNull`) and persistence (`AdsRemoteConfigStore` stores the whole config as one JSON string in DataStore) need no per-key code.
+5. Consumers inject `AdsRemoteConfigStore` (Koin) and read `store.current.<field>` (or collect `store.config` when the UI must react to changes).
 
 ---
 

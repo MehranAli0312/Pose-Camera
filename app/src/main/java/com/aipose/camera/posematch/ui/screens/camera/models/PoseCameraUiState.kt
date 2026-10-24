@@ -2,7 +2,6 @@ package com.aipose.camera.posematch.ui.screens.camera.models
 
 import com.aipose.camera.posematch.domain.models.ColorGrade
 import com.aipose.camera.posematch.ui.models.CaptureTimer
-import com.aipose.camera.posematch.domain.models.PhotoFilterId
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseMatch
 
@@ -20,7 +19,6 @@ data class PoseCameraUiState(
     val isGridVisible: Boolean = false,
     val isPosePickerVisible: Boolean = false,
     val isTimerSheetVisible: Boolean = false,
-    val selectedFilter: PhotoFilterId = PhotoFilterId.Auto,
     val autoGrade: ColorGrade? = null,
     val autoSwatchColor: Int? = null,
     val activeGrade: ColorGrade? = null,

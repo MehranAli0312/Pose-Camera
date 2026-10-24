@@ -15,22 +15,27 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.aipose.camera.posematch.ads.AppOpenRouteGate
 import com.aipose.camera.posematch.ads.InnerInterstitialAds
+import com.aipose.camera.posematch.data.notification.NotificationLaunchStore
+import com.aipose.camera.posematch.ui.common.RequestNotificationPermissionOnce
 import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.graph.DashboardNavGraph
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.bottomBarRoutes
 import com.aipose.camera.posematch.ui.graph.navigateToTabNow
+import com.aipose.camera.posematch.ui.graph.route
 import com.aipose.camera.posematch.ui.screens.bottomBar.DashboardBottomAdSpace
 import com.aipose.camera.posematch.ui.screens.bottomBar.DashboardBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.InScreenBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomBar.LocalInScreenBottomBar
 import com.aipose.camera.posematch.ui.screens.bottomSheet.ExitPopUp
+import com.example.ads.AdsManager
 import org.koin.compose.koinInject
 
 @Composable
@@ -38,6 +43,8 @@ fun DashboardScreen(
     navParentController: NavHostController,
     appOpenRouteGate: AppOpenRouteGate = koinInject(),
     innerInterstitialAds: InnerInterstitialAds = koinInject(),
+    notificationLaunchStore: NotificationLaunchStore = koinInject(),
+    adsManager: AdsManager = koinInject(),
 ) {
     val activity = getActivity()
     val navController = rememberNavController()
@@ -47,6 +54,13 @@ fun DashboardScreen(
             appOpenRouteGate.onRouteChanged(entry.destination.route)
         }
     }
+    val pendingNotificationTarget by notificationLaunchStore.pending.collectAsStateWithLifecycle()
+    LaunchedEffect(pendingNotificationTarget) {
+        val target = notificationLaunchStore.consume() ?: return@LaunchedEffect
+        navController.navigate(target.route()) { launchSingleTop = true }
+    }
+    val isFullScreenAdVisible by adsManager.isFullScreenAdVisible.collectAsStateWithLifecycle()
+    RequestNotificationPermissionOnce(canRequest = !isFullScreenAdVisible)
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 

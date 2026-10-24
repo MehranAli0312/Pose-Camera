@@ -19,18 +19,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.GlossyIconCircle
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.Emerald
-import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val OuterRingSize = 128.dp
-private val InnerRingSize = 100.dp
+private val OuterRingSize = 100.dp
+private val InnerRingSize = 92.dp
 private val BadgeSize = 80.dp
 private val CheckGlyphSize = 34.dp
 private const val OUTER_RING_ALPHA = 0.1f
@@ -52,15 +50,6 @@ internal fun PhotoSuccessHeader(
             text = stringResource(R.string.saved_title),
             style = poseTextStyle(25.sp, FontWeight.Bold, Color.White),
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 20.dp),
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = subtitle,
-            style = poseTextStyle(12.5.sp, FontWeight.Normal, LocalAppPalette.current.textMuted),
-            textAlign = TextAlign.Center,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(horizontal = 20.dp),
         )
     }

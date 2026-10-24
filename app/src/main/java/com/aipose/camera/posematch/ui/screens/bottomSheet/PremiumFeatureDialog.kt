@@ -59,6 +59,8 @@ fun PremiumFeatureBottomSheet(
         confirmValueChange = { !isAdLoading },
     )
 
+    LaunchedEffect(Unit) { ads.loadOnDemand(AdPlacement.PremiumRewarded) }
+
     LaunchedEffect(isAdLoading) {
         if (!isAdLoading) return@LaunchedEffect
         ads.rewarded(AdPlacement.PremiumRewarded) { result ->

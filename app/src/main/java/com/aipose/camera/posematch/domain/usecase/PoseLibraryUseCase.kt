@@ -1,10 +1,10 @@
 package com.aipose.camera.posematch.domain.usecase
 
+import com.aipose.camera.posematch.domain.models.LockedPoseCatalog
 import com.aipose.camera.posematch.domain.models.NormalizedPoint
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseJoint
 import com.aipose.camera.posematch.domain.repo.PoseRepository
-import com.aipose.camera.posematch.domain.time.localDayIndex
 import kotlinx.coroutines.flow.Flow
 
 class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
@@ -22,12 +22,9 @@ class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
     suspend fun shareableImagePath(pose: Pose): String? =
         poseRepository.shareableImagePath(pose)
 
-    fun nextHeroPose(poses: List<Pose>, currentPoseId: Int?): Pose? =
-        poses.filter { it.id != currentPoseId }.randomOrNull() ?: poses.firstOrNull()
-
-    fun poseOfTheDay(poses: List<Pose>): Pose? {
-        if (poses.isEmpty()) return null
-        val index = localDayIndex(System.currentTimeMillis()).mod(poses.size)
-        return poses[index]
+    fun nextHeroPose(poses: List<Pose>, currentPoseId: Int?): Pose? {
+        val paidIds = LockedPoseCatalog.lockedIds(poses)
+        val heroPool = poses.filter { it.id in paidIds }.ifEmpty { poses }
+        return heroPool.filter { it.id != currentPoseId }.randomOrNull() ?: heroPool.firstOrNull()
     }
 }

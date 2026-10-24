@@ -83,7 +83,6 @@ fun SavedScreen(
                 .poseScreenPadding(),
         ) {
             SavedHeader(
-                totalCount = content?.totalCount ?: 0,
                 onOpenSort = viewModel::showSortSheet,
             )
             Spacer(modifier = Modifier.height(19.dp))
@@ -92,8 +91,6 @@ fun SavedScreen(
 
             SavedTabs(
                 selected = content.selectedTab,
-                shotsCount = content.shots.size,
-                posesCount = content.poses.size,
                 onSelect = viewModel::selectTab,
             )
             Spacer(modifier = Modifier.height(17.dp))

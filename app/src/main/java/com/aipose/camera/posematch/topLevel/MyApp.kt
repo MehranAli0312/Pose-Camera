@@ -11,6 +11,7 @@ import com.aipose.camera.posematch.ads.ProStatusStore
 import com.aipose.camera.posematch.ads.appAdsModule
 import com.aipose.camera.posematch.ads.loadSplashAdOnSdkReady
 import com.aipose.camera.posematch.ads.registerAppOpenAds
+import com.aipose.camera.posematch.data.notification.PushNotificationDataSource
 import com.aipose.camera.posematch.di.localModule
 import com.aipose.camera.posematch.di.repositoryModule
 import com.aipose.camera.posematch.di.useCaseModule
@@ -43,6 +44,8 @@ class MyApp : Application() {
         }.koin
 
         startAds(koin)
+        EngagementForegroundObserver(koin.get(), applicationScope).register()
+        runCatching { koin.get<PushNotificationDataSource>().createChannel() }
     }
 
     private fun startAds(koin: Koin) {
@@ -64,7 +67,7 @@ class MyApp : Application() {
                 application = this,
                 lifecycleObserver = koin.get(),
                 remoteConfigStore = koin.get(),
-                loaderState = koin.get(),
+                coverState = koin.get(),
                 routeGate = koin.get(),
                 innerInterstitialAds = koin.get(),
             )

@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Pôr do sol</string>
     <string name="home_action_nature">Natureza</string>
     <string name="home_action_mirror">Espelho</string>
+    <string name="home_action_beach">Praia</string>
+    <string name="home_action_cafe">Café</string>
     <string name="home_action_explore">Explorar</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d pose</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Fotos tiradas</string>
     <string name="home_progress_perfect">Fotos perfeitas</string>
     <string name="home_progress_day_goal">Meta diária</string>
-    <string name="home_daily_title">Pose do dia</string>
-    <string name="home_daily_subtitle">Toque para tentar</string>
+    <string name="home_daily_title">Pose do momento</string>
     <string name="nav_saved">Salvos</string>
     <string name="nav_capture">Abrir câmera</string>
     <string name="onboard_next">Próximo</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%1$d%% DE CORRESPONDÊNCIA</string>
     <string name="onboard_filters_label">FILTROS</string>
     <string name="onboard_saved_label">Salva nas Coleções</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d foto ou pose que você curtiu</item>
-        <item quantity="other">%1$d fotos e poses que você curtiu</item>
-    </plurals>
-    <string name="saved_tab_shots">Fotos · %1$d</string>
-    <string name="saved_tab_poses">Poses · %1$d</string>
+    <string name="saved_tab_shots">Fotos</string>
+    <string name="saved_tab_poses">Poses</string>
     <string name="saved_add">Salvar nos favoritos</string>
     <string name="saved_remove">Remover dos favoritos</string>
     <string name="saved_sort_title">Ordenar salvos</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 perfeitas</string>
     <string name="achievements_badge_fifty_poses">50 poses</string>
     <string name="app_open_welcome_back">Bem-vindo de volta</string>
+    <string name="ad_commercial_break">Intervalo comercial</string>
+    <string name="notification_channel_memories">Memórias</string>
+    <string name="notification_channel_reminders">Lembretes e ideias de poses</string>
+    <string name="notification_channel_updates">Novidades e atualizações</string>
+    <string name="notification_memory_title">Em %1$s, você fez esta pose…</string>
+    <string name="notification_memory_title_place">Em %1$s, em %2$s, você fez esta pose…</string>
+    <string name="notification_memory_text">Lembra deste momento? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – não perca sua sequência hoje!</string>
+    <string name="notification_streak_text">Tire só uma foto hoje para continuar.</string>
+    <string name="notification_first_photo_title">Sua primeira pose perfeita está esperando 📸</string>
+    <string name="notification_first_photo_text">Escolha uma pose, imite-a e veja sua pontuação em segundos.</string>
+    <string name="notification_pose_idea_title">Ideia de pose do dia ✨</string>
+    <string name="notification_pose_idea_text">Consegue imitar esta pose? Toque para tentar agora.</string>
+    <string name="notification_action_view">Ver</string>
+    <string name="notification_action_not_interested">Não tenho interesse</string>
 </resources>

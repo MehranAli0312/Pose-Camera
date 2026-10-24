@@ -1,7 +1,6 @@
 package com.example.ads.internal
 
 import android.app.Activity
-import com.example.ads.AdFormat
 import com.example.ads.AdPlacement
 import com.example.ads.AdResult
 import com.example.ads.AdSlotStyle
@@ -25,9 +24,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 internal class DefaultAdsManager(
     private val scope: CoroutineScope,
@@ -55,12 +54,6 @@ internal class DefaultAdsManager(
     override val isFullScreenAdVisible: StateFlow<Boolean> = state.fullScreenAdVisible
 
     private val initializationStarted = MutableStateFlow(false)
-
-    private val warmUpGeneration = MutableStateFlow(0)
-
-    private val warmPlacements = MutableStateFlow<Set<AdPlacement>>(emptySet())
-
-    private val warmUpObserved = MutableStateFlow(false)
 
     override fun initialize() {
         if (initializationStarted.value) return
@@ -101,74 +94,11 @@ internal class DefaultAdsManager(
         log.d(reason)
     }
 
-    override fun preload(vararg formats: AdFormat, placement: AdPlacement) {
-        scope.launch {
-            formats.forEach { format -> startPreload(format, placement) }
-        }
-    }
-
     override fun preloadFor(placements: List<AdPlacement>) {
-        scope.launch { placements.forEach(::startPreloadFor) }
-    }
-
-    private fun startPreload(format: AdFormat, placement: AdPlacement) {
-        when (format) {
-            AdFormat.NATIVE -> scope.launch { nativeAds.preload(placement) }
-            AdFormat.BANNER -> Unit
-            else -> fullScreenAds.startPreloading(format, placement)
-        }
-    }
-
-    private fun startPreloadFor(placement: AdPlacement) {
-        val fullScreenFormat = fullscreenStyleFor(placement).format
-        when {
-            fullScreenFormat != null -> startPreload(fullScreenFormat, placement)
-            styleFor(placement) is AdSlotStyle.Native -> startPreload(AdFormat.NATIVE, placement)
-            else -> Unit
-        }
-    }
-
-    override fun keepWarm(placements: List<AdPlacement>) {
-        if (placements.isEmpty()) return
-        warmPlacements.update { current -> current + placements }
-        if (warmUpObserved.compareAndSet(expect = false, update = true)) observeWarmUp()
-        log.d("Warm-up registered for ${placements.joinToString { it.id }}")
-    }
-
-    override fun coolDown(placement: AdPlacement) {
-        warmPlacements.update { current -> current - placement }
-        log.d("Warm-up stopped for ${placement.id}")
-    }
-
-    private fun observeWarmUp() {
-        scope.launch {
-            var warmed = emptySet<AdPlacement>()
-            combine(isReady, isPro, warmUpGeneration, warmPlacements) { ready, _, _, placements ->
-                ready to placements
-            }.collect { (ready, placements) ->
-                (warmed - placements).forEach(fullScreenAds::stopPreloading)
-                warmed = placements
-                log.d("Warm-up pass: ready=$ready placements=${placements.joinToString { it.id }}")
-                if (!ready) return@collect
-                stopHiddenPreloads(placements.toList())
-                placements.forEach(::startPreloadFor)
-            }
-        }
-    }
-
-    private fun stopHiddenPreloads(placements: List<AdPlacement>) {
         placements
-            .filter { placement -> fullscreenStyleFor(placement).format == null }
-            .onEach { placement -> log.d("Warm-up skipped for ${placement.id}: style is hidden") }
-            .forEach(fullScreenAds::stopPreloading)
+            .filter { placement -> styleFor(placement) is AdSlotStyle.Native }
+            .forEach { placement -> scope.launch { nativeAds.preload(placement) } }
     }
-
-    override fun revalidateWarmUp() {
-        warmUpGeneration.update { it + 1 }
-    }
-
-    override fun isAvailable(format: AdFormat, placement: AdPlacement): Boolean =
-        fullScreenAds.isAvailable(format, placement)
 
     override fun prepareSlot(placement: AdPlacement) {
         scope.launch {
@@ -196,6 +126,30 @@ internal class DefaultAdsManager(
         return fullScreenAds.isLoadedOnDemand(format, placement)
     }
 
+    override fun isLoadingOnDemand(placement: AdPlacement): Boolean {
+        val format = fullscreenStyleFor(placement).format ?: return false
+        return fullScreenAds.isLoadingOnDemand(format, placement)
+    }
+
+    override fun canShowFullScreenNow(placement: AdPlacement): Boolean {
+        val format = fullscreenStyleFor(placement).format ?: return false
+        return fullScreenAds.canShowNow(format)
+    }
+
+    override suspend fun awaitOnDemand(placement: AdPlacement, timeoutMs: Long): Boolean {
+        val format = fullscreenStyleFor(placement).format ?: return false
+        return withTimeoutOrNull(timeoutMs) {
+            fullScreenAds.awaitOnDemand(format, placement)
+        } ?: false
+    }
+
+    override suspend fun awaitLoadInFlight(placement: AdPlacement, timeoutMs: Long): Boolean {
+        val format = fullscreenStyleFor(placement).format ?: return false
+        return withTimeoutOrNull(timeoutMs) {
+            fullScreenAds.awaitLoadInFlight(format, placement)
+        } ?: false
+    }
+
     override suspend fun showOnDemand(
         activity: Activity,
         placement: AdPlacement,
@@ -203,15 +157,6 @@ internal class DefaultAdsManager(
     ): AdResult {
         val format = fullscreenStyleFor(placement).format ?: return AdResult.NotEligible
         return fullScreenAds.showOnDemand(activity, format, placement, onShown)
-    }
-
-    override suspend fun showPreloaded(
-        activity: Activity,
-        placement: AdPlacement,
-        onShown: (() -> Unit)?,
-    ): AdResult {
-        val format = fullscreenStyleFor(placement).format ?: return AdResult.NotEligible
-        return fullScreenAds.showPreloaded(activity, format, placement, onShown)
     }
 
     override suspend fun loadAndShow(
@@ -239,29 +184,6 @@ internal class DefaultAdsManager(
         if (isPro.value) FullscreenAdStyle.Hidden else slotStyles.fullscreenStyleFor(placement)
 
     override fun nativeAdColors(): NativeAdColors = slotStyles.nativeAdColors()
-
-    override suspend fun showFullscreen(
-        activity: Activity,
-        placement: AdPlacement,
-        onShown: (() -> Unit)?,
-    ): AdResult {
-        val format = fullscreenStyleFor(placement).format ?: return AdResult.NotEligible
-        return fullScreenAds.show(activity, format, placement, onShown)
-    }
-
-    override suspend fun showInterstitial(activity: Activity, placement: AdPlacement): AdResult =
-        fullScreenAds.show(activity, AdFormat.INTERSTITIAL, placement)
-
-    override suspend fun showRewarded(activity: Activity, placement: AdPlacement): AdResult =
-        fullScreenAds.show(activity, AdFormat.REWARDED, placement)
-
-    override suspend fun showRewardedInterstitial(
-        activity: Activity,
-        placement: AdPlacement,
-    ): AdResult = fullScreenAds.show(activity, AdFormat.REWARDED_INTERSTITIAL, placement)
-
-    override suspend fun showAppOpen(activity: Activity, placement: AdPlacement): AdResult =
-        fullScreenAds.show(activity, AdFormat.APP_OPEN, placement)
 
     override fun destroy() {
         fullScreenAds.destroy()

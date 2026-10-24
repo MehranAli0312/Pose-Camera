@@ -60,6 +60,14 @@ internal class AdGate(
         return true
     }
 
+    fun canShowFullScreenNow(format: AdFormat): Boolean =
+        proStatus.proStatus().value.isEligibleForAds &&
+            state.foreground.value &&
+            !state.isFullScreenBusy() &&
+            state.enoughTimeSinceLastFullScreenAd(config.minIntervalBetweenFullScreenAdsMs) &&
+            (format != AdFormat.INTERSTITIAL ||
+                state.wouldPassInterstitialFrequency(config.interstitialFrequency))
+
     fun passesInterstitialFrequency(): Boolean =
         state.passesInterstitialFrequency(config.interstitialFrequency)
 }

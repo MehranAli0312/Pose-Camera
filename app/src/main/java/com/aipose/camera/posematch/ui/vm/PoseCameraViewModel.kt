@@ -190,15 +190,6 @@ class PoseCameraViewModel(
         _uiState.update { state -> state.copy(isGridVisible = !state.isGridVisible) }
     }
 
-    fun selectFilter(filterId: PhotoFilterId) {
-        _uiState.update { state ->
-            state.copy(
-                selectedFilter = filterId,
-                activeGrade = photoEditUseCase.gradeFor(filterId, state.autoGrade)
-            )
-        }
-    }
-
     fun onShutterClicked() {
         val state = _uiState.value
         if (state.isCapturing || state.isCountdownRunning) return
@@ -344,7 +335,7 @@ class PoseCameraViewModel(
                         overlayCutoutPath = cutoutPath,
                         autoGrade = look?.grade,
                         autoSwatchColor = look?.dominantColor,
-                        activeGrade = photoEditUseCase.gradeFor(state.selectedFilter, look?.grade)
+                        activeGrade = photoEditUseCase.gradeFor(PhotoFilterId.Auto, look?.grade)
                     )
                 }
             }

@@ -16,6 +16,4 @@ interface CustomPoseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(pose: CustomPoseEntity): Long
 
-    @Query("DELETE FROM custom_poses WHERE id = :id")
-    suspend fun deleteById(id: Long)
 }

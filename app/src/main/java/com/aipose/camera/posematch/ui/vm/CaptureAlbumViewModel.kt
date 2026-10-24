@@ -15,9 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class CaptureAlbumViewModel(
     private val context: Context,
@@ -28,20 +26,17 @@ class CaptureAlbumViewModel(
     private val _locationLabel = MutableStateFlow<String?>(null)
     private val _filter = MutableStateFlow(CollectionsFilter.All)
     private val _sort = MutableStateFlow(CollectionsSort.Newest)
-    private val _isRemoveDialogVisible = MutableStateFlow(false)
     private val _isSortSheetVisible = MutableStateFlow(false)
 
     private data class AlbumControls(
         val filter: CollectionsFilter,
         val sort: CollectionsSort,
-        val isRemoveDialogVisible: Boolean,
         val isSortSheetVisible: Boolean
     )
 
     private val controls = combine(
         _filter,
         _sort,
-        _isRemoveDialogVisible,
         _isSortSheetVisible,
         ::AlbumControls,
     )
@@ -62,10 +57,8 @@ class CaptureAlbumViewModel(
             totalCount = albumCaptures.size,
             averageMatch = albumCaptures.sumOf { it.matchScore } / albumCaptures.size,
             bestMatch = albumCaptures.maxOf { it.matchScore },
-            lastShotDaysAgo = albumCaptures.minOf { captureProgressUseCase.daysSince(it) },
             filter = controls.filter,
             sort = controls.sort,
-            isRemoveDialogVisible = controls.isRemoveDialogVisible,
             isSortSheetVisible = controls.isSortSheetVisible,
         )
     }.stateIn(
@@ -93,23 +86,6 @@ class CaptureAlbumViewModel(
 
     fun dismissSortSheet() {
         _isSortSheetVisible.value = false
-    }
-
-    fun showRemoveDialog() {
-        _isRemoveDialogVisible.value = true
-    }
-
-    fun dismissRemoveDialog() {
-        _isRemoveDialogVisible.value = false
-    }
-
-    fun removeAll() {
-        val locationLabel = _locationLabel.value ?: return
-        _isRemoveDialogVisible.value = false
-        viewModelScope.launch {
-            val captures = captureUseCase.observeCaptures().first()
-            captureUseCase.deleteAll(captures.filter { it.locationLabel() == locationLabel })
-        }
     }
 
     private fun CollectionsSort.comparator(): Comparator<Capture> = when (this) {

@@ -12,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.HomeInlineNative
+import com.aipose.camera.posematch.ads.rememberHomeInlineNativeAd
 import com.aipose.camera.posematch.ads.rememberInnerInterstitial
 import com.aipose.camera.posematch.domain.models.Pose
+import com.aipose.camera.posematch.ui.common.InlineNativeAd
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.PoseScreenTopSpacing
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
@@ -25,15 +27,14 @@ import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeader
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeroCard
-import com.aipose.camera.posematch.ui.screens.home.components.HomePoseOfTheDayCard
 import com.aipose.camera.posematch.ui.screens.home.components.HomeProgressCard
 import com.aipose.camera.posematch.ui.screens.home.components.HomeQuickActionGrid
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
 import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickActionId
-import com.aipose.camera.posematch.ui.screens.home.models.HomeDailyPose
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
+import com.example.ads.AdPlacement
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,10 +47,7 @@ fun HomeScreen(
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? HomeUiState.Content
     val innerInterstitial = rememberInnerInterstitial()
-
-    fun openPoseDetail(pose: Pose) {
-        navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(pose.id))
-    }
+    val homeNativeAd = rememberHomeInlineNativeAd()
 
     fun openWithAd(route: String) {
         if (!navController.acceptNavigationClick()) return
@@ -65,14 +63,6 @@ fun HomeScreen(
             viewModel.showLockedPose(hero.pose, HomeUnlockTarget.Camera)
         } else {
             startPosing(hero.pose)
-        }
-    }
-
-    fun tryDailyPose(daily: HomeDailyPose) {
-        if (daily.isLocked) {
-            viewModel.showLockedPose(daily.pose, HomeUnlockTarget.PoseDetail)
-        } else {
-            openPoseDetail(daily.pose)
         }
     }
 
@@ -122,9 +112,9 @@ fun HomeScreen(
 
                 item(key = HOME_ACTIONS_KEY) {
                     HomeQuickActionGrid(
-                        actions = content.quickActions,
-                        onActionClick = { action ->
-                            when (val id = action.id) {
+                        actions = HomeQuickActionId.entries,
+                        onActionClick = { id ->
+                            when (id) {
                                 HomeQuickActionId.Explore ->
                                     openAlbum(NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES)
 
@@ -135,22 +125,21 @@ fun HomeScreen(
                     )
                 }
 
+                if (homeNativeAd.isEnabled) {
+                    item(key = HOME_NATIVE_AD_KEY) {
+                        InlineNativeAd(
+                            placement = AdPlacement.HomeInlineNative,
+                            modifier = Modifier.padding(top = 14.dp),
+                        )
+                    }
+                }
+
                 item(key = HOME_PROGRESS_KEY) {
                     HomeProgressCard(
                         progress = content.progress,
                         onViewAll = { navController.navigateOnClick(NavRoute.ProgressScreenRoute.route) },
                         modifier = Modifier.padding(top = 14.dp),
                     )
-                }
-
-                content.poseOfTheDay?.let { daily ->
-                    item(key = HOME_DAILY_KEY) {
-                        HomePoseOfTheDayCard(
-                            daily = daily,
-                            onTryPose = { tryDailyPose(daily) },
-                            modifier = Modifier.padding(top = 12.dp),
-                        )
-                    }
                 }
             }
         }
@@ -173,5 +162,5 @@ fun HomeScreen(
 
 private const val HOME_HERO_KEY = "home_hero"
 private const val HOME_ACTIONS_KEY = "home_actions"
+private const val HOME_NATIVE_AD_KEY = "home_native_ad"
 private const val HOME_PROGRESS_KEY = "home_progress"
-private const val HOME_DAILY_KEY = "home_daily"

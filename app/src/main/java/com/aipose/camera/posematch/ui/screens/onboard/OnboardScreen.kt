@@ -31,7 +31,9 @@ import com.aipose.camera.posematch.ui.screens.onboard.data.onboardSteps
 import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardPage
 import com.aipose.camera.posematch.ui.screens.onboard.models.onboardPages
 import com.aipose.camera.posematch.ui.screens.onboard.models.stepIndexAt
+import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
 import com.aipose.camera.posematch.ui.screens.splash.goToHome
+import com.aipose.camera.posematch.ui.screens.splash.goToStartPremium
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import kotlin.math.abs
 import kotlinx.coroutines.launch
@@ -76,7 +78,11 @@ fun OnboardScreen(
             missedSplashAd.clear()
             scope.launch {
                 splashViewModel.writeSplashStatus()
-                goToHome(navController)
+                if (splashViewModel.showPremiumAfterOnboarding()) {
+                    goToStartPremium(navController, StartPremiumNextStep.Home)
+                } else {
+                    goToHome(navController)
+                }
             }
         }
     }
@@ -106,7 +112,6 @@ fun OnboardScreen(
                     bottomReserved = bottomAdHeight,
                 )
                 OnboardPage.NativeAd -> OnboardNativeAdPage(
-                    onContinue = { goToPage(page + 1) },
                     bottomReserved = adPageBottomReserved,
                 )
             }

@@ -10,7 +10,6 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -20,11 +19,6 @@ android {
 
     buildTypes {
         debug {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             resValue("string", "admob_app_id", "ca-app-pub-3940256099942544~3347511713")
             buildConfigField(
                 "String",
@@ -48,22 +42,12 @@ android {
             )
             buildConfigField(
                 "String",
-                "AD_UNIT_REWARDED_INTERSTITIAL",
-                "\"ca-app-pub-3940256099942544/5354046379\""
-            )
-            buildConfigField(
-                "String",
                 "AD_UNIT_APP_OPEN",
                 "\"ca-app-pub-3940256099942544/9257395921\""
             )
         }
 
         release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
             resValue("string", "admob_app_id", "ca-app-pub-6854526007331629~8767978934")
             buildConfigField(
                 "String",
@@ -83,11 +67,6 @@ android {
             buildConfigField(
                 "String",
                 "AD_UNIT_REWARDED",
-                "\"\""
-            )
-            buildConfigField(
-                "String",
-                "AD_UNIT_REWARDED_INTERSTITIAL",
                 "\"\""
             )
             buildConfigField(
@@ -119,7 +98,6 @@ kotlin {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.process)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -141,7 +119,4 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.koin.test)
-
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.runner)
 }

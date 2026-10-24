@@ -60,7 +60,9 @@ import com.aipose.camera.posematch.ui.models.allLanguageItems
 import com.aipose.camera.posematch.ui.models.resolveDefaultLanguageCode
 import com.aipose.camera.posematch.ui.screens.language.components.LanguageItemCard
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
+import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
 import com.aipose.camera.posematch.ui.screens.splash.goToOnboardOrNext
+import com.aipose.camera.posematch.ui.screens.splash.goToStartPremium
 import com.aipose.camera.posematch.ui.theme.BrandGradient
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
@@ -134,10 +136,21 @@ fun LocalizeScreen(
                     splashViewModel.writeSplashStatus()
                     languageViewModel.changeLanguage(selectedLanguage)
                     languageViewModel.applyLanguage(selectedLanguage)
-                    goToOnboardOrNext(
-                        navController = navController,
-                        showOnboarding = showOnboarding,
-                    )
+                    if (splashViewModel.showPremiumAfterLanguage()) {
+                        goToStartPremium(
+                            navController = navController,
+                            nextStep = if (showOnboarding) {
+                                StartPremiumNextStep.Onboard
+                            } else {
+                                StartPremiumNextStep.Home
+                            },
+                        )
+                    } else {
+                        goToOnboardOrNext(
+                            navController = navController,
+                            showOnboarding = showOnboarding,
+                        )
+                    }
                 }
             }
         } else {

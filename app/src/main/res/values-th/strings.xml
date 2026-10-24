@@ -175,6 +175,8 @@
     <string name="home_action_sunset">พระอาทิตย์ตก</string>
     <string name="home_action_nature">ธรรมชาติ</string>
     <string name="home_action_mirror">กระจก</string>
+    <string name="home_action_beach">ชายหาด</string>
+    <string name="home_action_cafe">คาเฟ่</string>
     <string name="home_action_explore">สำรวจ</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">%1$d ท่า</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">ภาพที่ถ่าย</string>
     <string name="home_progress_perfect">ภาพสมบูรณ์แบบ</string>
     <string name="home_progress_day_goal">เป้าหมายวันนี้</string>
-    <string name="home_daily_title">ท่าโพสประจำวัน</string>
-    <string name="home_daily_subtitle">แตะเพื่อลอง</string>
+    <string name="home_daily_title">ท่าโพสประจำช่วงเวลา</string>
     <string name="nav_saved">ที่บันทึก</string>
     <string name="nav_capture">เปิดกล้อง</string>
     <string name="onboard_next">ถัดไป</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">ตรง %1$d%%</string>
     <string name="onboard_filters_label">ฟิลเตอร์</string>
     <string name="onboard_saved_label">บันทึกลงคอลเลกชันแล้ว</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">ภาพและท่าโพสที่คุณกดหัวใจ %1$d รายการ</item>
-    </plurals>
-    <string name="saved_tab_shots">ภาพ · %1$d</string>
-    <string name="saved_tab_poses">ท่าโพส · %1$d</string>
+    <string name="saved_tab_shots">ภาพ</string>
+    <string name="saved_tab_poses">ท่าโพส</string>
     <string name="saved_add">เพิ่มในรายการโปรด</string>
     <string name="saved_remove">นำออกจากรายการโปรด</string>
     <string name="saved_sort_title">จัดเรียงที่บันทึก</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">สมบูรณ์แบบ 25</string>
     <string name="achievements_badge_fifty_poses">50 ท่า</string>
     <string name="app_open_welcome_back">ยินดีต้อนรับกลับ</string>
+    <string name="ad_commercial_break">พักโฆษณา</string>
+    <string name="notification_channel_memories">ความทรงจำ</string>
+    <string name="notification_channel_reminders">การแจ้งเตือนและไอเดียท่าโพส</string>
+    <string name="notification_channel_updates">ข่าวสารและการอัปเดต</string>
+    <string name="notification_memory_title">เมื่อ %1$s คุณโพสท่านี้…</string>
+    <string name="notification_memory_title_place">เมื่อ %1$s ที่ %2$s คุณโพสท่านี้…</string>
+    <string name="notification_memory_text">จำช่วงเวลานี้ได้ไหม? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s อย่าให้ขาดวันนี้นะ!</string>
+    <string name="notification_streak_text">ถ่ายรูปแค่ 1 รูปวันนี้เพื่อรักษาสถิติไว้</string>
+    <string name="notification_first_photo_title">ท่าโพสที่สมบูรณ์แบบท่าแรกของคุณรออยู่ 📸</string>
+    <string name="notification_first_photo_text">เลือกท่าโพส ทำตาม แล้วดูคะแนนของคุณได้ในไม่กี่วินาที</string>
+    <string name="notification_pose_idea_title">ไอเดียท่าโพสประจำวัน ✨</string>
+    <string name="notification_pose_idea_text">คุณทำท่านี้ได้ไหม? แตะเพื่อลองเลย</string>
+    <string name="notification_action_view">ดู</string>
+    <string name="notification_action_not_interested">ไม่สนใจ</string>
 </resources>

@@ -38,7 +38,7 @@ val adsModule = module {
 
     single { BannerAdController(androidContext(), get(), get()) }
     single { NativeAdController(get(), get()) }
-    single { FullScreenAdController(get(), get(), get(), get()) }
+    single { FullScreenAdController(get(AdsScopeQualifier), get(), get(), get()) }
     single { PreparedSlotController(get(AdsScopeQualifier), get(), get(), get()) }
 
     single<AdsManager> {

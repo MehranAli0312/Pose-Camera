@@ -18,17 +18,7 @@ interface AdsManager {
 
     suspend fun requestConsent(activity: Activity): ConsentResult
 
-    fun preload(vararg formats: AdFormat, placement: AdPlacement = AdPlacement.Default)
-
     fun preloadFor(placements: List<AdPlacement>)
-
-    fun keepWarm(placements: List<AdPlacement>)
-
-    fun coolDown(placement: AdPlacement)
-
-    fun revalidateWarmUp()
-
-    fun isAvailable(format: AdFormat, placement: AdPlacement = AdPlacement.Default): Boolean
 
     fun prepareSlot(placement: AdPlacement)
 
@@ -40,14 +30,15 @@ interface AdsManager {
 
     fun isLoadedOnDemand(placement: AdPlacement): Boolean
 
-    suspend fun showOnDemand(
-        activity: Activity,
-        placement: AdPlacement,
-        onShown: (() -> Unit)? = null,
-    ): AdResult
+    fun isLoadingOnDemand(placement: AdPlacement): Boolean
 
-    // Shows an ad already held by the placement's preloader; never waits on a network load.
-    suspend fun showPreloaded(
+    fun canShowFullScreenNow(placement: AdPlacement): Boolean
+
+    suspend fun awaitOnDemand(placement: AdPlacement, timeoutMs: Long): Boolean
+
+    suspend fun awaitLoadInFlight(placement: AdPlacement, timeoutMs: Long): Boolean
+
+    suspend fun showOnDemand(
         activity: Activity,
         placement: AdPlacement,
         onShown: (() -> Unit)? = null,
@@ -66,32 +57,6 @@ interface AdsManager {
     fun fullscreenStyleFor(placement: AdPlacement): FullscreenAdStyle
 
     fun nativeAdColors(): NativeAdColors
-
-    suspend fun showFullscreen(
-        activity: Activity,
-        placement: AdPlacement,
-        onShown: (() -> Unit)? = null,
-    ): AdResult
-
-    suspend fun showInterstitial(
-        activity: Activity,
-        placement: AdPlacement = AdPlacement.Default,
-    ): AdResult
-
-    suspend fun showRewarded(
-        activity: Activity,
-        placement: AdPlacement = AdPlacement.Default,
-    ): AdResult
-
-    suspend fun showRewardedInterstitial(
-        activity: Activity,
-        placement: AdPlacement = AdPlacement.Default,
-    ): AdResult
-
-    suspend fun showAppOpen(
-        activity: Activity,
-        placement: AdPlacement = AdPlacement.Default,
-    ): AdResult
 
     fun destroy()
 }

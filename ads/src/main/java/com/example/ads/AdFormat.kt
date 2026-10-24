@@ -5,6 +5,5 @@ enum class AdFormat {
     NATIVE,
     INTERSTITIAL,
     REWARDED,
-    REWARDED_INTERSTITIAL,
     APP_OPEN,
 }

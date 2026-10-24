@@ -15,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.SuccessScreenBottom
 import com.aipose.camera.posematch.ads.rememberPhotoSaveInterstitial
+import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
@@ -28,6 +30,7 @@ import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditTopB
 import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditWorkspace
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
 import com.aipose.camera.posematch.ui.vm.PhotoEditViewModel
+import com.example.ads.AdPlacement
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,9 +40,12 @@ fun PhotoEditScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val saveInterstitial = rememberPhotoSaveInterstitial()
+    val ads = rememberScreenAds()
     val draft = uiState.draft ?: return
 
     LaunchedEffect(draft.poseId) { saveInterstitial.prepare(draft.poseId) }
+
+    LaunchedEffect(Unit) { ads.preload(AdPlacement.SuccessScreenBottom) }
 
     LaunchedEffect(uiState.savedCaptureId) {
         val captureId = uiState.savedCaptureId ?: return@LaunchedEffect

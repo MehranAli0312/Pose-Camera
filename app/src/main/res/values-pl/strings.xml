@@ -181,6 +181,8 @@
     <string name="home_action_sunset">Zachód słońca</string>
     <string name="home_action_nature">Natura</string>
     <string name="home_action_mirror">Lustro</string>
+    <string name="home_action_beach">Plaża</string>
+    <string name="home_action_cafe">Kawiarnia</string>
     <string name="home_action_explore">Odkrywaj</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d poza</item>
@@ -206,8 +208,7 @@
     <string name="home_progress_shots">Zdjęcia</string>
     <string name="home_progress_perfect">Idealne zdjęcia</string>
     <string name="home_progress_day_goal">Cel dnia</string>
-    <string name="home_daily_title">Poza dnia</string>
-    <string name="home_daily_subtitle">Dotknij, aby spróbować</string>
+    <string name="home_daily_title">Poza momentu</string>
     <string name="nav_saved">Zapisane</string>
     <string name="nav_capture">Otwórz aparat</string>
     <string name="onboard_next">Dalej</string>
@@ -225,14 +226,8 @@
     <string name="onboard_match_badge">DOPASOWANIE %1$d%%</string>
     <string name="onboard_filters_label">FILTRY</string>
     <string name="onboard_saved_label">Zapisano w Kolekcjach</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d polubione zdjęcie lub poza</item>
-        <item quantity="few">%1$d polubione zdjęcia i pozy</item>
-        <item quantity="many">%1$d polubionych zdjęć i póz</item>
-        <item quantity="other">%1$d polubionego zdjęcia i pozy</item>
-    </plurals>
-    <string name="saved_tab_shots">Zdjęcia · %1$d</string>
-    <string name="saved_tab_poses">Pozy · %1$d</string>
+    <string name="saved_tab_shots">Zdjęcia</string>
+    <string name="saved_tab_poses">Pozy</string>
     <string name="saved_add">Dodaj do ulubionych</string>
     <string name="saved_remove">Usuń z ulubionych</string>
     <string name="saved_sort_title">Sortuj zapisane</string>
@@ -377,4 +372,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 idealnych</string>
     <string name="achievements_badge_fifty_poses">50 póz</string>
     <string name="app_open_welcome_back">Witaj ponownie</string>
+    <string name="ad_commercial_break">Przerwa reklamowa</string>
+    <string name="notification_channel_memories">Wspomnienia</string>
+    <string name="notification_channel_reminders">Przypomnienia i pomysły na pozy</string>
+    <string name="notification_channel_updates">Nowości i aktualizacje</string>
+    <string name="notification_memory_title">%1$s: Twoja poza z tego dnia…</string>
+    <string name="notification_memory_title_place">%1$s, %2$s: Twoja poza z tego dnia…</string>
+    <string name="notification_memory_text">Pamiętasz tę chwilę? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – nie przerywaj serii dziś!</string>
+    <string name="notification_streak_text">Zrób dziś tylko jedno zdjęcie, aby ją utrzymać.</string>
+    <string name="notification_first_photo_title">Twoja pierwsza idealna poza czeka 📸</string>
+    <string name="notification_first_photo_text">Wybierz pozę, dopasuj ją i poznaj swój wynik w kilka sekund.</string>
+    <string name="notification_pose_idea_title">Pomysł na pozę dnia ✨</string>
+    <string name="notification_pose_idea_text">Czy uda Ci się odtworzyć tę pozę? Dotknij, aby spróbować teraz.</string>
+    <string name="notification_action_view">Zobacz</string>
+    <string name="notification_action_not_interested">Nie interesuje mnie</string>
 </resources>

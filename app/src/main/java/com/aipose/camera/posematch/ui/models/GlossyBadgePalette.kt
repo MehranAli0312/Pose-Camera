@@ -13,7 +13,6 @@ import com.aipose.camera.posematch.ui.theme.PoseBlueLight
 import com.aipose.camera.posematch.ui.theme.PoseBlueShadow
 import com.aipose.camera.posematch.ui.theme.PoseAmberDeep
 import com.aipose.camera.posematch.ui.theme.PoseAmberLight
-import com.aipose.camera.posematch.ui.theme.PoseAmberPale
 import com.aipose.camera.posematch.ui.theme.PoseAmberShadow
 import com.aipose.camera.posematch.ui.theme.PoseCyan
 import com.aipose.camera.posematch.ui.theme.PoseCyanDeep
@@ -62,7 +61,6 @@ data class GlossyBadgePalette(
         val Rose = GlossyBadgePalette(PoseRoseLight, PoseRose, PoseRoseDeep, PoseRoseShadow)
         val Pink = GlossyBadgePalette(PosePinkLight, PosePink, PosePinkDeep, PosePinkShadow)
         val Amber = GlossyBadgePalette(PoseAmberLight, PoseAmber, PoseAmberDeep, PoseAmberShadow)
-        val Bulb = GlossyBadgePalette(PoseAmberPale, PoseAmber, PoseAmberDeep, PoseAmberShadow)
         val Emerald = GlossyBadgePalette(PoseEmeraldLight, EmeraldColor, PoseEmeraldDeep, PoseEmeraldShadow)
         val Sky = GlossyBadgePalette(PoseSkyLight, PoseSky, PoseSkyDeep, PoseSkyShadow)
         val Violet = GlossyBadgePalette(PoseVioletPale, VioletColor, PoseVioletDeep, PoseVioletShadow)

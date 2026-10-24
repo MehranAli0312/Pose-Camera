@@ -177,6 +177,8 @@
     <string name="home_action_sunset">सूर्यास्त</string>
     <string name="home_action_nature">प्रकृति</string>
     <string name="home_action_mirror">मिरर</string>
+    <string name="home_action_beach">बीच</string>
+    <string name="home_action_cafe">कैफ़े</string>
     <string name="home_action_explore">एक्सप्लोर करें</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d पोज़</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">ली गई फ़ोटो</string>
     <string name="home_progress_perfect">परफ़ेक्ट फ़ोटो</string>
     <string name="home_progress_day_goal">दैनिक लक्ष्य</string>
-    <string name="home_daily_title">आज का पोज़</string>
-    <string name="home_daily_subtitle">आज़माने के लिए टैप करें</string>
+    <string name="home_daily_title">इस पल का पोज़</string>
     <string name="nav_saved">सेव किए गए</string>
     <string name="nav_capture">कैमरा खोलें</string>
     <string name="onboard_next">आगे</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%1$d%% मैच</string>
     <string name="onboard_filters_label">फ़िल्टर</string>
     <string name="onboard_saved_label">कलेक्शन में सेव हुआ</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d पसंद की गई फ़ोटो या पोज़</item>
-        <item quantity="other">%1$d पसंद की गई फ़ोटो और पोज़</item>
-    </plurals>
-    <string name="saved_tab_shots">फ़ोटो · %1$d</string>
-    <string name="saved_tab_poses">पोज़ · %1$d</string>
+    <string name="saved_tab_shots">फ़ोटो</string>
+    <string name="saved_tab_poses">पोज़</string>
     <string name="saved_add">पसंदीदा में जोड़ें</string>
     <string name="saved_remove">पसंदीदा से हटाएँ</string>
     <string name="saved_sort_title">सेव किए गए को क्रम दें</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 परफ़ेक्ट</string>
     <string name="achievements_badge_fifty_poses">50 पोज़</string>
     <string name="app_open_welcome_back">वापसी पर स्वागत है</string>
+    <string name="ad_commercial_break">विज्ञापन ब्रेक</string>
+    <string name="notification_channel_memories">यादें</string>
+    <string name="notification_channel_reminders">रिमाइंडर और पोज़ आइडिया</string>
+    <string name="notification_channel_updates">समाचार और अपडेट</string>
+    <string name="notification_memory_title">%1$s को आपने यह पोज़ किया था…</string>
+    <string name="notification_memory_title_place">%1$s को %2$s में आपने यह पोज़ किया था…</string>
+    <string name="notification_memory_text">क्या आपको यह पल याद है? 📸</string>
+    <string name="notification_streak_title">🔥 अपनी %1$s आज टूटने न दें!</string>
+    <string name="notification_streak_text">बस आज एक फ़ोटो लें और इसे जारी रखें।</string>
+    <string name="notification_first_photo_title">आपका पहला परफ़ेक्ट पोज़ इंतज़ार कर रहा है 📸</string>
+    <string name="notification_first_photo_text">एक पोज़ चुनें, उसे मैच करें और सेकंडों में अपना स्कोर देखें।</string>
+    <string name="notification_pose_idea_title">आज का पोज़ आइडिया ✨</string>
+    <string name="notification_pose_idea_text">क्या आप यह पोज़ मैच कर सकते हैं? अभी आज़माने के लिए टैप करें।</string>
+    <string name="notification_action_view">देखें</string>
+    <string name="notification_action_not_interested">दिलचस्पी नहीं</string>
 </resources>

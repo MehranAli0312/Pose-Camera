@@ -16,10 +16,8 @@ sealed interface CaptureAlbumUiState {
         val totalCount: Int,
         val averageMatch: Int,
         val bestMatch: Int,
-        val lastShotDaysAgo: Int,
         val filter: CollectionsFilter,
         val sort: CollectionsSort,
-        val isRemoveDialogVisible: Boolean,
         val isSortSheetVisible: Boolean
     ) : CaptureAlbumUiState
 }

@@ -175,6 +175,8 @@
     <string name="home_action_sunset">Hoàng hôn</string>
     <string name="home_action_nature">Thiên nhiên</string>
     <string name="home_action_mirror">Gương</string>
+    <string name="home_action_beach">Bãi biển</string>
+    <string name="home_action_cafe">Quán cà phê</string>
     <string name="home_action_explore">Khám phá</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">%1$d dáng</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">Ảnh đã chụp</string>
     <string name="home_progress_perfect">Ảnh hoàn hảo</string>
     <string name="home_progress_day_goal">Mục tiêu ngày</string>
-    <string name="home_daily_title">Dáng của ngày</string>
-    <string name="home_daily_subtitle">Chạm để thử</string>
+    <string name="home_daily_title">Dáng khoảnh khắc</string>
     <string name="nav_saved">Đã lưu</string>
     <string name="nav_capture">Mở camera</string>
     <string name="onboard_next">Tiếp</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">KHỚP %1$d%%</string>
     <string name="onboard_filters_label">BỘ LỌC</string>
     <string name="onboard_saved_label">Đã lưu vào Bộ sưu tập</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">%1$d ảnh và dáng bạn đã thả tim</item>
-    </plurals>
-    <string name="saved_tab_shots">Ảnh · %1$d</string>
-    <string name="saved_tab_poses">Dáng · %1$d</string>
+    <string name="saved_tab_shots">Ảnh</string>
+    <string name="saved_tab_poses">Dáng</string>
     <string name="saved_add">Thêm vào yêu thích</string>
     <string name="saved_remove">Xóa khỏi yêu thích</string>
     <string name="saved_sort_title">Sắp xếp mục đã lưu</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 hoàn hảo</string>
     <string name="achievements_badge_fifty_poses">50 dáng</string>
     <string name="app_open_welcome_back">Chào mừng trở lại</string>
+    <string name="ad_commercial_break">Giờ quảng cáo</string>
+    <string name="notification_channel_memories">Kỷ niệm</string>
+    <string name="notification_channel_reminders">Lời nhắc và ý tưởng tạo dáng</string>
+    <string name="notification_channel_updates">Tin tức và cập nhật</string>
+    <string name="notification_memory_title">Vào %1$s, bạn đã tạo dáng này…</string>
+    <string name="notification_memory_title_place">Vào %1$s tại %2$s, bạn đã tạo dáng này…</string>
+    <string name="notification_memory_text">Bạn còn nhớ khoảnh khắc này? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – đừng để đứt chuỗi hôm nay!</string>
+    <string name="notification_streak_text">Chỉ cần chụp một ảnh hôm nay để duy trì.</string>
+    <string name="notification_first_photo_title">Dáng chụp hoàn hảo đầu tiên đang chờ bạn 📸</string>
+    <string name="notification_first_photo_text">Chọn một dáng, làm theo và xem điểm của bạn chỉ trong vài giây.</string>
+    <string name="notification_pose_idea_title">Ý tưởng tạo dáng hôm nay ✨</string>
+    <string name="notification_pose_idea_text">Bạn có làm theo được dáng này không? Chạm để thử ngay.</string>
+    <string name="notification_action_view">Xem</string>
+    <string name="notification_action_not_interested">Không quan tâm</string>
 </resources>

@@ -1,7 +1,14 @@
 package com.aipose.camera.posematch.ui.screens.home.components
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +34,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -72,6 +80,8 @@ private const val CTA_SHADOW_ALPHA = 0.55f
 private const val CTA_GLOSS_ALPHA = 0.4f
 private const val CTA_GLOSS_HEIGHT_RATIO = 0.45f
 private const val GRADIENT_MID_STOP = 0.55f
+private const val CTA_PULSE_MAX_SCALE = 1.08f
+private const val CTA_PULSE_DURATION_MS = 700
 
 @Composable
 internal fun HomeHeroCard(
@@ -126,6 +136,12 @@ internal fun HomeHeroCard(
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
+                text = stringResource(R.string.home_daily_title),
+                style = poseTextStyle(14.sp, FontWeight.Bold, Color.White),
+                maxLines = 1,
+                modifier=Modifier.basicMarquee(),
+            )
+            Text(
                 text = hero.pose.category,
                 style = poseTextStyle(22.sp, FontWeight.ExtraBold, Color.White),
                 textAlign = TextAlign.Center,
@@ -141,8 +157,22 @@ internal fun HomeHeroCard(
 @Composable
 private fun StartPosingButton(modifier: Modifier = Modifier) {
     val palette = GlossyBadgePalette.HeroCta
+    val pulse = rememberInfiniteTransition(label = "HeroCtaPulse")
+    val scale = pulse.animateFloat(
+        initialValue = 1f,
+        targetValue = CTA_PULSE_MAX_SCALE,
+        animationSpec = infiniteRepeatable(
+            animation = tween(CTA_PULSE_DURATION_MS, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "scale",
+    )
     Row(
         modifier = modifier
+            .graphicsLayer {
+                scaleX = scale.value
+                scaleY = scale.value
+            }
             .widthIn(max = CtaWidth)
             .fillMaxWidth()
             .height(CtaHeight)

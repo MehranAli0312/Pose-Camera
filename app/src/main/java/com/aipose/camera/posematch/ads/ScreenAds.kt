@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.lifecycleScope
 import com.example.ads.AdPlacement
 import com.example.ads.AdResult
+import com.example.ads.AdSlotStyle
 import com.example.ads.AdsManager
 import com.example.ads.FullscreenAdStyle
 import java.util.concurrent.atomic.AtomicBoolean
@@ -47,6 +48,9 @@ class ScreenAds internal constructor(
         adsManager.preloadFor(listOf(placement))
     }
 
+    fun isSlotEnabled(placement: AdPlacement): Boolean =
+        adsManager.styleFor(placement) != AdSlotStyle.Hidden
+
     fun prepareSlot(placement: AdPlacement) {
         adsManager.prepareSlot(placement)
     }
@@ -65,15 +69,17 @@ class ScreenAds internal constructor(
             return
         }
         activity.lifecycleScope.launch {
-            val result = runCatching {
-                adsManager.loadAndShow(
-                    activity = activity,
-                    placement = placement,
-                    loadTimeoutMs = REWARDED_LOAD_TIMEOUT_MS,
-                )
-            }.getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
+            val result = runCatching { showRewarded(activity, placement) }
+                .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
             onFinished(result)
         }
+    }
+
+    private suspend fun showRewarded(activity: ComponentActivity, placement: AdPlacement): AdResult {
+        if (!adsManager.awaitOnDemand(placement, REWARDED_LOAD_TIMEOUT_MS)) {
+            return AdResult.NotAvailable
+        }
+        return adsManager.showOnDemand(activity, placement)
     }
 
     fun fullscreen(

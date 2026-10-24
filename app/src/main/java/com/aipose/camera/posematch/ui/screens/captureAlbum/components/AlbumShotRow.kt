@@ -1,9 +1,9 @@
 package com.aipose.camera.posematch.ui.screens.captureAlbum.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.theme.PoseEmptySlot
 
 internal const val ALBUM_COLUMNS = 3
 
@@ -48,13 +47,7 @@ internal fun AlbumShotRow(
             }
         }
         repeat(ALBUM_COLUMNS - shots.size) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(TILE_ASPECT_RATIO)
-                    .clip(TileShape)
-                    .background(PoseEmptySlot),
-            )
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }

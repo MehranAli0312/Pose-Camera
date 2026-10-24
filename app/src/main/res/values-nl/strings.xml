@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Zonsondergang</string>
     <string name="home_action_nature">Natuur</string>
     <string name="home_action_mirror">Spiegel</string>
+    <string name="home_action_beach">Strand</string>
+    <string name="home_action_cafe">Café</string>
     <string name="home_action_explore">Ontdekken</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d pose</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Foto\'s gemaakt</string>
     <string name="home_progress_perfect">Perfecte foto\'s</string>
     <string name="home_progress_day_goal">Dagdoel</string>
-    <string name="home_daily_title">Pose van de dag</string>
-    <string name="home_daily_subtitle">Tik om te proberen</string>
+    <string name="home_daily_title">Pose van het moment</string>
     <string name="nav_saved">Bewaard</string>
     <string name="nav_capture">Camera openen</string>
     <string name="onboard_next">Volgende</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%1$d%% MATCH</string>
     <string name="onboard_filters_label">FILTERS</string>
     <string name="onboard_saved_label">Opgeslagen in Collecties</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d foto of pose met een hartje</item>
-        <item quantity="other">%1$d foto\'s en poses met een hartje</item>
-    </plurals>
-    <string name="saved_tab_shots">Foto\'s · %1$d</string>
-    <string name="saved_tab_poses">Poses · %1$d</string>
+    <string name="saved_tab_shots">Foto\'s</string>
+    <string name="saved_tab_poses">Poses</string>
     <string name="saved_add">Toevoegen aan favorieten</string>
     <string name="saved_remove">Verwijderen uit favorieten</string>
     <string name="saved_sort_title">Bewaarde items sorteren</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 perfect</string>
     <string name="achievements_badge_fifty_poses">50 poses</string>
     <string name="app_open_welcome_back">Welkom terug</string>
+    <string name="ad_commercial_break">Reclamepauze</string>
+    <string name="notification_channel_memories">Herinneringen</string>
+    <string name="notification_channel_reminders">Meldingen en pose-ideeën</string>
+    <string name="notification_channel_updates">Nieuws en updates</string>
+    <string name="notification_memory_title">Op %1$s maakte je deze pose…</string>
+    <string name="notification_memory_title_place">Op %1$s in %2$s maakte je deze pose…</string>
+    <string name="notification_memory_text">Weet je dit moment nog? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – verbreek je reeks vandaag niet!</string>
+    <string name="notification_streak_text">Maak vandaag maar één foto om door te gaan.</string>
+    <string name="notification_first_photo_title">Je eerste perfecte pose wacht op je 📸</string>
+    <string name="notification_first_photo_text">Kies een pose, doe hem na en zie binnen seconden je score.</string>
+    <string name="notification_pose_idea_title">Pose-idee van de dag ✨</string>
+    <string name="notification_pose_idea_text">Kun jij deze pose nadoen? Tik om hem nu te proberen.</string>
+    <string name="notification_action_view">Bekijken</string>
+    <string name="notification_action_not_interested">Niet geïnteresseerd</string>
 </resources>

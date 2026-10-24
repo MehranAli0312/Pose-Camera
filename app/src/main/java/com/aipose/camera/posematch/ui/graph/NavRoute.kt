@@ -1,6 +1,7 @@
 package com.aipose.camera.posematch.ui.graph
 
 import android.net.Uri
+import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
 
 private object Routes {
 
@@ -13,6 +14,7 @@ private object Routes {
     const val SAVED_SCREEN = "SAVED_SCREEN"
     const val SETTING_SCREEN = "SETTING_SCREEN"
     const val PRO_SCREEN = "UPGRADE_SCREEN"
+    const val START_PREMIUM_SCREEN = "START_PREMIUM_SCREEN"
     const val CAMERA_SCREEN = "CAMERA_SCREEN"
     const val POSE_ALBUM_SCREEN = "POSE_ALBUM_SCREEN"
     const val POSE_DETAIL_SCREEN = "POSE_DETAIL_SCREEN"
@@ -29,6 +31,7 @@ object NavArgs {
     const val CATEGORY = "category"
     const val LOCATION_LABEL = "locationLabel"
     const val CAPTURE_ID = "captureId"
+    const val NEXT_STEP = "nextStep"
 }
 
 sealed class NavRoute(val route: String) {
@@ -44,6 +47,12 @@ sealed class NavRoute(val route: String) {
     data object PhotoEditScreenRoute : NavRoute(Routes.PHOTO_EDIT_SCREEN)
     data object ProgressScreenRoute : NavRoute(Routes.PROGRESS_SCREEN)
     data object AchievementsScreenRoute : NavRoute(Routes.ACHIEVEMENTS_SCREEN)
+
+    data object StartPremiumScreenRoute :
+        NavRoute(Routes.START_PREMIUM_SCREEN + "/{" + NavArgs.NEXT_STEP + "}") {
+        fun routeFor(nextStep: StartPremiumNextStep): String =
+            Routes.START_PREMIUM_SCREEN + "/" + nextStep.name
+    }
 
     data object CameraScreenRoute :
         NavRoute(Routes.CAMERA_SCREEN + "/{" + NavArgs.POSE_ID + "}") {

@@ -10,49 +10,54 @@ enum class HomeQuickActionId(
     @DrawableRes val iconRes: Int,
     val palette: GlossyBadgePalette,
     @StringRes val titleRes: Int,
-    val subtitle: HomeActionSubtitle,
     val category: String?
 ) {
     Trending(
         iconRes = R.drawable.ic_pose_trending,
         palette = GlossyBadgePalette.Rose,
         titleRes = R.string.home_action_trending,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_viral_count),
         category = PoseCategories.VIRAL
     ),
     Couple(
         iconRes = R.drawable.ic_pose_couple,
         palette = GlossyBadgePalette.Pink,
         titleRes = R.string.home_action_couple,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_pose_count),
         category = PoseCategories.COUPLE
     ),
     Sunset(
         iconRes = R.drawable.ic_pose_sun,
         palette = GlossyBadgePalette.Amber,
         titleRes = R.string.home_action_sunset,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_pose_count),
         category = PoseCategories.SUNSET
     ),
     Nature(
         iconRes = R.drawable.ic_pose_leaf,
         palette = GlossyBadgePalette.Emerald,
         titleRes = R.string.home_action_nature,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_pose_count),
         category = PoseCategories.NATURE
     ),
     Mirror(
         iconRes = R.drawable.ic_pose_mirror,
         palette = GlossyBadgePalette.Sky,
         titleRes = R.string.home_action_mirror,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_pose_count),
         category = PoseCategories.MIRROR
+    ),
+    Beach(
+        iconRes = R.drawable.ic_pose_beach,
+        palette = GlossyBadgePalette.Cyan,
+        titleRes = R.string.home_action_beach,
+        category = PoseCategories.BEACH
+    ),
+    Cafe(
+        iconRes = R.drawable.ic_pose_cafe,
+        palette = GlossyBadgePalette.Orange,
+        titleRes = R.string.home_action_cafe,
+        category = PoseCategories.CAFE
     ),
     Explore(
         iconRes = R.drawable.ic_pose_explore,
         palette = GlossyBadgePalette.Violet,
         titleRes = R.string.home_action_explore,
-        subtitle = HomeActionSubtitle.Count(R.plurals.home_action_all_count),
         category = null
     )
 }

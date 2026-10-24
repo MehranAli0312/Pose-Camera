@@ -13,6 +13,10 @@ import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.data.local.PoseAssetDataSource
 import com.aipose.camera.posematch.data.local.PoseImageDataSource
 import com.aipose.camera.posematch.data.local.PoseShareDataSource
+import com.aipose.camera.posematch.data.notification.EngagementNotificationDataSource
+import com.aipose.camera.posematch.data.notification.EngagementWorkScheduler
+import com.aipose.camera.posematch.data.notification.NotificationLaunchStore
+import com.aipose.camera.posematch.data.notification.PushNotificationDataSource
 import com.aipose.camera.posematch.data.pose.CaptureProcessor
 import com.aipose.camera.posematch.data.pose.MlKitPoseDetector
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
@@ -48,6 +52,10 @@ val localModule = module {
     single { CaptureFileDataSource(androidContext()) }
     single { CaptureDraftStore() }
     single { DeviceLocationDataSource(androidContext()) }
+    single { EngagementNotificationDataSource(androidContext(), get()) }
+    single { EngagementWorkScheduler(androidContext()) }
+    single { NotificationLaunchStore() }
+    single { PushNotificationDataSource(androidContext()) }
     single { MlKitPoseDetector() }
     single { SubjectCutoutDataSource() }
     single { PhotoGradingEngine() }

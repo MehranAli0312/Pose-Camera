@@ -17,8 +17,8 @@ class PremiumSubscriptionUseCase(
     fun observeFreeUser(): Flow<Boolean> =
         repository.observeFreeUser().distinctUntilChanged()
 
-    suspend fun loadPlans(includeYearly: Boolean): Result<List<PremiumPlan>> =
-        repository.loadPlans().map { plans -> plans.forDisplay(includeYearly) }
+    suspend fun loadPlans(): Result<List<PremiumPlan>> =
+        repository.loadPlans().map { plans -> plans.forDisplay() }
 
     suspend fun restorePurchases(): ProRestoreResult = repository.restorePurchases()
 
@@ -28,8 +28,7 @@ class PremiumSubscriptionUseCase(
     fun isRecommended(plan: PremiumPlan, plans: List<PremiumPlan>): Boolean =
         plans.size > 1 && plan.plan == ProPlan.recommended
 
-    private fun List<PremiumPlan>.forDisplay(includeYearly: Boolean): List<PremiumPlan> =
-        filter { includeYearly || it.plan != ProPlan.YEARLY }
-            .distinctBy { it.plan }
+    private fun List<PremiumPlan>.forDisplay(): List<PremiumPlan> =
+        distinctBy { it.plan }
             .sortedBy { it.plan.ordinal }
 }

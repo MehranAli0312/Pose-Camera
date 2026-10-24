@@ -10,10 +10,7 @@ import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
-import com.aipose.camera.posematch.ui.screens.home.models.HomeDailyPose
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
-import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickAction
-import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickActionId
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockedPose
@@ -54,12 +51,6 @@ class HomeViewModel(
     val showProBadge: StateFlow<Boolean> = premiumSubscriptionUseCase.observeFreeUser()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), false)
 
-    private val _importedPose = MutableStateFlow<Pose?>(null)
-    val importedPose = _importedPose.asStateFlow()
-
-    private val _importFailed = MutableStateFlow(false)
-    val importFailed = _importFailed.asStateFlow()
-
     private val _unlockedPoseToOpen = MutableStateFlow<HomeUnlockedPose?>(null)
     val unlockedPoseToOpen = _unlockedPoseToOpen.asStateFlow()
 
@@ -80,21 +71,6 @@ class HomeViewModel(
         SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT),
         HomeUiState.Loading
     )
-
-    fun importPose(title: String, sourceUri: String) {
-        viewModelScope.launch {
-            val imported = poseLibraryUseCase.importPose(title, sourceUri)
-            if (imported == null) _importFailed.value = true else _importedPose.value = imported
-        }
-    }
-
-    fun consumeImportedPose() {
-        _importedPose.value = null
-    }
-
-    fun consumeImportFailure() {
-        _importFailed.value = false
-    }
 
     fun showLockedPose(pose: Pose, target: HomeUnlockTarget) {
         heroUnlock.value = HeroUnlock(lockedPose = pose, target = target)
@@ -150,22 +126,10 @@ class HomeViewModel(
             hero = posesWithHero.hero?.let { pose ->
                 HomeHero(pose = pose, isLocked = pose.id in lockedIds)
             },
-            quickActions = HomeQuickActionId.entries.map { id ->
-                HomeQuickAction(id = id, count = poses.countFor(id))
-            },
             progress = captureProgressUseCase.progressOf(captures),
-            poseOfTheDay = poseLibraryUseCase.poseOfTheDay(poses)?.let { pose ->
-                HomeDailyPose(pose = pose, isLocked = pose.id in lockedIds)
-            },
             lockedPose = unlock.lockedPose,
             unlockTarget = unlock.target
         )
-    }
-
-    private fun List<Pose>.countFor(id: HomeQuickActionId): Int = when {
-        id.category != null -> count { it.category == id.category }
-        id == HomeQuickActionId.Explore -> size
-        else -> 0
     }
 
     private companion object {

@@ -1,6 +1,8 @@
 package com.aipose.camera.posematch.di
 
+import com.aipose.camera.posematch.domain.engagement.EngagementNotificationPicker
 import com.aipose.camera.posematch.domain.usecase.CameraSettingsUseCase
+import com.aipose.camera.posematch.domain.usecase.EngagementNotificationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureLocationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.ProgressStatsUseCase
@@ -15,10 +17,12 @@ import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
 import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
 import com.aipose.camera.posematch.domain.usecase.RateUsUseCase
 import com.aipose.camera.posematch.domain.usecase.SplashStatusUseCase
+import com.aipose.camera.posematch.domain.usecase.StartPremiumUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
     factory { SplashStatusUseCase(get()) }
+    factory { StartPremiumUseCase(get(), get()) }
     factory { LanguageUseCase(get()) }
     factory { RateUsUseCase(get()) }
     factory { CameraSettingsUseCase(get()) }
@@ -33,4 +37,17 @@ val useCaseModule = module {
     factory { CaptureLocationUseCase(get()) }
     factory { PhotoEditUseCase(get()) }
     factory { PremiumSubscriptionUseCase(get()) }
+    factory { EngagementNotificationPicker() }
+    factory {
+        EngagementNotificationUseCase(
+            notificationRepository = get(),
+            captureRepository = get(),
+            poseRepository = get(),
+            splashStatusRepository = get(),
+            poseLockUseCase = get(),
+            captureProgressUseCase = get(),
+            remoteConfigStore = get(),
+            picker = get(),
+        )
+    }
 }

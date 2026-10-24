@@ -11,11 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
-import com.aipose.camera.posematch.ads.AppOpenLoaderState
+import com.aipose.camera.posematch.ads.AdLoadingCoverState
 import com.aipose.camera.posematch.ads.AppOpenRouteGate
 import com.aipose.camera.posematch.ui.common.SystemBarsAppearanceEffect
 import com.aipose.camera.posematch.ui.graph.AppNavGraph
-import com.aipose.camera.posematch.ui.screens.components.AppOpenLoadingOverlay
+import com.aipose.camera.posematch.ui.screens.components.AdLoadingOverlay
 import com.aipose.camera.posematch.ui.theme.MyAppTheme
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import org.koin.compose.koinInject
@@ -23,7 +23,7 @@ import org.koin.compose.koinInject
 @Composable
 fun MainScreen(
     languageChangeViewModel: LanguageViewModel = koinInject(),
-    appOpenLoaderState: AppOpenLoaderState = koinInject(),
+    adLoadingCoverState: AdLoadingCoverState = koinInject(),
     appOpenRouteGate: AppOpenRouteGate = koinInject(),
 ) {
     SystemBarsAppearanceEffect(isDarkTheme = true)
@@ -47,12 +47,12 @@ fun MainScreen(
                     appOpenRouteGate.onRouteChanged(entry.destination.route)
                 }
             }
-            val isAppOpenLoading by appOpenLoaderState.isVisible.collectAsStateWithLifecycle()
+            val adLoadingCover by adLoadingCoverState.cover.collectAsStateWithLifecycle()
             Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                 AppNavGraph(
                     navParentController = navParentController
                 )
-                if (isAppOpenLoading) AppOpenLoadingOverlay()
+                adLoadingCover?.let { cover -> AdLoadingOverlay(cover) }
             }
         } else {
             Box(

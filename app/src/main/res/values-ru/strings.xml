@@ -181,6 +181,8 @@
     <string name="home_action_sunset">Закат</string>
     <string name="home_action_nature">Природа</string>
     <string name="home_action_mirror">Зеркало</string>
+    <string name="home_action_beach">Пляж</string>
+    <string name="home_action_cafe">Кафе</string>
     <string name="home_action_explore">Обзор</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d поза</item>
@@ -206,8 +208,7 @@
     <string name="home_progress_shots">Снимков</string>
     <string name="home_progress_perfect">Идеальных</string>
     <string name="home_progress_day_goal">Цель дня</string>
-    <string name="home_daily_title">Поза дня</string>
-    <string name="home_daily_subtitle">Нажмите, чтобы попробовать</string>
+    <string name="home_daily_title">Поза момента</string>
     <string name="nav_saved">Избранное</string>
     <string name="nav_capture">Открыть камеру</string>
     <string name="onboard_next">Далее</string>
@@ -225,14 +226,8 @@
     <string name="onboard_match_badge">СОВПАДЕНИЕ %1$d%%</string>
     <string name="onboard_filters_label">ФИЛЬТРЫ</string>
     <string name="onboard_saved_label">Сохранено в Коллекции</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d снимок или поза в избранном</item>
-        <item quantity="few">%1$d снимка и позы в избранном</item>
-        <item quantity="many">%1$d снимков и поз в избранном</item>
-        <item quantity="other">%1$d снимка и позы в избранном</item>
-    </plurals>
-    <string name="saved_tab_shots">Снимки · %1$d</string>
-    <string name="saved_tab_poses">Позы · %1$d</string>
+    <string name="saved_tab_shots">Снимки</string>
+    <string name="saved_tab_poses">Позы</string>
     <string name="saved_add">Добавить в избранное</string>
     <string name="saved_remove">Убрать из избранного</string>
     <string name="saved_sort_title">Сортировка избранного</string>
@@ -377,4 +372,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 идеальных</string>
     <string name="achievements_badge_fifty_poses">50 поз</string>
     <string name="app_open_welcome_back">С возвращением</string>
+    <string name="ad_commercial_break">Рекламная пауза</string>
+    <string name="notification_channel_memories">Воспоминания</string>
+    <string name="notification_channel_reminders">Напоминания и идеи поз</string>
+    <string name="notification_channel_updates">Новости и обновления</string>
+    <string name="notification_memory_title">%1$s вы сделали эту позу…</string>
+    <string name="notification_memory_title_place">%1$s, %2$s: вы сделали эту позу…</string>
+    <string name="notification_memory_text">Помните этот момент? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s — не прерывайте серию сегодня!</string>
+    <string name="notification_streak_text">Сделайте сегодня всего одно фото, чтобы продолжить.</string>
+    <string name="notification_first_photo_title">Ваша первая идеальная поза ждёт 📸</string>
+    <string name="notification_first_photo_text">Выберите позу, повторите её и узнайте свой результат за секунды.</string>
+    <string name="notification_pose_idea_title">Идея позы дня ✨</string>
+    <string name="notification_pose_idea_text">Сможете повторить эту позу? Нажмите, чтобы попробовать.</string>
+    <string name="notification_action_view">Смотреть</string>
+    <string name="notification_action_not_interested">Не интересно</string>
 </resources>

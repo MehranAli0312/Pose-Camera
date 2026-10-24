@@ -136,6 +136,19 @@ internal fun NativeAdIconView(modifier: Modifier = Modifier, content: @Composabl
 }
 
 @Composable
+internal fun NativeAdStarRatingView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    val nativeAdView = LocalNativeAdView.current ?: return
+    AndroidView(
+        factory = { context -> ComposeView(context) },
+        modifier = modifier,
+        update = { view ->
+            nativeAdView.starRatingView = view
+            view.setContent(content)
+        },
+    )
+}
+
+@Composable
 internal fun NativeAdAdvertiserView(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val nativeAdView = LocalNativeAdView.current ?: return
     AndroidView(

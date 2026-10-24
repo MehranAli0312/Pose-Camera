@@ -175,6 +175,8 @@
     <string name="home_action_sunset">夕焼け</string>
     <string name="home_action_nature">自然</string>
     <string name="home_action_mirror">ミラー</string>
+    <string name="home_action_beach">ビーチ</string>
+    <string name="home_action_cafe">カフェ</string>
     <string name="home_action_explore">探す</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">%1$d ポーズ</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">撮影枚数</string>
     <string name="home_progress_perfect">パーフェクト</string>
     <string name="home_progress_day_goal">今日の目標</string>
-    <string name="home_daily_title">今日のポーズ</string>
-    <string name="home_daily_subtitle">タップして試す</string>
+    <string name="home_daily_title">今この瞬間のポーズ</string>
     <string name="nav_saved">保存済み</string>
     <string name="nav_capture">カメラを開く</string>
     <string name="onboard_next">次へ</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">%1$d%% マッチ</string>
     <string name="onboard_filters_label">フィルター</string>
     <string name="onboard_saved_label">コレクションに保存しました</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">ハートを付けた写真とポーズ %1$d 件</item>
-    </plurals>
-    <string name="saved_tab_shots">写真 · %1$d</string>
-    <string name="saved_tab_poses">ポーズ · %1$d</string>
+    <string name="saved_tab_shots">写真</string>
+    <string name="saved_tab_poses">ポーズ</string>
     <string name="saved_add">お気に入りに追加</string>
     <string name="saved_remove">お気に入りから削除</string>
     <string name="saved_sort_title">保存済みを並べ替え</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">パーフェクト 25</string>
     <string name="achievements_badge_fifty_poses">50 ポーズ</string>
     <string name="app_open_welcome_back">おかえりなさい</string>
+    <string name="ad_commercial_break">CMの時間です</string>
+    <string name="notification_channel_memories">思い出</string>
+    <string name="notification_channel_reminders">リマインダーとポーズのアイデア</string>
+    <string name="notification_channel_updates">お知らせとアップデート</string>
+    <string name="notification_memory_title">%1$s、あなたはこのポーズを撮りました…</string>
+    <string name="notification_memory_title_place">%1$s、%2$sであなたはこのポーズを撮りました…</string>
+    <string name="notification_memory_text">この瞬間、覚えていますか？📸</string>
+    <string name="notification_streak_title">🔥 %1$s、今日も途切れさせないで！</string>
+    <string name="notification_streak_text">今日あと1枚撮るだけで記録が続きます。</string>
+    <string name="notification_first_photo_title">はじめてのパーフェクトポーズが待っています 📸</string>
+    <string name="notification_first_photo_text">ポーズを選んで真似するだけで、数秒でスコアがわかります。</string>
+    <string name="notification_pose_idea_title">今日のポーズアイデア ✨</string>
+    <string name="notification_pose_idea_text">このポーズを再現できますか？タップして今すぐ試そう。</string>
+    <string name="notification_action_view">見る</string>
+    <string name="notification_action_not_interested">興味なし</string>
 </resources>

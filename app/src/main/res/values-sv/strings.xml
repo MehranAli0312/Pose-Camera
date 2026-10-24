@@ -177,6 +177,8 @@
     <string name="home_action_sunset">Solnedgång</string>
     <string name="home_action_nature">Natur</string>
     <string name="home_action_mirror">Spegel</string>
+    <string name="home_action_beach">Strand</string>
+    <string name="home_action_cafe">Kafé</string>
     <string name="home_action_explore">Utforska</string>
     <plurals name="home_action_pose_count">
         <item quantity="one">%1$d pose</item>
@@ -196,8 +198,7 @@
     <string name="home_progress_shots">Tagna bilder</string>
     <string name="home_progress_perfect">Perfekta bilder</string>
     <string name="home_progress_day_goal">Dagsmål</string>
-    <string name="home_daily_title">Dagens pose</string>
-    <string name="home_daily_subtitle">Tryck för att testa</string>
+    <string name="home_daily_title">Ögonblickets pose</string>
     <string name="nav_saved">Sparade</string>
     <string name="nav_capture">Öppna kameran</string>
     <string name="onboard_next">Nästa</string>
@@ -215,12 +216,8 @@
     <string name="onboard_match_badge">%1$d%% MATCH</string>
     <string name="onboard_filters_label">FILTER</string>
     <string name="onboard_saved_label">Sparat i Samlingar</string>
-    <plurals name="saved_subtitle">
-        <item quantity="one">%1$d hjärtmärkt bild eller pose</item>
-        <item quantity="other">%1$d hjärtmärkta bilder och poser</item>
-    </plurals>
-    <string name="saved_tab_shots">Bilder · %1$d</string>
-    <string name="saved_tab_poses">Poser · %1$d</string>
+    <string name="saved_tab_shots">Bilder</string>
+    <string name="saved_tab_poses">Poser</string>
     <string name="saved_add">Spara som favorit</string>
     <string name="saved_remove">Ta bort från favoriter</string>
     <string name="saved_sort_title">Sortera sparade</string>
@@ -347,4 +344,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 perfekta</string>
     <string name="achievements_badge_fifty_poses">50 poser</string>
     <string name="app_open_welcome_back">Välkommen tillbaka</string>
+    <string name="ad_commercial_break">Reklampaus</string>
+    <string name="notification_channel_memories">Minnen</string>
+    <string name="notification_channel_reminders">Påminnelser och poseidéer</string>
+    <string name="notification_channel_updates">Nyheter och uppdateringar</string>
+    <string name="notification_memory_title">Den %1$s tog du den här posen…</string>
+    <string name="notification_memory_title_place">Den %1$s i %2$s tog du den här posen…</string>
+    <string name="notification_memory_text">Minns du det här ögonblicket? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s – bryt inte din svit i dag!</string>
+    <string name="notification_streak_text">Ta bara ett foto i dag för att fortsätta.</string>
+    <string name="notification_first_photo_title">Din första perfekta pose väntar 📸</string>
+    <string name="notification_first_photo_text">Välj en pose, matcha den och se ditt resultat på några sekunder.</string>
+    <string name="notification_pose_idea_title">Dagens poseidé ✨</string>
+    <string name="notification_pose_idea_text">Kan du matcha den här posen? Tryck för att prova nu.</string>
+    <string name="notification_action_view">Visa</string>
+    <string name="notification_action_not_interested">Inte intresserad</string>
 </resources>

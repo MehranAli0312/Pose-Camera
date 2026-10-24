@@ -25,7 +25,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     factory { PoseFrameAnalyzer(get()) }
 
-    viewModel { SplashViewModel(get()) }
+    viewModel { SplashViewModel(get(), get()) }
     single { LanguageViewModel(get()) }
     single { RateUsViewModel(get()) }
     viewModel {

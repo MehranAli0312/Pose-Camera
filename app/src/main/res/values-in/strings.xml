@@ -175,6 +175,8 @@
     <string name="home_action_sunset">Matahari terbenam</string>
     <string name="home_action_nature">Alam</string>
     <string name="home_action_mirror">Cermin</string>
+    <string name="home_action_beach">Pantai</string>
+    <string name="home_action_cafe">Kafe</string>
     <string name="home_action_explore">Jelajahi</string>
     <plurals name="home_action_pose_count">
         <item quantity="other">%1$d pose</item>
@@ -191,8 +193,7 @@
     <string name="home_progress_shots">Foto diambil</string>
     <string name="home_progress_perfect">Foto sempurna</string>
     <string name="home_progress_day_goal">Target harian</string>
-    <string name="home_daily_title">Pose hari ini</string>
-    <string name="home_daily_subtitle">Ketuk untuk mencoba</string>
+    <string name="home_daily_title">Pose saat ini</string>
     <string name="nav_saved">Tersimpan</string>
     <string name="nav_capture">Buka kamera</string>
     <string name="onboard_next">Berikutnya</string>
@@ -210,11 +211,8 @@
     <string name="onboard_match_badge">COCOK %1$d%%</string>
     <string name="onboard_filters_label">FILTER</string>
     <string name="onboard_saved_label">Disimpan ke Koleksi</string>
-    <plurals name="saved_subtitle">
-        <item quantity="other">%1$d foto dan pose yang kamu sukai</item>
-    </plurals>
-    <string name="saved_tab_shots">Foto · %1$d</string>
-    <string name="saved_tab_poses">Pose · %1$d</string>
+    <string name="saved_tab_shots">Foto</string>
+    <string name="saved_tab_poses">Pose</string>
     <string name="saved_add">Simpan ke favorit</string>
     <string name="saved_remove">Hapus dari favorit</string>
     <string name="saved_sort_title">Urutkan tersimpan</string>
@@ -332,4 +330,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 sempurna</string>
     <string name="achievements_badge_fifty_poses">50 pose</string>
     <string name="app_open_welcome_back">Selamat datang kembali</string>
+    <string name="ad_commercial_break">Jeda iklan</string>
+    <string name="notification_channel_memories">Kenangan</string>
+    <string name="notification_channel_reminders">Pengingat &amp; ide pose</string>
+    <string name="notification_channel_updates">Berita &amp; pembaruan</string>
+    <string name="notification_memory_title">Pada %1$s, kamu berpose seperti ini…</string>
+    <string name="notification_memory_title_place">Pada %1$s di %2$s, kamu berpose seperti ini…</string>
+    <string name="notification_memory_text">Ingat momen ini? 📸</string>
+    <string name="notification_streak_title">🔥 %1$s, jangan sampai putus hari ini!</string>
+    <string name="notification_streak_text">Ambil satu foto saja hari ini untuk melanjutkannya.</string>
+    <string name="notification_first_photo_title">Pose sempurna pertamamu menanti 📸</string>
+    <string name="notification_first_photo_text">Pilih pose, cocokkan, dan lihat skormu dalam hitungan detik.</string>
+    <string name="notification_pose_idea_title">Ide pose hari ini ✨</string>
+    <string name="notification_pose_idea_text">Bisakah kamu meniru pose ini? Ketuk untuk mencobanya sekarang.</string>
+    <string name="notification_action_view">Lihat</string>
+    <string name="notification_action_not_interested">Tidak tertarik</string>
 </resources>

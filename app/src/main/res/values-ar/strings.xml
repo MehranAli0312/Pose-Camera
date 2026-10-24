@@ -185,6 +185,8 @@
     <string name="home_action_sunset">غروب</string>
     <string name="home_action_nature">طبيعة</string>
     <string name="home_action_mirror">مرآة</string>
+    <string name="home_action_beach">شاطئ</string>
+    <string name="home_action_cafe">مقهى</string>
     <string name="home_action_explore">استكشاف</string>
     <plurals name="home_action_pose_count">
         <item quantity="zero">%1$d وضعية</item>
@@ -216,8 +218,7 @@
     <string name="home_progress_shots">الصور الملتقطة</string>
     <string name="home_progress_perfect">صور مثالية</string>
     <string name="home_progress_day_goal">هدف اليوم</string>
-    <string name="home_daily_title">وضعية اليوم</string>
-    <string name="home_daily_subtitle">اضغط للتجربة</string>
+    <string name="home_daily_title">وضعية اللحظة</string>
     <string name="nav_saved">المحفوظة</string>
     <string name="nav_capture">فتح الكاميرا</string>
     <string name="onboard_next">التالي</string>
@@ -235,16 +236,8 @@
     <string name="onboard_match_badge">تطابق %1$d%%</string>
     <string name="onboard_filters_label">الفلاتر</string>
     <string name="onboard_saved_label">تم الحفظ في المجموعات</string>
-    <plurals name="saved_subtitle">
-        <item quantity="zero">%1$d صورة ووضعية أعجبتك</item>
-        <item quantity="one">صورة أو وضعية واحدة أعجبتك</item>
-        <item quantity="two">صورتان أو وضعيتان أعجبتاك</item>
-        <item quantity="few">%1$d صور ووضعيات أعجبتك</item>
-        <item quantity="many">%1$d صورة ووضعية أعجبتك</item>
-        <item quantity="other">%1$d صورة ووضعية أعجبتك</item>
-    </plurals>
-    <string name="saved_tab_shots">الصور · %1$d</string>
-    <string name="saved_tab_poses">الوضعيات · %1$d</string>
+    <string name="saved_tab_shots">الصور</string>
+    <string name="saved_tab_poses">الوضعيات</string>
     <string name="saved_add">إضافة إلى المفضلة</string>
     <string name="saved_remove">إزالة من المفضلة</string>
     <string name="saved_sort_title">ترتيب المحفوظات</string>
@@ -407,4 +400,19 @@
     <string name="achievements_badge_twenty_five_perfect">25 مثالية</string>
     <string name="achievements_badge_fifty_poses">50 وضعية</string>
     <string name="app_open_welcome_back">مرحبًا بعودتك</string>
+    <string name="ad_commercial_break">استراحة إعلانية</string>
+    <string name="notification_channel_memories">الذكريات</string>
+    <string name="notification_channel_reminders">التذكيرات وأفكار الوضعيات</string>
+    <string name="notification_channel_updates">الأخبار والتحديثات</string>
+    <string name="notification_memory_title">في %1$s، التقطت هذه الوضعية…</string>
+    <string name="notification_memory_title_place">في %1$s في %2$s، التقطت هذه الوضعية…</string>
+    <string name="notification_memory_text">هل تتذكر هذه اللحظة؟ 📸</string>
+    <string name="notification_streak_title">🔥 %1$s، حافظ عليها اليوم!</string>
+    <string name="notification_streak_text">التقط صورة واحدة فقط اليوم لتستمر.</string>
+    <string name="notification_first_photo_title">وضعيتك المثالية الأولى بانتظارك 📸</string>
+    <string name="notification_first_photo_text">اختر وضعية، طابقها واحصل على نتيجتك في ثوانٍ.</string>
+    <string name="notification_pose_idea_title">فكرة وضعية اليوم ✨</string>
+    <string name="notification_pose_idea_text">هل يمكنك مطابقة هذه الوضعية؟ اضغط لتجربتها الآن.</string>
+    <string name="notification_action_view">عرض</string>
+    <string name="notification_action_not_interested">غير مهتم</string>
 </resources>
