@@ -156,9 +156,8 @@
     <string name="adjust_warmth">ความอุ่น</string>
     <string name="crop_free">อิสระ</string>
     <string name="settings_retain_skeleton">คงเส้นโครงท่าโพสไว้หลังถ่าย</string>
-    <string name="toast_reference_imported">นำเข้าภาพอ้างอิงแล้ว! เปิดกล้องเพื่อจับคู่</string>
     <string name="toast_reference_failed">โหลดภาพอ้างอิงไม่สำเร็จ</string>
-    <string name="toast_capture_failed">ถ่ายภาพไม่สำเร็จ: %1$s</string>
+    <string name="toast_capture_failed">ถ่ายภาพไม่สำเร็จ</string>
     <string name="perm_camera_title">ต้องการสิทธิ์เข้าถึงกล้อง</string>
     <string name="perm_camera_desc">อนุญาตให้เข้าถึงกล้องเพื่อถ่ายภาพและจับคู่ท่าโพส</string>
     <string name="perm_allow">อนุญาต</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">เปิดการตั้งค่า</string>
     <string name="capture_untitled">ภาพไม่มีชื่อ</string>
     <string name="home_hero_cta">เริ่มโพส</string>
-    <string name="home_action_live_pose">โพสสด</string>
-    <string name="home_action_open_camera">เปิดกล้อง</string>
-    <string name="home_action_import">นำเข้า</string>
-    <string name="home_action_your_photo">ภาพของคุณ</string>
     <string name="home_action_trending">มาแรง</string>
     <string name="home_action_couple">คู่รัก</string>
     <string name="home_action_sunset">พระอาทิตย์ตก</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">ชายหาด</string>
     <string name="home_action_cafe">คาเฟ่</string>
     <string name="home_action_explore">สำรวจ</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">%1$d ท่า</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">%1$d ไวรัล</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">ทั้งหมด %1$d</item>
-    </plurals>
     <string name="home_progress_title">ความคืบหน้าของคุณ</string>
     <string name="home_progress_view_all">ดูทั้งหมด</string>
     <string name="home_progress_avg_match">ความตรงเฉลี่ย</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">วันนี้ %1$s</string>
     <string name="detail_yesterday">เมื่อวาน %1$s</string>
     <string name="detail_reshoot">ถ่ายใหม่</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">%1$d ภาพ</item>
-    </plurals>
-    <string name="album_summary">%1$s · เฉลี่ย %2$s · ภาพล่าสุด %3$s</string>
-    <string name="album_last_today">วันนี้</string>
-    <string name="album_last_yesterday">เมื่อวาน</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d วันที่แล้ว</item>
-    </plurals>
     <string name="album_filter_all">ทั้งหมด %1$d</string>
-    <string name="album_this_place">สถานที่นี้</string>
     <string name="album_stat_average">เฉลี่ย</string>
     <string name="album_stat_best">ดีที่สุด</string>
-    <string name="album_shoot_again">ถ่ายที่นี่อีกครั้ง</string>
-    <string name="album_remove_all">ลบภาพทั้งหมดจากสถานที่นี้</string>
-    <string name="album_remove_title">ลบภาพทั้งหมดไหม</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">ภาพ %1$d ภาพจาก %2$s จะถูกลบออกจากคอลเลกชันอย่างถาวร</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">ภาพสมบูรณ์แบบ %1$d ภาพ</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">สัปดาห์นี้คุณได้ %1$d%%+ ใน %2$d ท่า</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · AI บนอุปกรณ์ · ไม่มีการอัปโหลด</string>
     <string name="progress_title">ความคืบหน้าของคุณ</string>
     <string name="progress_tab_week">สัปดาห์</string>
     <string name="progress_tab_month">เดือน</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">คุณทำท่านี้ได้ไหม? แตะเพื่อลองเลย</string>
     <string name="notification_action_view">ดู</string>
     <string name="notification_action_not_interested">ไม่สนใจ</string>
+    <string name="settings_pro_card_title">ปลดล็อก PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">ท่าโพสพรีเมียมทั้งหมด คำแนะนำสด และไม่มีโฆษณา</string>
 </resources>

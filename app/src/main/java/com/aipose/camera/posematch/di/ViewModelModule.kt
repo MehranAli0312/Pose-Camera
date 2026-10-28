@@ -25,7 +25,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     factory { PoseFrameAnalyzer(get()) }
 
-    viewModel { SplashViewModel(get(), get()) }
+    viewModel { SplashViewModel(get(), get(), get()) }
     single { LanguageViewModel(get()) }
     single { RateUsViewModel(get()) }
     viewModel {
@@ -35,16 +35,16 @@ val viewModelModule = module {
             purchaseLauncher = get(),
         )
     }
-    viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { SavedViewModel(androidContext(), get(), get(), get(), get()) }
     viewModel { PoseAlbumViewModel(get(), get(), get()) }
     viewModel { PoseDetailViewModel(get(), get(), get(), get()) }
     viewModel { CollectionsViewModel(androidContext(), get(), get()) }
     viewModel { CaptureAlbumViewModel(androidContext(), get(), get()) }
-    viewModel { PhotoEditViewModel(get(), get(), get()) }
+    viewModel { PhotoEditViewModel(get(), get(), get(), get()) }
     viewModel { PhotoSuccessViewModel(get(), get()) }
     viewModel { CameraSettingsViewModel(get()) }
-    viewModel { SettingsViewModel(get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { ProgressViewModel(get(), get()) }
     viewModel { AchievementsViewModel(get(), get(), get()) }
     viewModel {
@@ -55,7 +55,8 @@ val viewModelModule = module {
             cameraSettingsUseCase = get(),
             photoEditUseCase = get(),
             poseLockUseCase = get(),
-            poseFrameAnalyzer = get()
+            poseFrameAnalyzer = get(),
+            trackEventUseCase = get()
         )
     }
 }

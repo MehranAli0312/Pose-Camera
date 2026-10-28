@@ -1,6 +1,5 @@
 package com.aipose.camera.posematch.ui.screens.bottomBar
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,14 +10,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,7 +34,7 @@ import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.common.poseRaisedCard
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
-import com.aipose.camera.posematch.ui.graph.navigateToTab
+import com.aipose.camera.posematch.ui.graph.navigateToTabNow
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.LocalAppPalette
 import com.aipose.camera.posematch.ui.theme.Violet
@@ -48,17 +45,16 @@ private val BarHeight = 70.dp
 private val BarCorner = 26.dp
 private val BarHorizontalMargin = 12.dp
 private val BarInnerPadding = 14.dp
-private val PillWidth = 32.dp
-private val PillHeight = 30.dp
-private val PillShape = RoundedCornerShape(12.dp)
 private val IconSize = 21.dp
+private val TabIconSize = 23.dp
+private val LabelMaxSize = 12.sp
+private val LabelMinSize = 9.sp
 private val FabSlotWidth = 74.dp
 private val FabSize = 60.dp
 private val FabGlowSize = 76.dp
 private val FabTopInset = 2.dp
 
 private const val BAR_SHADOW_ALPHA = 0.5f
-private const val PILL_ALPHA = 0.18f
 private const val FAB_GLOW_ALPHA = 0.18f
 
 @Composable
@@ -69,6 +65,12 @@ fun BottomNavigationBar(
 ) {
     val palette = LocalAppPalette.current
     val innerInterstitial = rememberInnerInterstitial()
+
+    fun openTab(route: String) {
+        if (!navController.acceptNavigationClick()) return
+        innerInterstitial.showThen { navController.navigateToTabNow(route) }
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -93,7 +95,7 @@ fun BottomNavigationBar(
                 NavTab(
                     item = item,
                     selectedDestination = selectedDestination,
-                    navController = navController,
+                    onClick = { openTab(item.route) },
                 )
             }
             Spacer(modifier = Modifier.width(FabSlotWidth))
@@ -101,7 +103,7 @@ fun BottomNavigationBar(
                 NavTab(
                     item = item,
                     selectedDestination = selectedDestination,
-                    navController = navController,
+                    onClick = { openTab(item.route) },
                 )
             }
         }
@@ -130,7 +132,7 @@ fun BottomNavigationBar(
 private fun RowScope.NavTab(
     item: BottomNavItem,
     selectedDestination: NavDestination?,
-    navController: NavController,
+    onClick: () -> Unit,
 ) {
     val palette = LocalAppPalette.current
     val selected = selectedDestination?.hierarchy?.any { it.route == item.route } == true
@@ -138,37 +140,31 @@ private fun RowScope.NavTab(
     Column(
         modifier = Modifier
             .weight(1f)
-            .click { navController.navigateToTab(item.route) },
+            .click { if (!selected) onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(12.dp))
-        Box(
-            modifier = Modifier
-                .size(width = PillWidth, height = PillHeight)
-                .clip(PillShape)
-                .background(
-                    if (selected) item.pillColor.copy(alpha = PILL_ALPHA) else Color.Transparent
-                ),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                painter = painterResource(item.icon),
-                contentDescription = label,
-                tint = if (selected) item.activeIconColor else palette.navInactive,
-                modifier = Modifier.size(IconSize),
-            )
-        }
-        Spacer(modifier = Modifier.height(3.dp))
+        Icon(
+            painter = painterResource(item.icon),
+            contentDescription = label,
+            tint = if (selected) item.activeIconColor else palette.navInactive,
+            modifier = Modifier.size(TabIconSize),
+        )
+        Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = label,
             style = poseTextStyle(
-                9.sp,
-                FontWeight.Bold,
+                LabelMaxSize,
+                FontWeight.SemiBold,
                 if (selected) item.activeLabelColor else palette.navInactive,
             ),
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+            autoSize = TextAutoSize.StepBased(
+                minFontSize = LabelMinSize,
+                maxFontSize = LabelMaxSize,
+            ),
         )
     }
 }

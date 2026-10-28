@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_attribution_label">Annonce</string>
+    <string name="ads_advertisement_label">Reklame</string>
+</resources>

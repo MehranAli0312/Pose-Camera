@@ -162,9 +162,8 @@
     <string name="adjust_warmth">Ciepło</string>
     <string name="crop_free">Dowolnie</string>
     <string name="settings_retain_skeleton">Zachowaj kontur po zdjęciu</string>
-    <string name="toast_reference_imported">Wzór zaimportowany! Otwórz aparat, aby porównać.</string>
     <string name="toast_reference_failed">Nie udało się wczytać wzoru</string>
-    <string name="toast_capture_failed">Nie udało się zrobić zdjęcia: %1$s</string>
+    <string name="toast_capture_failed">Nie udało się zrobić zdjęcia</string>
     <string name="perm_camera_title">Wymagane uprawnienie do aparatu</string>
     <string name="perm_camera_desc">Zezwól na dostęp do aparatu, aby robić zdjęcia i porównywać pozy.</string>
     <string name="perm_allow">Zezwól</string>
@@ -172,10 +171,6 @@
     <string name="perm_open_settings">Otwórz ustawienia</string>
     <string name="capture_untitled">Zdjęcie bez tytułu</string>
     <string name="home_hero_cta">Zacznij pozować</string>
-    <string name="home_action_live_pose">Poza na żywo</string>
-    <string name="home_action_open_camera">Otwórz aparat</string>
-    <string name="home_action_import">Importuj</string>
-    <string name="home_action_your_photo">Twoje zdjęcie</string>
     <string name="home_action_trending">Na czasie</string>
     <string name="home_action_couple">Para</string>
     <string name="home_action_sunset">Zachód słońca</string>
@@ -184,24 +179,6 @@
     <string name="home_action_beach">Plaża</string>
     <string name="home_action_cafe">Kawiarnia</string>
     <string name="home_action_explore">Odkrywaj</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d poza</item>
-        <item quantity="few">%1$d pozy</item>
-        <item quantity="many">%1$d póz</item>
-        <item quantity="other">%1$d pozy</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d viralowa</item>
-        <item quantity="few">%1$d viralowe</item>
-        <item quantity="many">%1$d viralowych</item>
-        <item quantity="other">%1$d viralowej</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">Wszystkie %1$d</item>
-        <item quantity="few">Wszystkie %1$d</item>
-        <item quantity="many">Wszystkie %1$d</item>
-        <item quantity="other">Wszystkie %1$d</item>
-    </plurals>
     <string name="home_progress_title">Twoje postępy</string>
     <string name="home_progress_view_all">Zobacz wszystko</string>
     <string name="home_progress_avg_match">Śr. dopasowanie</string>
@@ -277,34 +254,9 @@
     <string name="detail_today">Dziś %1$s</string>
     <string name="detail_yesterday">Wczoraj %1$s</string>
     <string name="detail_reshoot">Powtórz</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d zdjęcie</item>
-        <item quantity="few">%1$d zdjęcia</item>
-        <item quantity="many">%1$d zdjęć</item>
-        <item quantity="other">%1$d zdjęcia</item>
-    </plurals>
-    <string name="album_summary">%1$s · średnio %2$s · ostatnie zdjęcie %3$s</string>
-    <string name="album_last_today">dziś</string>
-    <string name="album_last_yesterday">wczoraj</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">%1$d dzień temu</item>
-        <item quantity="few">%1$d dni temu</item>
-        <item quantity="many">%1$d dni temu</item>
-        <item quantity="other">%1$d dnia temu</item>
-    </plurals>
     <string name="album_filter_all">Wszystkie %1$d</string>
-    <string name="album_this_place">To miejsce</string>
     <string name="album_stat_average">ŚREDNIA</string>
     <string name="album_stat_best">NAJLEPSZE</string>
-    <string name="album_shoot_again">Zrób tu kolejne zdjęcie</string>
-    <string name="album_remove_all">Usuń wszystkie zdjęcia z tego miejsca</string>
-    <string name="album_remove_title">Usunąć wszystkie zdjęcia?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d zdjęcie z miejsca %2$s zostanie trwale usunięte z kolekcji.</item>
-        <item quantity="few">%1$d zdjęcia z miejsca %2$s zostaną trwale usunięte z kolekcji.</item>
-        <item quantity="many">%1$d zdjęć z miejsca %2$s zostanie trwale usuniętych z kolekcji.</item>
-        <item quantity="other">%1$d zdjęcia z miejsca %2$s zostanie trwale usunięte z kolekcji.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d idealne zdjęcie</item>
         <item quantity="few">%1$d idealne zdjęcia</item>
@@ -317,7 +269,6 @@
         <item quantity="many">W tym tygodniu %1$d%%+ w %2$d pozach</item>
         <item quantity="other">W tym tygodniu %1$d%%+ w %2$d pozy</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · AI na urządzeniu · Bez przesyłania</string>
     <string name="progress_title">Twoje postępy</string>
     <string name="progress_tab_week">Tydzień</string>
     <string name="progress_tab_month">Miesiąc</string>
@@ -387,4 +338,6 @@
     <string name="notification_pose_idea_text">Czy uda Ci się odtworzyć tę pozę? Dotknij, aby spróbować teraz.</string>
     <string name="notification_action_view">Zobacz</string>
     <string name="notification_action_not_interested">Nie interesuje mnie</string>
+    <string name="settings_pro_card_title">Odblokuj PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Wszystkie pozy premium, przewodniki na żywo i brak reklam</string>
 </resources>

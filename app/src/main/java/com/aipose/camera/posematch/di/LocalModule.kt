@@ -1,6 +1,7 @@
 package com.aipose.camera.posematch.di
 
 import androidx.room.Room
+import com.aipose.camera.posematch.data.analytics.AnalyticsDataSource
 import com.aipose.camera.posematch.data.local.AdsRemoteDataStore
 import com.aipose.camera.posematch.data.local.AppDataStore
 import com.aipose.camera.posematch.data.local.AppDatabase
@@ -20,7 +21,6 @@ import com.aipose.camera.posematch.data.notification.PushNotificationDataSource
 import com.aipose.camera.posematch.data.pose.CaptureProcessor
 import com.aipose.camera.posematch.data.pose.MlKitPoseDetector
 import com.aipose.camera.posematch.data.pose.PhotoGradingEngine
-import com.aipose.camera.posematch.data.pose.SubjectCutoutDataSource
 import com.aipose.camera.posematch.domain.models.ProPlan
 import com.aipose.camera.posematch.ui.common.PremiumPurchaseLauncher
 import com.pdfutility.billing.BillingManager
@@ -37,6 +37,7 @@ val localModule = module {
     single { PremiumPurchaseLauncher(get()) }
     single { AppDataStore(get()) }
     single { NetworkConnectivityChecker(androidContext()) }
+    single { AnalyticsDataSource() }
 
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, AppDatabase.NAME).build()
@@ -57,7 +58,6 @@ val localModule = module {
     single { NotificationLaunchStore() }
     single { PushNotificationDataSource(androidContext()) }
     single { MlKitPoseDetector() }
-    single { SubjectCutoutDataSource() }
     single { PhotoGradingEngine() }
     single { CaptureProcessor(get()) }
 }

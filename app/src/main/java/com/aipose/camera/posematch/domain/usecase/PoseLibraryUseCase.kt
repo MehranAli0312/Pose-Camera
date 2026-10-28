@@ -17,8 +17,6 @@ class PoseLibraryUseCase(private val poseRepository: PoseRepository) {
     suspend fun importPose(title: String, sourceUri: String): Pose? =
         poseRepository.importPose(title, sourceUri)
 
-    suspend fun cutoutPath(pose: Pose): String? = poseRepository.cutoutPath(pose)
-
     suspend fun shareableImagePath(pose: Pose): String? =
         poseRepository.shareableImagePath(pose)
 

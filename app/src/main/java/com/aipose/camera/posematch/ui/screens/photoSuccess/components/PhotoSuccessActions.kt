@@ -43,7 +43,6 @@ private const val SHARE_BORDER_ALPHA = 0.14f
 @Composable
 internal fun PhotoSuccessActions(
     onShare: () -> Unit,
-    onShootAgain: () -> Unit,
     onViewCollections: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -67,10 +66,10 @@ internal fun PhotoSuccessActions(
                     .poseRaisedSurface(ButtonShape, borderAlpha = SHARE_BORDER_ALPHA),
             )
             ActionButton(
-                iconRes = R.drawable.ic_shoot_again,
+                iconRes = R.drawable.ic_pose_nav_collections,
                 iconTint = Color.White,
-                label = stringResource(R.string.saved_shoot_again),
-                onClick = onShootAgain,
+                label = stringResource(R.string.nav_gallery),
+                onClick = onViewCollections,
                 modifier = Modifier
                     .weight(1f)
                     .poseGradientPill(

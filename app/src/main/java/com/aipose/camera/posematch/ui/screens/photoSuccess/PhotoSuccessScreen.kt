@@ -26,8 +26,9 @@ import com.aipose.camera.posematch.ui.common.shareImageFile
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.RateUsPrompt
 import com.aipose.camera.posematch.ui.graph.NavRoute
+import com.aipose.camera.posematch.ui.firebaseRemote.PremiumCloseButtonPosition
 import com.aipose.camera.posematch.ui.graph.navigateToTab
-import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
+import com.aipose.camera.posematch.ui.screens.pro.components.ProTopBar
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessActions
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessHeader
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessShot
@@ -54,7 +55,6 @@ fun PhotoSuccessScreen(
     PoseGlowBackground(glows = PoseGlows.CaptureSaved) {
         if (content == null) return@PoseGlowBackground
         val capture = content.capture
-        val title = capture.title.ifBlank { stringResource(R.string.camera_no_pose) }
         val place = capture.location.name ?: stringResource(R.string.unknown_location)
         Column(
             modifier = Modifier
@@ -62,6 +62,12 @@ fun PhotoSuccessScreen(
                 .safeTopSystemBarsPadding()
                 .safeBottomSystemBarsPadding(),
         ) {
+            ProTopBar(
+                closeSecondsRemaining = 0,
+                closePosition = PremiumCloseButtonPosition.Right,
+                onClose = { navController.navigateToTab(NavRoute.HomeScreenRoute.route) },
+                modifier = Modifier.adaptiveWidth(),
+            )
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -69,15 +75,9 @@ fun PhotoSuccessScreen(
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(30.dp))
-                PhotoSuccessHeader(
-                    subtitle = if (content.isPersonalBest) {
-                        stringResource(R.string.saved_subtitle_best, title)
-                    } else {
-                        stringResource(R.string.saved_subtitle, title)
-                    },
-                )
-                Spacer(modifier = Modifier.height(28.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                PhotoSuccessHeader()
+                Spacer(modifier = Modifier.height(24.dp))
                 PhotoSuccessShot(
                     imagePath = capture.imagePath,
                     matchScore = capture.matchScore.takeIf { capture.poseId != null && it > 0 },
@@ -86,7 +86,6 @@ fun PhotoSuccessScreen(
                 Spacer(modifier = Modifier.height(30.dp))
                 PhotoSuccessActions(
                     onShare = { context.shareImageFile(capture.imagePath, shareChooserTitle) },
-                    onShootAgain = navController::popBackStackOnClick,
                     onViewCollections = {
                         navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
                     },

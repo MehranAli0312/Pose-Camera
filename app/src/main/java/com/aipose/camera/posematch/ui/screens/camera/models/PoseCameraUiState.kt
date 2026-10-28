@@ -10,7 +10,6 @@ data class PoseCameraUiState(
     val lockedPoseIds: Set<Int> = emptySet(),
     val lockedPose: Pose? = null,
     val selectedPose: Pose? = null,
-    val overlayCutoutPath: String? = null,
     val overlay: OverlayTransform = OverlayTransform(),
     val cameraFacing: CameraFacing = CameraFacing.Back,
     val flashMode: FlashMode = FlashMode.Off,
@@ -38,7 +37,7 @@ data class PoseCameraUiState(
     val feedback: MatchFeedback get() = MatchFeedback.forScore(match.score)
 
     val overlayImagePath: String?
-        get() = if (isPoseOverlayEnabled) overlayCutoutPath ?: selectedPose?.imagePath else null
+        get() = if (isPoseOverlayEnabled) selectedPose?.imagePath else null
 
     fun isToolActive(tool: CameraTool): Boolean = when (tool) {
         CameraTool.Grid -> isGridVisible

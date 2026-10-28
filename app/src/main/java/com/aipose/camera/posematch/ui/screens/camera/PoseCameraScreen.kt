@@ -79,7 +79,7 @@ fun PoseCameraScreen(
     val cameraPermission = rememberCameraPermissionState()
     val pulse = rememberHapticPulse()
     val context = LocalContext.current
-    val captureFailedTemplate = stringResource(R.string.toast_capture_failed)
+    val captureFailedMessage = stringResource(R.string.toast_capture_failed)
     val importFailedMessage = stringResource(R.string.toast_reference_failed)
     val importTitle = stringResource(R.string.imported_pose_title)
     var surfaceSize by remember { mutableStateOf(IntSize.Zero) }
@@ -141,9 +141,9 @@ fun PoseCameraScreen(
                     frameAnalyzer = viewModel.frameAnalyzer,
                     captureTarget = uiState.pendingCaptureTarget,
                     onCaptured = viewModel::onCaptureSucceeded,
-                    onCaptureFailed = { message ->
+                    onCaptureFailed = {
                         viewModel.onCaptureFailed()
-                        context.showToast(captureFailedTemplate.format(message.orEmpty()))
+                        context.showToast(captureFailedMessage)
                     },
                     modifier = Modifier.fillMaxSize(),
                 )

@@ -18,6 +18,7 @@ import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
 import com.aipose.camera.posematch.domain.usecase.RateUsUseCase
 import com.aipose.camera.posematch.domain.usecase.SplashStatusUseCase
 import com.aipose.camera.posematch.domain.usecase.StartPremiumUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -37,6 +38,7 @@ val useCaseModule = module {
     factory { CaptureLocationUseCase(get()) }
     factory { PhotoEditUseCase(get()) }
     factory { PremiumSubscriptionUseCase(get()) }
+    factory { TrackEventUseCase(get()) }
     factory { EngagementNotificationPicker() }
     factory {
         EngagementNotificationUseCase(

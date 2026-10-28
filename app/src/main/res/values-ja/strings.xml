@@ -156,9 +156,8 @@
     <string name="adjust_warmth">色温度</string>
     <string name="crop_free">自由</string>
     <string name="settings_retain_skeleton">撮影後もポーズの輪郭を表示</string>
-    <string name="toast_reference_imported">参考写真を読み込みました！カメラを開いてマッチさせましょう。</string>
     <string name="toast_reference_failed">参考写真を読み込めませんでした</string>
-    <string name="toast_capture_failed">撮影に失敗しました: %1$s</string>
+    <string name="toast_capture_failed">撮影に失敗しました</string>
     <string name="perm_camera_title">カメラへのアクセスが必要です</string>
     <string name="perm_camera_desc">写真を撮ってポーズをマッチさせるには、カメラへのアクセスを許可してください。</string>
     <string name="perm_allow">許可</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">設定を開く</string>
     <string name="capture_untitled">無題の写真</string>
     <string name="home_hero_cta">ポーズを始める</string>
-    <string name="home_action_live_pose">ライブポーズ</string>
-    <string name="home_action_open_camera">カメラを開く</string>
-    <string name="home_action_import">インポート</string>
-    <string name="home_action_your_photo">あなたの写真</string>
     <string name="home_action_trending">トレンド</string>
     <string name="home_action_couple">カップル</string>
     <string name="home_action_sunset">夕焼け</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">ビーチ</string>
     <string name="home_action_cafe">カフェ</string>
     <string name="home_action_explore">探す</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">%1$d ポーズ</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">バイラル %1$d</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">すべて %1$d</item>
-    </plurals>
     <string name="home_progress_title">あなたの成長</string>
     <string name="home_progress_view_all">すべて表示</string>
     <string name="home_progress_avg_match">平均マッチ</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">今日 %1$s</string>
     <string name="detail_yesterday">昨日 %1$s</string>
     <string name="detail_reshoot">撮り直す</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">%1$d 枚</item>
-    </plurals>
-    <string name="album_summary">%1$s · 平均 %2$s · 最終撮影 %3$s</string>
-    <string name="album_last_today">今日</string>
-    <string name="album_last_yesterday">昨日</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d日前</item>
-    </plurals>
     <string name="album_filter_all">すべて %1$d</string>
-    <string name="album_this_place">この場所</string>
     <string name="album_stat_average">平均</string>
     <string name="album_stat_best">ベスト</string>
-    <string name="album_shoot_again">ここでもう一度撮る</string>
-    <string name="album_remove_all">この場所の写真をすべて削除</string>
-    <string name="album_remove_title">すべての写真を削除しますか？</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">%2$s の写真 %1$d 枚がコレクションから完全に削除されます。</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">パーフェクト写真 %1$d 枚</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">今週 %2$d 件のポーズで %1$d%%+ を達成</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · 端末内AI · アップロードなし</string>
     <string name="progress_title">あなたの成長</string>
     <string name="progress_tab_week">週</string>
     <string name="progress_tab_month">月</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">このポーズを再現できますか？タップして今すぐ試そう。</string>
     <string name="notification_action_view">見る</string>
     <string name="notification_action_not_interested">興味なし</string>
+    <string name="settings_pro_card_title">PoseAI Pro を解放</string>
+    <string name="settings_pro_card_subtitle">すべてのプレミアムポーズ、ライブガイド、広告なし</string>
 </resources>

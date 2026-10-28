@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
 import com.aipose.camera.posematch.ads.rememberOnboardingNativeAd
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBackdrop
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardBottomAd
 import com.aipose.camera.posematch.ui.screens.onboard.components.OnboardChrome
@@ -94,6 +95,8 @@ fun OnboardScreen(
     fun goToNextPage() {
         missedSplashAd.showThen { goToPage(currentPage + 1) }
     }
+
+    LaunchedEffect(Unit) { splashViewModel.trackScreen(AnalyticsEvent.Onboard) }
 
     BackHandler(enabled = true) {}
 

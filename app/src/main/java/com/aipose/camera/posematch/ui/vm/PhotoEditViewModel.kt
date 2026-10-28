@@ -2,6 +2,7 @@ package com.aipose.camera.posematch.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.CaptureDraft
 import com.aipose.camera.posematch.domain.models.PhotoAdjustments
@@ -11,6 +12,7 @@ import com.aipose.camera.posematch.domain.models.PhotoGeometry
 import com.aipose.camera.posematch.domain.usecase.CaptureLocationUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.AdjustTool
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.CropTransform
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
@@ -24,7 +26,8 @@ import kotlinx.coroutines.launch
 class PhotoEditViewModel(
     private val photoEditUseCase: PhotoEditUseCase,
     private val captureUseCase: CaptureUseCase,
-    private val captureLocationUseCase: CaptureLocationUseCase
+    private val captureLocationUseCase: CaptureLocationUseCase,
+    private val trackEventUseCase: TrackEventUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PhotoEditUiState())
@@ -32,6 +35,7 @@ class PhotoEditViewModel(
 
     init {
         observeDraft()
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.Editor) }
     }
 
     fun selectTab(tab: PhotoEditTab) {
@@ -136,6 +140,7 @@ class PhotoEditViewModel(
             val id = captureUseCase.save(capture)
             captureUseCase.exportToGallery(capture.copy(id = id))
             captureUseCase.clearDraft()
+            trackEventUseCase.track(AnalyticsEvent.Save)
             _uiState.update { current -> current.copy(isSaving = false, savedCaptureId = id) }
         }
     }

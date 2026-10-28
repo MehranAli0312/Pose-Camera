@@ -170,9 +170,8 @@
     <string name="crop_four_by_five" translatable="false">4:5</string>
     <string name="crop_sixteen_by_nine" translatable="false">16:9</string>
     <string name="settings_retain_skeleton">Keep pose overlay after shot</string>
-    <string name="toast_reference_imported">Reference imported! Open Camera to match.</string>
     <string name="toast_reference_failed">Reference alignment loading failed</string>
-    <string name="toast_capture_failed">Capture failed: %1$s</string>
+    <string name="toast_capture_failed">Capture failed</string>
     <string name="perm_camera_title">Camera Permission Needed</string>
     <string name="perm_camera_desc">Allow camera access to take pictures and match your poses.</string>
     <string name="perm_allow">Allow</string>
@@ -182,10 +181,6 @@
     <string name="home_title_pose" translatable="false">Pose</string>
     <string name="home_title_ai" translatable="false">AI</string>
     <string name="home_hero_cta">Start Posing</string>
-    <string name="home_action_live_pose">Live Pose</string>
-    <string name="home_action_open_camera">Open camera</string>
-    <string name="home_action_import">Import</string>
-    <string name="home_action_your_photo">Your photo</string>
     <string name="home_action_trending">Trending</string>
     <string name="home_action_couple">Couple</string>
     <string name="home_action_sunset">Sunset</string>
@@ -194,18 +189,6 @@
     <string name="home_action_beach">Beach</string>
     <string name="home_action_cafe">Cafe</string>
     <string name="home_action_explore">Explore</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d pose</item>
-        <item quantity="other">%1$d poses</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d viral</item>
-        <item quantity="other">%1$d viral</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">All %1$d</item>
-        <item quantity="other">All %1$d</item>
-    </plurals>
     <string name="home_progress_title">Your Progress</string>
     <string name="home_progress_view_all">View All</string>
     <string name="home_progress_avg_match">Avg Match</string>
@@ -282,28 +265,9 @@
     <string name="detail_yesterday">Yesterday %1$s</string>
     <string name="detail_date_time" translatable="false">%1$s, %2$s</string>
     <string name="detail_reshoot">Re-shoot</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d shot</item>
-        <item quantity="other">%1$d shots</item>
-    </plurals>
-    <string name="album_summary">%1$s · %2$s average · last shot %3$s</string>
-    <string name="album_last_today">today</string>
-    <string name="album_last_yesterday">yesterday</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">%1$d day ago</item>
-        <item quantity="other">%1$d days ago</item>
-    </plurals>
     <string name="album_filter_all">All %1$d</string>
-    <string name="album_this_place">This place</string>
     <string name="album_stat_average">AVERAGE</string>
     <string name="album_stat_best">BEST</string>
-    <string name="album_shoot_again">Shoot here again</string>
-    <string name="album_remove_all">Remove all shots from this place</string>
-    <string name="album_remove_title">Remove all shots?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d shot from %2$s will be permanently removed from your collection.</item>
-        <item quantity="other">%1$d shots from %2$s will be permanently removed from your collection.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d perfect shot</item>
         <item quantity="other">%1$d perfect shots</item>
@@ -312,7 +276,6 @@
         <item quantity="one">You scored %1$d%%+ on %2$d pose this week</item>
         <item quantity="other">You scored %1$d%%+ on %2$d poses this week</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · On-device AI · No uploads</string>
     <string name="progress_title">Your Progress</string>
     <string name="progress_tab_week">Week</string>
     <string name="progress_tab_month">Month</string>
@@ -379,4 +342,6 @@
     <string name="notification_pose_idea_text">Can you match this pose? Tap to try it now.</string>
     <string name="notification_action_view">View</string>
     <string name="notification_action_not_interested">Not interested</string>
+    <string name="settings_pro_card_title">Unlock PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">All premium poses, live guides &amp; no ads</string>
 </resources>

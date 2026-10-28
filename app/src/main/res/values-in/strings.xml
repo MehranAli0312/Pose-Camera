@@ -156,9 +156,8 @@
     <string name="adjust_warmth">Kehangatan</string>
     <string name="crop_free">Bebas</string>
     <string name="settings_retain_skeleton">Pertahankan garis pose setelah memotret</string>
-    <string name="toast_reference_imported">Referensi diimpor! Buka kamera untuk mencocokkan.</string>
     <string name="toast_reference_failed">Gagal memuat referensi</string>
-    <string name="toast_capture_failed">Gagal memotret: %1$s</string>
+    <string name="toast_capture_failed">Gagal memotret</string>
     <string name="perm_camera_title">Izin kamera diperlukan</string>
     <string name="perm_camera_desc">Izinkan akses kamera untuk memotret dan mencocokkan posemu.</string>
     <string name="perm_allow">Izinkan</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">Buka Setelan</string>
     <string name="capture_untitled">Foto tanpa judul</string>
     <string name="home_hero_cta">Mulai berpose</string>
-    <string name="home_action_live_pose">Pose langsung</string>
-    <string name="home_action_open_camera">Buka kamera</string>
-    <string name="home_action_import">Impor</string>
-    <string name="home_action_your_photo">Fotomu</string>
     <string name="home_action_trending">Tren</string>
     <string name="home_action_couple">Pasangan</string>
     <string name="home_action_sunset">Matahari terbenam</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">Pantai</string>
     <string name="home_action_cafe">Kafe</string>
     <string name="home_action_explore">Jelajahi</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">%1$d pose</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">%1$d viral</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">Semua %1$d</item>
-    </plurals>
     <string name="home_progress_title">Progresmu</string>
     <string name="home_progress_view_all">Lihat semua</string>
     <string name="home_progress_avg_match">Rata-rata</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">Hari ini %1$s</string>
     <string name="detail_yesterday">Kemarin %1$s</string>
     <string name="detail_reshoot">Potret ulang</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">%1$d foto</item>
-    </plurals>
-    <string name="album_summary">%1$s · rata-rata %2$s · foto terakhir %3$s</string>
-    <string name="album_last_today">hari ini</string>
-    <string name="album_last_yesterday">kemarin</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d hari lalu</item>
-    </plurals>
     <string name="album_filter_all">Semua %1$d</string>
-    <string name="album_this_place">Tempat ini</string>
     <string name="album_stat_average">RATA-RATA</string>
     <string name="album_stat_best">TERBAIK</string>
-    <string name="album_shoot_again">Potret lagi di sini</string>
-    <string name="album_remove_all">Hapus semua foto dari tempat ini</string>
-    <string name="album_remove_title">Hapus semua foto?</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">%1$d foto dari %2$s akan dihapus permanen dari koleksimu.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">%1$d foto sempurna</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">Kamu meraih %1$d%%+ pada %2$d pose minggu ini</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · AI di perangkat · Tanpa unggahan</string>
     <string name="progress_title">Progresmu</string>
     <string name="progress_tab_week">Minggu</string>
     <string name="progress_tab_month">Bulan</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">Bisakah kamu meniru pose ini? Ketuk untuk mencobanya sekarang.</string>
     <string name="notification_action_view">Lihat</string>
     <string name="notification_action_not_interested">Tidak tertarik</string>
+    <string name="settings_pro_card_title">Buka PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Semua pose premium, panduan langsung &amp; tanpa iklan</string>
 </resources>

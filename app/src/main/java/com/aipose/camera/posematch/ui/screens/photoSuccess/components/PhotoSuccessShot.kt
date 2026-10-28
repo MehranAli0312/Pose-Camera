@@ -66,6 +66,8 @@ internal fun PhotoSuccessShot(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        PlaceLabelRow(placeLabel = placeLabel)
+        Spacer(modifier = Modifier.height(20.dp))
         var aspectRatio by remember(imagePath) { mutableFloatStateOf(DEFAULT_SHOT_ASPECT_RATIO) }
         PoseImage(
             imagePath = imagePath,
@@ -82,29 +84,35 @@ internal fun PhotoSuccessShot(
                 .shadow(ShotElevation, ShotShape, ambientColor = PoseShadow, spotColor = PoseShadow)
                 .clip(ShotShape),
         )
-        Spacer(modifier = Modifier.height(24.dp))
         if (matchScore != null) {
+            Spacer(modifier = Modifier.height(24.dp))
             MatchChip(score = matchScore)
-            Spacer(modifier = Modifier.height(16.dp))
         }
-        Row(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_saved_pin),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(Violet),
-                modifier = Modifier.size(width = PinWidth, height = PinHeight),
-            )
-            Text(
-                text = placeLabel,
-                style = poseTextStyle(11.sp, FontWeight.Bold, LocalAppPalette.current.textMuted),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+    }
+}
+
+@Composable
+private fun PlaceLabelRow(
+    placeLabel: String,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_saved_pin),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(Violet),
+            modifier = Modifier.size(width = PinWidth, height = PinHeight),
+        )
+        Text(
+            text = placeLabel,
+            style = poseTextStyle(11.sp, FontWeight.Bold, LocalAppPalette.current.textMuted),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 

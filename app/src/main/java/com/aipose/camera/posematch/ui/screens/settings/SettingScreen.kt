@@ -19,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.BuildConfig
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
@@ -37,7 +36,7 @@ import com.aipose.camera.posematch.ui.models.allLanguageItems
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingRow
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingSectionLabel
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingToggle
-import com.aipose.camera.posematch.ui.screens.settings.components.SettingsFooter
+import com.aipose.camera.posematch.ui.screens.settings.components.SettingsProCard
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingsHeader
 import com.aipose.camera.posematch.ui.vm.CameraSettingsViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
@@ -62,6 +61,7 @@ fun SettingScreen(
     val progress by settingsViewModel.progress.collectAsStateWithLifecycle()
     val keepPoseOverlay by cameraSettingsViewModel.keepPoseOverlay.collectAsStateWithLifecycle()
     val captureTimer by cameraSettingsViewModel.captureTimer.collectAsStateWithLifecycle()
+    val showProCard by settingsViewModel.showProCard.collectAsStateWithLifecycle()
     var isTimerSheetVisible by rememberSaveable { mutableStateOf(false) }
     val isRateUsVisible = rememberSaveable { mutableStateOf(false) }
     val shareChooserTitle = stringResource(R.string.app_name)
@@ -89,6 +89,12 @@ fun SettingScreen(
                     ),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
+                if (showProCard) {
+                    SettingsProCard(
+                        onClick = { navController.navigateOnClick(NavRoute.ProScreenRoute.route) },
+                        modifier = Modifier.padding(top = 10.dp),
+                    )
+                }
                 SettingSectionLabel(
                     text = stringResource(R.string.settings_preferences),
                     modifier = Modifier.padding(top = 20.dp),
@@ -152,10 +158,6 @@ fun SettingScreen(
                             uriHandler.openUri(PRIVACY_POLICY)
                         }
                     },
-                )
-                SettingsFooter(
-                    versionName = BuildConfig.VERSION_NAME,
-                    modifier = Modifier.padding(top = 16.dp),
                 )
             }
         }

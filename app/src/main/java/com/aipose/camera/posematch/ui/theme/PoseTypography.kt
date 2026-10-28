@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.sp
 
 private const val LINE_HEIGHT_RATIO = 1.21f
 private val ScreenTitleSize = 16.sp
+val PoseTabTitleSize = 21.sp
 
 @Composable
 @ReadOnlyComposable
@@ -33,4 +34,13 @@ fun poseScreenTitleStyle(
 ): TextStyle = MaterialTheme.typography.titleSmall.copy(
     fontSize = ScreenTitleSize,
     color = color,
+)
+
+@Composable
+@ReadOnlyComposable
+fun poseTabTitleStyle(
+    color: Color = MaterialTheme.colorScheme.onSurface,
+): TextStyle = poseScreenTitleStyle(color).copy(
+    fontSize = PoseTabTitleSize,
+    lineHeight = PoseTabTitleSize * LINE_HEIGHT_RATIO,
 )

@@ -158,9 +158,8 @@
     <string name="adjust_warmth">Θερμότητα</string>
     <string name="crop_free">Ελεύθερο</string>
     <string name="settings_retain_skeleton">Διατήρηση περιγράμματος μετά τη λήψη</string>
-    <string name="toast_reference_imported">Η αναφορά εισήχθη! Ανοίξτε την κάμερα για σύγκριση.</string>
     <string name="toast_reference_failed">Αποτυχία φόρτωσης αναφοράς</string>
-    <string name="toast_capture_failed">Η λήψη απέτυχε: %1$s</string>
+    <string name="toast_capture_failed">Η λήψη απέτυχε</string>
     <string name="perm_camera_title">Απαιτείται άδεια κάμερας</string>
     <string name="perm_camera_desc">Επιτρέψτε την πρόσβαση στην κάμερα για να τραβάτε φωτογραφίες και να συγκρίνετε πόζες.</string>
     <string name="perm_allow">Να επιτρέπεται</string>
@@ -168,10 +167,6 @@
     <string name="perm_open_settings">Άνοιγμα ρυθμίσεων</string>
     <string name="capture_untitled">Φωτογραφία χωρίς τίτλο</string>
     <string name="home_hero_cta">Ξεκινήστε το πόζαρισμα</string>
-    <string name="home_action_live_pose">Ζωντανή πόζα</string>
-    <string name="home_action_open_camera">Άνοιγμα κάμερας</string>
-    <string name="home_action_import">Εισαγωγή</string>
-    <string name="home_action_your_photo">Η φωτογραφία σας</string>
     <string name="home_action_trending">Τάσεις</string>
     <string name="home_action_couple">Ζευγάρι</string>
     <string name="home_action_sunset">Ηλιοβασίλεμα</string>
@@ -180,18 +175,6 @@
     <string name="home_action_beach">Παραλία</string>
     <string name="home_action_cafe">Καφέ</string>
     <string name="home_action_explore">Εξερεύνηση</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d πόζα</item>
-        <item quantity="other">%1$d πόζες</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d viral</item>
-        <item quantity="other">%1$d viral</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">Όλες %1$d</item>
-        <item quantity="other">Όλες %1$d</item>
-    </plurals>
     <string name="home_progress_title">Η πρόοδός σας</string>
     <string name="home_progress_view_all">Όλα</string>
     <string name="home_progress_avg_match">Μέσο ταίριασμα</string>
@@ -265,28 +248,9 @@
     <string name="detail_today">Σήμερα %1$s</string>
     <string name="detail_yesterday">Χθες %1$s</string>
     <string name="detail_reshoot">Νέα λήψη</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d λήψη</item>
-        <item quantity="other">%1$d λήψεις</item>
-    </plurals>
-    <string name="album_summary">%1$s · μέσος όρος %2$s · τελευταία λήψη %3$s</string>
-    <string name="album_last_today">σήμερα</string>
-    <string name="album_last_yesterday">χθες</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">πριν από %1$d ημέρα</item>
-        <item quantity="other">πριν από %1$d ημέρες</item>
-    </plurals>
     <string name="album_filter_all">Όλες %1$d</string>
-    <string name="album_this_place">Αυτό το μέρος</string>
     <string name="album_stat_average">ΜΕΣΟΣ ΟΡΟΣ</string>
     <string name="album_stat_best">ΚΑΛΥΤΕΡΟ</string>
-    <string name="album_shoot_again">Νέα λήψη εδώ</string>
-    <string name="album_remove_all">Αφαίρεση όλων των λήψεων από αυτό το μέρος</string>
-    <string name="album_remove_title">Αφαίρεση όλων των λήψεων;</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d λήψη από %2$s θα αφαιρεθεί οριστικά από τη συλλογή σας.</item>
-        <item quantity="other">%1$d λήψεις από %2$s θα αφαιρεθούν οριστικά από τη συλλογή σας.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d τέλεια λήψη</item>
         <item quantity="other">%1$d τέλειες λήψεις</item>
@@ -295,7 +259,6 @@
         <item quantity="one">Πετύχατε %1$d%%+ σε %2$d πόζα αυτή την εβδομάδα</item>
         <item quantity="other">Πετύχατε %1$d%%+ σε %2$d πόζες αυτή την εβδομάδα</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · AI στη συσκευή · Χωρίς μεταφορτώσεις</string>
     <string name="progress_title">Η πρόοδός σας</string>
     <string name="progress_tab_week">Εβδομάδα</string>
     <string name="progress_tab_month">Μήνας</string>
@@ -359,4 +322,6 @@
     <string name="notification_pose_idea_text">Μπορείς να ταιριάξεις αυτή την πόζα; Πάτησε για να τη δοκιμάσεις τώρα.</string>
     <string name="notification_action_view">Προβολή</string>
     <string name="notification_action_not_interested">Δεν ενδιαφέρομαι</string>
+    <string name="settings_pro_card_title">Ξεκλείδωσε το PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Όλες οι premium πόζες, ζωντανοί οδηγοί &amp; χωρίς διαφημίσεις</string>
 </resources>

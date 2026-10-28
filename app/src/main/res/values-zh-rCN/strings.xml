@@ -156,9 +156,8 @@
     <string name="adjust_warmth">色温</string>
     <string name="crop_free">自由</string>
     <string name="settings_retain_skeleton">拍摄后保留姿势轮廓</string>
-    <string name="toast_reference_imported">参考图已导入！打开相机开始匹配。</string>
     <string name="toast_reference_failed">参考图加载失败</string>
-    <string name="toast_capture_failed">拍摄失败：%1$s</string>
+    <string name="toast_capture_failed">拍摄失败</string>
     <string name="perm_camera_title">需要相机权限</string>
     <string name="perm_camera_desc">允许访问相机，以便拍照并匹配你的姿势。</string>
     <string name="perm_allow">允许</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">打开设置</string>
     <string name="capture_untitled">未命名照片</string>
     <string name="home_hero_cta">开始摆姿势</string>
-    <string name="home_action_live_pose">实时姿势</string>
-    <string name="home_action_open_camera">打开相机</string>
-    <string name="home_action_import">导入</string>
-    <string name="home_action_your_photo">你的照片</string>
     <string name="home_action_trending">热门</string>
     <string name="home_action_couple">情侣</string>
     <string name="home_action_sunset">日落</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">海滩</string>
     <string name="home_action_cafe">咖啡馆</string>
     <string name="home_action_explore">探索</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">%1$d 个姿势</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">%1$d 个爆款</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">全部 %1$d</item>
-    </plurals>
     <string name="home_progress_title">你的进步</string>
     <string name="home_progress_view_all">查看全部</string>
     <string name="home_progress_avg_match">平均匹配</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">今天 %1$s</string>
     <string name="detail_yesterday">昨天 %1$s</string>
     <string name="detail_reshoot">重拍</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">%1$d 张照片</item>
-    </plurals>
-    <string name="album_summary">%1$s · 平均 %2$s · 最近拍摄 %3$s</string>
-    <string name="album_last_today">今天</string>
-    <string name="album_last_yesterday">昨天</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d 天前</item>
-    </plurals>
     <string name="album_filter_all">全部 %1$d</string>
-    <string name="album_this_place">此地点</string>
     <string name="album_stat_average">平均</string>
     <string name="album_stat_best">最佳</string>
-    <string name="album_shoot_again">在这里再拍一次</string>
-    <string name="album_remove_all">移除此地点的所有照片</string>
-    <string name="album_remove_title">移除所有照片？</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">%2$s 的 %1$d 张照片将从合集中永久删除。</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">%1$d 张完美照片</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">本周你在 %2$d 个姿势上达到 %1$d%%+</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · 设备端 AI · 不上传</string>
     <string name="progress_title">你的进步</string>
     <string name="progress_tab_week">周</string>
     <string name="progress_tab_month">月</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">你能摆出这个姿势吗？点按立即试试。</string>
     <string name="notification_action_view">查看</string>
     <string name="notification_action_not_interested">不感兴趣</string>
+    <string name="settings_pro_card_title">解锁 PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">全部高级姿势、实时指导，无广告</string>
 </resources>

@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraFacing
 import com.aipose.camera.posematch.ui.screens.camera.models.FlashMode
@@ -30,7 +31,7 @@ internal fun CameraPreviewSurface(
     frameAnalyzer: ImageAnalysis.Analyzer,
     captureTarget: String?,
     onCaptured: (String) -> Unit,
-    onCaptureFailed: (String?) -> Unit,
+    onCaptureFailed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -80,14 +81,14 @@ internal fun CameraPreviewSurface(
         val options = ImageCapture.OutputFileOptions.Builder(File(target)).build()
         imageCapture.takePicture(
             options,
-            cameraExecutor,
+            ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     currentOnCaptured(target)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
-                    currentOnCaptureFailed(exception.message)
+                    currentOnCaptureFailed()
                 }
             },
         )

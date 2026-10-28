@@ -162,9 +162,8 @@
     <string name="adjust_warmth">Теплота</string>
     <string name="crop_free">Свободно</string>
     <string name="settings_retain_skeleton">Оставлять контур после снимка</string>
-    <string name="toast_reference_imported">Образец импортирован! Откройте камеру для сравнения.</string>
     <string name="toast_reference_failed">Не удалось загрузить образец</string>
-    <string name="toast_capture_failed">Ошибка съёмки: %1$s</string>
+    <string name="toast_capture_failed">Ошибка съёмки</string>
     <string name="perm_camera_title">Нужен доступ к камере</string>
     <string name="perm_camera_desc">Разрешите доступ к камере, чтобы снимать и сравнивать позы.</string>
     <string name="perm_allow">Разрешить</string>
@@ -172,10 +171,6 @@
     <string name="perm_open_settings">Открыть настройки</string>
     <string name="capture_untitled">Снимок без названия</string>
     <string name="home_hero_cta">Начать позировать</string>
-    <string name="home_action_live_pose">Поза вживую</string>
-    <string name="home_action_open_camera">Открыть камеру</string>
-    <string name="home_action_import">Импорт</string>
-    <string name="home_action_your_photo">Ваше фото</string>
     <string name="home_action_trending">В тренде</string>
     <string name="home_action_couple">Пара</string>
     <string name="home_action_sunset">Закат</string>
@@ -184,24 +179,6 @@
     <string name="home_action_beach">Пляж</string>
     <string name="home_action_cafe">Кафе</string>
     <string name="home_action_explore">Обзор</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d поза</item>
-        <item quantity="few">%1$d позы</item>
-        <item quantity="many">%1$d поз</item>
-        <item quantity="other">%1$d позы</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d вирусная</item>
-        <item quantity="few">%1$d вирусные</item>
-        <item quantity="many">%1$d вирусных</item>
-        <item quantity="other">%1$d вирусные</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">Все %1$d</item>
-        <item quantity="few">Все %1$d</item>
-        <item quantity="many">Все %1$d</item>
-        <item quantity="other">Все %1$d</item>
-    </plurals>
     <string name="home_progress_title">Ваш прогресс</string>
     <string name="home_progress_view_all">Все</string>
     <string name="home_progress_avg_match">Среднее</string>
@@ -277,34 +254,9 @@
     <string name="detail_today">Сегодня %1$s</string>
     <string name="detail_yesterday">Вчера %1$s</string>
     <string name="detail_reshoot">Переснять</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d снимок</item>
-        <item quantity="few">%1$d снимка</item>
-        <item quantity="many">%1$d снимков</item>
-        <item quantity="other">%1$d снимка</item>
-    </plurals>
-    <string name="album_summary">%1$s · среднее %2$s · последний снимок %3$s</string>
-    <string name="album_last_today">сегодня</string>
-    <string name="album_last_yesterday">вчера</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">%1$d день назад</item>
-        <item quantity="few">%1$d дня назад</item>
-        <item quantity="many">%1$d дней назад</item>
-        <item quantity="other">%1$d дня назад</item>
-    </plurals>
     <string name="album_filter_all">Все %1$d</string>
-    <string name="album_this_place">Это место</string>
     <string name="album_stat_average">СРЕДНЕЕ</string>
     <string name="album_stat_best">ЛУЧШЕЕ</string>
-    <string name="album_shoot_again">Снять здесь ещё</string>
-    <string name="album_remove_all">Удалить все снимки этого места</string>
-    <string name="album_remove_title">Удалить все снимки?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d снимок из места %2$s будет навсегда удалён из коллекции.</item>
-        <item quantity="few">%1$d снимка из места %2$s будут навсегда удалены из коллекции.</item>
-        <item quantity="many">%1$d снимков из места %2$s будут навсегда удалены из коллекции.</item>
-        <item quantity="other">%1$d снимка из места %2$s будут навсегда удалены из коллекции.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d идеальный снимок</item>
         <item quantity="few">%1$d идеальных снимка</item>
@@ -317,7 +269,6 @@
         <item quantity="many">На этой неделе %1$d%%+ в %2$d позах</item>
         <item quantity="other">На этой неделе %1$d%%+ в %2$d позы</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · ИИ на устройстве · Без загрузок</string>
     <string name="progress_title">Ваш прогресс</string>
     <string name="progress_tab_week">Неделя</string>
     <string name="progress_tab_month">Месяц</string>
@@ -387,4 +338,6 @@
     <string name="notification_pose_idea_text">Сможете повторить эту позу? Нажмите, чтобы попробовать.</string>
     <string name="notification_action_view">Смотреть</string>
     <string name="notification_action_not_interested">Не интересно</string>
+    <string name="settings_pro_card_title">Откройте PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Все премиум-позы, живые подсказки и без рекламы</string>
 </resources>

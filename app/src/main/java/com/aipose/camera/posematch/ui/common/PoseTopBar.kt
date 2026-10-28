@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.ui.theme.poseScreenTitleStyle
@@ -22,6 +23,7 @@ fun PoseTopBar(
     title: String,
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
+    titleStyle: TextStyle = poseScreenTitleStyle(),
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
@@ -36,7 +38,7 @@ fun PoseTopBar(
         }
         Text(
             text = title,
-            style = poseScreenTitleStyle(),
+            style = titleStyle,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier

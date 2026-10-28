@@ -1,5 +1,6 @@
 package com.aipose.camera.posematch.ui.screens.poseDetail
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -22,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.rememberInnerInterstitial
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.shareImageFile
 import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
+import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailHero
 import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailPanel
 import com.aipose.camera.posematch.ui.screens.poseDetail.components.PoseDetailTopBar
@@ -50,6 +51,16 @@ fun PoseDetailScreen(
     val shareImagePath by viewModel.shareImagePath.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val shareChooserTitle = stringResource(R.string.action_share)
+    val innerInterstitial = rememberInnerInterstitial()
+
+    fun continueWithAd(action: () -> Unit) {
+        if (!navController.acceptNavigationClick()) return
+        innerInterstitial.showThen(action)
+    }
+
+    fun goBackWithAd() = continueWithAd { navController.popBackStack() }
+
+    BackHandler(onBack = ::goBackWithAd)
 
     LaunchedEffect(poseId) { viewModel.onPoseRequested(poseId) }
 
@@ -86,15 +97,15 @@ fun PoseDetailScreen(
             PoseDetailPanel(
                 content = content,
                 onStartPosing = {
-                    navController.navigateOnClick(
-                        NavRoute.CameraScreenRoute.routeFor(content.pose.id)
-                    )
+                    continueWithAd {
+                        navController.navigate(NavRoute.CameraScreenRoute.routeFor(content.pose.id))
+                    }
                 },
             )
         }
         PoseDetailTopBar(
             isSaved = content.isSaved,
-            onBack = { navController.popBackStackOnClick() },
+            onBack = ::goBackWithAd,
             onToggleSaved = viewModel::toggleSaved,
             onShare = { viewModel.share(content.pose) },
             modifier = Modifier.align(Alignment.TopCenter),

@@ -1,5 +1,6 @@
 package com.aipose.camera.posematch.di
 
+import com.aipose.camera.posematch.data.repoImpl.AnalyticsRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.CameraSettingsRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.CaptureLocationRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.CaptureRepositoryImpl
@@ -12,6 +13,7 @@ import com.aipose.camera.posematch.data.repoImpl.PoseRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.PremiumRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.RateUsRepositoryImpl
 import com.aipose.camera.posematch.data.repoImpl.SplashStatusRepositoryImpl
+import com.aipose.camera.posematch.domain.repo.AnalyticsRepository
 import com.aipose.camera.posematch.domain.repo.CameraSettingsRepository
 import com.aipose.camera.posematch.domain.repo.CaptureLocationRepository
 import com.aipose.camera.posematch.domain.repo.CaptureRepository
@@ -24,7 +26,6 @@ import com.aipose.camera.posematch.domain.repo.PoseRepository
 import com.aipose.camera.posematch.domain.repo.PremiumRepository
 import com.aipose.camera.posematch.domain.repo.RateUsRepository
 import com.aipose.camera.posematch.domain.repo.SplashStatusRepository
-import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -33,16 +34,15 @@ val repositoryModule = module {
     single<FavoritePoseRepository> { FavoritePoseRepositoryImpl(get()) }
     single<RateUsRepository> { RateUsRepositoryImpl(get()) }
     single<CameraSettingsRepository> { CameraSettingsRepositoryImpl(get()) }
+    single<AnalyticsRepository> { AnalyticsRepositoryImpl(get(), get()) }
     single<PoseRepository> {
         PoseRepositoryImpl(
-            context = androidContext(),
             assetDataSource = get(),
             importedFileDataSource = get(),
             imageDataSource = get(),
             shareDataSource = get(),
             customPoseDao = get(),
-            poseDetector = get(),
-            cutoutDataSource = get()
+            poseDetector = get()
         )
     }
     single<PoseLockRepository> { PoseLockRepositoryImpl(get()) }

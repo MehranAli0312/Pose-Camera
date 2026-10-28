@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseRaisedIconButton
 import com.aipose.camera.posematch.ui.common.PoseTopBar
+import com.aipose.camera.posematch.ui.theme.poseTabTitleStyle
 
 private val FilterGlyphSize = DpSize(15.dp, 14.dp)
 
@@ -16,7 +17,11 @@ internal fun SavedHeader(
     onOpenSort: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    PoseTopBar(title = stringResource(R.string.nav_saved), modifier = modifier) {
+    PoseTopBar(
+        title = stringResource(R.string.nav_saved),
+        modifier = modifier,
+        titleStyle = poseTabTitleStyle(),
+    ) {
         PoseRaisedIconButton(
             iconRes = R.drawable.ic_pose_filter,
             contentDescription = stringResource(R.string.saved_sort_title),

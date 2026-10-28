@@ -2,6 +2,7 @@ package com.aipose.camera.posematch.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseLockAccess
@@ -10,6 +11,7 @@ import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
@@ -45,7 +47,8 @@ class HomeViewModel(
     private val captureUseCase: CaptureUseCase,
     private val captureProgressUseCase: CaptureProgressUseCase,
     private val poseLockUseCase: PoseLockUseCase,
-    premiumSubscriptionUseCase: PremiumSubscriptionUseCase
+    premiumSubscriptionUseCase: PremiumSubscriptionUseCase,
+    private val trackEventUseCase: TrackEventUseCase
 ) : ViewModel() {
 
     val showProBadge: StateFlow<Boolean> = premiumSubscriptionUseCase.observeFreeUser()
@@ -72,6 +75,18 @@ class HomeViewModel(
         HomeUiState.Loading
     )
 
+    init {
+        track(AnalyticsEvent.Home)
+    }
+
+    fun onHeroTapped() {
+        track(AnalyticsEvent.HomeHero)
+    }
+
+    fun onCategoryTapped() {
+        track(AnalyticsEvent.HomeCategory)
+    }
+
     fun showLockedPose(pose: Pose, target: HomeUnlockTarget) {
         heroUnlock.value = HeroUnlock(lockedPose = pose, target = target)
     }
@@ -90,6 +105,10 @@ class HomeViewModel(
 
     fun consumeUnlockedPose() {
         _unlockedPoseToOpen.value = null
+    }
+
+    private fun track(event: AnalyticsEvent) {
+        viewModelScope.launch { trackEventUseCase.track(event) }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

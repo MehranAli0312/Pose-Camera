@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.ads.R
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.rememberShimmer
@@ -139,6 +141,11 @@ private fun AdBadge(boneColor: Color, textColor: Color, modifier: Modifier = Mod
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
+            autoSize = TextAutoSize.StepBased(
+                minFontSize = BadgeLabelMinSize,
+                maxFontSize = MaterialTheme.typography.labelLarge.fontSize,
+            ),
+            modifier = Modifier.padding(horizontal = BadgeLabelInset),
         )
     }
 }
@@ -201,4 +208,6 @@ private val MarkerShape = GenericShape { size, _ ->
 private val CompactMaxHeight = 100.dp
 private val RatingMinHeight = 64.dp
 private val TallBadgeSize = 40.dp
+private val BadgeLabelInset = 4.dp
+private val BadgeLabelMinSize = 6.sp
 private val MarkerSize = 10.dp

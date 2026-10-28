@@ -156,9 +156,8 @@
     <string name="adjust_warmth">색온도</string>
     <string name="crop_free">자유</string>
     <string name="settings_retain_skeleton">촬영 후에도 포즈 윤곽선 유지</string>
-    <string name="toast_reference_imported">참고 사진을 가져왔습니다! 카메라를 열어 맞춰 보세요.</string>
     <string name="toast_reference_failed">참고 사진을 불러오지 못했습니다</string>
-    <string name="toast_capture_failed">촬영 실패: %1$s</string>
+    <string name="toast_capture_failed">촬영 실패</string>
     <string name="perm_camera_title">카메라 권한이 필요합니다</string>
     <string name="perm_camera_desc">사진을 찍고 포즈를 맞추려면 카메라 접근을 허용하세요.</string>
     <string name="perm_allow">허용</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">설정 열기</string>
     <string name="capture_untitled">제목 없는 사진</string>
     <string name="home_hero_cta">포즈 시작</string>
-    <string name="home_action_live_pose">실시간 포즈</string>
-    <string name="home_action_open_camera">카메라 열기</string>
-    <string name="home_action_import">가져오기</string>
-    <string name="home_action_your_photo">내 사진</string>
     <string name="home_action_trending">인기</string>
     <string name="home_action_couple">커플</string>
     <string name="home_action_sunset">일몰</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">해변</string>
     <string name="home_action_cafe">카페</string>
     <string name="home_action_explore">둘러보기</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">포즈 %1$d개</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">바이럴 %1$d개</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">전체 %1$d</item>
-    </plurals>
     <string name="home_progress_title">나의 진행 상황</string>
     <string name="home_progress_view_all">모두 보기</string>
     <string name="home_progress_avg_match">평균 일치</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">오늘 %1$s</string>
     <string name="detail_yesterday">어제 %1$s</string>
     <string name="detail_reshoot">다시 찍기</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">사진 %1$d장</item>
-    </plurals>
-    <string name="album_summary">%1$s · 평균 %2$s · 마지막 촬영 %3$s</string>
-    <string name="album_last_today">오늘</string>
-    <string name="album_last_yesterday">어제</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d일 전</item>
-    </plurals>
     <string name="album_filter_all">전체 %1$d</string>
-    <string name="album_this_place">이 장소</string>
     <string name="album_stat_average">평균</string>
     <string name="album_stat_best">최고</string>
-    <string name="album_shoot_again">여기서 다시 찍기</string>
-    <string name="album_remove_all">이 장소의 사진 모두 삭제</string>
-    <string name="album_remove_title">사진을 모두 삭제할까요?</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">%2$s의 사진 %1$d장이 컬렉션에서 영구적으로 삭제됩니다.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">완벽한 사진 %1$d장</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">이번 주 포즈 %2$d개에서 %1$d%%+ 달성</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · 기기 내 AI · 업로드 없음</string>
     <string name="progress_title">나의 진행 상황</string>
     <string name="progress_tab_week">주</string>
     <string name="progress_tab_month">월</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">이 포즈를 따라 할 수 있나요? 지금 탭해서 해보세요.</string>
     <string name="notification_action_view">보기</string>
     <string name="notification_action_not_interested">관심 없음</string>
+    <string name="settings_pro_card_title">PoseAI Pro 잠금 해제</string>
+    <string name="settings_pro_card_subtitle">모든 프리미엄 포즈, 실시간 가이드, 광고 없음</string>
 </resources>

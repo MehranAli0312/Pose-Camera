@@ -155,6 +155,22 @@ class AppDataStore(private val context: Context) {
         }
     }
 
+    suspend fun markAnalyticsEventFirstOccurrence(eventName: String): Boolean {
+        var isFirstOccurrence = false
+        preferences.edit { stored ->
+            val loggedEvents = stored[AppPreferencesKeys.LOGGED_ANALYTICS_EVENTS]
+            val onboardingDone = stored[AppPreferencesKeys.IS_ON_SPLASH_FIRST_RUN] == false
+            if (loggedEvents == null && onboardingDone) {
+                stored[AppPreferencesKeys.ANALYTICS_RETURNING_USER] = true
+            }
+            val isReturningUser = stored[AppPreferencesKeys.ANALYTICS_RETURNING_USER] ?: false
+            val logged = loggedEvents.orEmpty()
+            isFirstOccurrence = !isReturningUser && eventName !in logged
+            stored[AppPreferencesKeys.LOGGED_ANALYTICS_EVENTS] = logged + eventName
+        }
+        return isFirstOccurrence
+    }
+
     private fun String.toFavoriteEntry(): Pair<Int, Long>? {
         val parts = split(FAVORITE_SEPARATOR)
         if (parts.size != 2) return null

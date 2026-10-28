@@ -22,4 +22,6 @@ internal object AppPreferencesKeys {
     val LAST_APP_OPEN_AT = longPreferencesKey("last_app_open_at")
     val ENGAGEMENT_LAST_SENT_AT = longPreferencesKey("engagement_last_sent_at")
     val ENGAGEMENT_UNOPENED_IN_A_ROW = intPreferencesKey("engagement_unopened_in_a_row")
+    val LOGGED_ANALYTICS_EVENTS = stringSetPreferencesKey("logged_analytics_events")
+    val ANALYTICS_RETURNING_USER = booleanPreferencesKey("analytics_returning_user")
 }

@@ -158,9 +158,8 @@
     <string name="adjust_warmth">गर्माहट</string>
     <string name="crop_free">फ़्री</string>
     <string name="settings_retain_skeleton">फ़ोटो के बाद पोज़ आउटलाइन रखें</string>
-    <string name="toast_reference_imported">रेफ़रेंस इंपोर्ट हो गया! मिलाने के लिए कैमरा खोलें।</string>
     <string name="toast_reference_failed">रेफ़रेंस लोड नहीं हो सका</string>
-    <string name="toast_capture_failed">फ़ोटो नहीं ली जा सकी: %1$s</string>
+    <string name="toast_capture_failed">फ़ोटो नहीं ली जा सकी</string>
     <string name="perm_camera_title">कैमरा अनुमति ज़रूरी है</string>
     <string name="perm_camera_desc">फ़ोटो लेने और अपने पोज़ मिलाने के लिए कैमरा एक्सेस की अनुमति दें।</string>
     <string name="perm_allow">अनुमति दें</string>
@@ -168,10 +167,6 @@
     <string name="perm_open_settings">सेटिंग्स खोलें</string>
     <string name="capture_untitled">बिना नाम की फ़ोटो</string>
     <string name="home_hero_cta">पोज़ देना शुरू करें</string>
-    <string name="home_action_live_pose">लाइव पोज़</string>
-    <string name="home_action_open_camera">कैमरा खोलें</string>
-    <string name="home_action_import">इंपोर्ट करें</string>
-    <string name="home_action_your_photo">आपकी फ़ोटो</string>
     <string name="home_action_trending">ट्रेंडिंग</string>
     <string name="home_action_couple">कपल</string>
     <string name="home_action_sunset">सूर्यास्त</string>
@@ -180,18 +175,6 @@
     <string name="home_action_beach">बीच</string>
     <string name="home_action_cafe">कैफ़े</string>
     <string name="home_action_explore">एक्सप्लोर करें</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d पोज़</item>
-        <item quantity="other">%1$d पोज़</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d वायरल</item>
-        <item quantity="other">%1$d वायरल</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">सभी %1$d</item>
-        <item quantity="other">सभी %1$d</item>
-    </plurals>
     <string name="home_progress_title">आपकी प्रगति</string>
     <string name="home_progress_view_all">सभी देखें</string>
     <string name="home_progress_avg_match">औसत मैच</string>
@@ -265,28 +248,9 @@
     <string name="detail_today">आज %1$s</string>
     <string name="detail_yesterday">कल %1$s</string>
     <string name="detail_reshoot">फिर से लें</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d फ़ोटो</item>
-        <item quantity="other">%1$d फ़ोटो</item>
-    </plurals>
-    <string name="album_summary">%1$s · औसत %2$s · आख़िरी फ़ोटो %3$s</string>
-    <string name="album_last_today">आज</string>
-    <string name="album_last_yesterday">कल</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">%1$d दिन पहले</item>
-        <item quantity="other">%1$d दिन पहले</item>
-    </plurals>
     <string name="album_filter_all">सभी %1$d</string>
-    <string name="album_this_place">यह जगह</string>
     <string name="album_stat_average">औसत</string>
     <string name="album_stat_best">सर्वश्रेष्ठ</string>
-    <string name="album_shoot_again">यहाँ फिर से फ़ोटो लें</string>
-    <string name="album_remove_all">इस जगह की सभी फ़ोटो हटाएँ</string>
-    <string name="album_remove_title">सभी फ़ोटो हटाएँ?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%2$s की %1$d फ़ोटो आपके कलेक्शन से हमेशा के लिए हट जाएगी।</item>
-        <item quantity="other">%2$s की %1$d फ़ोटो आपके कलेक्शन से हमेशा के लिए हट जाएँगी।</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d परफ़ेक्ट फ़ोटो</item>
         <item quantity="other">%1$d परफ़ेक्ट फ़ोटो</item>
@@ -295,7 +259,6 @@
         <item quantity="one">इस हफ़्ते आपने %2$d पोज़ पर %1$d%%+ पाया</item>
         <item quantity="other">इस हफ़्ते आपने %2$d पोज़ पर %1$d%%+ पाया</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · डिवाइस पर AI · कोई अपलोड नहीं</string>
     <string name="progress_title">आपकी प्रगति</string>
     <string name="progress_tab_week">हफ़्ता</string>
     <string name="progress_tab_month">महीना</string>
@@ -359,4 +322,6 @@
     <string name="notification_pose_idea_text">क्या आप यह पोज़ मैच कर सकते हैं? अभी आज़माने के लिए टैप करें।</string>
     <string name="notification_action_view">देखें</string>
     <string name="notification_action_not_interested">दिलचस्पी नहीं</string>
+    <string name="settings_pro_card_title">PoseAI Pro अनलॉक करें</string>
+    <string name="settings_pro_card_subtitle">सभी प्रीमियम पोज़, लाइव गाइड और कोई विज्ञापन नहीं</string>
 </resources>

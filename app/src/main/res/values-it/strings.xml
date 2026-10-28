@@ -158,9 +158,8 @@
     <string name="adjust_warmth">Calore</string>
     <string name="crop_free">Libero</string>
     <string name="settings_retain_skeleton">Mantieni la sagoma dopo lo scatto</string>
-    <string name="toast_reference_imported">Riferimento importato! Apri la fotocamera per il confronto.</string>
     <string name="toast_reference_failed">Impossibile caricare il riferimento</string>
-    <string name="toast_capture_failed">Scatto non riuscito: %1$s</string>
+    <string name="toast_capture_failed">Scatto non riuscito</string>
     <string name="perm_camera_title">Serve l\'autorizzazione per la fotocamera</string>
     <string name="perm_camera_desc">Consenti l\'accesso alla fotocamera per scattare foto e confrontare le tue pose.</string>
     <string name="perm_allow">Consenti</string>
@@ -168,10 +167,6 @@
     <string name="perm_open_settings">Apri impostazioni</string>
     <string name="capture_untitled">Foto senza titolo</string>
     <string name="home_hero_cta">Inizia a posare</string>
-    <string name="home_action_live_pose">Posa dal vivo</string>
-    <string name="home_action_open_camera">Apri fotocamera</string>
-    <string name="home_action_import">Importa</string>
-    <string name="home_action_your_photo">La tua foto</string>
     <string name="home_action_trending">Di tendenza</string>
     <string name="home_action_couple">Coppia</string>
     <string name="home_action_sunset">Tramonto</string>
@@ -180,18 +175,6 @@
     <string name="home_action_beach">Spiaggia</string>
     <string name="home_action_cafe">Caffè</string>
     <string name="home_action_explore">Esplora</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d posa</item>
-        <item quantity="other">%1$d pose</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d virale</item>
-        <item quantity="other">%1$d virali</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">Tutte %1$d</item>
-        <item quantity="other">Tutte %1$d</item>
-    </plurals>
     <string name="home_progress_title">I tuoi progressi</string>
     <string name="home_progress_view_all">Vedi tutto</string>
     <string name="home_progress_avg_match">Media</string>
@@ -265,28 +248,9 @@
     <string name="detail_today">Oggi %1$s</string>
     <string name="detail_yesterday">Ieri %1$s</string>
     <string name="detail_reshoot">Riscatta</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d scatto</item>
-        <item quantity="other">%1$d scatti</item>
-    </plurals>
-    <string name="album_summary">%1$s · media %2$s · ultimo scatto %3$s</string>
-    <string name="album_last_today">oggi</string>
-    <string name="album_last_yesterday">ieri</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">%1$d giorno fa</item>
-        <item quantity="other">%1$d giorni fa</item>
-    </plurals>
     <string name="album_filter_all">Tutte %1$d</string>
-    <string name="album_this_place">Questo luogo</string>
     <string name="album_stat_average">MEDIA</string>
     <string name="album_stat_best">MIGLIORE</string>
-    <string name="album_shoot_again">Scatta di nuovo qui</string>
-    <string name="album_remove_all">Rimuovi tutti gli scatti di questo luogo</string>
-    <string name="album_remove_title">Rimuovere tutti gli scatti?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d scatto di %2$s verrà rimosso definitivamente dalla tua raccolta.</item>
-        <item quantity="other">%1$d scatti di %2$s verranno rimossi definitivamente dalla tua raccolta.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d scatto perfetto</item>
         <item quantity="other">%1$d scatti perfetti</item>
@@ -295,7 +259,6 @@
         <item quantity="one">Hai ottenuto %1$d%%+ su %2$d posa questa settimana</item>
         <item quantity="other">Hai ottenuto %1$d%%+ su %2$d pose questa settimana</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · IA sul dispositivo · Nessun caricamento</string>
     <string name="progress_title">I tuoi progressi</string>
     <string name="progress_tab_week">Settimana</string>
     <string name="progress_tab_month">Mese</string>
@@ -359,4 +322,6 @@
     <string name="notification_pose_idea_text">Riesci a replicare questa posa? Tocca per provarla ora.</string>
     <string name="notification_action_view">Visualizza</string>
     <string name="notification_action_not_interested">Non mi interessa</string>
+    <string name="settings_pro_card_title">Sblocca PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Tutte le pose premium, guide live e niente pubblicità</string>
 </resources>

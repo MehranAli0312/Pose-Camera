@@ -15,7 +15,6 @@ import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.ads.HomeInlineNative
 import com.aipose.camera.posematch.ads.rememberHomeInlineNativeAd
 import com.aipose.camera.posematch.ads.rememberInnerInterstitial
-import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.InlineNativeAd
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
@@ -54,15 +53,12 @@ fun HomeScreen(
         innerInterstitial.showThen { navController.navigate(route) }
     }
 
-    fun startPosing(pose: Pose) {
-        openWithAd(NavRoute.CameraScreenRoute.routeFor(pose.id))
-    }
-
     fun startHeroPosing(hero: HomeHero) {
+        viewModel.onHeroTapped()
         if (hero.isLocked) {
             viewModel.showLockedPose(hero.pose, HomeUnlockTarget.Camera)
         } else {
-            startPosing(hero.pose)
+            navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(hero.pose.id))
         }
     }
 
@@ -114,6 +110,7 @@ fun HomeScreen(
                     HomeQuickActionGrid(
                         actions = HomeQuickActionId.entries,
                         onActionClick = { id ->
+                            viewModel.onCategoryTapped()
                             when (id) {
                                 HomeQuickActionId.Explore ->
                                     openAlbum(NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES)
@@ -137,7 +134,7 @@ fun HomeScreen(
                 item(key = HOME_PROGRESS_KEY) {
                     HomeProgressCard(
                         progress = content.progress,
-                        onViewAll = { navController.navigateOnClick(NavRoute.ProgressScreenRoute.route) },
+                        onViewAll = { openWithAd(NavRoute.ProgressScreenRoute.route) },
                         modifier = Modifier.padding(top = 14.dp),
                     )
                 }

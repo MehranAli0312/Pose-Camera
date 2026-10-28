@@ -158,9 +158,8 @@
     <string name="adjust_warmth">Wärme</string>
     <string name="crop_free">Frei</string>
     <string name="settings_retain_skeleton">Posen-Overlay nach dem Foto behalten</string>
-    <string name="toast_reference_imported">Vorlage importiert! Öffne die Kamera zum Abgleichen.</string>
     <string name="toast_reference_failed">Vorlage konnte nicht geladen werden</string>
-    <string name="toast_capture_failed">Aufnahme fehlgeschlagen: %1$s</string>
+    <string name="toast_capture_failed">Aufnahme fehlgeschlagen</string>
     <string name="perm_camera_title">Kameraberechtigung erforderlich</string>
     <string name="perm_camera_desc">Erlaube den Kamerazugriff, um Fotos aufzunehmen und deine Posen abzugleichen.</string>
     <string name="perm_allow">Erlauben</string>
@@ -168,10 +167,6 @@
     <string name="perm_open_settings">Einstellungen öffnen</string>
     <string name="capture_untitled">Unbenanntes Foto</string>
     <string name="home_hero_cta">Posieren starten</string>
-    <string name="home_action_live_pose">Live-Pose</string>
-    <string name="home_action_open_camera">Kamera öffnen</string>
-    <string name="home_action_import">Importieren</string>
-    <string name="home_action_your_photo">Dein Foto</string>
     <string name="home_action_trending">Im Trend</string>
     <string name="home_action_couple">Paar</string>
     <string name="home_action_sunset">Sonnenuntergang</string>
@@ -180,18 +175,6 @@
     <string name="home_action_beach">Strand</string>
     <string name="home_action_cafe">Café</string>
     <string name="home_action_explore">Entdecken</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="one">%1$d Pose</item>
-        <item quantity="other">%1$d Posen</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="one">%1$d viral</item>
-        <item quantity="other">%1$d viral</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="one">Alle %1$d</item>
-        <item quantity="other">Alle %1$d</item>
-    </plurals>
     <string name="home_progress_title">Dein Fortschritt</string>
     <string name="home_progress_view_all">Alle ansehen</string>
     <string name="home_progress_avg_match">Ø Match</string>
@@ -265,28 +248,9 @@
     <string name="detail_today">Heute %1$s</string>
     <string name="detail_yesterday">Gestern %1$s</string>
     <string name="detail_reshoot">Neu aufnehmen</string>
-    <plurals name="album_shot_count">
-        <item quantity="one">%1$d Foto</item>
-        <item quantity="other">%1$d Fotos</item>
-    </plurals>
-    <string name="album_summary">%1$s · %2$s Durchschnitt · letztes Foto %3$s</string>
-    <string name="album_last_today">heute</string>
-    <string name="album_last_yesterday">gestern</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="one">vor %1$d Tag</item>
-        <item quantity="other">vor %1$d Tagen</item>
-    </plurals>
     <string name="album_filter_all">Alle %1$d</string>
-    <string name="album_this_place">Dieser Ort</string>
     <string name="album_stat_average">DURCHSCHNITT</string>
     <string name="album_stat_best">BESTWERT</string>
-    <string name="album_shoot_again">Hier noch einmal fotografieren</string>
-    <string name="album_remove_all">Alle Fotos von diesem Ort entfernen</string>
-    <string name="album_remove_title">Alle Fotos entfernen?</string>
-    <plurals name="album_remove_message">
-        <item quantity="one">%1$d Foto von %2$s wird dauerhaft aus deiner Sammlung entfernt.</item>
-        <item quantity="other">%1$d Fotos von %2$s werden dauerhaft aus deiner Sammlung entfernt.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d perfektes Foto</item>
         <item quantity="other">%1$d perfekte Fotos</item>
@@ -295,7 +259,6 @@
         <item quantity="one">Du hast diese Woche %1$d%%+ bei %2$d Pose erreicht</item>
         <item quantity="other">Du hast diese Woche %1$d%%+ bei %2$d Posen erreicht</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · KI auf dem Gerät · Keine Uploads</string>
     <string name="progress_title">Dein Fortschritt</string>
     <string name="progress_tab_week">Woche</string>
     <string name="progress_tab_month">Monat</string>
@@ -359,4 +322,6 @@
     <string name="notification_pose_idea_text">Schaffst du diese Pose? Tippe, um sie jetzt auszuprobieren.</string>
     <string name="notification_action_view">Ansehen</string>
     <string name="notification_action_not_interested">Kein Interesse</string>
+    <string name="settings_pro_card_title">PoseAI Pro freischalten</string>
+    <string name="settings_pro_card_subtitle">Alle Premium-Posen, Live-Anleitungen &amp; keine Werbung</string>
 </resources>

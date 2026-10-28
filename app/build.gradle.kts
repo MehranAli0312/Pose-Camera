@@ -16,8 +16,8 @@ android {
         minSdk = 24
         targetSdk = 37
 
-        versionCode = 13
-        versionName = "0.1.3"
+        versionCode = 15
+        versionName = "0.1.5"
     }
 
     buildTypes {
@@ -81,7 +81,6 @@ dependencies {
     implementation(libs.androidx.camera.view)
 
     implementation(libs.mlkit.pose)
-    implementation(libs.mlkit.segmentation.selfie)
 
     implementation(libs.androidx.room.runtime)
     "ksp"(libs.androidx.room.compiler)

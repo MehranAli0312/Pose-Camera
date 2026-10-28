@@ -156,9 +156,8 @@
     <string name="adjust_warmth">Độ ấm</string>
     <string name="crop_free">Tự do</string>
     <string name="settings_retain_skeleton">Giữ đường viền dáng sau khi chụp</string>
-    <string name="toast_reference_imported">Đã nhập ảnh mẫu! Mở camera để so khớp.</string>
     <string name="toast_reference_failed">Không tải được ảnh mẫu</string>
-    <string name="toast_capture_failed">Chụp thất bại: %1$s</string>
+    <string name="toast_capture_failed">Chụp thất bại</string>
     <string name="perm_camera_title">Cần quyền truy cập camera</string>
     <string name="perm_camera_desc">Cho phép truy cập camera để chụp ảnh và so khớp dáng.</string>
     <string name="perm_allow">Cho phép</string>
@@ -166,10 +165,6 @@
     <string name="perm_open_settings">Mở cài đặt</string>
     <string name="capture_untitled">Ảnh chưa đặt tên</string>
     <string name="home_hero_cta">Bắt đầu tạo dáng</string>
-    <string name="home_action_live_pose">Dáng trực tiếp</string>
-    <string name="home_action_open_camera">Mở camera</string>
-    <string name="home_action_import">Nhập</string>
-    <string name="home_action_your_photo">Ảnh của bạn</string>
     <string name="home_action_trending">Thịnh hành</string>
     <string name="home_action_couple">Cặp đôi</string>
     <string name="home_action_sunset">Hoàng hôn</string>
@@ -178,15 +173,6 @@
     <string name="home_action_beach">Bãi biển</string>
     <string name="home_action_cafe">Quán cà phê</string>
     <string name="home_action_explore">Khám phá</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="other">%1$d dáng</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="other">%1$d viral</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="other">Tất cả %1$d</item>
-    </plurals>
     <string name="home_progress_title">Tiến độ của bạn</string>
     <string name="home_progress_view_all">Xem tất cả</string>
     <string name="home_progress_avg_match">Khớp TB</string>
@@ -259,32 +245,15 @@
     <string name="detail_today">Hôm nay %1$s</string>
     <string name="detail_yesterday">Hôm qua %1$s</string>
     <string name="detail_reshoot">Chụp lại</string>
-    <plurals name="album_shot_count">
-        <item quantity="other">%1$d ảnh</item>
-    </plurals>
-    <string name="album_summary">%1$s · trung bình %2$s · ảnh gần nhất %3$s</string>
-    <string name="album_last_today">hôm nay</string>
-    <string name="album_last_yesterday">hôm qua</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="other">%1$d ngày trước</item>
-    </plurals>
     <string name="album_filter_all">Tất cả %1$d</string>
-    <string name="album_this_place">Địa điểm này</string>
     <string name="album_stat_average">TRUNG BÌNH</string>
     <string name="album_stat_best">CAO NHẤT</string>
-    <string name="album_shoot_again">Chụp lại ở đây</string>
-    <string name="album_remove_all">Xóa mọi ảnh tại địa điểm này</string>
-    <string name="album_remove_title">Xóa tất cả ảnh?</string>
-    <plurals name="album_remove_message">
-        <item quantity="other">%1$d ảnh tại %2$s sẽ bị xóa vĩnh viễn khỏi bộ sưu tập.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="other">%1$d ảnh hoàn hảo</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="other">Bạn đạt %1$d%%+ ở %2$d dáng tuần này</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · AI trên thiết bị · Không tải lên</string>
     <string name="progress_title">Tiến độ của bạn</string>
     <string name="progress_tab_week">Tuần</string>
     <string name="progress_tab_month">Tháng</string>
@@ -345,4 +314,6 @@
     <string name="notification_pose_idea_text">Bạn có làm theo được dáng này không? Chạm để thử ngay.</string>
     <string name="notification_action_view">Xem</string>
     <string name="notification_action_not_interested">Không quan tâm</string>
+    <string name="settings_pro_card_title">Mở khóa PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">Tất cả tư thế cao cấp, hướng dẫn trực tiếp &amp; không quảng cáo</string>
 </resources>

@@ -47,6 +47,7 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
 import com.aipose.camera.posematch.ads.OnboardingNativeAdPreloadEffect
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.example.ads.AdPlacement
 import com.example.ads.compose.AdsSlot
@@ -83,6 +84,10 @@ fun LocalizeScreen(
     val missedSplashAd = rememberMissedSplashAd()
 
     OnboardingNativeAdPreloadEffect(isFirstSession)
+
+    LaunchedEffect(isFirstSession) {
+        if (isFirstSession) splashViewModel.trackScreen(AnalyticsEvent.Language)
+    }
 
     var selectedLanguage by rememberSaveable {
         mutableStateOf(

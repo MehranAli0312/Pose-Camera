@@ -67,7 +67,6 @@ data class GlossyBadgePalette(
         val Cyan = GlossyBadgePalette(PoseCyanLight, PoseCyan, PoseCyanDeep, PoseCyanShadow)
         val Blue = GlossyBadgePalette(PoseBlueLight, PoseBlue, PoseBlueDeep, PoseBlueShadow)
         val Brand = GlossyBadgePalette(PoseVioletLight, IndigoColor, PoseIndigoDeep, PoseIndigoShadow)
-        val Shuffle = GlossyBadgePalette(PoseIndigoLight, IndigoColor, PoseVioletDeep, PoseIndigoShadow)
         val HeroCta = GlossyBadgePalette(IndigoColor, VioletColor, PoseMagenta, PoseVioletShadow)
         val Capture = GlossyBadgePalette(PoseVioletLight, VioletColor, PosePinkBright, PoseMagentaShadow)
         val NavCapture = GlossyBadgePalette(PoseNavActive, VioletColor, PosePinkBright, PoseVioletShadow)

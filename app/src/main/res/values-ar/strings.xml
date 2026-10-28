@@ -166,9 +166,8 @@
     <string name="adjust_warmth">الدفء</string>
     <string name="crop_free">حر</string>
     <string name="settings_retain_skeleton">إبقاء إطار الوضعية بعد الالتقاط</string>
-    <string name="toast_reference_imported">تم استيراد المرجع! افتح الكاميرا للمطابقة.</string>
     <string name="toast_reference_failed">تعذّر تحميل المرجع</string>
-    <string name="toast_capture_failed">فشل الالتقاط: %1$s</string>
+    <string name="toast_capture_failed">فشل الالتقاط</string>
     <string name="perm_camera_title">مطلوب إذن الكاميرا</string>
     <string name="perm_camera_desc">اسمح بالوصول إلى الكاميرا لالتقاط الصور ومطابقة وضعياتك.</string>
     <string name="perm_allow">سماح</string>
@@ -176,10 +175,6 @@
     <string name="perm_open_settings">افتح الإعدادات</string>
     <string name="capture_untitled">صورة بلا عنوان</string>
     <string name="home_hero_cta">ابدأ الوضعيات</string>
-    <string name="home_action_live_pose">وضعية مباشرة</string>
-    <string name="home_action_open_camera">فتح الكاميرا</string>
-    <string name="home_action_import">استيراد</string>
-    <string name="home_action_your_photo">صورتك</string>
     <string name="home_action_trending">الأكثر رواجًا</string>
     <string name="home_action_couple">أزواج</string>
     <string name="home_action_sunset">غروب</string>
@@ -188,30 +183,6 @@
     <string name="home_action_beach">شاطئ</string>
     <string name="home_action_cafe">مقهى</string>
     <string name="home_action_explore">استكشاف</string>
-    <plurals name="home_action_pose_count">
-        <item quantity="zero">%1$d وضعية</item>
-        <item quantity="one">وضعية %1$d</item>
-        <item quantity="two">وضعيتان %1$d</item>
-        <item quantity="few">%1$d وضعيات</item>
-        <item quantity="many">%1$d وضعية</item>
-        <item quantity="other">%1$d وضعية</item>
-    </plurals>
-    <plurals name="home_action_viral_count">
-        <item quantity="zero">%1$d رائجة</item>
-        <item quantity="one">%1$d رائجة</item>
-        <item quantity="two">%1$d رائجتان</item>
-        <item quantity="few">%1$d رائجة</item>
-        <item quantity="many">%1$d رائجة</item>
-        <item quantity="other">%1$d رائجة</item>
-    </plurals>
-    <plurals name="home_action_all_count">
-        <item quantity="zero">الكل %1$d</item>
-        <item quantity="one">الكل %1$d</item>
-        <item quantity="two">الكل %1$d</item>
-        <item quantity="few">الكل %1$d</item>
-        <item quantity="many">الكل %1$d</item>
-        <item quantity="other">الكل %1$d</item>
-    </plurals>
     <string name="home_progress_title">تقدّمك</string>
     <string name="home_progress_view_all">عرض الكل</string>
     <string name="home_progress_avg_match">متوسط التطابق</string>
@@ -289,40 +260,9 @@
     <string name="detail_today">اليوم %1$s</string>
     <string name="detail_yesterday">أمس %1$s</string>
     <string name="detail_reshoot">إعادة الالتقاط</string>
-    <plurals name="album_shot_count">
-        <item quantity="zero">%1$d صورة</item>
-        <item quantity="one">صورة واحدة</item>
-        <item quantity="two">صورتان</item>
-        <item quantity="few">%1$d صور</item>
-        <item quantity="many">%1$d صورة</item>
-        <item quantity="other">%1$d صورة</item>
-    </plurals>
-    <string name="album_summary">%1$s · متوسط %2$s · آخر صورة %3$s</string>
-    <string name="album_last_today">اليوم</string>
-    <string name="album_last_yesterday">أمس</string>
-    <plurals name="album_last_days_ago">
-        <item quantity="zero">منذ %1$d يوم</item>
-        <item quantity="one">منذ يوم واحد</item>
-        <item quantity="two">منذ يومين</item>
-        <item quantity="few">منذ %1$d أيام</item>
-        <item quantity="many">منذ %1$d يومًا</item>
-        <item quantity="other">منذ %1$d يوم</item>
-    </plurals>
     <string name="album_filter_all">الكل %1$d</string>
-    <string name="album_this_place">هذا المكان</string>
     <string name="album_stat_average">المتوسط</string>
     <string name="album_stat_best">الأفضل</string>
-    <string name="album_shoot_again">التقط هنا مرة أخرى</string>
-    <string name="album_remove_all">إزالة كل صور هذا المكان</string>
-    <string name="album_remove_title">إزالة كل الصور؟</string>
-    <plurals name="album_remove_message">
-        <item quantity="zero">ستُحذف %1$d صورة من %2$s نهائيًا من مجموعتك.</item>
-        <item quantity="one">ستُحذف صورة واحدة من %2$s نهائيًا من مجموعتك.</item>
-        <item quantity="two">ستُحذف صورتان من %2$s نهائيًا من مجموعتك.</item>
-        <item quantity="few">ستُحذف %1$d صور من %2$s نهائيًا من مجموعتك.</item>
-        <item quantity="many">ستُحذف %1$d صورة من %2$s نهائيًا من مجموعتك.</item>
-        <item quantity="other">ستُحذف %1$d صورة من %2$s نهائيًا من مجموعتك.</item>
-    </plurals>
     <plurals name="collections_perfect_title">
         <item quantity="zero">%1$d صورة مثالية</item>
         <item quantity="one">صورة مثالية واحدة</item>
@@ -339,7 +279,6 @@
         <item quantity="many">حققت %1$d%%+ في %2$d وضعية هذا الأسبوع</item>
         <item quantity="other">حققت %1$d%%+ في %2$d وضعية هذا الأسبوع</item>
     </plurals>
-    <string name="settings_footer">PoseAI %1$s · ذكاء اصطناعي على الجهاز · دون رفع</string>
     <string name="progress_title">تقدّمك</string>
     <string name="progress_tab_week">أسبوع</string>
     <string name="progress_tab_month">شهر</string>
@@ -415,4 +354,6 @@
     <string name="notification_pose_idea_text">هل يمكنك مطابقة هذه الوضعية؟ اضغط لتجربتها الآن.</string>
     <string name="notification_action_view">عرض</string>
     <string name="notification_action_not_interested">غير مهتم</string>
+    <string name="settings_pro_card_title">افتح PoseAI Pro</string>
+    <string name="settings_pro_card_subtitle">كل الوضعيات المميزة، إرشادات مباشرة وبدون إعلانات</string>
 </resources>

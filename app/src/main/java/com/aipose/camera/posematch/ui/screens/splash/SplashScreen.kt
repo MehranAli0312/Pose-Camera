@@ -28,6 +28,7 @@ import com.aipose.camera.posematch.ads.SplashFullscreen
 import com.aipose.camera.posematch.ads.prepareSplashAd
 import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
 import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
@@ -56,6 +57,8 @@ fun SplashScreen(
     val missedSplashAd: MissedSplashAd = koinInject()
 
     BackHandler(enabled = true) {}
+
+    LaunchedEffect(Unit) { viewModel.trackScreen(AnalyticsEvent.Splash) }
 
     LaunchedEffect(Unit) {
         val startedAt = SystemClock.elapsedRealtime()

@@ -26,7 +26,6 @@ playAppUpdate = "2.1.0"
 
 cameraX = "1.6.2"
 mlkitPoseDetection = "18.0.0-beta5"
-mlkitSegmentationSelfie = "16.0.0-beta6"
 roomVersion = "2.8.5"
 kotlinxSerialization = "1.11.0"
 kotlinxCoroutines = "1.11.0"
@@ -63,7 +62,6 @@ androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycl
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
 
 mlkit-pose = { group = "com.google.mlkit", name = "pose-detection", version.ref = "mlkitPoseDetection" }
-mlkit-segmentation-selfie = { group = "com.google.mlkit", name = "segmentation-selfie", version.ref = "mlkitSegmentationSelfie" }
 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }

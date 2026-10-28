@@ -8,7 +8,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_one.webp",
+    "image": "file:///android_asset/poses/viral_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -47,7 +47,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_two.webp",
+    "image": "file:///android_asset/poses/viral_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -86,7 +86,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_three.webp",
+    "image": "file:///android_asset/poses/viral_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -125,7 +125,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_four.webp",
+    "image": "file:///android_asset/poses/viral_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -164,7 +164,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_five.webp",
+    "image": "file:///android_asset/poses/viral_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -203,7 +203,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_six.webp",
+    "image": "file:///android_asset/poses/viral_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -242,7 +242,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_seven.webp",
+    "image": "file:///android_asset/poses/viral_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -281,7 +281,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_eight.webp",
+    "image": "file:///android_asset/poses/viral_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -320,7 +320,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_nine.webp",
+    "image": "file:///android_asset/poses/viral_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -359,7 +359,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_ten.webp",
+    "image": "file:///android_asset/poses/viral_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -398,7 +398,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_eleven.webp",
+    "image": "file:///android_asset/poses/viral_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -437,7 +437,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_twelve.webp",
+    "image": "file:///android_asset/poses/viral_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -476,7 +476,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_thirteen.webp",
+    "image": "file:///android_asset/poses/viral_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -515,7 +515,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_fourteen.webp",
+    "image": "file:///android_asset/poses/viral_14.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -554,7 +554,7 @@
     "tags": [
       "viral"
     ],
-    "image": "file:///android_asset/poses/viral_fifteen.webp",
+    "image": "file:///android_asset/poses/viral_15.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -593,7 +593,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_one.webp",
+    "image": "file:///android_asset/poses/couple_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -632,7 +632,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_two.webp",
+    "image": "file:///android_asset/poses/couple_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -671,7 +671,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_three.webp",
+    "image": "file:///android_asset/poses/couple_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -710,7 +710,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_four.webp",
+    "image": "file:///android_asset/poses/couple_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -749,7 +749,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_five.webp",
+    "image": "file:///android_asset/poses/couple_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -788,7 +788,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_six.webp",
+    "image": "file:///android_asset/poses/couple_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -827,7 +827,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_seven.webp",
+    "image": "file:///android_asset/poses/couple_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -866,7 +866,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_eight.webp",
+    "image": "file:///android_asset/poses/couple_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -905,7 +905,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_nine.webp",
+    "image": "file:///android_asset/poses/couple_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -944,7 +944,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_ten.webp",
+    "image": "file:///android_asset/poses/couple_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -983,7 +983,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_eleven.webp",
+    "image": "file:///android_asset/poses/couple_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1022,7 +1022,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_twelve.webp",
+    "image": "file:///android_asset/poses/couple_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1061,7 +1061,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_thirteen.webp",
+    "image": "file:///android_asset/poses/couple_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1100,7 +1100,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_fourteen.webp",
+    "image": "file:///android_asset/poses/couple_14.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1139,7 +1139,7 @@
     "tags": [
       "couple"
     ],
-    "image": "file:///android_asset/poses/couple_fifteen.webp",
+    "image": "file:///android_asset/poses/couple_15.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1178,7 +1178,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_one.webp",
+    "image": "file:///android_asset/poses/sunset_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1217,7 +1217,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_two.webp",
+    "image": "file:///android_asset/poses/sunset_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1256,7 +1256,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_three.webp",
+    "image": "file:///android_asset/poses/sunset_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1295,7 +1295,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_four.webp",
+    "image": "file:///android_asset/poses/sunset_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1334,7 +1334,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_five.webp",
+    "image": "file:///android_asset/poses/sunset_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1373,7 +1373,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_six.webp",
+    "image": "file:///android_asset/poses/sunset_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1412,7 +1412,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_seven.webp",
+    "image": "file:///android_asset/poses/sunset_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1451,7 +1451,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_eight.webp",
+    "image": "file:///android_asset/poses/sunset_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1490,7 +1490,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_nine.webp",
+    "image": "file:///android_asset/poses/sunset_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1529,7 +1529,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_ten.webp",
+    "image": "file:///android_asset/poses/sunset_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1568,7 +1568,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_eleven.webp",
+    "image": "file:///android_asset/poses/sunset_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1607,7 +1607,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_twelve.webp",
+    "image": "file:///android_asset/poses/sunset_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1646,7 +1646,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_thirteen.webp",
+    "image": "file:///android_asset/poses/sunset_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1685,7 +1685,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_fourteen.webp",
+    "image": "file:///android_asset/poses/sunset_14.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1724,7 +1724,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_fifteen.webp",
+    "image": "file:///android_asset/poses/sunset_15.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1763,7 +1763,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_sixteen.webp",
+    "image": "file:///android_asset/poses/sunset_16.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1802,7 +1802,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_seventeen.webp",
+    "image": "file:///android_asset/poses/sunset_17.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1841,7 +1841,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_eighteen.webp",
+    "image": "file:///android_asset/poses/sunset_18.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1880,7 +1880,7 @@
     "tags": [
       "sunset"
     ],
-    "image": "file:///android_asset/poses/sunset_nineteen.webp",
+    "image": "file:///android_asset/poses/sunset_19.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1919,7 +1919,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_one.webp",
+    "image": "file:///android_asset/poses/dark_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1958,7 +1958,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_two.webp",
+    "image": "file:///android_asset/poses/dark_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -1997,7 +1997,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_three.webp",
+    "image": "file:///android_asset/poses/dark_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2036,7 +2036,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_four.webp",
+    "image": "file:///android_asset/poses/dark_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2075,7 +2075,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_five.webp",
+    "image": "file:///android_asset/poses/dark_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2114,7 +2114,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_six.webp",
+    "image": "file:///android_asset/poses/dark_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2153,7 +2153,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_seven.webp",
+    "image": "file:///android_asset/poses/dark_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2192,7 +2192,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_eight.webp",
+    "image": "file:///android_asset/poses/dark_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2231,7 +2231,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_nine.webp",
+    "image": "file:///android_asset/poses/dark_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2270,7 +2270,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_ten.webp",
+    "image": "file:///android_asset/poses/dark_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2309,7 +2309,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_eleven.webp",
+    "image": "file:///android_asset/poses/dark_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2348,7 +2348,7 @@
     "tags": [
       "dark"
     ],
-    "image": "file:///android_asset/poses/dark_twelve.webp",
+    "image": "file:///android_asset/poses/dark_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2387,7 +2387,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_one.webp",
+    "image": "file:///android_asset/poses/mirror_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2426,7 +2426,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_two.webp",
+    "image": "file:///android_asset/poses/mirror_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2465,7 +2465,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_four.webp",
+    "image": "file:///android_asset/poses/mirror_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2504,7 +2504,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_five.webp",
+    "image": "file:///android_asset/poses/mirror_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2543,7 +2543,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_six.webp",
+    "image": "file:///android_asset/poses/mirror_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2582,7 +2582,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_seven.webp",
+    "image": "file:///android_asset/poses/mirror_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2621,7 +2621,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_eight.webp",
+    "image": "file:///android_asset/poses/mirror_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2660,7 +2660,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_nine.webp",
+    "image": "file:///android_asset/poses/mirror_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2699,7 +2699,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_ten.webp",
+    "image": "file:///android_asset/poses/mirror_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2738,7 +2738,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_eleven.webp",
+    "image": "file:///android_asset/poses/mirror_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2777,7 +2777,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_twelve.webp",
+    "image": "file:///android_asset/poses/mirror_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2816,7 +2816,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_thirteen.webp",
+    "image": "file:///android_asset/poses/mirror_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2855,7 +2855,7 @@
     "tags": [
       "mirror"
     ],
-    "image": "file:///android_asset/poses/mirror_fourteen.webp",
+    "image": "file:///android_asset/poses/mirror_14.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2894,7 +2894,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_one.webp",
+    "image": "file:///android_asset/poses/beach_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2933,7 +2933,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_two.webp",
+    "image": "file:///android_asset/poses/beach_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -2972,7 +2972,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_three.webp",
+    "image": "file:///android_asset/poses/beach_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3011,7 +3011,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_four.webp",
+    "image": "file:///android_asset/poses/beach_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3050,7 +3050,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_five.webp",
+    "image": "file:///android_asset/poses/beach_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3089,7 +3089,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_six.webp",
+    "image": "file:///android_asset/poses/beach_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3128,7 +3128,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_seven.webp",
+    "image": "file:///android_asset/poses/beach_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3167,7 +3167,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_eight.webp",
+    "image": "file:///android_asset/poses/beach_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3206,7 +3206,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_nine.webp",
+    "image": "file:///android_asset/poses/beach_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3245,7 +3245,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_ten.webp",
+    "image": "file:///android_asset/poses/beach_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3284,7 +3284,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_eleven.webp",
+    "image": "file:///android_asset/poses/beach_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3323,7 +3323,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_twelve.webp",
+    "image": "file:///android_asset/poses/beach_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3362,7 +3362,7 @@
     "tags": [
       "beach"
     ],
-    "image": "file:///android_asset/poses/beach_thirteen.webp",
+    "image": "file:///android_asset/poses/beach_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3401,7 +3401,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_one.webp",
+    "image": "file:///android_asset/poses/cafe_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3440,7 +3440,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_two.webp",
+    "image": "file:///android_asset/poses/cafe_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3479,7 +3479,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_three.webp",
+    "image": "file:///android_asset/poses/cafe_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3518,7 +3518,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_four.webp",
+    "image": "file:///android_asset/poses/cafe_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3557,7 +3557,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_five.webp",
+    "image": "file:///android_asset/poses/cafe_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3596,7 +3596,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_six.webp",
+    "image": "file:///android_asset/poses/cafe_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3635,7 +3635,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_seven.webp",
+    "image": "file:///android_asset/poses/cafe_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3674,7 +3674,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_eight.webp",
+    "image": "file:///android_asset/poses/cafe_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3713,7 +3713,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_nine.webp",
+    "image": "file:///android_asset/poses/cafe_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3752,7 +3752,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_ten.webp",
+    "image": "file:///android_asset/poses/cafe_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3791,7 +3791,7 @@
     "tags": [
       "cafe"
     ],
-    "image": "file:///android_asset/poses/cafe_eleven.webp",
+    "image": "file:///android_asset/poses/cafe_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3830,7 +3830,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_one.webp",
+    "image": "file:///android_asset/poses/family_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3869,7 +3869,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_two.webp",
+    "image": "file:///android_asset/poses/family_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3908,7 +3908,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_three.webp",
+    "image": "file:///android_asset/poses/family_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3947,7 +3947,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_four.webp",
+    "image": "file:///android_asset/poses/family_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -3986,7 +3986,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_five.webp",
+    "image": "file:///android_asset/poses/family_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4025,7 +4025,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_six.webp",
+    "image": "file:///android_asset/poses/family_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4064,7 +4064,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_seven.webp",
+    "image": "file:///android_asset/poses/family_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4103,7 +4103,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_eight.webp",
+    "image": "file:///android_asset/poses/family_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4142,7 +4142,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_nine.webp",
+    "image": "file:///android_asset/poses/family_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4181,7 +4181,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_ten.webp",
+    "image": "file:///android_asset/poses/family_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4220,7 +4220,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_eleven.webp",
+    "image": "file:///android_asset/poses/family_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4259,7 +4259,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_twelve.webp",
+    "image": "file:///android_asset/poses/family_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4298,7 +4298,7 @@
     "tags": [
       "family"
     ],
-    "image": "file:///android_asset/poses/family_thirteen.webp",
+    "image": "file:///android_asset/poses/family_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4337,7 +4337,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_one.webp",
+    "image": "file:///android_asset/poses/nature_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4376,7 +4376,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_two.webp",
+    "image": "file:///android_asset/poses/nature_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4415,7 +4415,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_three.webp",
+    "image": "file:///android_asset/poses/nature_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4454,7 +4454,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_four.webp",
+    "image": "file:///android_asset/poses/nature_4.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4493,7 +4493,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_five.webp",
+    "image": "file:///android_asset/poses/nature_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4532,7 +4532,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_six.webp",
+    "image": "file:///android_asset/poses/nature_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4571,7 +4571,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_eight.webp",
+    "image": "file:///android_asset/poses/nature_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4610,7 +4610,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_nine.webp",
+    "image": "file:///android_asset/poses/nature_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4649,7 +4649,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_ten.webp",
+    "image": "file:///android_asset/poses/nature_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4688,7 +4688,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_eleven.webp",
+    "image": "file:///android_asset/poses/nature_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4727,7 +4727,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_twelve.webp",
+    "image": "file:///android_asset/poses/nature_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4766,7 +4766,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_thirteen.webp",
+    "image": "file:///android_asset/poses/nature_13.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4805,7 +4805,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_fifteen.webp",
+    "image": "file:///android_asset/poses/nature_15.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4844,7 +4844,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_sixteen.webp",
+    "image": "file:///android_asset/poses/nature_16.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4883,7 +4883,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_seventeen.webp",
+    "image": "file:///android_asset/poses/nature_17.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4922,7 +4922,7 @@
     "tags": [
       "nature"
     ],
-    "image": "file:///android_asset/poses/nature_eighteen.webp",
+    "image": "file:///android_asset/poses/nature_18.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -4961,7 +4961,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_one.webp",
+    "image": "file:///android_asset/poses/waterfall_1.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5000,7 +5000,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_two.webp",
+    "image": "file:///android_asset/poses/waterfall_2.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5039,7 +5039,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_three.webp",
+    "image": "file:///android_asset/poses/waterfall_3.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5078,7 +5078,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_five.webp",
+    "image": "file:///android_asset/poses/waterfall_5.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5117,7 +5117,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_six.webp",
+    "image": "file:///android_asset/poses/waterfall_6.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5156,7 +5156,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_seven.webp",
+    "image": "file:///android_asset/poses/waterfall_7.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5195,7 +5195,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_eight.webp",
+    "image": "file:///android_asset/poses/waterfall_8.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5234,7 +5234,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_nine.webp",
+    "image": "file:///android_asset/poses/waterfall_9.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5273,7 +5273,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_ten.webp",
+    "image": "file:///android_asset/poses/waterfall_10.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5312,7 +5312,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_eleven.webp",
+    "image": "file:///android_asset/poses/waterfall_11.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,
@@ -5351,7 +5351,7 @@
     "tags": [
       "waterfall"
     ],
-    "image": "file:///android_asset/poses/waterfall_twelve.webp",
+    "image": "file:///android_asset/poses/waterfall_12.webp",
     "landmarks": {
       "head_x": 0.5,
       "head_y": 0.15,

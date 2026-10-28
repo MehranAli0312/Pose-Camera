@@ -4,6 +4,7 @@ import androidx.camera.core.ImageAnalysis
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.data.pose.PoseFrameAnalyzer
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.CaptureDraft
 import com.aipose.camera.posematch.domain.models.NormalizedPoint
 import com.aipose.camera.posematch.domain.models.PhotoFilterId
@@ -15,6 +16,7 @@ import com.aipose.camera.posematch.domain.usecase.PhotoEditUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseMatchUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
 import com.aipose.camera.posematch.ui.models.CaptureTimer
 import com.aipose.camera.posematch.ui.screens.camera.models.PoseCameraUiState
@@ -33,7 +35,8 @@ class PoseCameraViewModel(
     private val cameraSettingsUseCase: CameraSettingsUseCase,
     private val photoEditUseCase: PhotoEditUseCase,
     private val poseLockUseCase: PoseLockUseCase,
-    private val poseFrameAnalyzer: PoseFrameAnalyzer
+    private val poseFrameAnalyzer: PoseFrameAnalyzer,
+    private val trackEventUseCase: TrackEventUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PoseCameraUiState())
@@ -55,6 +58,7 @@ class PoseCameraViewModel(
         observePoseOverlayPreference()
         observeTimerPreference()
         observeGalleryCount()
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.Camera) }
     }
 
     fun onPoseRequested(poseId: Int) {
@@ -111,7 +115,6 @@ class PoseCameraViewModel(
                     offsetY = 0f,
                     rotation = 0f
                 ),
-                overlayCutoutPath = null,
                 autoGrade = null,
                 autoSwatchColor = null,
                 activeGrade = null
@@ -324,7 +327,6 @@ class PoseCameraViewModel(
         referenceJob?.cancel()
         referenceLandmarks = emptyMap()
         referenceJob = viewModelScope.launch {
-            val cutoutPath = poseLibraryUseCase.cutoutPath(pose)
             val look = photoEditUseCase.extractReferenceLook(pose.imagePath)
             referenceLandmarks = poseLibraryUseCase.detectLandmarks(pose.imagePath)
             _uiState.update { state ->
@@ -332,7 +334,6 @@ class PoseCameraViewModel(
                     state
                 } else {
                     state.copy(
-                        overlayCutoutPath = cutoutPath,
                         autoGrade = look?.grade,
                         autoSwatchColor = look?.dominantColor,
                         activeGrade = photoEditUseCase.gradeFor(PhotoFilterId.Auto, look?.grade)
