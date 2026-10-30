@@ -324,4 +324,7 @@
     <string name="notification_action_not_interested">दिलचस्पी नहीं</string>
     <string name="settings_pro_card_title">PoseAI Pro अनलॉक करें</string>
     <string name="settings_pro_card_subtitle">सभी प्रीमियम पोज़, लाइव गाइड और कोई विज्ञापन नहीं</string>
+    <string name="onboard_ad_swipe_to_continue">जारी रखने के लिए स्वाइप करें</string>
+    <string name="onboard_ad_previous_cd">पिछला पेज</string>
+    <string name="onboard_ad_next_cd">अगला पेज</string>
 </resources>

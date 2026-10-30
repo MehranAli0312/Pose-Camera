@@ -316,4 +316,7 @@
     <string name="notification_action_not_interested">Không quan tâm</string>
     <string name="settings_pro_card_title">Mở khóa PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Tất cả tư thế cao cấp, hướng dẫn trực tiếp &amp; không quảng cáo</string>
+    <string name="onboard_ad_swipe_to_continue">Vuốt để tiếp tục</string>
+    <string name="onboard_ad_previous_cd">Trang trước</string>
+    <string name="onboard_ad_next_cd">Trang sau</string>
 </resources>

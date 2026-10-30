@@ -27,6 +27,9 @@ class OnboardingNativeAd internal constructor(
     var pageIndex: Int? by mutableStateOf(initialPageIndex)
         private set
 
+    val closeDelaySeconds: Int
+        get() = store.current.onboardingNativeCloseDelay
+
     suspend fun insertWhenReady(lastStepIndex: Int, settledPage: () -> Int?) {
         if (pageIndex != null) return
         val preferredIndex = store.current.onboardingNativeAd.afterStepCount ?: return

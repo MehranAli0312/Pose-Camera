@@ -342,6 +342,9 @@
     <string name="notification_pose_idea_text">Can you match this pose? Tap to try it now.</string>
     <string name="notification_action_view">View</string>
     <string name="notification_action_not_interested">Not interested</string>
+    <string name="onboard_ad_swipe_to_continue">Swipe to continue</string>
+    <string name="onboard_ad_previous_cd">Previous page</string>
+    <string name="onboard_ad_next_cd">Next page</string>
     <string name="settings_pro_card_title">Unlock PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">All premium poses, live guides &amp; no ads</string>
 </resources>

@@ -324,4 +324,7 @@
     <string name="notification_action_not_interested">Non mi interessa</string>
     <string name="settings_pro_card_title">Sblocca PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Tutte le pose premium, guide live e niente pubblicità</string>
+    <string name="onboard_ad_swipe_to_continue">Scorri per continuare</string>
+    <string name="onboard_ad_previous_cd">Pagina precedente</string>
+    <string name="onboard_ad_next_cd">Pagina successiva</string>
 </resources>

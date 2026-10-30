@@ -322,6 +322,9 @@
     <string name="notification_pose_idea_text">Μπορείς να ταιριάξεις αυτή την πόζα; Πάτησε για να τη δοκιμάσεις τώρα.</string>
     <string name="notification_action_view">Προβολή</string>
     <string name="notification_action_not_interested">Δεν ενδιαφέρομαι</string>
+    <string name="onboard_ad_swipe_to_continue">Σύρετε για να συνεχίσετε</string>
+    <string name="onboard_ad_previous_cd">Προηγούμενη σελίδα</string>
+    <string name="onboard_ad_next_cd">Επόμενη σελίδα</string>
     <string name="settings_pro_card_title">Ξεκλείδωσε το PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Όλες οι premium πόζες, ζωντανοί οδηγοί &amp; χωρίς διαφημίσεις</string>
 </resources>

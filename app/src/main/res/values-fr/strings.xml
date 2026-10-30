@@ -324,4 +324,7 @@
     <string name="notification_action_not_interested">Pas intéressé</string>
     <string name="settings_pro_card_title">Débloquez PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Toutes les poses premium, guides en direct et zéro pub</string>
+    <string name="onboard_ad_swipe_to_continue">Balayez pour continuer</string>
+    <string name="onboard_ad_previous_cd">Page précédente</string>
+    <string name="onboard_ad_next_cd">Page suivante</string>
 </resources>

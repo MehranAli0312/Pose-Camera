@@ -314,6 +314,9 @@
     <string name="notification_pose_idea_text">คุณทำท่านี้ได้ไหม? แตะเพื่อลองเลย</string>
     <string name="notification_action_view">ดู</string>
     <string name="notification_action_not_interested">ไม่สนใจ</string>
+    <string name="onboard_ad_swipe_to_continue">ปัดเพื่อดำเนินการต่อ</string>
+    <string name="onboard_ad_previous_cd">หน้าก่อนหน้า</string>
+    <string name="onboard_ad_next_cd">หน้าถัดไป</string>
     <string name="settings_pro_card_title">ปลดล็อก PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">ท่าโพสพรีเมียมทั้งหมด คำแนะนำสด และไม่มีโฆษณา</string>
 </resources>

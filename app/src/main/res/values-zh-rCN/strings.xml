@@ -316,4 +316,7 @@
     <string name="notification_action_not_interested">不感兴趣</string>
     <string name="settings_pro_card_title">解锁 PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">全部高级姿势、实时指导，无广告</string>
+    <string name="onboard_ad_swipe_to_continue">滑动以继续</string>
+    <string name="onboard_ad_previous_cd">上一页</string>
+    <string name="onboard_ad_next_cd">下一页</string>
 </resources>

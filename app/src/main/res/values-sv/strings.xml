@@ -322,6 +322,9 @@
     <string name="notification_pose_idea_text">Kan du matcha den här posen? Tryck för att prova nu.</string>
     <string name="notification_action_view">Visa</string>
     <string name="notification_action_not_interested">Inte intresserad</string>
+    <string name="onboard_ad_swipe_to_continue">Svep för att fortsätta</string>
+    <string name="onboard_ad_previous_cd">Föregående sida</string>
+    <string name="onboard_ad_next_cd">Nästa sida</string>
     <string name="settings_pro_card_title">Lås upp PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Alla premiumposer, liveguider och inga annonser</string>
 </resources>

@@ -340,4 +340,7 @@
     <string name="notification_action_not_interested">Nie interesuje mnie</string>
     <string name="settings_pro_card_title">Odblokuj PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Wszystkie pozy premium, przewodniki na żywo i brak reklam</string>
+    <string name="onboard_ad_swipe_to_continue">Przesuń, aby kontynuować</string>
+    <string name="onboard_ad_previous_cd">Poprzednia strona</string>
+    <string name="onboard_ad_next_cd">Następna strona</string>
 </resources>

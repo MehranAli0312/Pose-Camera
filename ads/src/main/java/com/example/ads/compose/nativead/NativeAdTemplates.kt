@@ -312,81 +312,80 @@ internal fun FullScreenNativeTemplate(
 ) {
     NativeAdSurface(modifier.fillMaxSize(), cornerRadius = 0.dp, strokeWidth = 0.dp) {
         Column(modifier = Modifier.fillMaxSize()) {
-            FullScreenNativeHeader(colors)
-
-            if (nativeAd.hasMedia()) {
-                NativeAdMediaView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    scaleType = ImageView.ScaleType.FIT_CENTER,
-                )
-            } else {
-                Spacer(modifier = Modifier.weight(1f))
-            }
-
-            Column(
+            FullScreenNativeMedia(
+                nativeAd = nativeAd,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                NativeAdHeadlineView {
-                    Text(
-                        text = nativeAd.headline.orEmpty(),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = AdSlotDefaults.colors.headline,
-                        maxLines = 1,
-                        modifier = Modifier.basicMarquee()
-                    )
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    NativeAdIcon(nativeAd, size = 32.dp, cornerRadius = 16.dp)
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        SmallNativeSupportingText(nativeAd)
-                    }
-
-                    NativeAdCta(
-                        nativeAd = nativeAd,
-                        colors = colors,
-                        verticalPadding = 12.dp,
-                        shape = RoundedCornerShape(10.dp),
-                    )
-                }
-            }
+                    .weight(1f),
+            )
+            FullScreenNativeDetails(nativeAd, colors)
         }
     }
 }
 
 @Composable
-private fun FullScreenNativeHeader(colors: NativeAdColors) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(FullScreenHeaderHeight),
-    ) {
-        Text(
-            text = stringResource(R.string.ads_advertisement_label),
-            style = MaterialTheme.typography.titleSmall,
-            color = AdSlotDefaults.colors.headline,
-            modifier = Modifier.align(Alignment.Center),
-        )
-        Row(
+private fun FullScreenNativeMedia(nativeAd: NativeAd, modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        if (nativeAd.hasMedia()) {
+            NativeAdMediaView(
+                modifier = Modifier.fillMaxSize(),
+                scaleType = ImageView.ScaleType.FIT_CENTER,
+            )
+        }
+        NativeAdChoicesView(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(top = 6.dp, end = 8.dp),
+                .padding(FullScreenAdChoicesInset),
+        )
+    }
+}
+
+@Composable
+private fun FullScreenNativeDetails(nativeAd: NativeAd, colors: NativeAdColors) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = FullScreenHorizontalPadding, vertical = FullScreenVerticalPadding),
+        verticalArrangement = Arrangement.spacedBy(FullScreenDetailsSpacing),
+    ) {
+        Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(FullScreenInfoSpacing),
         ) {
-            AdAttributionBadge(colors)
-            NativeAdChoicesView()
+            NativeAdIcon(nativeAd, size = FullScreenIconSize, cornerRadius = FullScreenIconCornerRadius)
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(FullScreenTextSpacing),
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(FullScreenBadgeSpacing),
+                ) {
+                    NativeAdHeadlineView(modifier = Modifier.weight(1f, fill = false)) {
+                        Text(
+                            text = nativeAd.headline.orEmpty(),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = AdSlotDefaults.colors.headline,
+                            maxLines = 1,
+                            modifier = Modifier.basicMarquee()
+                        )
+                    }
+                    AdAttributionBadge(colors)
+                }
+                SmallNativeSupportingText(nativeAd)
+            }
         }
+
+        NativeAdCta(
+            nativeAd = nativeAd,
+            colors = colors,
+            fillWidth = true,
+            verticalPadding = FullScreenCtaVerticalPadding,
+            shape = RoundedCornerShape(FullScreenCtaCornerRadius),
+            fontWeight = FontWeight.Bold,
+        )
     }
 }
 
@@ -448,6 +447,7 @@ private fun NativeAdCta(
     fillWidth: Boolean = false,
     verticalPadding: Dp = 8.dp,
     shape: Shape = RoundedCornerShape(8.dp),
+    fontWeight: FontWeight? = null,
 ) {
     val callToAction = nativeAd.callToAction?.takeIf { it.isNotBlank() } ?: return
     NativeAdCallToActionView(
@@ -465,6 +465,7 @@ private fun NativeAdCta(
                 text = callToAction,
                 style = MaterialTheme.typography.labelLarge,
                 color = colors.ctaText.orThemeColor(MaterialTheme.colorScheme.onPrimary),
+                fontWeight = fontWeight,
                 maxLines = 1,
                 modifier = Modifier.basicMarquee()
             )
@@ -481,7 +482,17 @@ private val MediumContentHeight = 164.dp
 private const val MEDIUM_MEDIA_WEIGHT = 0.42f
 private const val MEDIUM_DETAILS_WEIGHT = 0.58f
 private val NativeStrokeWidth = 1.5.dp
-private val FullScreenHeaderHeight = 48.dp
+private val FullScreenAdChoicesInset = 8.dp
+private val FullScreenHorizontalPadding = 16.dp
+private val FullScreenVerticalPadding = 12.dp
+private val FullScreenDetailsSpacing = 12.dp
+private val FullScreenInfoSpacing = 10.dp
+private val FullScreenTextSpacing = 2.dp
+private val FullScreenBadgeSpacing = 6.dp
+private val FullScreenIconSize = 44.dp
+private val FullScreenIconCornerRadius = 10.dp
+private val FullScreenCtaVerticalPadding = 13.dp
+private val FullScreenCtaCornerRadius = 10.dp
 private const val MAX_STARS = 5
 private const val EMPTY_STAR_ALPHA = 0.35f
 private val FilledStarColor = Color(0xFFFFB300)

@@ -324,4 +324,7 @@
     <string name="notification_action_not_interested">Niet geïnteresseerd</string>
     <string name="settings_pro_card_title">Ontgrendel PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Alle premium poses, live gidsen &amp; geen advertenties</string>
+    <string name="onboard_ad_swipe_to_continue">Veeg om door te gaan</string>
+    <string name="onboard_ad_previous_cd">Vorige pagina</string>
+    <string name="onboard_ad_next_cd">Volgende pagina</string>
 </resources>

@@ -340,4 +340,7 @@
     <string name="notification_action_not_interested">Не цікаво</string>
     <string name="settings_pro_card_title">Відкрийте PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Усі преміум-пози, живі підказки та без реклами</string>
+    <string name="onboard_ad_swipe_to_continue">Проведіть, щоб продовжити</string>
+    <string name="onboard_ad_previous_cd">Попередня сторінка</string>
+    <string name="onboard_ad_next_cd">Наступна сторінка</string>
 </resources>

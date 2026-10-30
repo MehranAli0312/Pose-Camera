@@ -324,4 +324,7 @@
     <string name="notification_action_not_interested">Kein Interesse</string>
     <string name="settings_pro_card_title">PoseAI Pro freischalten</string>
     <string name="settings_pro_card_subtitle">Alle Premium-Posen, Live-Anleitungen &amp; keine Werbung</string>
+    <string name="onboard_ad_swipe_to_continue">Wischen, um fortzufahren</string>
+    <string name="onboard_ad_previous_cd">Vorherige Seite</string>
+    <string name="onboard_ad_next_cd">Nächste Seite</string>
 </resources>
