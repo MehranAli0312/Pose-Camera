@@ -359,4 +359,7 @@
     <string name="notification_pose_idea_text">Consegue imitar esta pose? Toque para tentar agora.</string>
     <string name="notification_action_view">Ver</string>
     <string name="notification_action_not_interested">Não tenho interesse</string>
+    <string name="onboard_ad_swipe_to_continue">Deslize para continuar</string>
+    <string name="onboard_ad_previous_cd">Página anterior</string>
+    <string name="onboard_ad_next_cd">Próxima página</string>
 </resources>

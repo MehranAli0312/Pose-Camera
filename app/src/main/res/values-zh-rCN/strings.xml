@@ -345,4 +345,7 @@
     <string name="notification_pose_idea_text">你能摆出这个姿势吗？点按立即试试。</string>
     <string name="notification_action_view">查看</string>
     <string name="notification_action_not_interested">不感兴趣</string>
+    <string name="onboard_ad_swipe_to_continue">滑动以继续</string>
+    <string name="onboard_ad_previous_cd">上一页</string>
+    <string name="onboard_ad_next_cd">下一页</string>
 </resources>

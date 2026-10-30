@@ -387,4 +387,7 @@
     <string name="notification_pose_idea_text">Czy uda Ci się odtworzyć tę pozę? Dotknij, aby spróbować teraz.</string>
     <string name="notification_action_view">Zobacz</string>
     <string name="notification_action_not_interested">Nie interesuje mnie</string>
+    <string name="onboard_ad_swipe_to_continue">Przesuń, aby kontynuować</string>
+    <string name="onboard_ad_previous_cd">Poprzednia strona</string>
+    <string name="onboard_ad_next_cd">Następna strona</string>
 </resources>

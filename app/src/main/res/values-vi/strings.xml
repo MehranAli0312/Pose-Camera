@@ -345,4 +345,7 @@
     <string name="notification_pose_idea_text">Bạn có làm theo được dáng này không? Chạm để thử ngay.</string>
     <string name="notification_action_view">Xem</string>
     <string name="notification_action_not_interested">Không quan tâm</string>
+    <string name="onboard_ad_swipe_to_continue">Vuốt để tiếp tục</string>
+    <string name="onboard_ad_previous_cd">Trang trước</string>
+    <string name="onboard_ad_next_cd">Trang sau</string>
 </resources>

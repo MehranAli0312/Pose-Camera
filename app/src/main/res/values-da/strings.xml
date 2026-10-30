@@ -359,4 +359,7 @@
     <string name="notification_pose_idea_text">Kan du matche denne pose? Tryk for at prøve nu.</string>
     <string name="notification_action_view">Vis</string>
     <string name="notification_action_not_interested">Ikke interesseret</string>
+    <string name="onboard_ad_swipe_to_continue">Stryg for at fortsætte</string>
+    <string name="onboard_ad_previous_cd">Forrige side</string>
+    <string name="onboard_ad_next_cd">Næste side</string>
 </resources>

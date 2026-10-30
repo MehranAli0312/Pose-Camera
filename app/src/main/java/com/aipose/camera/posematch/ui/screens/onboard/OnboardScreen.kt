@@ -112,6 +112,10 @@ fun OnboardScreen(
                     bottomReserved = bottomAdHeight,
                 )
                 OnboardPage.NativeAd -> OnboardNativeAdPage(
+                    isSettled = pagerState.settledPage == page,
+                    closeDelaySeconds = nativeAd.closeDelaySeconds,
+                    onClose = { goToPage(page + 1) },
+                    onPrevious = { goToPage(page - 1) },
                     bottomReserved = adPageBottomReserved,
                 )
             }

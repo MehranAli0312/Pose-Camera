@@ -345,4 +345,7 @@
     <string name="notification_pose_idea_text">Bisakah kamu meniru pose ini? Ketuk untuk mencobanya sekarang.</string>
     <string name="notification_action_view">Lihat</string>
     <string name="notification_action_not_interested">Tidak tertarik</string>
+    <string name="onboard_ad_swipe_to_continue">Geser untuk melanjutkan</string>
+    <string name="onboard_ad_previous_cd">Halaman sebelumnya</string>
+    <string name="onboard_ad_next_cd">Halaman berikutnya</string>
 </resources>

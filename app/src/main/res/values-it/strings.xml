@@ -359,4 +359,7 @@
     <string name="notification_pose_idea_text">Riesci a replicare questa posa? Tocca per provarla ora.</string>
     <string name="notification_action_view">Visualizza</string>
     <string name="notification_action_not_interested">Non mi interessa</string>
+    <string name="onboard_ad_swipe_to_continue">Scorri per continuare</string>
+    <string name="onboard_ad_previous_cd">Pagina precedente</string>
+    <string name="onboard_ad_next_cd">Pagina successiva</string>
 </resources>

@@ -359,4 +359,7 @@
     <string name="notification_pose_idea_text">Bu pozu yakalayabilir misin? Hemen denemek için dokun.</string>
     <string name="notification_action_view">Görüntüle</string>
     <string name="notification_action_not_interested">İlgilenmiyorum</string>
+    <string name="onboard_ad_swipe_to_continue">Devam etmek için kaydırın</string>
+    <string name="onboard_ad_previous_cd">Önceki sayfa</string>
+    <string name="onboard_ad_next_cd">Sonraki sayfa</string>
 </resources>
