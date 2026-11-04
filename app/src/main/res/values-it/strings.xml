@@ -313,4 +313,7 @@
     <string name="pro_badge_one_time">PAGAMENTO UNICO</string>
     <string name="pro_price_per_year">%1$s/anno</string>
     <string name="home_poses_title">Pose di tendenza</string>
+    <string name="onboard_ad_swipe_to_continue">Scorri per continuare</string>
+    <string name="onboard_ad_previous_cd">Pagina precedente</string>
+    <string name="onboard_ad_next_cd">Pagina successiva</string>
 </resources>

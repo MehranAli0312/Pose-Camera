@@ -286,6 +286,9 @@
     <string name="notification_pose_idea_text">이 포즈를 따라 할 수 있나요? 지금 탭해서 해보세요.</string>
     <string name="notification_action_view">보기</string>
     <string name="notification_action_not_interested">관심 없음</string>
+    <string name="onboard_ad_swipe_to_continue">스와이프하여 계속</string>
+    <string name="onboard_ad_previous_cd">이전 페이지</string>
+    <string name="onboard_ad_next_cd">다음 페이지</string>
     <string name="settings_pro_card_title">PoseAI Pro 잠금 해제</string>
     <string name="settings_pro_card_subtitle">모든 프리미엄 포즈, 실시간 가이드, 광고 없음</string>
     <string name="pro_plan_weekly">주간</string>

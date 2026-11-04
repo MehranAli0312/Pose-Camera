@@ -8,35 +8,27 @@ class AdRemoteStylesTest {
 
     @Test
     fun `banner or native scale maps every banner and native style`() {
-        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(0))
-        assertEquals(AdSlotStyle.Banner(BannerStyle.ADAPTIVE), AdRemoteStyles.bannerOrNative(1))
-        assertEquals(AdSlotStyle.Native(NativeAdDesign.SMALL), AdRemoteStyles.bannerOrNative(2))
-        assertEquals(AdSlotStyle.Native(NativeAdDesign.MEDIUM), AdRemoteStyles.bannerOrNative(3))
+        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(AdRemoteStyles.OFF))
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.ADAPTIVE),
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.ADAPTIVE_BANNER),
+        )
         assertEquals(
             AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM),
-            AdRemoteStyles.bannerOrNative(4),
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.COLLAPSIBLE_BOTTOM_BANNER),
         )
         assertEquals(
             AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE),
-            AdRemoteStyles.bannerOrNative(5),
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.MEDIUM_RECTANGLE),
         )
-        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(6))
-    }
-
-    @Test
-    fun `native scale maps off and every shipped design`() {
-        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.native(0))
-        assertEquals(AdSlotStyle.Native(NativeAdDesign.SMALL), AdRemoteStyles.native(1))
-        assertEquals(AdSlotStyle.Native(NativeAdDesign.MEDIUM), AdRemoteStyles.native(2))
-        assertEquals(AdSlotStyle.Native(NativeAdDesign.LARGE), AdRemoteStyles.native(3))
-    }
-
-    @Test
-    fun `native scale never resolves to a banner`() {
-        (0..50).forEach { id ->
-            val style = AdRemoteStyles.native(id)
-            assert(style !is AdSlotStyle.Banner) { "native($id) resolved to $style" }
-        }
+        assertEquals(
+            AdSlotStyle.Native(NativeAdDesign.SMALL),
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.NATIVE_SMALL),
+        )
+        assertEquals(
+            AdSlotStyle.Native(NativeAdDesign.MEDIUM),
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.NATIVE_MEDIUM),
+        )
     }
 
     @Test
@@ -50,22 +42,17 @@ class AdRemoteStylesTest {
     }
 
     @Test
-    fun `an unrecognised value never shows an ad on any scale`() {
-        val unknown = listOf(-1, 99, 1_000, Int.MIN_VALUE, Int.MAX_VALUE)
+    fun `an unrecognised value never shows an ad`() {
+        val unknown = listOf(-1, 6, 99, 1_000, Int.MIN_VALUE, Int.MAX_VALUE)
 
         unknown.forEach { id ->
-            assertEquals("native($id)", AdSlotStyle.Hidden, AdRemoteStyles.native(id))
-            assertEquals(
-                "bannerOrNative($id)",
-                AdSlotStyle.Hidden,
-                AdRemoteStyles.bannerOrNative(id),
-            )
+            assertEquals("bannerOrNative($id)", AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(id))
         }
     }
 
     @Test
     fun `an explicit banner style overrides the configured one`() {
-        val configured = AdRemoteStyles.bannerOrNative(1)
+        val configured = AdRemoteStyles.bannerOrNative(AdRemoteStyles.ADAPTIVE_BANNER)
 
         assertEquals(
             BannerStyle.COLLAPSIBLE_BOTTOM,
@@ -75,19 +62,25 @@ class AdRemoteStylesTest {
 
     @Test
     fun `the configured banner style is used when the caller names none`() {
-        assertEquals(BannerStyle.ADAPTIVE, AdRemoteStyles.bannerOrNative(1).bannerStyleOr(null))
+        assertEquals(
+            BannerStyle.ADAPTIVE,
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.ADAPTIVE_BANNER).bannerStyleOr(null),
+        )
     }
 
     @Test
     fun `an explicit native design overrides the configured one`() {
-        val configured = AdRemoteStyles.native(1)
+        val configured = AdRemoteStyles.bannerOrNative(AdRemoteStyles.NATIVE_SMALL)
 
         assertEquals(NativeAdDesign.LARGE, configured.nativeDesignOr(NativeAdDesign.LARGE))
     }
 
     @Test
     fun `the configured native design is used when the caller names none`() {
-        assertEquals(NativeAdDesign.MEDIUM, AdRemoteStyles.native(2).nativeDesignOr(null))
+        assertEquals(
+            NativeAdDesign.MEDIUM,
+            AdRemoteStyles.bannerOrNative(AdRemoteStyles.NATIVE_MEDIUM).nativeDesignOr(null),
+        )
     }
 
     @Test
@@ -98,8 +91,8 @@ class AdRemoteStylesTest {
 
     @Test
     fun `a placement never renders a format it was not configured for`() {
-        val nativePlacement = AdRemoteStyles.native(2)
-        val bannerPlacement = AdRemoteStyles.bannerOrNative(1)
+        val nativePlacement = AdRemoteStyles.bannerOrNative(AdRemoteStyles.NATIVE_MEDIUM)
+        val bannerPlacement = AdRemoteStyles.bannerOrNative(AdRemoteStyles.ADAPTIVE_BANNER)
 
         assertNull("a native placement must not fall back to a banner",
             nativePlacement.bannerStyleOr(null))

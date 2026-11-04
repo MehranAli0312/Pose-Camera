@@ -31,8 +31,8 @@ data class AdsRemoteConfig(
     val splashInterstitial: Boolean = false,
     @SerialName("home_screen_bottom_ad")
     val homeScreenBottomAd: BottomAdPosition = BottomAdPosition.Off,
-    @SerialName("home_screen_bottom_ad_style")
-    val homeScreenBottomAdStyle: Int = DEFAULT_HOME_SCREEN_BOTTOM_AD_STYLE,
+    @SerialName("home_screen_bottom_ad_type")
+    val homeScreenBottomAdType: Int = AdRemoteStyles.NATIVE_SMALL,
     @SerialName("language_screen_bottom_ad")
     val languageScreenBottomAd: Int = AdRemoteStyles.OFF,
     @SerialName("onboard_screen_bottom_ad")
@@ -81,6 +81,8 @@ data class AdsRemoteConfig(
     val localNotifications: Boolean = true,
     @SerialName("onboarding_full_native_ad")
     val onboardingNativeAd: OnboardingNativeAdPosition = OnboardingNativeAdPosition.Off,
+    @SerialName("onboarding_full_native_close_delay_sec")
+    val onboardingNativeCloseDelaySeconds: Long = DEFAULT_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS,
     @SerialName("ad_units")
     val adUnits: AdUnitIds = AdUnitIds(),
     @SerialName("native_ad_colors")
@@ -93,7 +95,7 @@ data class AdsRemoteConfig(
             if (homeScreenBottomAd == BottomAdPosition.Off) {
                 AdSlotStyle.Hidden
             } else {
-                AdRemoteStyles.bannerOrNative(homeScreenBottomAdStyle)
+                AdRemoteStyles.bannerOrNative(homeScreenBottomAdType)
             }
         AdPlacement.LanguageScreenBottom ->
             AdRemoteStyles.bannerOrNative(languageScreenBottomAd)
@@ -129,6 +131,11 @@ data class AdsRemoteConfig(
     val premiumCloseDelay: Int
         get() = premiumCloseDelaySeconds.coerceIn(0L, MAX_PREMIUM_CLOSE_DELAY_SECONDS).toInt()
 
+    val onboardingNativeCloseDelay: Int
+        get() = onboardingNativeCloseDelaySeconds
+            .coerceIn(0L, MAX_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS)
+            .toInt()
+
     val appOpenLoadTimeoutMs: Long
         get() = appOpenLoadTimeoutSeconds
             .coerceIn(MIN_AD_WAIT_SECONDS, MAX_APP_OPEN_LOAD_TIMEOUT_SECONDS) * MILLIS_PER_SECOND
@@ -149,8 +156,9 @@ data class AdsRemoteConfig(
         const val DEFAULT_APP_OPEN_LOAD_TIMEOUT_SECONDS = 8L
         const val DEFAULT_SPLASH_AD_MAX_WAIT_SECONDS = 12L
         const val DEFAULT_INTER_LOAD_WAIT_SECONDS = 5L
-        const val DEFAULT_HOME_SCREEN_BOTTOM_AD_STYLE = 2
+        const val DEFAULT_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS = 0L
         private const val MAX_PREMIUM_CLOSE_DELAY_SECONDS = 30L
+        private const val MAX_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS = 30L
         private const val MIN_AD_WAIT_SECONDS = 1L
         private const val MAX_APP_OPEN_LOAD_TIMEOUT_SECONDS = 20L
         private const val MAX_SPLASH_AD_WAIT_SECONDS = 30L

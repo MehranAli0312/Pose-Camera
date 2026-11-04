@@ -3,20 +3,18 @@ package com.example.ads
 object AdRemoteStyles {
 
     const val OFF: Int = 0
-
-    fun native(id: Int): AdSlotStyle = when (id) {
-        1 -> AdSlotStyle.Native(NativeAdDesign.SMALL)
-        2 -> AdSlotStyle.Native(NativeAdDesign.MEDIUM)
-        3 -> AdSlotStyle.Native(NativeAdDesign.LARGE)
-        else -> AdSlotStyle.Hidden
-    }
+    const val ADAPTIVE_BANNER: Int = 1
+    const val COLLAPSIBLE_BOTTOM_BANNER: Int = 2
+    const val MEDIUM_RECTANGLE: Int = 3
+    const val NATIVE_SMALL: Int = 4
+    const val NATIVE_MEDIUM: Int = 5
 
     fun bannerOrNative(id: Int): AdSlotStyle = when (id) {
-        1 -> AdSlotStyle.Banner(BannerStyle.ADAPTIVE)
-        2 -> AdSlotStyle.Native(NativeAdDesign.SMALL)
-        3 -> AdSlotStyle.Native(NativeAdDesign.MEDIUM)
-        4 -> AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM)
-        5 -> AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE)
+        ADAPTIVE_BANNER -> AdSlotStyle.Banner(BannerStyle.ADAPTIVE)
+        COLLAPSIBLE_BOTTOM_BANNER -> AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM)
+        MEDIUM_RECTANGLE -> AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE)
+        NATIVE_SMALL -> AdSlotStyle.Native(NativeAdDesign.SMALL)
+        NATIVE_MEDIUM -> AdSlotStyle.Native(NativeAdDesign.MEDIUM)
         else -> AdSlotStyle.Hidden
     }
 

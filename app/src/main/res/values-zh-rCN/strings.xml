@@ -299,4 +299,7 @@
     <string name="pro_badge_one_time">一次性付款</string>
     <string name="pro_price_per_year">%1$s/年</string>
     <string name="home_poses_title">热门姿势</string>
+    <string name="onboard_ad_swipe_to_continue">滑动以继续</string>
+    <string name="onboard_ad_previous_cd">上一页</string>
+    <string name="onboard_ad_next_cd">下一页</string>
 </resources>

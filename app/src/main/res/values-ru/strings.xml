@@ -320,4 +320,7 @@
     <string name="pro_badge_one_time">РАЗОВЫЙ ПЛАТЁЖ</string>
     <string name="pro_price_per_year">%1$s/год</string>
     <string name="home_poses_title">Популярные позы</string>
+    <string name="onboard_ad_swipe_to_continue">Проведите, чтобы продолжить</string>
+    <string name="onboard_ad_previous_cd">Предыдущая страница</string>
+    <string name="onboard_ad_next_cd">Следующая страница</string>
 </resources>

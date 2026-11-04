@@ -23,6 +23,7 @@ class AdsModuleTest {
                 ProStatusProvider::class,
                 AdSlotStyleProvider::class,
                 AdUnitProvider::class,
+                AdEventListener::class,
             ),
         )
     }

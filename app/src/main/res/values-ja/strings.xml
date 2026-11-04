@@ -286,6 +286,9 @@
     <string name="notification_pose_idea_text">このポーズを再現できますか？タップして今すぐ試そう。</string>
     <string name="notification_action_view">見る</string>
     <string name="notification_action_not_interested">興味なし</string>
+    <string name="onboard_ad_swipe_to_continue">スワイプして続行</string>
+    <string name="onboard_ad_previous_cd">前のページ</string>
+    <string name="onboard_ad_next_cd">次のページ</string>
     <string name="settings_pro_card_title">PoseAI Pro を解放</string>
     <string name="settings_pro_card_subtitle">すべてのプレミアムポーズ、ライブガイド、広告なし</string>
     <string name="pro_plan_weekly">週間</string>

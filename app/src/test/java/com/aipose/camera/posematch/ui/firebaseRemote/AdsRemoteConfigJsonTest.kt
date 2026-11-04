@@ -8,6 +8,7 @@ import com.aipose.camera.posematch.ads.PoseAlbumInlineSecond
 import com.aipose.camera.posematch.ads.SuccessScreenBottom
 import com.example.ads.AdFormat
 import com.example.ads.AdPlacement
+import com.example.ads.AdRemoteStyles
 import com.example.ads.AdSlotStyle
 import com.example.ads.BannerStyle
 import com.example.ads.NativeAdDesign
@@ -71,12 +72,12 @@ class AdsRemoteConfigJsonTest {
     fun everySlotUsesTheBannerOrNativeScale() {
         val config = AdsRemoteConfig(
             homeScreenBottomAd = BottomAdPosition.BelowBottomBar,
-            homeScreenBottomAdStyle = 4,
-            languageScreenBottomAd = 5,
-            onboardScreenBottomAd = 1,
-            successScreenBottomAd = 3,
-            poseAlbumNativeAd = 5,
-            homeInlineNativeAd = 2,
+            homeScreenBottomAdType = AdRemoteStyles.COLLAPSIBLE_BOTTOM_BANNER,
+            languageScreenBottomAd = AdRemoteStyles.MEDIUM_RECTANGLE,
+            onboardScreenBottomAd = AdRemoteStyles.ADAPTIVE_BANNER,
+            successScreenBottomAd = AdRemoteStyles.NATIVE_MEDIUM,
+            poseAlbumNativeAd = AdRemoteStyles.MEDIUM_RECTANGLE,
+            homeInlineNativeAd = AdRemoteStyles.NATIVE_SMALL,
         )
 
         assertEquals(
@@ -107,7 +108,7 @@ class AdsRemoteConfigJsonTest {
 
     @Test
     fun homeBottomAdStaysHiddenWhileItsPositionIsOff() {
-        val config = AdsRemoteConfig(homeScreenBottomAdStyle = 4)
+        val config = AdsRemoteConfig(homeScreenBottomAdType = AdRemoteStyles.NATIVE_SMALL)
 
         assertEquals(AdSlotStyle.Hidden, config.slotStyleFor(AdPlacement.HomeScreenBottom))
     }
@@ -168,7 +169,7 @@ class AdsRemoteConfigJsonTest {
           "photo_save_interstitial": false,
           "inter_load_wait_sec": 5,
           "home_screen_bottom_ad": 0,
-          "home_screen_bottom_ad_style": 2,
+          "home_screen_bottom_ad_type": 4,
           "language_screen_bottom_ad": 0,
           "onboard_screen_bottom_ad": 0,
           "success_screen_bottom_ad": 0,
@@ -177,6 +178,7 @@ class AdsRemoteConfigJsonTest {
           "pose_album_native_ad": 0,
           "home_inline_native_ad": 0,
           "onboarding_full_native_ad": 0,
+          "onboarding_full_native_close_delay_sec": 0,
           "premium_feature_dialog": 0,
           "premium_close_delay_sec": 0,
           "premium_close_position": 0,

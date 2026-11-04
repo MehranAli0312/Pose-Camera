@@ -320,4 +320,7 @@
     <string name="pro_badge_one_time">JEDNORAZOWA PŁATNOŚĆ</string>
     <string name="pro_price_per_year">%1$s/rok</string>
     <string name="home_poses_title">Popularne pozy</string>
+    <string name="onboard_ad_swipe_to_continue">Przesuń, aby kontynuować</string>
+    <string name="onboard_ad_previous_cd">Poprzednia strona</string>
+    <string name="onboard_ad_next_cd">Następna strona</string>
 </resources>

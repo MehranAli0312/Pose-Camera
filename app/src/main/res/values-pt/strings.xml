@@ -313,4 +313,7 @@
     <string name="pro_badge_one_time">PAGAMENTO ÚNICO</string>
     <string name="pro_price_per_year">%1$s/ano</string>
     <string name="home_poses_title">Poses em alta</string>
+    <string name="onboard_ad_swipe_to_continue">Deslize para continuar</string>
+    <string name="onboard_ad_previous_cd">Página anterior</string>
+    <string name="onboard_ad_next_cd">Próxima página</string>
 </resources>

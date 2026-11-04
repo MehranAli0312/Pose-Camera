@@ -306,4 +306,7 @@
     <string name="pro_badge_one_time">EENMALIGE BETALING</string>
     <string name="pro_price_per_year">%1$s/jaar</string>
     <string name="home_poses_title">Populaire poses</string>
+    <string name="onboard_ad_swipe_to_continue">Veeg om door te gaan</string>
+    <string name="onboard_ad_previous_cd">Vorige pagina</string>
+    <string name="onboard_ad_next_cd">Volgende pagina</string>
 </resources>

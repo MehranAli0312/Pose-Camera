@@ -306,4 +306,7 @@
     <string name="pro_badge_one_time">EINMALZAHLUNG</string>
     <string name="pro_price_per_year">%1$s/Jahr</string>
     <string name="home_poses_title">Angesagte Posen</string>
+    <string name="onboard_ad_swipe_to_continue">Wischen, um fortzufahren</string>
+    <string name="onboard_ad_previous_cd">Vorherige Seite</string>
+    <string name="onboard_ad_next_cd">Nächste Seite</string>
 </resources>

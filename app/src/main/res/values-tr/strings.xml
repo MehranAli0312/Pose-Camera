@@ -306,4 +306,7 @@
     <string name="pro_badge_one_time">TEK SEFERLİK ÖDEME</string>
     <string name="pro_price_per_year">%1$s/yıl</string>
     <string name="home_poses_title">Trend Pozlar</string>
+    <string name="onboard_ad_swipe_to_continue">Devam etmek için kaydırın</string>
+    <string name="onboard_ad_previous_cd">Önceki sayfa</string>
+    <string name="onboard_ad_next_cd">Sonraki sayfa</string>
 </resources>

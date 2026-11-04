@@ -321,6 +321,9 @@
     <string name="notification_pose_idea_text">هل يمكنك مطابقة هذه الوضعية؟ اضغط لتجربتها الآن.</string>
     <string name="notification_action_view">عرض</string>
     <string name="notification_action_not_interested">غير مهتم</string>
+    <string name="onboard_ad_swipe_to_continue">اسحب للمتابعة</string>
+    <string name="onboard_ad_previous_cd">الصفحة السابقة</string>
+    <string name="onboard_ad_next_cd">الصفحة التالية</string>
     <string name="settings_pro_card_title">افتح PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">كل الوضعيات المميزة، إرشادات مباشرة وبدون إعلانات</string>
     <string name="pro_plan_weekly">أسبوعي</string>

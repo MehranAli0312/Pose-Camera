@@ -1,0 +1,46 @@
+{
+  "splash_interstitial": true,
+  "home_screen_bottom_ad": 1,
+  "home_screen_bottom_ad_type": 2,
+  "language_screen_bottom_ad": 2,
+  "onboard_screen_bottom_ad": 4,
+  "success_screen_bottom_ad": 3,
+  "pose_album_native_ad": 5,
+  "home_inline_native_ad": 4,
+  "app_open_on_resume": true,
+  "app_open_load_timeout_sec": 8,
+  "splash_ad_max_wait_sec": 12,
+  "inner_interstitial": true,
+  "inner_interstitial_capping_sec": 45,
+  "inner_interstitial_splash_fallback": true,
+  "photo_save_interstitial": true,
+  "inter_load_wait_sec": 5,
+  "premium_feature_dialog": 0,
+  "premium_close_delay_sec": 0,
+  "premium_close_position": 0,
+  "show_onboarding_screen": true,
+  "first_session_premium": 0,
+  "returning_session_premium": 0,
+  "local_notifications_enabled": true,
+  "onboarding_full_native_ad": 1,
+  "onboarding_full_native_close_delay_sec": 3,
+  "ad_units": {
+    "splash_inter": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "activity_inter": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "activity_banner": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "activity_native": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "onboard_full_native": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "app_open_on_resume": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX",
+    "rewarded": "ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX"
+  },
+  "native_ad_colors": {
+    "cta_bg": "#FFFFFF",
+    "cta_text": "#077EFC",
+    "label_bg": "#077EFC",
+    "label_text": "#FFFFFF"
+  },
+  "app_update": {
+    "version_code": 0,
+    "force_update": false
+  }
+}
