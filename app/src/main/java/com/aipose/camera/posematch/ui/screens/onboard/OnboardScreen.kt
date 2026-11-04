@@ -75,9 +75,9 @@ fun OnboardScreen(
     }
 
     fun finishOnboarding() {
-        missedSplashAd.showThen {
-            missedSplashAd.clear()
+        missedSplashAd.showAtOnboardEndThen {
             scope.launch {
+                splashViewModel.trackScreen(AnalyticsEvent.OnboardComplete)
                 splashViewModel.writeSplashStatus()
                 if (splashViewModel.showPremiumAfterOnboarding()) {
                     goToStartPremium(navController, StartPremiumNextStep.Home)
@@ -96,7 +96,10 @@ fun OnboardScreen(
         missedSplashAd.showThen { goToPage(currentPage + 1) }
     }
 
-    LaunchedEffect(Unit) { splashViewModel.trackScreen(AnalyticsEvent.Onboard) }
+    LaunchedEffect(Unit) {
+        missedSplashAd.onOnboardStarted()
+        splashViewModel.trackScreen(AnalyticsEvent.Onboard)
+    }
 
     BackHandler(enabled = true) {}
 

@@ -17,21 +17,18 @@
     <string name="pro_restore">Przywróć zakup</string>
     <string name="pro_terms">Warunki</string>
     <string name="pro_privacy">Prywatność</string>
-    <string name="pro_title_highlight">wszystko</string>
-    <string name="pro_benefit_poses">Odblokuj wszystkie pozy premium</string>
-    <string name="pro_benefit_no_ads">Żadnych reklam, nigdy</string>
-    <string name="pro_benefit_updates">Wspieraj przyszłe aktualizacje</string>
+    <string name="pro_title_highlight">najlepsza poza</string>
+    <string name="pro_benefit_poses">Wszystkie pozy premium</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% bez reklam</string>
+    <string name="pro_benefit_updates">Wskazówki kamery na żywo</string>
     <string name="pro_plan_lifetime">Dożywotnio</string>
     <string name="pro_plan_lifetime_note">Jednorazowa płatność, Twoje na zawsze</string>
     <string name="pro_plan_yearly_note">Płatne raz w roku</string>
-    <string name="pro_cta_lifetime">Odblokuj dożywotnio</string>
-    <string name="pro_cta_yearly">Odblokuj rocznie</string>
-    <string name="pro_footnote_lifetime">Jednorazowa płatność · Bez subskrypcji</string>
+    <string name="pro_footnote_lifetime">%1$s jednorazowo · Bez subskrypcji</string>
     <string name="pro_plan_yearly">Rocznie</string>
     <string name="pro_best_value">NAJLEPSZA OFERTA</string>
     <string name="pro_store_unavailable">Nie udało się wczytać planów. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="pro_retry">Spróbuj ponownie</string>
-    <string name="pro_try_for_free">Wypróbuj za darmo</string>
     <string name="pro_auto_renewal_note">Subskrypcja z automatycznym odnowieniem. Anuluj w każdej chwili</string>
     <string name="pro_purchase_success">Zakup udany</string>
     <string name="pro_purchase_already_owned">Masz już ten plan</string>
@@ -52,8 +49,7 @@
         <item quantity="many">%1$d gwiazdek</item>
         <item quantity="other">%1$d gwiazdki</item>
     </plurals>
-    <string name="pro_title">Odblokuj wszystko</string>
-    <string name="pro_subtitle">Wszystkie pozy, bez reklam — na zawsze.</string>
+    <string name="pro_title">Twoja najlepsza poza zaczyna się tutaj</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dzień za darmo, potem %2$s</item>
         <item quantity="few">%1$d dni za darmo, potem %2$s</item>
@@ -64,7 +60,6 @@
     <string name="premium_feature_go_premium_title">Przejdź na Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Zablokowana poza</string>
-    <string name="premium_pose_title">Poza premium</string>
     <string name="premium_pose_message">Obejrzyj krótką reklamę, aby odblokować tę pozę, lub przejdź na Premium, aby odblokować wszystkie.</string>
     <string name="premium_pose_watch_ad">Obejrzyj reklamę, aby odblokować</string>
     <string name="nav_home">Start</string>
@@ -91,8 +86,6 @@
     <string name="detail_captured">Zrobiono</string>
     <string name="detail_match_score">Dopasowanie</string>
     <string name="detail_category">Kategoria</string>
-    <string name="camera_sim_title">Tryb symulacji studia</string>
-    <string name="camera_sim_hint">Przesuwaj wyrównanie za pomocą okręgów poniżej</string>
     <string name="action_reset">Resetuj</string>
     <string name="tab_filters">Filtry</string>
     <string name="tab_adjust">Dostosuj</string>
@@ -119,11 +112,7 @@
     <string name="crop_flip_horizontal">Odbij poziomo</string>
     <string name="crop_flip_vertical">Odbij pionowo</string>
     <string name="saved_title">Zapisano w Kolekcjach</string>
-    <string name="saved_subtitle_best">%1$s · twój najlepszy wynik</string>
-    <string name="saved_subtitle">%1$s · zapisano w galerii</string>
     <string name="saved_place_now">%1$s · Przed chwilą</string>
-    <string name="saved_shoot_again">Zrób kolejne</string>
-    <string name="saved_view_collections">Zobacz w Kolekcjach</string>
     <string name="action_clear">Wyczyść</string>
     <string name="imported_pose_title">Wzór z galerii</string>
     <string name="action_back">Wstecz</string>
@@ -171,14 +160,6 @@
     <string name="perm_open_settings">Otwórz ustawienia</string>
     <string name="capture_untitled">Zdjęcie bez tytułu</string>
     <string name="home_hero_cta">Zacznij pozować</string>
-    <string name="home_action_trending">Na czasie</string>
-    <string name="home_action_couple">Para</string>
-    <string name="home_action_sunset">Zachód słońca</string>
-    <string name="home_action_nature">Natura</string>
-    <string name="home_action_mirror">Lustro</string>
-    <string name="home_action_beach">Plaża</string>
-    <string name="home_action_cafe">Kawiarnia</string>
-    <string name="home_action_explore">Odkrywaj</string>
     <string name="home_progress_title">Twoje postępy</string>
     <string name="home_progress_view_all">Zobacz wszystko</string>
     <string name="home_progress_avg_match">Śr. dopasowanie</string>
@@ -215,18 +196,6 @@
     <string name="saved_empty_shots_sub">Dotknij serca na zdjęciu, aby zachować je tutaj.</string>
     <string name="saved_empty_poses">Brak polubionych póz</string>
     <string name="saved_empty_poses_sub">Dotknij serca na pozie, aby zachować ją tutaj.</string>
-    <string name="pose_detail_in_set">%1$d w zestawie</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d próba</item>
-        <item quantity="few">%1$d próby</item>
-        <item quantity="many">%1$d prób</item>
-        <item quantity="other">%1$d próby</item>
-    </plurals>
-    <string name="pose_detail_best_match">Twoje najlepsze dopasowanie</string>
-    <string name="pose_detail_best_match_sub">Pobij je, aby odblokować odznakę Bezbłędnie</string>
-    <string name="pose_detail_no_match">Brak wyniku</string>
-    <string name="pose_detail_no_match_sub">Przyjmij tę pozę, aby zdobyć pierwszy wynik</string>
-    <string name="pose_detail_cta">Zacznij pozować</string>
     <string name="settings_preferences">PREFERENCJE</string>
     <string name="settings_about">INFORMACJE</string>
     <string name="settings_capture_timer">Samowyzwalacz</string>
@@ -340,4 +309,15 @@
     <string name="notification_action_not_interested">Nie interesuje mnie</string>
     <string name="settings_pro_card_title">Odblokuj PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Wszystkie pozy premium, przewodniki na żywo i brak reklam</string>
+    <string name="pro_plan_weekly">Tygodniowo</string>
+    <string name="pro_plan_weekly_note">Płatne co tydzień · Anuluj w każdej chwili</string>
+    <string name="pro_price_per_week">%1$s/tydzień</string>
+    <string name="pro_save_percent">OSZCZĘDŹ %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Odnawia się za %1$s/tydzień. Anuluj w każdej chwili w Google Play.</string>
+    <string name="pro_renewal_note_yearly">Odnawia się za %1$s/rok. Anuluj w każdej chwili w Google Play.</string>
+    <string name="pro_cta_continue">Kontynuuj</string>
+    <string name="pro_cta_access_free">Uzyskaj dostęp za darmo</string>
+    <string name="pro_badge_one_time">JEDNORAZOWA PŁATNOŚĆ</string>
+    <string name="pro_price_per_year">%1$s/rok</string>
+    <string name="home_poses_title">Popularne pozy</string>
 </resources>

@@ -108,7 +108,7 @@ fun AdsBanner(
                                     currentRequest,
                                     object : AdLoadCallback<BannerAd> {
                                         override fun onAdLoaded(ad: BannerAd) {
-                                            controller.onLoaded(placement)
+                                            controller.onLoaded(placement, ad)
                                             loaded = true
                                         }
 

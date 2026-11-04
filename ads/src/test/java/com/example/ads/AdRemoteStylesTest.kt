@@ -7,12 +7,20 @@ import org.junit.Test
 class AdRemoteStylesTest {
 
     @Test
-    fun `banner or native scale maps off banner small and medium native`() {
+    fun `banner or native scale maps every banner and native style`() {
         assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(0))
         assertEquals(AdSlotStyle.Banner(BannerStyle.ADAPTIVE), AdRemoteStyles.bannerOrNative(1))
         assertEquals(AdSlotStyle.Native(NativeAdDesign.SMALL), AdRemoteStyles.bannerOrNative(2))
         assertEquals(AdSlotStyle.Native(NativeAdDesign.MEDIUM), AdRemoteStyles.bannerOrNative(3))
-        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(4))
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM),
+            AdRemoteStyles.bannerOrNative(4),
+        )
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE),
+            AdRemoteStyles.bannerOrNative(5),
+        )
+        assertEquals(AdSlotStyle.Hidden, AdRemoteStyles.bannerOrNative(6))
     }
 
     @Test

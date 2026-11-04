@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.PERFECT_MATCH_SCORE
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.captureAlbum.models.CaptureAlbumUiState
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilter
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsSort
@@ -16,12 +18,18 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class CaptureAlbumViewModel(
     private val context: Context,
     private val captureUseCase: CaptureUseCase,
-    private val captureProgressUseCase: CaptureProgressUseCase
+    private val captureProgressUseCase: CaptureProgressUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.CaptureAlbum) }
+    }
 
     private val _locationLabel = MutableStateFlow<String?>(null)
     private val _filter = MutableStateFlow(CollectionsFilter.All)

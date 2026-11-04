@@ -139,6 +139,7 @@ fun LocalizeScreen(
                     val showOnboarding = remoteConfigStore.current.showOnboardingScreen
                     if (!showOnboarding) missedSplashAd.clear()
                     splashViewModel.writeSplashStatus()
+                    splashViewModel.trackScreen(AnalyticsEvent.LanguageSelected)
                     languageViewModel.changeLanguage(selectedLanguage)
                     languageViewModel.applyLanguage(selectedLanguage)
                     if (splashViewModel.showPremiumAfterLanguage()) {

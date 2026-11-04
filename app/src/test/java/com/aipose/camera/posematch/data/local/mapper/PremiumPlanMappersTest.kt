@@ -14,15 +14,28 @@ class PremiumPlanMappersTest {
 
     @Test
     fun catalogUsesPlayConsoleProductIds() {
-        assertEquals(listOf("yearly_pro"), ProPlan.subscriptionProductIds)
+        assertEquals(listOf("yearly_pro", "weekly_plan"), ProPlan.subscriptionProductIds)
         assertEquals(listOf("lifetime_pro"), ProPlan.oneTimeProductIds)
         assertEquals("yearly_pro", ProPlan.YEARLY.productId)
+        assertEquals("weekly_plan", ProPlan.WEEKLY.productId)
         assertEquals("lifetime_pro", ProPlan.LIFETIME.productId)
     }
 
     @Test
-    fun mapsLifetimeAndYearlyWithAnyBasePlanId() {
-        val plans = listOf(lifetime("Rs 4,500"), yearlyBasePlan("yearly-pro", "Rs 2,900")).toPremiumPlans()
+    fun mapsLifetimeYearlyAndWeeklyWithPriceDetails() {
+        val plans = listOf(
+            lifetime("Rs 4,500", micros = 4_500_000_000L),
+            subscriptionBasePlan("yearly-pro", "Rs 2,900", micros = 2_900_000_000L),
+            subscriptionBasePlan(
+                "weekly-pro-plan",
+                "Rs 300",
+                micros = 300_000_000L,
+                billingPeriod = "P1W",
+                productId = "weekly_plan",
+            ),
+        ).toPremiumPlans()
+
+        assertEquals(listOf(ProPlan.YEARLY, ProPlan.WEEKLY, ProPlan.LIFETIME), plans.map { it.plan })
 
         val lifetime = plans.single { it.plan == ProPlan.LIFETIME }
         assertEquals("lifetime_pro", lifetime.productId)
@@ -30,19 +43,28 @@ class PremiumPlanMappersTest {
         assertNull(lifetime.offerId)
         assertTrue(lifetime.isOneTime)
         assertEquals("Rs 4,500", lifetime.formattedPrice)
+        assertEquals(4_500_000_000L, lifetime.priceMicros)
 
         val yearly = plans.single { it.plan == ProPlan.YEARLY }
         assertEquals("yearly_pro", yearly.productId)
         assertEquals("yearly-pro", yearly.basePlanId)
         assertNull(yearly.offerId)
         assertEquals("Rs 2,900", yearly.formattedPrice)
+        assertEquals(2_900_000_000L, yearly.priceMicros)
+        assertEquals("PKR", yearly.currencyCode)
         assertEquals(0, yearly.trialDays)
+
+        val weekly = plans.single { it.plan == ProPlan.WEEKLY }
+        assertEquals("weekly_plan", weekly.productId)
+        assertEquals("weekly-pro-plan", weekly.basePlanId)
+        assertEquals("Rs 300", weekly.formattedPrice)
+        assertEquals(300_000_000L, weekly.priceMicros)
     }
 
     @Test
     fun prefersFreeTrialOfferOnYearlyBasePlan() {
         val plans = listOf(
-            yearlyBasePlan("yearly", "Rs 2,900"),
+            subscriptionBasePlan("yearly", "Rs 2,900"),
             yearlyTrialOffer("yearly", "free-trial", trialDays = 3, price = "Rs 2,900"),
         ).toPremiumPlans()
 
@@ -51,49 +73,57 @@ class PremiumPlanMappersTest {
         assertEquals("free-trial", yearly.offerId)
         assertEquals(3, yearly.trialDays)
         assertEquals("Rs 2,900", yearly.formattedPrice)
+        assertEquals(1_000_000L, yearly.priceMicros)
     }
 
     @Test
-    fun prefersYearlyBasePlanWhenSeveralExist() {
+    fun prefersBasePlanMatchingThePlanBillingPeriod() {
         val plans = listOf(
-            yearlyBasePlan("monthly", "Rs 500", billingPeriod = "P1M"),
-            yearlyBasePlan("yearly", "Rs 2,900"),
+            subscriptionBasePlan("monthly", "Rs 500", billingPeriod = "P1M"),
+            subscriptionBasePlan("yearly", "Rs 2,900"),
+            subscriptionBasePlan("weekly-monthly", "Rs 900", billingPeriod = "P1M", productId = "weekly_plan"),
+            subscriptionBasePlan("weekly-pro-plan", "Rs 300", billingPeriod = "P1W", productId = "weekly_plan"),
         ).toPremiumPlans()
 
-        assertEquals("yearly", plans.single().basePlanId)
-        assertEquals("Rs 2,900", plans.single().formattedPrice)
+        assertEquals("yearly", plans.single { it.plan == ProPlan.YEARLY }.basePlanId)
+        assertEquals("weekly-pro-plan", plans.single { it.plan == ProPlan.WEEKLY }.basePlanId)
     }
 
     @Test
     fun ignoresUnknownProductsAndMissingPrices() {
         val plans = listOf(
             lifetime("", productId = "lifetime_pro"),
-            yearlyBasePlan("yearly", "Rs 2,900", productId = "premium"),
+            subscriptionBasePlan("yearly", "Rs 2,900", productId = "premium"),
             lifetime("Rs 4,500", productId = "premium_lifetime"),
         ).toPremiumPlans()
 
         assertTrue(plans.isEmpty())
     }
 
-    private fun lifetime(price: String, productId: String = "lifetime_pro") = ProductDetail(
+    private fun lifetime(
+        price: String,
+        micros: Long = 1_000_000L,
+        productId: String = "lifetime_pro",
+    ) = ProductDetail(
         productId = productId,
         planId = "",
         productTitle = "Lifetime Pro",
         productType = ProductType.inapp,
-        pricingDetails = listOf(phase(RecurringMode.ORIGINAL, price, billingPeriod = "")),
+        pricingDetails = listOf(phase(RecurringMode.ORIGINAL, price, billingPeriod = "", micros = micros)),
     )
 
-    private fun yearlyBasePlan(
+    private fun subscriptionBasePlan(
         basePlanId: String,
         price: String,
+        micros: Long = 1_000_000L,
         billingPeriod: String = "P1Y",
         productId: String = "yearly_pro",
     ) = ProductDetail(
         productId = productId,
         planId = basePlanId,
-        productTitle = "Yearly Pro",
+        productTitle = "Pro",
         productType = ProductType.subs,
-        pricingDetails = listOf(phase(RecurringMode.ORIGINAL, price, billingPeriod)),
+        pricingDetails = listOf(phase(RecurringMode.ORIGINAL, price, billingPeriod, micros = micros)),
     )
 
     private fun yearlyTrialOffer(basePlanId: String, offerId: String, trialDays: Int, price: String) =
@@ -103,21 +133,26 @@ class PremiumPlanMappersTest {
             productTitle = "Yearly Pro",
             productType = ProductType.subs,
             pricingDetails = listOf(
-                phase(RecurringMode.FREE, "Free", "P${trialDays}D", trialDays = trialDays),
+                phase(RecurringMode.FREE, "Free", "P${trialDays}D", trialDays = trialDays, micros = 0L),
                 phase(RecurringMode.ORIGINAL, price, "P1Y"),
             ),
             offerId = offerId,
         )
 
-    private fun phase(mode: RecurringMode, price: String, billingPeriod: String, trialDays: Int = 0) =
-        PricingPhase(
-            recurringMode = mode,
-            price = price,
-            currencyCode = "PKR",
-            planTitle = "",
-            billingCycleCount = 0,
-            billingPeriod = billingPeriod,
-            priceAmountMicros = if (mode == RecurringMode.FREE) 0L else 1_000_000L,
-            freeTrialPeriod = trialDays,
-        )
+    private fun phase(
+        mode: RecurringMode,
+        price: String,
+        billingPeriod: String,
+        trialDays: Int = 0,
+        micros: Long = 1_000_000L,
+    ) = PricingPhase(
+        recurringMode = mode,
+        price = price,
+        currencyCode = "PKR",
+        planTitle = "",
+        billingCycleCount = 0,
+        billingPeriod = billingPeriod,
+        priceAmountMicros = micros,
+        freeTrialPeriod = trialDays,
+    )
 }

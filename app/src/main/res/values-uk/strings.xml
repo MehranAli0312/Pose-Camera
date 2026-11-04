@@ -17,21 +17,18 @@
     <string name="pro_restore">Відновити покупку</string>
     <string name="pro_terms">Умови</string>
     <string name="pro_privacy">Конфіденційність</string>
-    <string name="pro_title_highlight">все</string>
-    <string name="pro_benefit_poses">Відкрийте всі преміум-пози</string>
-    <string name="pro_benefit_no_ads">Жодної реклами</string>
-    <string name="pro_benefit_updates">Підтримайте майбутні оновлення</string>
+    <string name="pro_title_highlight">найкраща поза</string>
+    <string name="pro_benefit_poses">Усі преміум-пози</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% без реклами</string>
+    <string name="pro_benefit_updates">Підказки камери в реальному часі</string>
     <string name="pro_plan_lifetime">Назавжди</string>
     <string name="pro_plan_lifetime_note">Одноразовий платіж, ваше назавжди</string>
     <string name="pro_plan_yearly_note">Оплата раз на рік</string>
-    <string name="pro_cta_lifetime">Відкрити назавжди</string>
-    <string name="pro_cta_yearly">Відкрити на рік</string>
-    <string name="pro_footnote_lifetime">Одноразовий платіж · Без підписки</string>
+    <string name="pro_footnote_lifetime">%1$s один раз · Без підписки</string>
     <string name="pro_plan_yearly">Річний</string>
     <string name="pro_best_value">НАЙВИГІДНІШЕ</string>
     <string name="pro_store_unavailable">Не вдалося завантажити тарифи. Перевірте з’єднання та спробуйте ще раз.</string>
     <string name="pro_retry">Спробувати ще раз</string>
-    <string name="pro_try_for_free">Спробувати безкоштовно</string>
     <string name="pro_auto_renewal_note">Підписка з автопродовженням. Скасуйте будь-коли</string>
     <string name="pro_purchase_success">Покупку виконано</string>
     <string name="pro_purchase_already_owned">Цей план уже ваш</string>
@@ -52,8 +49,7 @@
         <item quantity="many">%1$d зірок</item>
         <item quantity="other">%1$d зірки</item>
     </plurals>
-    <string name="pro_title">Відкрийте все</string>
-    <string name="pro_subtitle">Усі пози без реклами — назавжди.</string>
+    <string name="pro_title">Ваша найкраща поза починається тут</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d день безкоштовно, потім %2$s</item>
         <item quantity="few">%1$d дні безкоштовно, потім %2$s</item>
@@ -64,7 +60,6 @@
     <string name="premium_feature_go_premium_title">Перейти на Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Заблокована поза</string>
-    <string name="premium_pose_title">Преміум-поза</string>
     <string name="premium_pose_message">Перегляньте коротку рекламу, щоб відкрити цю позу, або перейдіть на Premium, щоб відкрити всі.</string>
     <string name="premium_pose_watch_ad">Дивитися рекламу й відкрити</string>
     <string name="nav_home">Головна</string>
@@ -91,8 +86,6 @@
     <string name="detail_captured">Знято</string>
     <string name="detail_match_score">Збіг</string>
     <string name="detail_category">Категорія</string>
-    <string name="camera_sim_title">Режим симуляції студії</string>
-    <string name="camera_sim_hint">Переміщуйте вирівнювання за допомогою кіл нижче</string>
     <string name="action_reset">Скинути</string>
     <string name="tab_filters">Фільтри</string>
     <string name="tab_adjust">Налаштування</string>
@@ -119,11 +112,7 @@
     <string name="crop_flip_horizontal">Віддзеркалити Г</string>
     <string name="crop_flip_vertical">Віддзеркалити В</string>
     <string name="saved_title">Збережено в Колекції</string>
-    <string name="saved_subtitle_best">%1$s · ваш найкращий результат</string>
-    <string name="saved_subtitle">%1$s · збережено в галерею</string>
     <string name="saved_place_now">%1$s · Щойно</string>
-    <string name="saved_shoot_again">Зняти ще</string>
-    <string name="saved_view_collections">Відкрити в Колекціях</string>
     <string name="action_clear">Очистити</string>
     <string name="imported_pose_title">Зразок із галереї</string>
     <string name="action_back">Назад</string>
@@ -171,14 +160,6 @@
     <string name="perm_open_settings">Відкрити налаштування</string>
     <string name="capture_untitled">Знімок без назви</string>
     <string name="home_hero_cta">Почати позувати</string>
-    <string name="home_action_trending">У тренді</string>
-    <string name="home_action_couple">Пара</string>
-    <string name="home_action_sunset">Захід сонця</string>
-    <string name="home_action_nature">Природа</string>
-    <string name="home_action_mirror">Дзеркало</string>
-    <string name="home_action_beach">Пляж</string>
-    <string name="home_action_cafe">Кафе</string>
-    <string name="home_action_explore">Огляд</string>
     <string name="home_progress_title">Ваш прогрес</string>
     <string name="home_progress_view_all">Усі</string>
     <string name="home_progress_avg_match">Середнє</string>
@@ -215,18 +196,6 @@
     <string name="saved_empty_shots_sub">Торкніться серця на знімку, щоб зберегти його тут.</string>
     <string name="saved_empty_poses">В обраному поки немає поз</string>
     <string name="saved_empty_poses_sub">Торкніться серця на позі, щоб зберегти її тут.</string>
-    <string name="pose_detail_in_set">%1$d у наборі</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d спроба</item>
-        <item quantity="few">%1$d спроби</item>
-        <item quantity="many">%1$d спроб</item>
-        <item quantity="other">%1$d спроби</item>
-    </plurals>
-    <string name="pose_detail_best_match">Ваш найкращий результат</string>
-    <string name="pose_detail_best_match_sub">Перевершіть його, щоб відкрити значок «Бездоганно»</string>
-    <string name="pose_detail_no_match">Поки немає результату</string>
-    <string name="pose_detail_no_match_sub">Прийміть цю позу, щоб отримати першу оцінку</string>
-    <string name="pose_detail_cta">Почати позувати</string>
     <string name="settings_preferences">ПАРАМЕТРИ</string>
     <string name="settings_about">ПРО ЗАСТОСУНОК</string>
     <string name="settings_capture_timer">Таймер зйомки</string>
@@ -340,4 +309,15 @@
     <string name="notification_action_not_interested">Не цікаво</string>
     <string name="settings_pro_card_title">Відкрийте PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Усі преміум-пози, живі підказки та без реклами</string>
+    <string name="pro_plan_weekly">Тижневий</string>
+    <string name="pro_plan_weekly_note">Оплата щотижня · Скасуйте будь-коли</string>
+    <string name="pro_price_per_week">%1$s/тиждень</string>
+    <string name="pro_save_percent">ЕКОНОМІЯ %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Продовжується за %1$s/тиждень. Скасуйте будь-коли в Google Play.</string>
+    <string name="pro_renewal_note_yearly">Продовжується за %1$s/рік. Скасуйте будь-коли в Google Play.</string>
+    <string name="pro_cta_continue">Продовжити</string>
+    <string name="pro_cta_access_free">Отримати доступ безкоштовно</string>
+    <string name="pro_badge_one_time">РАЗОВИЙ ПЛАТІЖ</string>
+    <string name="pro_price_per_year">%1$s/рік</string>
+    <string name="home_poses_title">Популярні пози</string>
 </resources>

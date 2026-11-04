@@ -4,12 +4,16 @@ import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.ads.ProRestoreResult
+import com.aipose.camera.posematch.domain.models.PaywallAnalyticsAction
+import com.aipose.camera.posematch.domain.models.PaywallAnalyticsEvent
 import com.aipose.camera.posematch.domain.models.PremiumPlan
 import com.aipose.camera.posematch.domain.models.PremiumPurchaseOutcome
 import com.aipose.camera.posematch.domain.usecase.PremiumSubscriptionUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.common.PremiumPurchaseLauncher
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.screens.pro.models.ProEvent
+import com.aipose.camera.posematch.ui.screens.pro.models.ProPlanOption
 import com.aipose.camera.posematch.ui.screens.pro.models.ProPlansState
 import com.aipose.camera.posematch.ui.screens.pro.models.ProUiState
 import kotlinx.coroutines.Job
@@ -27,6 +31,7 @@ class ProViewModel(
     private val subscriptionUseCase: PremiumSubscriptionUseCase,
     private val purchaseLauncher: PremiumPurchaseLauncher,
     private val remoteConfigStore: AdsRemoteConfigStore,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(initialState())
@@ -39,6 +44,7 @@ class ProViewModel(
     private var restoreJob: Job? = null
 
     init {
+        trackPaywall(PaywallAnalyticsAction.Viewed)
         startCloseCountdown()
         observePurchaseOutcomes()
         loadPlans()
@@ -54,7 +60,12 @@ class ProViewModel(
                 ProPlansState.Unavailable
             } else {
                 ProPlansState.Content(
-                    plans = plans,
+                    options = plans.map { plan ->
+                        ProPlanOption(
+                            details = plan,
+                            savingsPercent = subscriptionUseCase.savingsPercent(plan, plans),
+                        )
+                    },
                     selectedPlan = selected,
                     recommendedPlan = plans.firstOrNull {
                         subscriptionUseCase.isRecommended(it, plans)
@@ -66,17 +77,22 @@ class ProViewModel(
         }
     }
 
-    fun selectPlan(plan: PremiumPlan) = updateContent { content ->
-        if (content.isPurchasing) content else content.copy(selectedPlan = plan)
+    fun selectPlan(plan: PremiumPlan) {
+        val content = _uiState.value.plans as? ProPlansState.Content ?: return
+        if (content.isPurchasing || content.selectedPlan == plan) return
+        updateContent { it.copy(selectedPlan = plan) }
+        trackPaywall(PaywallAnalyticsAction.PlanSelected)
     }
 
     fun startPurchase(activity: Activity?) {
         val state = _uiState.value
         val content = state.plans as? ProPlansState.Content ?: return
         if (content.isPurchasing || state.isRestoring) return
+        trackPaywall(PaywallAnalyticsAction.PurchaseClicked)
         updateContent { it.copy(isPurchasing = true) }
         if (!purchaseLauncher.launch(activity, content.selectedPlan)) {
             updateContent { it.copy(isPurchasing = false) }
+            trackPaywall(PaywallAnalyticsAction.PurchaseFailed)
             _events.tryEmit(ProEvent.PurchaseFailed(reason = ""))
         }
     }
@@ -88,9 +104,12 @@ class ProViewModel(
         restoreJob = viewModelScope.launch {
             val result = subscriptionUseCase.restorePurchases()
             _uiState.update { it.copy(isRestoring = false) }
+            if (result == ProRestoreResult.Restored) trackPaywall(PaywallAnalyticsAction.Restored)
             _events.tryEmit(result.toEvent())
         }
     }
+
+    fun onClosed() = trackPaywall(PaywallAnalyticsAction.Closed)
 
     private fun startCloseCountdown() {
         viewModelScope.launch {
@@ -105,8 +124,16 @@ class ProViewModel(
         viewModelScope.launch {
             subscriptionUseCase.purchaseOutcomes.collect { outcome ->
                 updateContent { it.copy(isPurchasing = false) }
+                outcome.toAnalyticsAction()?.let(::trackPaywall)
                 _events.tryEmit(outcome.toEvent())
             }
+        }
+    }
+
+    private fun trackPaywall(action: PaywallAnalyticsAction) {
+        val selectedPlan = (_uiState.value.plans as? ProPlansState.Content)?.selectedPlan?.plan
+        viewModelScope.launch {
+            trackEventUseCase.trackPaywall(PaywallAnalyticsEvent(action = action, plan = selectedPlan))
         }
     }
 
@@ -141,4 +168,12 @@ private fun PremiumPurchaseOutcome.toEvent(): ProEvent = when (this) {
     PremiumPurchaseOutcome.Pending -> ProEvent.PurchasePending
     PremiumPurchaseOutcome.Cancelled -> ProEvent.PurchaseCancelled
     is PremiumPurchaseOutcome.Failed -> ProEvent.PurchaseFailed(reason)
+}
+
+private fun PremiumPurchaseOutcome.toAnalyticsAction(): PaywallAnalyticsAction? = when (this) {
+    PremiumPurchaseOutcome.Purchased -> PaywallAnalyticsAction.Purchased
+    PremiumPurchaseOutcome.Pending -> PaywallAnalyticsAction.PurchasePending
+    PremiumPurchaseOutcome.Cancelled -> PaywallAnalyticsAction.PurchaseCancelled
+    is PremiumPurchaseOutcome.Failed -> PaywallAnalyticsAction.PurchaseFailed
+    PremiumPurchaseOutcome.AlreadyOwned -> null
 }

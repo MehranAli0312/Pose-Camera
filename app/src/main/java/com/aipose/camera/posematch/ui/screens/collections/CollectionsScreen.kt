@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -20,11 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.poseScreenPadding
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
-import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.StudioSearchField
+import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.screens.collections.components.CaptureAlbumSection
@@ -51,6 +53,8 @@ fun CollectionsScreen(
     val query by viewModel.query.collectAsStateWithLifecycle()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(Unit) { viewModel.trackEvent(AnalyticsEvent.Collections) }
 
     fun dismissKeyboard() {
         keyboardController?.hide()

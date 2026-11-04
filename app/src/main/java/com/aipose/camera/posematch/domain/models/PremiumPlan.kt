@@ -5,6 +5,8 @@ data class PremiumPlan(
     val basePlanId: String?,
     val offerId: String?,
     val formattedPrice: String,
+    val priceMicros: Long,
+    val currencyCode: String,
     val trialDays: Int,
 ) {
     val productId: String get() = plan.productId

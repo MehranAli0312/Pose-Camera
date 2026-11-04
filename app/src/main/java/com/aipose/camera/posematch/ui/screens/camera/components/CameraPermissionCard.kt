@@ -17,12 +17,15 @@ import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 
 private val ScreenInset = 28.dp
+private val BadgeSize = 46.dp
+private val BadgeGlyphSize = 24.dp
 private const val SCRIM_ALPHA = 0.82f
 
 @Composable
 internal fun CameraPermissionCard(
     isBlocked: Boolean,
     onAllow: () -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -33,12 +36,15 @@ internal fun CameraPermissionCard(
         contentAlignment = Alignment.Center,
     ) {
         PoseDialogCard(
-            iconRes = R.drawable.ic_pose_camera,
+            iconRes = R.drawable.ic_pose_camera_cta,
             iconPalette = GlossyBadgePalette.Violet,
             title = stringResource(R.string.perm_camera_title),
             message = stringResource(
                 if (isBlocked) R.string.perm_camera_blocked_desc else R.string.perm_camera_desc
             ),
+            badgeSize = BadgeSize,
+            badgeGlyphSize = BadgeGlyphSize,
+            onClose = onClose,
         ) {
             PoseCtaButton(
                 text = stringResource(

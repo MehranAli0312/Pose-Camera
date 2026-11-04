@@ -60,7 +60,7 @@ import com.aipose.camera.posematch.ui.theme.PoseShadow
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val CardCorner = 26.dp
-private val CardHeight = 172.dp
+private val CardHeight = 156.dp
 private const val PHOTO_WIDTH_FRACTION = 164f / 300f
 private const val CONTENT_WIDTH_FRACTION = 1f - PHOTO_WIDTH_FRACTION
 private val CtaWidth = 152.dp
@@ -134,7 +134,7 @@ internal fun HomeHeroCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(TitleCtaSpacing),
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.home_daily_title),
                 style = poseTextStyle(14.sp, FontWeight.Bold, Color.White),
@@ -148,7 +148,7 @@ internal fun HomeHeroCard(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             StartPosingButton()
         }
     }
@@ -223,6 +223,9 @@ private fun StartPosingButton(modifier: Modifier = Modifier) {
             text = stringResource(R.string.home_hero_cta),
             style = poseTextStyle(13.5.sp, FontWeight.Bold, Color.White),
             maxLines = 1,
+            modifier = Modifier
+                .weight(1f, fill = false)
+                .basicMarquee(),
         )
     }
 }

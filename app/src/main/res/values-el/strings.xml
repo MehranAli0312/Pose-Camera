@@ -17,21 +17,18 @@
     <string name="pro_restore">Επαναφορά αγοράς</string>
     <string name="pro_terms">Όροι</string>
     <string name="pro_privacy">Απόρρητο</string>
-    <string name="pro_title_highlight">τα πάντα</string>
-    <string name="pro_benefit_poses">Ξεκλειδώστε όλες τις premium πόζες</string>
-    <string name="pro_benefit_no_ads">Καμία διαφήμιση, ποτέ</string>
-    <string name="pro_benefit_updates">Στηρίξτε τις μελλοντικές ενημερώσεις</string>
+    <string name="pro_title_highlight">καλύτερη πόζα</string>
+    <string name="pro_benefit_poses">Όλες οι premium πόζες</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% χωρίς διαφημίσεις</string>
+    <string name="pro_benefit_updates">Ζωντανοί οδηγοί κάμερας</string>
     <string name="pro_plan_lifetime">Ισόβια</string>
     <string name="pro_plan_lifetime_note">Εφάπαξ πληρωμή, δική σας για πάντα</string>
     <string name="pro_plan_yearly_note">Χρέωση μία φορά τον χρόνο</string>
-    <string name="pro_cta_lifetime">Απόκτηση Ισόβιας</string>
-    <string name="pro_cta_yearly">Απόκτηση Ετήσιας</string>
-    <string name="pro_footnote_lifetime">Εφάπαξ πληρωμή · Χωρίς συνδρομή</string>
+    <string name="pro_footnote_lifetime">%1$s εφάπαξ · Χωρίς συνδρομή</string>
     <string name="pro_plan_yearly">Ετήσιο</string>
     <string name="pro_best_value">ΚΑΛΥΤΕΡΗ ΑΞΙΑ</string>
     <string name="pro_store_unavailable">Δεν ήταν δυνατή η φόρτωση των πλάνων. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
     <string name="pro_retry">Δοκιμάστε ξανά</string>
-    <string name="pro_try_for_free">Δοκιμάστε δωρεάν</string>
     <string name="pro_auto_renewal_note">Συνδρομή με αυτόματη ανανέωση. Ακύρωση οποτεδήποτε</string>
     <string name="pro_purchase_success">Η αγορά ολοκληρώθηκε</string>
     <string name="pro_purchase_already_owned">Έχετε ήδη αυτό το πλάνο</string>
@@ -50,8 +47,7 @@
         <item quantity="one">%1$d αστέρι</item>
         <item quantity="other">%1$d αστέρια</item>
     </plurals>
-    <string name="pro_title">Ξεκλειδώστε τα πάντα</string>
-    <string name="pro_subtitle">Αποκτήστε κάθε πόζα, χωρίς διαφημίσεις — για πάντα.</string>
+    <string name="pro_title">Η καλύτερη πόζα σου ξεκινά εδώ</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d ημέρα δωρεάν, μετά %2$s</item>
         <item quantity="other">%1$d ημέρες δωρεάν, μετά %2$s</item>
@@ -60,7 +56,6 @@
     <string name="premium_feature_go_premium_title">Γίνετε Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Κλειδωμένη πόζα</string>
-    <string name="premium_pose_title">Premium πόζα</string>
     <string name="premium_pose_message">Δείτε μια σύντομη διαφήμιση για να ξεκλειδώσετε αυτήν την πόζα ή γίνετε Premium για να τις ξεκλειδώσετε όλες.</string>
     <string name="premium_pose_watch_ad">Δείτε διαφήμιση για ξεκλείδωμα</string>
     <string name="nav_home">Αρχική</string>
@@ -87,8 +82,6 @@
     <string name="detail_captured">Λήψη</string>
     <string name="detail_match_score">Βαθμός ταιριάσματος</string>
     <string name="detail_category">Κατηγορία</string>
-    <string name="camera_sim_title">Λειτουργία προσομοίωσης στούντιο</string>
-    <string name="camera_sim_hint">Μετακινήστε την ευθυγράμμιση με τους κύκλους παρακάτω</string>
     <string name="action_reset">Επαναφορά</string>
     <string name="tab_filters">Φίλτρα</string>
     <string name="tab_adjust">Ρύθμιση</string>
@@ -115,11 +108,7 @@
     <string name="crop_flip_horizontal">Οριζ. αναστροφή</string>
     <string name="crop_flip_vertical">Κάθ. αναστροφή</string>
     <string name="saved_title">Αποθηκεύτηκε στις Συλλογές</string>
-    <string name="saved_subtitle_best">%1$s · η καλύτερη βαθμολογία σας</string>
-    <string name="saved_subtitle">%1$s · αποθηκεύτηκε στη συλλογή</string>
     <string name="saved_place_now">%1$s · Μόλις τώρα</string>
-    <string name="saved_shoot_again">Νέα λήψη</string>
-    <string name="saved_view_collections">Προβολή στις Συλλογές</string>
     <string name="action_clear">Εκκαθάριση</string>
     <string name="imported_pose_title">Αναφορά από τη συλλογή</string>
     <string name="action_back">Πίσω</string>
@@ -167,14 +156,6 @@
     <string name="perm_open_settings">Άνοιγμα ρυθμίσεων</string>
     <string name="capture_untitled">Φωτογραφία χωρίς τίτλο</string>
     <string name="home_hero_cta">Ξεκινήστε το πόζαρισμα</string>
-    <string name="home_action_trending">Τάσεις</string>
-    <string name="home_action_couple">Ζευγάρι</string>
-    <string name="home_action_sunset">Ηλιοβασίλεμα</string>
-    <string name="home_action_nature">Φύση</string>
-    <string name="home_action_mirror">Καθρέφτης</string>
-    <string name="home_action_beach">Παραλία</string>
-    <string name="home_action_cafe">Καφέ</string>
-    <string name="home_action_explore">Εξερεύνηση</string>
     <string name="home_progress_title">Η πρόοδός σας</string>
     <string name="home_progress_view_all">Όλα</string>
     <string name="home_progress_avg_match">Μέσο ταίριασμα</string>
@@ -211,16 +192,6 @@
     <string name="saved_empty_shots_sub">Πατήστε την καρδιά σε μια λήψη για να τη κρατήσετε εδώ.</string>
     <string name="saved_empty_poses">Δεν υπάρχουν αγαπημένες πόζες</string>
     <string name="saved_empty_poses_sub">Πατήστε την καρδιά σε μια πόζα για να την κρατήσετε εδώ.</string>
-    <string name="pose_detail_in_set">%1$d στο σετ</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d προσπάθεια</item>
-        <item quantity="other">%1$d προσπάθειες</item>
-    </plurals>
-    <string name="pose_detail_best_match">Το καλύτερο ταίριασμά σας</string>
-    <string name="pose_detail_best_match_sub">Ξεπεράστε το για να ξεκλειδώσετε το σήμα Άψογο</string>
-    <string name="pose_detail_no_match">Κανένα ταίριασμα ακόμα</string>
-    <string name="pose_detail_no_match_sub">Κάντε αυτή την πόζα για την πρώτη σας βαθμολογία</string>
-    <string name="pose_detail_cta">Ξεκινήστε το πόζαρισμα</string>
     <string name="settings_preferences">ΠΡΟΤΙΜΗΣΕΙΣ</string>
     <string name="settings_about">ΣΧΕΤΙΚΑ</string>
     <string name="settings_capture_timer">Χρονόμετρο λήψης</string>
@@ -324,4 +295,15 @@
     <string name="notification_action_not_interested">Δεν ενδιαφέρομαι</string>
     <string name="settings_pro_card_title">Ξεκλείδωσε το PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Όλες οι premium πόζες, ζωντανοί οδηγοί &amp; χωρίς διαφημίσεις</string>
+    <string name="pro_plan_weekly">Εβδομαδιαίο</string>
+    <string name="pro_plan_weekly_note">Χρέωση κάθε εβδομάδα · Ακύρωση οποτεδήποτε</string>
+    <string name="pro_price_per_week">%1$s/εβδομάδα</string>
+    <string name="pro_save_percent">ΕΞΟΙΚΟΝΟΜΗΣΗ %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Ανανεώνεται στα %1$s/εβδομάδα. Ακύρωση οποτεδήποτε στο Google Play.</string>
+    <string name="pro_renewal_note_yearly">Ανανεώνεται στα %1$s/έτος. Ακύρωση οποτεδήποτε στο Google Play.</string>
+    <string name="pro_cta_continue">Συνέχεια</string>
+    <string name="pro_cta_access_free">Πρόσβαση δωρεάν</string>
+    <string name="pro_badge_one_time">ΕΦΑΠΑΞ ΠΛΗΡΩΜΗ</string>
+    <string name="pro_price_per_year">%1$s/έτος</string>
+    <string name="home_poses_title">Δημοφιλείς πόζες</string>
 </resources>

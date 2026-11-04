@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
+import com.aipose.camera.posematch.ui.common.pulseScale
 import com.aipose.camera.posematch.ui.theme.PoseGlowIndigo
 import com.aipose.camera.posematch.ui.theme.PosePremiumCtaDeep
 import com.aipose.camera.posematch.ui.theme.PosePremiumGold
@@ -42,6 +43,8 @@ private val LabelSize = 16.sp
 private val ProgressStroke = 2.5.dp
 private const val PLAY_RING_ALPHA = 0.9f
 private const val DISABLED_ALPHA = 0.5f
+private const val GO_PREMIUM_PULSE_MAX_SCALE = 1.12f
+private const val GO_PREMIUM_PULSE_DURATION_MS = 700
 
 @Composable
 internal fun WatchAdToUnlockButton(
@@ -108,6 +111,11 @@ internal fun GoPremiumButton(
             text = stringResource(R.string.premium_feature_go_premium_title),
             style = poseTextStyle(LabelSize, FontWeight.Bold, PosePremiumGold),
             maxLines = 1,
+            modifier = Modifier.pulseScale(
+                enabled = enabled,
+                maxScale = GO_PREMIUM_PULSE_MAX_SCALE,
+                durationMillis = GO_PREMIUM_PULSE_DURATION_MS,
+            ),
         )
     }
 }

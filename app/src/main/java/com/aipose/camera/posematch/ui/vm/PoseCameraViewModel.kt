@@ -76,6 +76,7 @@ class PoseCameraViewModel(
     }
 
     fun unlockAfterRewardedAd(pose: Pose) {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseUnlocked) }
         _uiState.update { state -> state.copy(lockedPose = null) }
         viewModelScope.launch {
             poseLockUseCase.unlockWithRewardedAd(pose.id)
@@ -100,6 +101,7 @@ class PoseCameraViewModel(
     }
 
     fun selectPose(pose: Pose) {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseSelected) }
         if (_uiState.value.selectedPose?.id == pose.id) {
             hidePosePicker()
             return
@@ -134,6 +136,7 @@ class PoseCameraViewModel(
 
     fun importPose(title: String, sourceUri: String) {
         if (_uiState.value.isImporting) return
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseImported) }
         _uiState.update { state -> state.copy(isImporting = true) }
         viewModelScope.launch {
             val imported = poseLibraryUseCase.importPose(title, sourceUri)
@@ -215,6 +218,7 @@ class PoseCameraViewModel(
     }
 
     fun onCaptureSucceeded(path: String) {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.CaptureSuccess) }
         val state = _uiState.value
         captureUseCase.putDraft(
             CaptureDraft(
@@ -232,6 +236,7 @@ class PoseCameraViewModel(
     }
 
     fun onCaptureFailed() {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.CaptureFailed) }
         val target = _uiState.value.pendingCaptureTarget
         _uiState.update { state -> state.copy(isCapturing = false, pendingCaptureTarget = null) }
         if (target != null) viewModelScope.launch { captureUseCase.discardFile(target) }

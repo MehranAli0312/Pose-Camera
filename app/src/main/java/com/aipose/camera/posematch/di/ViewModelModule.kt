@@ -13,7 +13,6 @@ import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.PhotoEditViewModel
 import com.aipose.camera.posematch.ui.vm.PhotoSuccessViewModel
 import com.aipose.camera.posematch.ui.vm.PoseAlbumViewModel
-import com.aipose.camera.posematch.ui.vm.PoseDetailViewModel
 import com.aipose.camera.posematch.ui.vm.PoseCameraViewModel
 import com.aipose.camera.posematch.ui.vm.ProViewModel
 import com.aipose.camera.posematch.ui.vm.RateUsViewModel
@@ -33,20 +32,20 @@ val viewModelModule = module {
             subscriptionUseCase = get(),
             remoteConfigStore = get(),
             purchaseLauncher = get(),
+            trackEventUseCase = get(),
         )
     }
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { SavedViewModel(androidContext(), get(), get(), get(), get()) }
-    viewModel { PoseAlbumViewModel(get(), get(), get()) }
-    viewModel { PoseDetailViewModel(get(), get(), get(), get()) }
-    viewModel { CollectionsViewModel(androidContext(), get(), get()) }
-    viewModel { CaptureAlbumViewModel(androidContext(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SavedViewModel(androidContext(), get(), get(), get(), get(), get()) }
+    viewModel { PoseAlbumViewModel(get(), get(), get(), get()) }
+    viewModel { CollectionsViewModel(androidContext(), get(), get(), get()) }
+    viewModel { CaptureAlbumViewModel(androidContext(), get(), get(), get()) }
     viewModel { PhotoEditViewModel(get(), get(), get(), get()) }
-    viewModel { PhotoSuccessViewModel(get(), get()) }
+    viewModel { PhotoSuccessViewModel(get(), get(), get()) }
     viewModel { CameraSettingsViewModel(get()) }
-    viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { ProgressViewModel(get(), get()) }
-    viewModel { AchievementsViewModel(get(), get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get(), get()) }
+    viewModel { ProgressViewModel(get(), get(), get()) }
+    viewModel { AchievementsViewModel(get(), get(), get(), get()) }
     viewModel {
         PoseCameraViewModel(
             poseLibraryUseCase = get(),

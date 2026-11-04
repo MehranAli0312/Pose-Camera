@@ -15,6 +15,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 internal class BannerAdController(
     private val context: Context,
     private val gate: AdGate,
+    private val reporter: AdEventReporter,
     private val log: AdsLog,
 ) {
 
@@ -46,7 +47,7 @@ internal class BannerAdController(
                 request,
                 object : AdLoadCallback<BannerAd> {
                     override fun onAdLoaded(ad: BannerAd) {
-                        onLoaded(placement)
+                        onLoaded(placement, ad)
                         settle(ad)
                     }
 
@@ -76,10 +77,16 @@ internal class BannerAdController(
         }
     }
 
-    fun onLoaded(placement: AdPlacement) = log.d("Banner loaded for ${placement.id}")
+    fun onLoaded(placement: AdPlacement, ad: BannerAd) {
+        log.d("Banner loaded for ${placement.id}")
+        ad.adEventCallback = reporter.bannerCallback(placement)
+        reporter.loadResult(loaded = true, AdFormat.BANNER, placement)
+    }
 
-    fun onFailed(placement: AdPlacement, message: String) =
+    fun onFailed(placement: AdPlacement, message: String) {
         log.w("Banner failed for ${placement.id}: $message")
+        reporter.loadResult(loaded = false, AdFormat.BANNER, placement)
+    }
 
     private fun screenWidthDp(): Int = context.resources.configuration.screenWidthDp
 

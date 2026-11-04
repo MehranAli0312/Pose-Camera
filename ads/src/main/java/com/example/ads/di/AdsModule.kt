@@ -1,6 +1,7 @@
 package com.example.ads.di
 
 import com.example.ads.AdsManager
+import com.example.ads.internal.AdEventReporter
 import com.example.ads.internal.AdGate
 import com.example.ads.internal.AdsLog
 import com.example.ads.internal.AdsRuntimeState
@@ -29,15 +30,16 @@ val adsModule = module {
     single { AdsLog(get()) }
     single { AdsRuntimeState() }
     single { NetworkChecker(androidContext()) }
+    single { AdEventReporter(get(), get()) }
 
     single { AdGate(get(), get(), get(), get(), get(), get()) }
 
     single { ConsentManager(androidContext(), get()) }
     single { SdkInitializer(androidContext(), get(), get(), get()) }
 
-    single { BannerAdController(androidContext(), get(), get()) }
-    single { NativeAdController(get(), get()) }
-    single { FullScreenAdController(get(AdsScopeQualifier), get(), get(), get()) }
+    single { BannerAdController(androidContext(), get(), get(), get()) }
+    single { NativeAdController(get(), get(), get()) }
+    single { FullScreenAdController(get(AdsScopeQualifier), get(), get(), get(), get()) }
     single { PreparedSlotController(get(AdsScopeQualifier), get(), get(), get()) }
 
     single<AdsManager> {

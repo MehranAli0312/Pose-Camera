@@ -17,21 +17,18 @@
     <string name="pro_restore">Återställ köp</string>
     <string name="pro_terms">Villkor</string>
     <string name="pro_privacy">Integritet</string>
-    <string name="pro_title_highlight">allt</string>
-    <string name="pro_benefit_poses">Lås upp alla premiumposer</string>
-    <string name="pro_benefit_no_ads">Inga annonser, någonsin</string>
-    <string name="pro_benefit_updates">Stöd framtida uppdateringar</string>
+    <string name="pro_title_highlight">bästa pose</string>
+    <string name="pro_benefit_poses">Alla premiumposer</string>
+    <string name="pro_benefit_no_ads" formatted="false">100 % annonsfritt</string>
+    <string name="pro_benefit_updates">Livekameraguider</string>
     <string name="pro_plan_lifetime">Livstid</string>
     <string name="pro_plan_lifetime_note">Engångsbetalning, din för alltid</string>
     <string name="pro_plan_yearly_note">Debiteras en gång om året</string>
-    <string name="pro_cta_lifetime">Lås upp Livstid</string>
-    <string name="pro_cta_yearly">Lås upp Årsvis</string>
-    <string name="pro_footnote_lifetime">Engångsbetalning · Ingen prenumeration</string>
+    <string name="pro_footnote_lifetime">%1$s en gång · Inget abonnemang</string>
     <string name="pro_plan_yearly">Årsvis</string>
     <string name="pro_best_value">BÄST VÄRDE</string>
     <string name="pro_store_unavailable">Det gick inte att läsa in abonnemangen. Kontrollera anslutningen och försök igen.</string>
     <string name="pro_retry">Försök igen</string>
-    <string name="pro_try_for_free">Prova gratis</string>
     <string name="pro_auto_renewal_note">Abonnemanget förnyas automatiskt. Avsluta när som helst</string>
     <string name="pro_purchase_success">Köpet genomfördes</string>
     <string name="pro_purchase_already_owned">Du har redan det här abonnemanget</string>
@@ -50,8 +47,7 @@
         <item quantity="one">%1$d stjärna</item>
         <item quantity="other">%1$d stjärnor</item>
     </plurals>
-    <string name="pro_title">Lås upp allt</string>
-    <string name="pro_subtitle">Alla poser, utan annonser — för alltid.</string>
+    <string name="pro_title">Din bästa pose börjar här</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dag gratis, sedan %2$s</item>
         <item quantity="other">%1$d dagar gratis, sedan %2$s</item>
@@ -60,7 +56,6 @@
     <string name="premium_feature_go_premium_title">Skaffa Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Låst pose</string>
-    <string name="premium_pose_title">Premiumpose</string>
     <string name="premium_pose_message">Titta på en kort annons för att låsa upp den här posen, eller skaffa Premium för att låsa upp alla.</string>
     <string name="premium_pose_watch_ad">Titta på annons för att låsa upp</string>
     <string name="nav_home">Hem</string>
@@ -87,8 +82,6 @@
     <string name="detail_captured">Taget</string>
     <string name="detail_match_score">Matchpoäng</string>
     <string name="detail_category">Kategori</string>
-    <string name="camera_sim_title">Studiosimuleringsläge</string>
-    <string name="camera_sim_hint">Flytta justeringen med de dragbara cirklarna nedan</string>
     <string name="action_reset">Återställ</string>
     <string name="tab_filters">Filter</string>
     <string name="tab_adjust">Justera</string>
@@ -115,11 +108,7 @@
     <string name="crop_flip_horizontal">Spegla vågrätt</string>
     <string name="crop_flip_vertical">Spegla lodrätt</string>
     <string name="saved_title">Sparat i Samlingar</string>
-    <string name="saved_subtitle_best">%1$s · din bästa poäng hittills</string>
-    <string name="saved_subtitle">%1$s · sparat i ditt galleri</string>
     <string name="saved_place_now">%1$s · Just nu</string>
-    <string name="saved_shoot_again">Fota igen</string>
-    <string name="saved_view_collections">Visa i Samlingar</string>
     <string name="action_clear">Rensa</string>
     <string name="imported_pose_title">Referens från galleriet</string>
     <string name="action_back">Tillbaka</string>
@@ -167,14 +156,6 @@
     <string name="perm_open_settings">Öppna inställningar</string>
     <string name="capture_untitled">Namnlöst foto</string>
     <string name="home_hero_cta">Börja posera</string>
-    <string name="home_action_trending">Trendigt</string>
-    <string name="home_action_couple">Par</string>
-    <string name="home_action_sunset">Solnedgång</string>
-    <string name="home_action_nature">Natur</string>
-    <string name="home_action_mirror">Spegel</string>
-    <string name="home_action_beach">Strand</string>
-    <string name="home_action_cafe">Kafé</string>
-    <string name="home_action_explore">Utforska</string>
     <string name="home_progress_title">Dina framsteg</string>
     <string name="home_progress_view_all">Visa alla</string>
     <string name="home_progress_avg_match">Snittmatch</string>
@@ -211,16 +192,6 @@
     <string name="saved_empty_shots_sub">Tryck på hjärtat på en bild för att spara den här.</string>
     <string name="saved_empty_poses">Inga hjärtmärkta poser än</string>
     <string name="saved_empty_poses_sub">Tryck på hjärtat på en pose för att spara den här.</string>
-    <string name="pose_detail_in_set">%1$d i setet</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d försök</item>
-        <item quantity="other">%1$d försök</item>
-    </plurals>
-    <string name="pose_detail_best_match">Din bästa match</string>
-    <string name="pose_detail_best_match_sub">Slå den för att låsa upp märket Felfri</string>
-    <string name="pose_detail_no_match">Ingen match än</string>
-    <string name="pose_detail_no_match_sub">Gör den här posen för att sätta din första poäng</string>
-    <string name="pose_detail_cta">Börja posera</string>
     <string name="settings_preferences">INSTÄLLNINGAR</string>
     <string name="settings_about">OM</string>
     <string name="settings_capture_timer">Självutlösare</string>
@@ -324,4 +295,15 @@
     <string name="notification_action_not_interested">Inte intresserad</string>
     <string name="settings_pro_card_title">Lås upp PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Alla premiumposer, liveguider och inga annonser</string>
+    <string name="pro_plan_weekly">Veckovis</string>
+    <string name="pro_plan_weekly_note">Debiteras varje vecka · Avsluta när som helst</string>
+    <string name="pro_price_per_week">%1$s/vecka</string>
+    <string name="pro_save_percent">SPARA %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Förnyas för %1$s/vecka. Avsluta när som helst i Google Play.</string>
+    <string name="pro_renewal_note_yearly">Förnyas för %1$s/år. Avsluta när som helst i Google Play.</string>
+    <string name="pro_cta_continue">Fortsätt</string>
+    <string name="pro_cta_access_free">Få gratis åtkomst</string>
+    <string name="pro_badge_one_time">ENGÅNGSBETALNING</string>
+    <string name="pro_price_per_year">%1$s/år</string>
+    <string name="home_poses_title">Populära poser</string>
 </resources>

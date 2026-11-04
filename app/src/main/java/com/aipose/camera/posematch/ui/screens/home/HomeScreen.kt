@@ -24,12 +24,11 @@ import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
+import com.aipose.camera.posematch.ui.screens.home.components.HomeCategoryPosesSection
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeader
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeroCard
 import com.aipose.camera.posematch.ui.screens.home.components.HomeProgressCard
-import com.aipose.camera.posematch.ui.screens.home.components.HomeQuickActionGrid
 import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
-import com.aipose.camera.posematch.ui.screens.home.models.HomeQuickActionId
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
@@ -71,7 +70,6 @@ fun HomeScreen(
         viewModel.consumeUnlockedPose()
         val route = when (unlocked.target) {
             HomeUnlockTarget.Camera -> NavRoute.CameraScreenRoute.routeFor(unlocked.poseId)
-            HomeUnlockTarget.PoseDetail -> NavRoute.PoseDetailScreenRoute.routeFor(unlocked.poseId)
         }
         navController.navigateOnClick(route)
     }
@@ -106,19 +104,30 @@ fun HomeScreen(
                     }
                 }
 
-                item(key = HOME_ACTIONS_KEY) {
-                    HomeQuickActionGrid(
-                        actions = HomeQuickActionId.entries,
-                        onActionClick = { id ->
-                            viewModel.onCategoryTapped()
-                            when (id) {
-                                HomeQuickActionId.Explore ->
-                                    openAlbum(NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES)
-
-                                else -> id.category?.let(::openAlbum)
+                item(key = HOME_CATEGORY_POSES_KEY) {
+                    HomeCategoryPosesSection(
+                        categories = content.categories,
+                        selectedCategory = content.selectedCategory,
+                        poses = content.poses,
+                        savedPoseIds = content.savedPoseIds,
+                        lockedPoseIds = content.lockedPoseIds,
+                        onCategorySelect = viewModel::selectCategory,
+                        onPoseClick = { pose, isLocked ->
+                            if (isLocked) {
+                                viewModel.showLockedPose(pose, HomeUnlockTarget.Camera)
+                            } else {
+                                navController.navigateOnClick(
+                                    NavRoute.CameraScreenRoute.routeFor(pose.id)
+                                )
                             }
                         },
-                        modifier = Modifier.padding(top = 14.dp),
+                        onToggleSaved = viewModel::toggleSaved,
+                        onSeeAllClick = {
+                            openAlbum(
+                                content.selectedCategory ?: NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES
+                            )
+                        },
+                        modifier = Modifier.padding(top = 16.dp),
                     )
                 }
 
@@ -126,7 +135,7 @@ fun HomeScreen(
                     item(key = HOME_NATIVE_AD_KEY) {
                         InlineNativeAd(
                             placement = AdPlacement.HomeInlineNative,
-                            modifier = Modifier.padding(top = 14.dp),
+                            modifier = Modifier.padding(top = 16.dp),
                         )
                     }
                 }
@@ -135,7 +144,7 @@ fun HomeScreen(
                     HomeProgressCard(
                         progress = content.progress,
                         onViewAll = { openWithAd(NavRoute.ProgressScreenRoute.route) },
-                        modifier = Modifier.padding(top = 14.dp),
+                        modifier = Modifier.padding(top = 16.dp),
                     )
                 }
             }
@@ -158,6 +167,6 @@ fun HomeScreen(
 }
 
 private const val HOME_HERO_KEY = "home_hero"
-private const val HOME_ACTIONS_KEY = "home_actions"
+private const val HOME_CATEGORY_POSES_KEY = "home_category_poses"
 private const val HOME_NATIVE_AD_KEY = "home_native_ad"
 private const val HOME_PROGRESS_KEY = "home_progress"

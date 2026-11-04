@@ -17,21 +17,18 @@
     <string name="pro_restore">खरीद बहाल करें</string>
     <string name="pro_terms">शर्तें</string>
     <string name="pro_privacy">गोपनीयता</string>
-    <string name="pro_title_highlight">सब कुछ</string>
-    <string name="pro_benefit_poses">सभी प्रीमियम पोज़ अनलॉक करें</string>
-    <string name="pro_benefit_no_ads">कभी विज्ञापन नहीं</string>
-    <string name="pro_benefit_updates">भविष्य के अपडेट का समर्थन करें</string>
+    <string name="pro_title_highlight">बेस्ट पोज़</string>
+    <string name="pro_benefit_poses">सभी प्रीमियम पोज़</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% विज्ञापन-मुक्त</string>
+    <string name="pro_benefit_updates">लाइव कैमरा गाइड</string>
     <string name="pro_plan_lifetime">लाइफ़टाइम</string>
     <string name="pro_plan_lifetime_note">एक बार भुगतान, हमेशा के लिए आपका</string>
     <string name="pro_plan_yearly_note">साल में एक बार बिल</string>
-    <string name="pro_cta_lifetime">लाइफ़टाइम अनलॉक करें</string>
-    <string name="pro_cta_yearly">सालाना अनलॉक करें</string>
-    <string name="pro_footnote_lifetime">एक बार भुगतान · कोई सदस्यता नहीं</string>
+    <string name="pro_footnote_lifetime">%1$s एक बार · कोई सब्सक्रिप्शन नहीं</string>
     <string name="pro_plan_yearly">वार्षिक</string>
     <string name="pro_best_value">सबसे किफ़ायती</string>
     <string name="pro_store_unavailable">प्लान लोड नहीं हो सके। अपना कनेक्शन जाँचें और फिर से कोशिश करें।</string>
     <string name="pro_retry">फिर से कोशिश करें</string>
-    <string name="pro_try_for_free">मुफ़्त आज़माएँ</string>
     <string name="pro_auto_renewal_note">ऑटो-रिन्यूअल वाला सब्सक्रिप्शन. कभी भी रद्द करें</string>
     <string name="pro_purchase_success">खरीद सफल</string>
     <string name="pro_purchase_already_owned">यह प्लान आपके पास पहले से है</string>
@@ -50,8 +47,7 @@
         <item quantity="one">%1$d स्टार</item>
         <item quantity="other">%1$d स्टार</item>
     </plurals>
-    <string name="pro_title">सब कुछ अनलॉक करें</string>
-    <string name="pro_subtitle">हर पोज़ पाएँ, बिना विज्ञापन — हमेशा के लिए।</string>
+    <string name="pro_title">आपका बेस्ट पोज़ यहीं से शुरू होता है</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d दिन मुफ़्त, फिर %2$s</item>
         <item quantity="other">%1$d दिन मुफ़्त, फिर %2$s</item>
@@ -60,7 +56,6 @@
     <string name="premium_feature_go_premium_title">Premium लें</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">लॉक पोज़</string>
-    <string name="premium_pose_title">प्रीमियम पोज़</string>
     <string name="premium_pose_message">यह पोज़ अनलॉक करने के लिए एक छोटा विज्ञापन देखें, या सभी अनलॉक करने के लिए Premium लें।</string>
     <string name="premium_pose_watch_ad">अनलॉक करने के लिए विज्ञापन देखें</string>
     <string name="nav_home">होम</string>
@@ -87,8 +82,6 @@
     <string name="detail_captured">लिया गया</string>
     <string name="detail_match_score">मैच स्कोर</string>
     <string name="detail_category">कैटेगरी</string>
-    <string name="camera_sim_title">स्टूडियो सिमुलेशन मोड</string>
-    <string name="camera_sim_hint">नीचे दिए खींचने वाले सर्कल से अलाइनमेंट बदलें</string>
     <string name="action_reset">रीसेट करें</string>
     <string name="tab_filters">फ़िल्टर</string>
     <string name="tab_adjust">एडजस्ट</string>
@@ -115,11 +108,7 @@
     <string name="crop_flip_horizontal">क्षैतिज पलटें</string>
     <string name="crop_flip_vertical">ऊर्ध्वाधर पलटें</string>
     <string name="saved_title">कलेक्शन में सेव हुआ</string>
-    <string name="saved_subtitle_best">%1$s · अब तक का आपका सर्वश्रेष्ठ स्कोर</string>
-    <string name="saved_subtitle">%1$s · आपकी गैलरी में सेव हुआ</string>
     <string name="saved_place_now">%1$s · अभी</string>
-    <string name="saved_shoot_again">फिर से लें</string>
-    <string name="saved_view_collections">कलेक्शन में देखें</string>
     <string name="action_clear">साफ़ करें</string>
     <string name="imported_pose_title">गैलरी रेफ़रेंस</string>
     <string name="action_back">वापस</string>
@@ -167,14 +156,6 @@
     <string name="perm_open_settings">सेटिंग्स खोलें</string>
     <string name="capture_untitled">बिना नाम की फ़ोटो</string>
     <string name="home_hero_cta">पोज़ देना शुरू करें</string>
-    <string name="home_action_trending">ट्रेंडिंग</string>
-    <string name="home_action_couple">कपल</string>
-    <string name="home_action_sunset">सूर्यास्त</string>
-    <string name="home_action_nature">प्रकृति</string>
-    <string name="home_action_mirror">मिरर</string>
-    <string name="home_action_beach">बीच</string>
-    <string name="home_action_cafe">कैफ़े</string>
-    <string name="home_action_explore">एक्सप्लोर करें</string>
     <string name="home_progress_title">आपकी प्रगति</string>
     <string name="home_progress_view_all">सभी देखें</string>
     <string name="home_progress_avg_match">औसत मैच</string>
@@ -211,16 +192,6 @@
     <string name="saved_empty_shots_sub">किसी फ़ोटो को यहाँ रखने के लिए उसके दिल पर टैप करें।</string>
     <string name="saved_empty_poses">अभी कोई पसंदीदा पोज़ नहीं</string>
     <string name="saved_empty_poses_sub">किसी पोज़ को यहाँ रखने के लिए उसके दिल पर टैप करें।</string>
-    <string name="pose_detail_in_set">सेट में %1$d</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d कोशिश</item>
-        <item quantity="other">%1$d कोशिशें</item>
-    </plurals>
-    <string name="pose_detail_best_match">आपका सर्वश्रेष्ठ मैच</string>
-    <string name="pose_detail_best_match_sub">बेदाग़ बैज अनलॉक करने के लिए इसे पार करें</string>
-    <string name="pose_detail_no_match">अभी कोई मैच नहीं</string>
-    <string name="pose_detail_no_match_sub">अपना पहला स्कोर पाने के लिए यह पोज़ दें</string>
-    <string name="pose_detail_cta">पोज़ देना शुरू करें</string>
     <string name="settings_preferences">प्राथमिकताएँ</string>
     <string name="settings_about">ऐप के बारे में</string>
     <string name="settings_capture_timer">कैप्चर टाइमर</string>
@@ -324,4 +295,15 @@
     <string name="notification_action_not_interested">दिलचस्पी नहीं</string>
     <string name="settings_pro_card_title">PoseAI Pro अनलॉक करें</string>
     <string name="settings_pro_card_subtitle">सभी प्रीमियम पोज़, लाइव गाइड और कोई विज्ञापन नहीं</string>
+    <string name="pro_plan_weekly">साप्ताहिक</string>
+    <string name="pro_plan_weekly_note">हर हफ़्ते बिल · कभी भी रद्द करें</string>
+    <string name="pro_price_per_week">%1$s/हफ़्ता</string>
+    <string name="pro_save_percent">%1$d%% बचाएँ</string>
+    <string name="pro_renewal_note_weekly">%1$s/हफ़्ता पर रिन्यू होगा. Google Play में कभी भी रद्द करें.</string>
+    <string name="pro_renewal_note_yearly">%1$s/साल पर रिन्यू होगा. Google Play में कभी भी रद्द करें.</string>
+    <string name="pro_cta_continue">जारी रखें</string>
+    <string name="pro_cta_access_free">मुफ़्त में एक्सेस करें</string>
+    <string name="pro_badge_one_time">एक बार भुगतान</string>
+    <string name="pro_price_per_year">%1$s/साल</string>
+    <string name="home_poses_title">ट्रेंडिंग पोज़</string>
 </resources>

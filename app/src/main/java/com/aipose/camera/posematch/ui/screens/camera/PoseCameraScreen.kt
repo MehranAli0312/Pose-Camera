@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ads.CameraScreenBottom
 import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.rememberCameraPermissionState
 import com.aipose.camera.posematch.ui.common.rememberHapticPulse
@@ -50,7 +51,6 @@ import com.aipose.camera.posematch.ui.screens.camera.components.CameraPosePicker
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraPreviewSurface
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraScrims
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraShutterBar
-import com.aipose.camera.posematch.ui.screens.camera.components.CameraSimulatedSurface
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraToolRail
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraTopBar
 import com.aipose.camera.posematch.ui.screens.camera.components.CaptureCountdown
@@ -60,6 +60,8 @@ import com.aipose.camera.posematch.ui.screens.camera.components.PoseOverlayImage
 import com.aipose.camera.posematch.ui.screens.camera.components.PoseStrip
 import com.aipose.camera.posematch.ui.vm.PoseCameraViewModel
 import com.example.common.showToast
+import com.example.ads.AdPlacement
+import com.example.ads.compose.AdsSlot
 import org.koin.androidx.compose.koinViewModel
 
 private const val HIGH_MATCH_SCORE = 80
@@ -147,8 +149,6 @@ fun PoseCameraScreen(
                     },
                     modifier = Modifier.fillMaxSize(),
                 )
-            } else {
-                CameraSimulatedSurface(modifier = Modifier.fillMaxSize())
             }
 
             if (uiState.isGridVisible) {
@@ -238,6 +238,7 @@ fun PoseCameraScreen(
                 onShutterClick = viewModel::onShutterClicked,
                 onToggleFacing = viewModel::toggleCameraFacing,
             )
+            AdsSlot(placement = AdPlacement.CameraScreenBottom)
         }
 
         AnimatedVisibility(
@@ -249,10 +250,11 @@ fun PoseCameraScreen(
             GreatMatchBanner()
         }
 
-        if (!cameraPermission.isGranted) {
+        if (!cameraPermission.isGranted && !cameraPermission.isRequesting) {
             CameraPermissionCard(
                 isBlocked = cameraPermission.isBlocked,
                 onAllow = cameraPermission.request,
+                onClose = { navController.popBackStack() },
                 modifier = Modifier.fillMaxSize(),
             )
         }

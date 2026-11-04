@@ -17,21 +17,18 @@
     <string name="pro_restore">Khôi phục giao dịch</string>
     <string name="pro_terms">Điều khoản</string>
     <string name="pro_privacy">Quyền riêng tư</string>
-    <string name="pro_title_highlight">tất cả</string>
-    <string name="pro_benefit_poses">Mở khóa mọi dáng pose cao cấp</string>
-    <string name="pro_benefit_no_ads">Không quảng cáo, mãi mãi</string>
-    <string name="pro_benefit_updates">Ủng hộ các bản cập nhật sau này</string>
+    <string name="pro_title_highlight">Dáng chụp đẹp nhất</string>
+    <string name="pro_benefit_poses">Mọi dáng pose cao cấp</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% không quảng cáo</string>
+    <string name="pro_benefit_updates">Hướng dẫn camera trực tiếp</string>
     <string name="pro_plan_lifetime">Trọn đời</string>
     <string name="pro_plan_lifetime_note">Thanh toán một lần, của bạn mãi mãi</string>
     <string name="pro_plan_yearly_note">Thanh toán mỗi năm một lần</string>
-    <string name="pro_cta_lifetime">Mở khóa Trọn đời</string>
-    <string name="pro_cta_yearly">Mở khóa Hằng năm</string>
-    <string name="pro_footnote_lifetime">Thanh toán một lần · Không đăng ký</string>
+    <string name="pro_footnote_lifetime">%1$s một lần · Không đăng ký</string>
     <string name="pro_plan_yearly">Hằng năm</string>
     <string name="pro_best_value">ĐÁNG GIÁ NHẤT</string>
     <string name="pro_store_unavailable">Không thể tải các gói. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="pro_retry">Thử lại</string>
-    <string name="pro_try_for_free">Dùng thử miễn phí</string>
     <string name="pro_auto_renewal_note">Gói đăng ký tự gia hạn. Hủy bất cứ lúc nào</string>
     <string name="pro_purchase_success">Mua thành công</string>
     <string name="pro_purchase_already_owned">Bạn đã sở hữu gói này</string>
@@ -49,8 +46,7 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d sao</item>
     </plurals>
-    <string name="pro_title">Mở khóa tất cả</string>
-    <string name="pro_subtitle">Có mọi dáng pose, không quảng cáo — mãi mãi.</string>
+    <string name="pro_title">Dáng chụp đẹp nhất của bạn bắt đầu từ đây</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">Miễn phí %1$d ngày, sau đó %2$s</item>
     </plurals>
@@ -58,7 +54,6 @@
     <string name="premium_feature_go_premium_title">Nâng cấp Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Dáng pose bị khóa</string>
-    <string name="premium_pose_title">Dáng pose cao cấp</string>
     <string name="premium_pose_message">Xem một quảng cáo ngắn để mở khóa dáng pose này, hoặc nâng cấp Premium để mở khóa tất cả.</string>
     <string name="premium_pose_watch_ad">Xem quảng cáo để mở khóa</string>
     <string name="nav_home">Trang chủ</string>
@@ -85,8 +80,6 @@
     <string name="detail_captured">Đã chụp</string>
     <string name="detail_match_score">Điểm khớp</string>
     <string name="detail_category">Danh mục</string>
-    <string name="camera_sim_title">Chế độ mô phỏng studio</string>
-    <string name="camera_sim_hint">Di chuyển căn chỉnh bằng các vòng tròn kéo được bên dưới</string>
     <string name="action_reset">Đặt lại</string>
     <string name="tab_filters">Bộ lọc</string>
     <string name="tab_adjust">Điều chỉnh</string>
@@ -113,11 +106,7 @@
     <string name="crop_flip_horizontal">Lật ngang</string>
     <string name="crop_flip_vertical">Lật dọc</string>
     <string name="saved_title">Đã lưu vào Bộ sưu tập</string>
-    <string name="saved_subtitle_best">%1$s · điểm cao nhất của bạn</string>
-    <string name="saved_subtitle">%1$s · đã lưu vào thư viện</string>
     <string name="saved_place_now">%1$s · Vừa xong</string>
-    <string name="saved_shoot_again">Chụp lại</string>
-    <string name="saved_view_collections">Xem trong Bộ sưu tập</string>
     <string name="action_clear">Xóa</string>
     <string name="imported_pose_title">Ảnh mẫu từ thư viện</string>
     <string name="action_back">Quay lại</string>
@@ -165,14 +154,6 @@
     <string name="perm_open_settings">Mở cài đặt</string>
     <string name="capture_untitled">Ảnh chưa đặt tên</string>
     <string name="home_hero_cta">Bắt đầu tạo dáng</string>
-    <string name="home_action_trending">Thịnh hành</string>
-    <string name="home_action_couple">Cặp đôi</string>
-    <string name="home_action_sunset">Hoàng hôn</string>
-    <string name="home_action_nature">Thiên nhiên</string>
-    <string name="home_action_mirror">Gương</string>
-    <string name="home_action_beach">Bãi biển</string>
-    <string name="home_action_cafe">Quán cà phê</string>
-    <string name="home_action_explore">Khám phá</string>
     <string name="home_progress_title">Tiến độ của bạn</string>
     <string name="home_progress_view_all">Xem tất cả</string>
     <string name="home_progress_avg_match">Khớp TB</string>
@@ -209,15 +190,6 @@
     <string name="saved_empty_shots_sub">Chạm tim trên ảnh để giữ ảnh ở đây.</string>
     <string name="saved_empty_poses">Chưa có dáng được thả tim</string>
     <string name="saved_empty_poses_sub">Chạm tim trên dáng để giữ dáng ở đây.</string>
-    <string name="pose_detail_in_set">%1$d trong bộ</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="other">%1$d lần thử</item>
-    </plurals>
-    <string name="pose_detail_best_match">Khớp tốt nhất của bạn</string>
-    <string name="pose_detail_best_match_sub">Vượt qua để mở khóa huy hiệu Hoàn hảo</string>
-    <string name="pose_detail_no_match">Chưa có điểm khớp</string>
-    <string name="pose_detail_no_match_sub">Tạo dáng này để ghi điểm đầu tiên</string>
-    <string name="pose_detail_cta">Bắt đầu tạo dáng</string>
     <string name="settings_preferences">TÙY CHỌN</string>
     <string name="settings_about">GIỚI THIỆU</string>
     <string name="settings_capture_timer">Hẹn giờ chụp</string>
@@ -316,4 +288,15 @@
     <string name="notification_action_not_interested">Không quan tâm</string>
     <string name="settings_pro_card_title">Mở khóa PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Tất cả tư thế cao cấp, hướng dẫn trực tiếp &amp; không quảng cáo</string>
+    <string name="pro_plan_weekly">Hằng tuần</string>
+    <string name="pro_plan_weekly_note">Thanh toán mỗi tuần · Hủy bất cứ lúc nào</string>
+    <string name="pro_price_per_week">%1$s/tuần</string>
+    <string name="pro_save_percent">TIẾT KIỆM %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Gia hạn với giá %1$s/tuần. Hủy bất cứ lúc nào trên Google Play.</string>
+    <string name="pro_renewal_note_yearly">Gia hạn với giá %1$s/năm. Hủy bất cứ lúc nào trên Google Play.</string>
+    <string name="pro_cta_continue">Tiếp tục</string>
+    <string name="pro_cta_access_free">Truy cập miễn phí</string>
+    <string name="pro_badge_one_time">THANH TOÁN MỘT LẦN</string>
+    <string name="pro_price_per_year">%1$s/năm</string>
+    <string name="home_poses_title">Tư thế thịnh hành</string>
 </resources>

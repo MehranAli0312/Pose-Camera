@@ -2,16 +2,18 @@ package com.aipose.camera.posematch.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.models.PoseLockAccess
 import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.models.PoseCategories
+import com.aipose.camera.posematch.ui.models.PoseDifficulty
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseAlbumUiState
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseCategoryCount
-import com.aipose.camera.posematch.ui.models.PoseDifficulty
 import com.aipose.camera.posematch.ui.screens.poseAlbum.models.PoseSort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,8 +35,13 @@ private data class ExploreControls(
 class PoseAlbumViewModel(
     private val poseLibraryUseCase: PoseLibraryUseCase,
     private val favoritePoseUseCase: FavoritePoseUseCase,
-    private val poseLockUseCase: PoseLockUseCase
+    private val poseLockUseCase: PoseLockUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseAlbum) }
+    }
 
     private val _unlockedPoseToOpen = MutableStateFlow<Int?>(null)
     val unlockedPoseToOpen = _unlockedPoseToOpen.asStateFlow()

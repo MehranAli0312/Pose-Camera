@@ -56,7 +56,7 @@ fun SavedScreen(
     LaunchedEffect(unlockedPoseToOpen) {
         val poseId = unlockedPoseToOpen ?: return@LaunchedEffect
         viewModel.consumeUnlockedPose()
-        navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(poseId))
+        navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(poseId))
     }
 
     fun openShot(shot: SavedShot) {
@@ -71,7 +71,7 @@ fun SavedScreen(
             return
         }
         navController.navigateOnClick(
-            NavRoute.PoseDetailScreenRoute.routeFor(saved.pose.id)
+            NavRoute.CameraScreenRoute.routeFor(saved.pose.id)
         )
     }
 

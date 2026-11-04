@@ -39,7 +39,6 @@ import com.aipose.camera.posematch.ui.theme.PoseSheetShape
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.example.ads.AdPlacement
 
-private val TitleSize = 20.sp
 private val MessageSize = 14.sp
 private const val MESSAGE_ALPHA = 0.7f
 
@@ -92,13 +91,6 @@ fun PremiumFeatureBottomSheet(
             )
 
             Text(
-                text = stringResource(R.string.premium_pose_title),
-                style = poseTextStyle(TitleSize, FontWeight.Bold, Color.White),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 22.dp),
-            )
-
-            Text(
                 text = stringResource(R.string.premium_pose_message),
                 style = poseTextStyle(
                     MessageSize,
@@ -106,7 +98,7 @@ fun PremiumFeatureBottomSheet(
                     Color.White.copy(alpha = MESSAGE_ALPHA),
                 ),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
+                modifier = Modifier.padding(top = 22.dp, start = 8.dp, end = 8.dp),
             )
 
             Spacer(modifier = Modifier.height(28.dp))

@@ -1,7 +1,16 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
+import com.aipose.camera.posematch.ads.HomeInlineNative
+import com.aipose.camera.posematch.ads.HomeScreenBottom
+import com.aipose.camera.posematch.ads.LanguageScreenBottom
+import com.aipose.camera.posematch.ads.OnboardScreenBottom
+import com.aipose.camera.posematch.ads.PoseAlbumInlineSecond
+import com.aipose.camera.posematch.ads.SuccessScreenBottom
 import com.example.ads.AdFormat
 import com.example.ads.AdPlacement
+import com.example.ads.AdSlotStyle
+import com.example.ads.BannerStyle
+import com.example.ads.NativeAdDesign
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -59,6 +68,51 @@ class AdsRemoteConfigJsonTest {
     }
 
     @Test
+    fun everySlotUsesTheBannerOrNativeScale() {
+        val config = AdsRemoteConfig(
+            homeScreenBottomAd = BottomAdPosition.BelowBottomBar,
+            homeScreenBottomAdStyle = 4,
+            languageScreenBottomAd = 5,
+            onboardScreenBottomAd = 1,
+            successScreenBottomAd = 3,
+            poseAlbumNativeAd = 5,
+            homeInlineNativeAd = 2,
+        )
+
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM),
+            config.slotStyleFor(AdPlacement.HomeScreenBottom),
+        )
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE),
+            config.slotStyleFor(AdPlacement.LanguageScreenBottom),
+        )
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.ADAPTIVE),
+            config.slotStyleFor(AdPlacement.OnboardScreenBottom),
+        )
+        assertEquals(
+            AdSlotStyle.Native(NativeAdDesign.MEDIUM),
+            config.slotStyleFor(AdPlacement.SuccessScreenBottom),
+        )
+        assertEquals(
+            AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE),
+            config.slotStyleFor(AdPlacement.PoseAlbumInlineSecond),
+        )
+        assertEquals(
+            AdSlotStyle.Native(NativeAdDesign.SMALL),
+            config.slotStyleFor(AdPlacement.HomeInlineNative),
+        )
+    }
+
+    @Test
+    fun homeBottomAdStaysHiddenWhileItsPositionIsOff() {
+        val config = AdsRemoteConfig(homeScreenBottomAdStyle = 4)
+
+        assertEquals(AdSlotStyle.Hidden, config.slotStyleFor(AdPlacement.HomeScreenBottom))
+    }
+
+    @Test
     fun unknownEnumCodeFallsBackAndUnknownKeysAreIgnored() {
         val config = AdsRemoteConfig.fromJsonOrNull(
             """{"home_screen_bottom_ad": 9, "premium_close_position": 7, "first_session_premium": 4, "future_flag": true}""",
@@ -100,6 +154,7 @@ class AdsRemoteConfigJsonTest {
         const val FIREBASE_TEMPLATE = """
         {
           "show_onboarding_screen": true,
+          "onboard_inter_ad_key": false,
           "first_session_premium": 0,
           "returning_session_premium": 0,
           "local_notifications_enabled": true,
@@ -113,9 +168,12 @@ class AdsRemoteConfigJsonTest {
           "photo_save_interstitial": false,
           "inter_load_wait_sec": 5,
           "home_screen_bottom_ad": 0,
+          "home_screen_bottom_ad_style": 2,
           "language_screen_bottom_ad": 0,
           "onboard_screen_bottom_ad": 0,
           "success_screen_bottom_ad": 0,
+          "camera_screen_bottom_ad": 0,
+          "editor_screen_bottom_ad": 0,
           "pose_album_native_ad": 0,
           "home_inline_native_ad": 0,
           "onboarding_full_native_ad": 0,

@@ -17,21 +17,18 @@
     <string name="pro_restore">Aankoop herstellen</string>
     <string name="pro_terms">Voorwaarden</string>
     <string name="pro_privacy">Privacy</string>
-    <string name="pro_title_highlight">alles</string>
-    <string name="pro_benefit_poses">Ontgrendel alle premium-poses</string>
-    <string name="pro_benefit_no_ads">Nooit meer advertenties</string>
-    <string name="pro_benefit_updates">Steun toekomstige updates</string>
+    <string name="pro_title_highlight">beste pose</string>
+    <string name="pro_benefit_poses">Alle premium-poses</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% advertentievrij</string>
+    <string name="pro_benefit_updates">Live cameragidsen</string>
     <string name="pro_plan_lifetime">Levenslang</string>
     <string name="pro_plan_lifetime_note">Eenmalige betaling, voor altijd van jou</string>
     <string name="pro_plan_yearly_note">Eén keer per jaar gefactureerd</string>
-    <string name="pro_cta_lifetime">Levenslang ontgrendelen</string>
-    <string name="pro_cta_yearly">Jaarlijks ontgrendelen</string>
-    <string name="pro_footnote_lifetime">Eenmalige betaling · Geen abonnement</string>
+    <string name="pro_footnote_lifetime">%1$s eenmalig · Geen abonnement</string>
     <string name="pro_plan_yearly">Jaarlijks</string>
     <string name="pro_best_value">BESTE DEAL</string>
     <string name="pro_store_unavailable">Kan abonnementen niet laden. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="pro_retry">Opnieuw proberen</string>
-    <string name="pro_try_for_free">Gratis proberen</string>
     <string name="pro_auto_renewal_note">Abonnement met automatische verlenging. Altijd opzegbaar</string>
     <string name="pro_purchase_success">Aankoop gelukt</string>
     <string name="pro_purchase_already_owned">Je hebt dit abonnement al</string>
@@ -50,8 +47,7 @@
         <item quantity="one">%1$d ster</item>
         <item quantity="other">%1$d sterren</item>
     </plurals>
-    <string name="pro_title">Ontgrendel alles</string>
-    <string name="pro_subtitle">Alle poses, zonder advertenties — voor altijd.</string>
+    <string name="pro_title">Je beste pose begint hier</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d dag gratis, daarna %2$s</item>
         <item quantity="other">%1$d dagen gratis, daarna %2$s</item>
@@ -60,7 +56,6 @@
     <string name="premium_feature_go_premium_title">Neem Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Vergrendelde pose</string>
-    <string name="premium_pose_title">Premium-pose</string>
     <string name="premium_pose_message">Bekijk een korte advertentie om deze pose te ontgrendelen, of neem Premium om ze allemaal te ontgrendelen.</string>
     <string name="premium_pose_watch_ad">Bekijk advertentie om te ontgrendelen</string>
     <string name="nav_home">Home</string>
@@ -87,8 +82,6 @@
     <string name="detail_captured">Gemaakt</string>
     <string name="detail_match_score">Matchscore</string>
     <string name="detail_category">Categorie</string>
-    <string name="camera_sim_title">Studiosimulatiemodus</string>
-    <string name="camera_sim_hint">Verplaats de uitlijning met de versleepbare cirkels hieronder</string>
     <string name="action_reset">Herstellen</string>
     <string name="tab_filters">Filters</string>
     <string name="tab_adjust">Aanpassen</string>
@@ -115,11 +108,7 @@
     <string name="crop_flip_horizontal">Spiegel H</string>
     <string name="crop_flip_vertical">Spiegel V</string>
     <string name="saved_title">Opgeslagen in Collecties</string>
-    <string name="saved_subtitle_best">%1$s · je beste score tot nu toe</string>
-    <string name="saved_subtitle">%1$s · opgeslagen in je galerij</string>
     <string name="saved_place_now">%1$s · Zojuist</string>
-    <string name="saved_shoot_again">Opnieuw fotograferen</string>
-    <string name="saved_view_collections">Bekijk in Collecties</string>
     <string name="action_clear">Wissen</string>
     <string name="imported_pose_title">Galerijreferentie</string>
     <string name="action_back">Terug</string>
@@ -167,14 +156,6 @@
     <string name="perm_open_settings">Instellingen openen</string>
     <string name="capture_untitled">Naamloze foto</string>
     <string name="home_hero_cta">Begin met poseren</string>
-    <string name="home_action_trending">Trending</string>
-    <string name="home_action_couple">Koppel</string>
-    <string name="home_action_sunset">Zonsondergang</string>
-    <string name="home_action_nature">Natuur</string>
-    <string name="home_action_mirror">Spiegel</string>
-    <string name="home_action_beach">Strand</string>
-    <string name="home_action_cafe">Café</string>
-    <string name="home_action_explore">Ontdekken</string>
     <string name="home_progress_title">Jouw voortgang</string>
     <string name="home_progress_view_all">Alles bekijken</string>
     <string name="home_progress_avg_match">Gem. match</string>
@@ -211,16 +192,6 @@
     <string name="saved_empty_shots_sub">Tik op het hartje bij een foto om hem hier te bewaren.</string>
     <string name="saved_empty_poses">Nog geen poses met een hartje</string>
     <string name="saved_empty_poses_sub">Tik op het hartje bij een pose om hem hier te bewaren.</string>
-    <string name="pose_detail_in_set">%1$d in de set</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d poging</item>
-        <item quantity="other">%1$d pogingen</item>
-    </plurals>
-    <string name="pose_detail_best_match">Jouw beste match</string>
-    <string name="pose_detail_best_match_sub">Verbeter hem om de badge Foutloos te ontgrendelen</string>
-    <string name="pose_detail_no_match">Nog geen match</string>
-    <string name="pose_detail_no_match_sub">Neem deze pose aan voor je eerste score</string>
-    <string name="pose_detail_cta">Begin met poseren</string>
     <string name="settings_preferences">VOORKEUREN</string>
     <string name="settings_about">OVER</string>
     <string name="settings_capture_timer">Opnametimer</string>
@@ -324,4 +295,15 @@
     <string name="notification_action_not_interested">Niet geïnteresseerd</string>
     <string name="settings_pro_card_title">Ontgrendel PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Alle premium poses, live gidsen &amp; geen advertenties</string>
+    <string name="pro_plan_weekly">Wekelijks</string>
+    <string name="pro_plan_weekly_note">Wekelijks gefactureerd · Altijd opzegbaar</string>
+    <string name="pro_price_per_week">%1$s/week</string>
+    <string name="pro_save_percent">BESPAAR %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Wordt verlengd voor %1$s/week. Altijd opzegbaar in Google Play.</string>
+    <string name="pro_renewal_note_yearly">Wordt verlengd voor %1$s/jaar. Altijd opzegbaar in Google Play.</string>
+    <string name="pro_cta_continue">Doorgaan</string>
+    <string name="pro_cta_access_free">Gratis toegang</string>
+    <string name="pro_badge_one_time">EENMALIGE BETALING</string>
+    <string name="pro_price_per_year">%1$s/jaar</string>
+    <string name="home_poses_title">Populaire poses</string>
 </resources>

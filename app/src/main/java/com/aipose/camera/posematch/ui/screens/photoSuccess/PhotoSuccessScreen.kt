@@ -85,7 +85,10 @@ fun PhotoSuccessScreen(
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 PhotoSuccessActions(
-                    onShare = { context.shareImageFile(capture.imagePath, shareChooserTitle) },
+                    onShare = {
+                        viewModel.onShared()
+                        context.shareImageFile(capture.imagePath, shareChooserTitle)
+                    },
                     onViewCollections = {
                         navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
                     },

@@ -1,7 +1,14 @@
 package com.aipose.camera.posematch.ui.screens.photoEdit.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -98,8 +106,25 @@ private fun SaveButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val pulse = rememberInfiniteTransition(label = "SaveButtonPulse")
+    val scale = pulse.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.08f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(750, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "scale",
+    )
+
     Box(
         modifier = modifier
+            .graphicsLayer {
+                if (!isSaving) {
+                    scaleX = scale.value
+                    scaleY = scale.value
+                }
+            }
             .widthIn(min = SaveMinWidth)
             .height(SaveHeight)
             .poseGradientPill(
@@ -110,7 +135,7 @@ private fun SaveButton(
                 glossHeight = SaveGlossHeight,
             )
             .bounceClick(enabled = !isSaving, onClick = onClick)
-            .padding(horizontal = 20.dp),
+            .padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center,
     ) {
         if (isSaving) {
@@ -120,11 +145,22 @@ private fun SaveButton(
                 modifier = Modifier.size(SaveProgressSize),
             )
         } else {
-            Text(
-                text = stringResource(R.string.action_save),
-                style = poseTextStyle(14.sp, FontWeight.Bold, Color.White),
-                maxLines = 1,
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_tick),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(Color.White),
+                    modifier = Modifier.size(14.dp),
+                )
+                Text(
+                    text = stringResource(R.string.action_save),
+                    style = poseTextStyle(14.sp, FontWeight.Bold, Color.White),
+                    maxLines = 1,
+                )
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -27,9 +28,10 @@ fun PoseImage(
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
     alpha: Float = 1f,
+    placeholderColor: Color = AppTheme.extendedColors.mediaPlaceholder,
     onImageSizeKnown: ((Size) -> Unit)? = null,
 ) {
-    Box(modifier = modifier.background(AppTheme.extendedColors.mediaPlaceholder)) {
+    Box(modifier = modifier.background(placeholderColor)) {
         if (imagePath.isNotBlank()) {
             val context = LocalContext.current
             val request = remember(context, imagePath) {

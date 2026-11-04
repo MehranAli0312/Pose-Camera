@@ -17,7 +17,6 @@ private object Routes {
     const val START_PREMIUM_SCREEN = "START_PREMIUM_SCREEN"
     const val CAMERA_SCREEN = "CAMERA_SCREEN"
     const val POSE_ALBUM_SCREEN = "POSE_ALBUM_SCREEN"
-    const val POSE_DETAIL_SCREEN = "POSE_DETAIL_SCREEN"
     const val CAPTURE_ALBUM_SCREEN = "CAPTURE_ALBUM_SCREEN"
     const val CAPTURE_DETAIL_SCREEN = "CAPTURE_DETAIL_SCREEN"
     const val PHOTO_EDIT_SCREEN = "PHOTO_EDIT_SCREEN"
@@ -61,11 +60,6 @@ sealed class NavRoute(val route: String) {
         fun routeFor(poseId: Int): String = Routes.CAMERA_SCREEN + "/" + poseId
 
         fun routeWithoutPose(): String = routeFor(NO_POSE_ID)
-    }
-
-    data object PoseDetailScreenRoute :
-        NavRoute(Routes.POSE_DETAIL_SCREEN + "/{" + NavArgs.POSE_ID + "}") {
-        fun routeFor(poseId: Int): String = Routes.POSE_DETAIL_SCREEN + "/" + poseId
     }
 
     data object PoseAlbumScreenRoute :

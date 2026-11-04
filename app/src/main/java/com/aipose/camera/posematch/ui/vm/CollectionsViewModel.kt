@@ -5,10 +5,12 @@ import android.text.format.DateFormat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.PERFECT_MATCH_SCORE
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureAlbum
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureUi
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilter
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,7 +35,8 @@ import java.util.Locale
 class CollectionsViewModel(
     private val context: Context,
     private val captureUseCase: CaptureUseCase,
-    private val captureProgressUseCase: CaptureProgressUseCase
+    private val captureProgressUseCase: CaptureProgressUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
 
     private val _query = MutableStateFlow("")
@@ -130,8 +134,13 @@ class CollectionsViewModel(
         viewModelScope.launch { captureUseCase.toggleFavorite(capture) }
     }
 
+    fun trackEvent(event: AnalyticsEvent) {
+        viewModelScope.launch { trackEventUseCase.track(event) }
+    }
+
     fun delete(capture: Capture) {
         viewModelScope.launch { captureUseCase.delete(capture) }
+        trackEvent(AnalyticsEvent.CaptureDeleted)
     }
 
     private fun Capture.toUi(): CaptureUi = CaptureUi(

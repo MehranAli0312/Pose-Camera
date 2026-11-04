@@ -35,6 +35,7 @@ private val LOCATION_PERMISSIONS = listOf(
 data class CameraPermissionState(
     val isGranted: Boolean,
     val isBlocked: Boolean,
+    val isRequesting: Boolean,
     val request: () -> Unit,
 )
 
@@ -47,6 +48,7 @@ fun rememberCameraPermissionState(): CameraPermissionState {
     var isGranted by remember { mutableStateOf(context.isGranted(CAMERA_PERMISSION)) }
     var isBlocked by remember { mutableStateOf(false) }
     var hasAskedSystem by rememberSaveable { mutableStateOf(false) }
+    var isRequesting by remember { mutableStateOf(false) }
 
     fun refresh() {
         isGranted = context.isGranted(CAMERA_PERMISSION)
@@ -55,11 +57,15 @@ fun rememberCameraPermissionState(): CameraPermissionState {
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { refresh() }
+    ) {
+        isRequesting = false
+        refresh()
+    }
 
     fun launch(permissions: List<String>) {
         if (permissions.isEmpty()) return
         hasAskedSystem = true
+        isRequesting = true
         launcher.launch(permissions.toTypedArray())
     }
 
@@ -78,6 +84,7 @@ fun rememberCameraPermissionState(): CameraPermissionState {
     return CameraPermissionState(
         isGranted = isGranted,
         isBlocked = isBlocked,
+        isRequesting = isRequesting,
         request = {
             when {
                 isGranted -> Unit

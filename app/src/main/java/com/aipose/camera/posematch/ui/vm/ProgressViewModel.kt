@@ -2,20 +2,28 @@ package com.aipose.camera.posematch.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.ProgressPeriod
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.ProgressStatsUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.progress.models.ProgressUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ProgressViewModel(
     captureUseCase: CaptureUseCase,
-    private val progressStatsUseCase: ProgressStatsUseCase
+    private val progressStatsUseCase: ProgressStatsUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.Progress) }
+    }
 
     private val _period = MutableStateFlow(ProgressPeriod.Week)
 

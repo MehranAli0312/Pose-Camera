@@ -1,5 +1,6 @@
 package com.aipose.camera.posematch.ads
 
+import com.example.ads.AdEventListener
 import com.example.ads.AdPlacement
 import com.example.ads.AdSlotStyle
 import com.example.ads.AdSlotStyleProvider
@@ -28,7 +29,7 @@ val appAdsModule = module {
     single { AdsRemoteConfigStore(get()) }
     single { AdLoadingCoverState() }
     single { AppOpenRouteGate() }
-    single { MissedSplashAd() }
+    single { MissedSplashAd(store = get(), commercialBreakAds = get()) }
     single { CommercialBreakAds(adsManager = get(), store = get(), coverState = get()) }
     single { InnerInterstitialAds(adsManager = get(), store = get(), commercialBreakAds = get()) }
     single { RewardedUnlockSession() }
@@ -56,6 +57,8 @@ val appAdsModule = module {
     }
 
     single<AdSlotStyleProvider> { AppAdSlotStyleProvider(get()) }
+
+    single<AdEventListener> { AppAdEventListener(get()) }
 
     single<AdUnitProvider> { RemoteAdUnitProvider(get()) }
 }

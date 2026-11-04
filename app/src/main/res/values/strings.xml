@@ -26,12 +26,11 @@
     <string name="pro_restore">Restore purchase</string>
     <string name="pro_terms">Terms</string>
     <string name="pro_privacy">Privacy</string>
-    <string name="pro_title">Unlock Everything</string>
-    <string name="pro_title_highlight">Everything</string>
-    <string name="pro_subtitle">Get every pose, ad-free — forever.</string>
-    <string name="pro_benefit_poses">Unlock all premium poses</string>
-    <string name="pro_benefit_no_ads">No ads, ever</string>
-    <string name="pro_benefit_updates">Support future updates</string>
+    <string name="pro_title">Your best pose starts here</string>
+    <string name="pro_title_highlight">best pose</string>
+    <string name="pro_benefit_poses">All premium poses</string>
+    <string name="pro_benefit_no_ads" formatted="false">100% ad-free</string>
+    <string name="pro_benefit_updates">Live camera guides</string>
     <string name="pro_plan_lifetime">Lifetime</string>
     <string name="pro_plan_yearly">Yearly</string>
     <string name="pro_plan_lifetime_note">One-time payment, yours forever</string>
@@ -43,10 +42,7 @@
     </plurals>
     <string name="pro_store_unavailable">Couldn\'t load plans. Check your connection and try again.</string>
     <string name="pro_retry">Try Again</string>
-    <string name="pro_cta_lifetime">Unlock Lifetime</string>
-    <string name="pro_cta_yearly">Unlock Yearly</string>
-    <string name="pro_try_for_free">Try for Free</string>
-    <string name="pro_footnote_lifetime">One-time payment · No subscription</string>
+    <string name="pro_footnote_lifetime">%1$s once · No subscription</string>
     <string name="pro_auto_renewal_note">Subscription with auto-renewal. Cancel Anytime</string>
     <string name="pro_purchase_success">Purchase successful</string>
     <string name="pro_purchase_already_owned">You already own this plan</string>
@@ -61,7 +57,6 @@
     <string name="premium_feature_go_premium_title">Go Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Locked pose</string>
-    <string name="premium_pose_title">Premium Pose</string>
     <string name="premium_pose_message">Watch a short ad to unlock this pose, or go premium to unlock them all.</string>
     <string name="premium_pose_watch_ad">Watch ad to unlock</string>
     <string name="nav_home">Home</string>
@@ -88,8 +83,6 @@
     <string name="detail_captured">Captured</string>
     <string name="detail_match_score">Match Score</string>
     <string name="detail_category">Category</string>
-    <string name="camera_sim_title">Studio Simulation Mode</string>
-    <string name="camera_sim_hint">Move alignment using draggable circles below</string>
     <string name="action_reset">Reset</string>
     <string name="tab_filters">Filters</string>
     <string name="tab_adjust">Adjust</string>
@@ -123,11 +116,7 @@
     <string name="crop_flip_horizontal">Flip H</string>
     <string name="crop_flip_vertical">Flip V</string>
     <string name="saved_title">Saved to Collections</string>
-    <string name="saved_subtitle_best">%1$s · your best score yet</string>
-    <string name="saved_subtitle">%1$s · saved to your gallery</string>
     <string name="saved_place_now">%1$s · Just now</string>
-    <string name="saved_shoot_again">Shoot again</string>
-    <string name="saved_view_collections">View in Collections</string>
     <string name="action_clear">Clear</string>
     <string name="imported_pose_title">Gallery Reference</string>
     <string name="action_back">Back</string>
@@ -180,15 +169,8 @@
     <string name="capture_untitled">Untitled frame</string>
     <string name="home_title_pose" translatable="false">Pose</string>
     <string name="home_title_ai" translatable="false">AI</string>
-    <string name="home_hero_cta">Start Posing</string>
-    <string name="home_action_trending">Trending</string>
-    <string name="home_action_couple">Couple</string>
-    <string name="home_action_sunset">Sunset</string>
-    <string name="home_action_nature">Nature</string>
-    <string name="home_action_mirror">Mirror</string>
-    <string name="home_action_beach">Beach</string>
-    <string name="home_action_cafe">Cafe</string>
-    <string name="home_action_explore">Explore</string>
+    <string name="home_hero_cta">TRY POSE</string>
+    <string name="home_poses_title">Trending Poses</string>
     <string name="home_progress_title">Your Progress</string>
     <string name="home_progress_view_all">View All</string>
     <string name="home_progress_avg_match">Avg Match</string>
@@ -227,16 +209,6 @@
     <string name="saved_empty_shots_sub">Tap the heart on a shot to keep it here.</string>
     <string name="saved_empty_poses">No hearted poses yet</string>
     <string name="saved_empty_poses_sub">Tap the heart on a pose to keep it here.</string>
-    <string name="pose_detail_in_set">%1$d in set</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d try</item>
-        <item quantity="other">%1$d tries</item>
-    </plurals>
-    <string name="pose_detail_best_match">Your best match</string>
-    <string name="pose_detail_best_match_sub">Beat it to unlock the Flawless badge</string>
-    <string name="pose_detail_no_match">No match yet</string>
-    <string name="pose_detail_no_match_sub">Strike this pose to set your first score</string>
-    <string name="pose_detail_cta">Start posing</string>
     <string name="settings_preferences">PREFERENCES</string>
     <string name="settings_about">ABOUT</string>
     <string name="settings_capture_timer">Capture timer</string>
@@ -344,4 +316,14 @@
     <string name="notification_action_not_interested">Not interested</string>
     <string name="settings_pro_card_title">Unlock PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">All premium poses, live guides &amp; no ads</string>
+    <string name="pro_plan_weekly">Weekly</string>
+    <string name="pro_plan_weekly_note">Billed weekly · Cancel anytime</string>
+    <string name="pro_price_per_week">%1$s/week</string>
+    <string name="pro_save_percent">SAVE %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Renews at %1$s/week. Cancel anytime in Google Play.</string>
+    <string name="pro_renewal_note_yearly">Renews at %1$s/year. Cancel anytime in Google Play.</string>
+    <string name="pro_cta_continue">Continue</string>
+    <string name="pro_cta_access_free">Access for Free</string>
+    <string name="pro_badge_one_time">ONE-TIME PAYMENT</string>
+    <string name="pro_price_per_year">%1$s/year</string>
 </resources>

@@ -20,7 +20,6 @@ import com.aipose.camera.posematch.ui.screens.photoSuccess.PhotoSuccessScreen
 import com.aipose.camera.posematch.ui.screens.progress.ProgressScreen
 import com.aipose.camera.posematch.ui.screens.achievements.AchievementsScreen
 import com.aipose.camera.posematch.ui.screens.poseAlbum.PoseAlbumScreen
-import com.aipose.camera.posematch.ui.screens.poseDetail.PoseDetailScreen
 import com.aipose.camera.posematch.ui.screens.pro.PremiumScreen
 import com.aipose.camera.posematch.ui.screens.saved.SavedScreen
 import com.aipose.camera.posematch.ui.screens.settings.SettingScreen
@@ -42,7 +41,6 @@ fun DashboardNavGraph(
         addProScreen(navController, this)
         addCameraScreen(navController, this)
         addPoseAlbumScreen(navController, this)
-        addPoseDetailScreen(navController, this)
         addCaptureAlbumScreen(navController, this)
         addCaptureDetailScreen(navController, this)
         addPhotoEditScreen(navController, this)
@@ -148,20 +146,6 @@ private fun addPoseAlbumScreen(
         PoseAlbumScreen(
             navController = navController,
             category = backStackEntry.arguments?.getString(NavArgs.CATEGORY).orEmpty(),
-        )
-    }
-}
-
-private fun addPoseDetailScreen(
-    navController: NavHostController, navGraphBuilder: NavGraphBuilder
-) {
-    navGraphBuilder.addScreenWithTransitions(
-        route = NavRoute.PoseDetailScreenRoute.route,
-        arguments = listOf(navArgument(NavArgs.POSE_ID) { type = NavType.IntType }),
-    ) { backStackEntry ->
-        PoseDetailScreen(
-            navController = navController,
-            poseId = backStackEntry.arguments?.getInt(NavArgs.POSE_ID) ?: 0,
         )
     }
 }

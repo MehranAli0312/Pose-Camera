@@ -24,12 +24,12 @@ import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
-import com.aipose.camera.posematch.ui.screens.pro.components.ProBenefitsCard
 import com.aipose.camera.posematch.ui.screens.pro.components.ProBottomCta
+import com.aipose.camera.posematch.ui.screens.pro.components.ProFeatureRow
 import com.aipose.camera.posematch.ui.screens.pro.components.ProHeader
+import com.aipose.camera.posematch.ui.screens.pro.components.ProHero
 import com.aipose.camera.posematch.ui.screens.pro.components.ProPlanSelector
 import com.aipose.camera.posematch.ui.screens.pro.components.ProTopBar
-import com.aipose.camera.posematch.ui.screens.pro.components.ProTopBarHeight
 import com.aipose.camera.posematch.ui.screens.pro.components.proEventMessage
 import com.aipose.camera.posematch.ui.screens.pro.components.proPaywallBackground
 import com.aipose.camera.posematch.ui.vm.ProViewModel
@@ -52,6 +52,10 @@ fun PremiumScreen(
     val uriHandler = LocalUriHandler.current
     val activity = getActivity()
     val currentOnPurchased by rememberUpdatedState(onPurchased)
+    val closePaywall = {
+        viewModel.onClosed()
+        onClose()
+    }
 
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
@@ -61,7 +65,7 @@ fun PremiumScreen(
     }
 
     BackHandler {
-        if (state.canClose) onClose()
+        if (state.canClose) closePaywall()
     }
 
     Column(
@@ -79,26 +83,32 @@ fun PremiumScreen(
                     .padding(horizontal = PaywallGutter),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(Modifier.height(ProTopBarHeight + 22.dp))
+                Spacer(Modifier.height(16.dp))
+
+                ProHero()
+
+                Spacer(Modifier.height(16.dp))
 
                 ProHeader()
 
-                Spacer(Modifier.height(19.dp))
+                Spacer(Modifier.height(16.dp))
 
-                ProBenefitsCard()
+                ProFeatureRow()
 
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(28.dp))
 
                 ProPlanSelector(
                     state = state.plans,
                     onSelectPlan = viewModel::selectPlan,
                 )
+
+                Spacer(Modifier.height(8.dp))
             }
 
             ProTopBar(
                 closeSecondsRemaining = state.closeSecondsRemaining,
                 closePosition = state.closePosition,
-                onClose = onClose,
+                onClose = closePaywall,
                 modifier = Modifier.safeTopSystemBarsPadding(),
             )
         }
@@ -115,8 +125,8 @@ fun PremiumScreen(
             modifier = Modifier.padding(
                 start = PaywallGutter,
                 end = PaywallGutter,
-                top = 28.dp,
-                bottom = 24.dp,
+                top = 16.dp,
+                bottom = 16.dp,
             ),
         )
     }

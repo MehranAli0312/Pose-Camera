@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
 import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
 import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedPose
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedShot
 import com.aipose.camera.posematch.ui.screens.saved.models.SavedSort
@@ -28,8 +30,13 @@ class SavedViewModel(
     private val captureUseCase: CaptureUseCase,
     private val favoritePoseUseCase: FavoritePoseUseCase,
     private val poseLockUseCase: PoseLockUseCase,
-    poseLibraryUseCase: PoseLibraryUseCase
+    poseLibraryUseCase: PoseLibraryUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.Saved) }
+    }
 
     private val _lockedPose = MutableStateFlow<Pose?>(null)
     val lockedPose = _lockedPose.asStateFlow()

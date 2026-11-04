@@ -1,5 +1,7 @@
 package com.aipose.camera.posematch.ui.firebaseRemote
 
+import com.aipose.camera.posematch.ads.CameraScreenBottom
+import com.aipose.camera.posematch.ads.EditorScreenBottom
 import com.aipose.camera.posematch.ads.HomeInlineNative
 import com.aipose.camera.posematch.ads.HomeScreenBottom
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
@@ -29,12 +31,18 @@ data class AdsRemoteConfig(
     val splashInterstitial: Boolean = false,
     @SerialName("home_screen_bottom_ad")
     val homeScreenBottomAd: BottomAdPosition = BottomAdPosition.Off,
+    @SerialName("home_screen_bottom_ad_style")
+    val homeScreenBottomAdStyle: Int = DEFAULT_HOME_SCREEN_BOTTOM_AD_STYLE,
     @SerialName("language_screen_bottom_ad")
     val languageScreenBottomAd: Int = AdRemoteStyles.OFF,
     @SerialName("onboard_screen_bottom_ad")
     val onboardScreenBottomAd: Int = AdRemoteStyles.OFF,
     @SerialName("success_screen_bottom_ad")
     val successScreenBottomAd: Int = AdRemoteStyles.OFF,
+    @SerialName("camera_screen_bottom_ad")
+    val cameraScreenBottomAd: Int = AdRemoteStyles.OFF,
+    @SerialName("editor_screen_bottom_ad")
+    val editorScreenBottomAd: Int = AdRemoteStyles.OFF,
     @SerialName("pose_album_native_ad")
     val poseAlbumNativeAd: Int = AdRemoteStyles.OFF,
     @SerialName("home_inline_native_ad")
@@ -63,6 +71,8 @@ data class AdsRemoteConfig(
     val premiumClosePosition: PremiumCloseButtonPosition = PremiumCloseButtonPosition.Right,
     @SerialName("show_onboarding_screen")
     val showOnboardingScreen: Boolean = true,
+    @SerialName("onboard_inter_ad_key")
+    val onboardInterAd: Boolean = false,
     @SerialName("first_session_premium")
     val firstSessionPremium: FirstSessionPremium = FirstSessionPremium.Off,
     @SerialName("returning_session_premium")
@@ -83,7 +93,7 @@ data class AdsRemoteConfig(
             if (homeScreenBottomAd == BottomAdPosition.Off) {
                 AdSlotStyle.Hidden
             } else {
-                AdSlotStyle.Native(NativeAdDesign.SMALL)
+                AdRemoteStyles.bannerOrNative(homeScreenBottomAdStyle)
             }
         AdPlacement.LanguageScreenBottom ->
             AdRemoteStyles.bannerOrNative(languageScreenBottomAd)
@@ -94,11 +104,17 @@ data class AdsRemoteConfig(
         AdPlacement.SuccessScreenBottom ->
             AdRemoteStyles.bannerOrNative(successScreenBottomAd)
 
+        AdPlacement.CameraScreenBottom ->
+            AdRemoteStyles.bannerOrNative(cameraScreenBottomAd)
+
+        AdPlacement.EditorScreenBottom ->
+            AdRemoteStyles.bannerOrNative(editorScreenBottomAd)
+
         AdPlacement.PoseAlbumInlineFirst,
         AdPlacement.PoseAlbumInlineSecond,
-        -> AdRemoteStyles.native(poseAlbumNativeAd)
+        -> AdRemoteStyles.bannerOrNative(poseAlbumNativeAd)
 
-        AdPlacement.HomeInlineNative -> AdRemoteStyles.native(homeInlineNativeAd)
+        AdPlacement.HomeInlineNative -> AdRemoteStyles.bannerOrNative(homeInlineNativeAd)
 
         AdPlacement.OnboardingFullScreenNative ->
             if (onboardingNativeAd == OnboardingNativeAdPosition.Off) {
@@ -133,6 +149,7 @@ data class AdsRemoteConfig(
         const val DEFAULT_APP_OPEN_LOAD_TIMEOUT_SECONDS = 8L
         const val DEFAULT_SPLASH_AD_MAX_WAIT_SECONDS = 12L
         const val DEFAULT_INTER_LOAD_WAIT_SECONDS = 5L
+        const val DEFAULT_HOME_SCREEN_BOTTOM_AD_STYLE = 2
         private const val MAX_PREMIUM_CLOSE_DELAY_SECONDS = 30L
         private const val MIN_AD_WAIT_SECONDS = 1L
         private const val MAX_APP_OPEN_LOAD_TIMEOUT_SECONDS = 20L

@@ -17,21 +17,18 @@
     <string name="pro_restore">Restaurer l\'achat</string>
     <string name="pro_terms">Conditions</string>
     <string name="pro_privacy">Confidentialité</string>
-    <string name="pro_title_highlight">Tout</string>
-    <string name="pro_benefit_poses">Débloquez toutes les poses premium</string>
-    <string name="pro_benefit_no_ads">Plus jamais de pub</string>
-    <string name="pro_benefit_updates">Soutenez les futures mises à jour</string>
+    <string name="pro_title_highlight">meilleure pose</string>
+    <string name="pro_benefit_poses">Toutes les poses premium</string>
+    <string name="pro_benefit_no_ads" formatted="false">100 % sans pub</string>
+    <string name="pro_benefit_updates">Guides caméra en direct</string>
     <string name="pro_plan_lifetime">À vie</string>
     <string name="pro_plan_lifetime_note">Paiement unique, à vous pour toujours</string>
     <string name="pro_plan_yearly_note">Facturé une fois par an</string>
-    <string name="pro_cta_lifetime">Débloquer à vie</string>
-    <string name="pro_cta_yearly">Débloquer l\'offre annuelle</string>
-    <string name="pro_footnote_lifetime">Paiement unique · Sans abonnement</string>
+    <string name="pro_footnote_lifetime">%1$s une fois · Sans abonnement</string>
     <string name="pro_plan_yearly">Annuel</string>
     <string name="pro_best_value">MEILLEURE OFFRE</string>
     <string name="pro_store_unavailable">Impossible de charger les offres. Vérifiez votre connexion et réessayez.</string>
     <string name="pro_retry">Réessayer</string>
-    <string name="pro_try_for_free">Essayer gratuitement</string>
     <string name="pro_auto_renewal_note">Abonnement à renouvellement automatique. Résiliable à tout moment</string>
     <string name="pro_purchase_success">Achat réussi</string>
     <string name="pro_purchase_already_owned">Vous possédez déjà cette offre</string>
@@ -48,19 +45,19 @@
     <string name="rate_us_premium_dismiss">Plus tard</string>
     <plurals name="rate_us_premium_star">
         <item quantity="one">%1$d étoile</item>
+        <item quantity="many">%1$d étoiles</item>
         <item quantity="other">%1$d étoiles</item>
     </plurals>
-    <string name="pro_title">Tout débloquer</string>
-    <string name="pro_subtitle">Toutes les poses, sans pub — pour toujours.</string>
+    <string name="pro_title">Ta meilleure pose commence ici</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d jour gratuit, puis %2$s</item>
+        <item quantity="many">%1$d jours gratuits, puis %2$s</item>
         <item quantity="other">%1$d jours gratuits, puis %2$s</item>
     </plurals>
     <string name="premium_feature_free_access_loading">Chargement de la pub…</string>
     <string name="premium_feature_go_premium_title">Passer à Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Pose verrouillée</string>
-    <string name="premium_pose_title">Pose premium</string>
     <string name="premium_pose_message">Regardez une courte pub pour débloquer cette pose, ou passez à Premium pour toutes les débloquer.</string>
     <string name="premium_pose_watch_ad">Regarder une pub pour débloquer</string>
     <string name="nav_home">Accueil</string>
@@ -87,8 +84,6 @@
     <string name="detail_captured">Prise le</string>
     <string name="detail_match_score">Score de correspondance</string>
     <string name="detail_category">Catégorie</string>
-    <string name="camera_sim_title">Mode simulation studio</string>
-    <string name="camera_sim_hint">Déplacez l\'alignement avec les cercles ci-dessous</string>
     <string name="action_reset">Réinitialiser</string>
     <string name="tab_filters">Filtres</string>
     <string name="tab_adjust">Réglages</string>
@@ -115,11 +110,7 @@
     <string name="crop_flip_horizontal">Miroir H</string>
     <string name="crop_flip_vertical">Miroir V</string>
     <string name="saved_title">Enregistrée dans Collections</string>
-    <string name="saved_subtitle_best">%1$s · votre meilleur score</string>
-    <string name="saved_subtitle">%1$s · enregistrée dans votre galerie</string>
     <string name="saved_place_now">%1$s · À l\'instant</string>
-    <string name="saved_shoot_again">Reprendre une photo</string>
-    <string name="saved_view_collections">Voir dans Collections</string>
     <string name="action_clear">Effacer</string>
     <string name="imported_pose_title">Référence de la galerie</string>
     <string name="action_back">Retour</string>
@@ -167,14 +158,6 @@
     <string name="perm_open_settings">Ouvrir les paramètres</string>
     <string name="capture_untitled">Photo sans titre</string>
     <string name="home_hero_cta">Commencer à poser</string>
-    <string name="home_action_trending">Tendances</string>
-    <string name="home_action_couple">Couple</string>
-    <string name="home_action_sunset">Coucher de soleil</string>
-    <string name="home_action_nature">Nature</string>
-    <string name="home_action_mirror">Miroir</string>
-    <string name="home_action_beach">Plage</string>
-    <string name="home_action_cafe">Café</string>
-    <string name="home_action_explore">Explorer</string>
     <string name="home_progress_title">Votre progression</string>
     <string name="home_progress_view_all">Tout voir</string>
     <string name="home_progress_avg_match">Score moyen</string>
@@ -211,16 +194,6 @@
     <string name="saved_empty_shots_sub">Touchez le cœur d\'une photo pour la garder ici.</string>
     <string name="saved_empty_poses">Aucune pose aimée pour l\'instant</string>
     <string name="saved_empty_poses_sub">Touchez le cœur d\'une pose pour la garder ici.</string>
-    <string name="pose_detail_in_set">%1$d dans la série</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d essai</item>
-        <item quantity="other">%1$d essais</item>
-    </plurals>
-    <string name="pose_detail_best_match">Votre meilleur score</string>
-    <string name="pose_detail_best_match_sub">Battez-le pour débloquer le badge Sans faute</string>
-    <string name="pose_detail_no_match">Pas encore de score</string>
-    <string name="pose_detail_no_match_sub">Prenez cette pose pour obtenir votre premier score</string>
-    <string name="pose_detail_cta">Commencer à poser</string>
     <string name="settings_preferences">PRÉFÉRENCES</string>
     <string name="settings_about">À PROPOS</string>
     <string name="settings_capture_timer">Retardateur</string>
@@ -253,10 +226,12 @@
     <string name="album_stat_best">MEILLEUR</string>
     <plurals name="collections_perfect_title">
         <item quantity="one">%1$d photo parfaite</item>
+        <item quantity="many">%1$d photos parfaites</item>
         <item quantity="other">%1$d photos parfaites</item>
     </plurals>
     <plurals name="collections_perfect_subtitle">
         <item quantity="one">Vous avez obtenu %1$d%%+ sur %2$d pose cette semaine</item>
+        <item quantity="many">Vous avez obtenu %1$d%%+ sur %2$d poses cette semaine</item>
         <item quantity="other">Vous avez obtenu %1$d%%+ sur %2$d poses cette semaine</item>
     </plurals>
     <string name="progress_title">Votre progression</string>
@@ -281,10 +256,12 @@
     <string name="achievements_title">Succès</string>
     <plurals name="achievements_streak_title">
         <item quantity="one">%1$d jour d\'affilée</item>
+        <item quantity="many">%1$d jours d\'affilée</item>
         <item quantity="other">%1$d jours d\'affilée</item>
     </plurals>
     <plurals name="achievements_personal_best">
         <item quantity="one">Record personnel : %1$d jour</item>
+        <item quantity="many">Record personnel : %1$d jours</item>
         <item quantity="other">Record personnel : %1$d jours</item>
     </plurals>
     <string name="achievements_badges_label">BADGES · %1$d SUR %2$d</string>
@@ -292,6 +269,7 @@
     <string name="achievements_next_goal">Prochain : %1$d jours d\'affilée</string>
     <plurals name="achievements_next_hint">
         <item quantity="one">Photographiez encore %1$d jour pour débloquer le badge</item>
+        <item quantity="many">Photographiez encore %1$d jours pour débloquer le badge</item>
         <item quantity="other">Photographiez encore %1$d jours pour débloquer le badge</item>
     </plurals>
     <string name="achievements_badge_first_shot">Première photo</string>
@@ -324,4 +302,15 @@
     <string name="notification_action_not_interested">Pas intéressé</string>
     <string name="settings_pro_card_title">Débloquez PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">Toutes les poses premium, guides en direct et zéro pub</string>
+    <string name="pro_plan_weekly">Hebdomadaire</string>
+    <string name="pro_plan_weekly_note">Facturé chaque semaine · Résiliable à tout moment</string>
+    <string name="pro_price_per_week">%1$s/semaine</string>
+    <string name="pro_save_percent">ÉCONOMISEZ %1$d%%</string>
+    <string name="pro_renewal_note_weekly">Renouvelé à %1$s/semaine. Résiliable à tout moment sur Google Play.</string>
+    <string name="pro_renewal_note_yearly">Renouvelé à %1$s/an. Résiliable à tout moment sur Google Play.</string>
+    <string name="pro_cta_continue">Continuer</string>
+    <string name="pro_cta_access_free">Accéder gratuitement</string>
+    <string name="pro_badge_one_time">PAIEMENT UNIQUE</string>
+    <string name="pro_price_per_year">%1$s/an</string>
+    <string name="home_poses_title">Poses tendance</string>
 </resources>

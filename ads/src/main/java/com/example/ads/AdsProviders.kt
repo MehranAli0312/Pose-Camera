@@ -11,6 +11,10 @@ fun interface AdUnitProvider {
     }
 }
 
+fun interface AdEventListener {
+    fun onAdEvent(event: AdEvent)
+}
+
 fun interface ProStatusProvider {
     fun proStatus(): StateFlow<ProStatus>
 }

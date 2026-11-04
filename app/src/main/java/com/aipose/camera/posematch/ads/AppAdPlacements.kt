@@ -40,3 +40,9 @@ val AdPlacement.Companion.PremiumRewarded: AdPlacement
 
 val AdPlacement.Companion.PhotoSaveInterstitial: AdPlacement
     get() = AdPlacement("photo_save_interstitial")
+
+val AdPlacement.Companion.CameraScreenBottom: AdPlacement
+    get() = AdPlacement("camera_screen_bottom")
+
+val AdPlacement.Companion.EditorScreenBottom: AdPlacement
+    get() = AdPlacement("editor_screen_bottom")

@@ -14,6 +14,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 internal class NativeAdController(
     private val gate: AdGate,
+    private val reporter: AdEventReporter,
     private val log: AdsLog,
 ) {
 
@@ -94,11 +95,14 @@ internal class NativeAdController(
                 object : NativeAdLoaderCallback {
                     override fun onNativeAdLoaded(nativeAd: NativeAd) {
                         log.d("Native loaded for ${placement.id}")
+                        nativeAd.adEventCallback = reporter.nativeCallback(placement)
+                        reporter.loadResult(loaded = true, AdFormat.NATIVE, placement)
                         settle(nativeAd)
                     }
 
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         log.w("Native failed for ${placement.id}: ${adError.message}")
+                        reporter.loadResult(loaded = false, AdFormat.NATIVE, placement)
                         settle(null)
                     }
                 },

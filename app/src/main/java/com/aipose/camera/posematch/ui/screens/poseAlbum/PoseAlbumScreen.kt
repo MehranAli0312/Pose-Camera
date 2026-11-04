@@ -73,7 +73,7 @@ fun PoseAlbumScreen(
     LaunchedEffect(unlockedPoseToOpen) {
         val poseId = unlockedPoseToOpen ?: return@LaunchedEffect
         viewModel.consumeUnlockedPose()
-        navController.navigateOnClick(NavRoute.PoseDetailScreenRoute.routeFor(poseId))
+        navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(poseId))
     }
 
     val content = uiState as? PoseAlbumUiState.Content
@@ -157,7 +157,7 @@ fun PoseAlbumScreen(
                                     viewModel.showLockedPose(pose)
                                 } else {
                                     navController.navigateOnClick(
-                                        NavRoute.PoseDetailScreenRoute.routeFor(pose.id)
+                                        NavRoute.CameraScreenRoute.routeFor(pose.id)
                                     )
                                 }
                             },

@@ -2,8 +2,10 @@ package com.aipose.camera.posematch.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
+import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.photoSuccess.models.PhotoSuccessUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,8 +14,13 @@ import kotlinx.coroutines.launch
 
 class PhotoSuccessViewModel(
     private val captureUseCase: CaptureUseCase,
-    private val captureProgressUseCase: CaptureProgressUseCase
+    private val captureProgressUseCase: CaptureProgressUseCase,
+    private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PhotoSuccess) }
+    }
 
     private val _uiState = MutableStateFlow<PhotoSuccessUiState>(PhotoSuccessUiState.Loading)
     val uiState = _uiState.asStateFlow()
@@ -35,5 +42,9 @@ class PhotoSuccessViewModel(
                 )
             }
         }
+    }
+
+    fun onShared() {
+        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.CaptureShared) }
     }
 }

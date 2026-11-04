@@ -24,20 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.common.click
 import com.aipose.camera.posematch.ui.common.poseGradientPill
 import com.aipose.camera.posematch.ui.common.poseRaisedSurface
 import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
 import com.aipose.camera.posematch.ui.theme.PoseTextBright
-import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
 private val ButtonHeight = 56.dp
 private val ButtonCorner = 28.dp
 private val ButtonShape = RoundedCornerShape(ButtonCorner)
 private val ButtonGlyphSize = 20.dp
-private val ChevronWidth = 8.dp
-private val ChevronHeight = 10.dp
 private const val SHARE_BORDER_ALPHA = 0.14f
 
 @Composable
@@ -77,26 +73,6 @@ internal fun PhotoSuccessActions(
                         cornerRadius = ButtonCorner,
                         glossHeight = 25.dp,
                     ),
-            )
-        }
-        Row(
-            modifier = Modifier
-                .padding(top = 24.dp)
-                .click(onClick = onViewCollections)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.saved_view_collections),
-                style = poseTextStyle(12.sp, FontWeight.Bold, PoseVioletLight),
-                maxLines = 1,
-            )
-            Image(
-                painter = painterResource(R.drawable.ic_pose_chevron_end),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(PoseVioletLight),
-                modifier = Modifier.size(width = ChevronWidth, height = ChevronHeight),
             )
         }
     }

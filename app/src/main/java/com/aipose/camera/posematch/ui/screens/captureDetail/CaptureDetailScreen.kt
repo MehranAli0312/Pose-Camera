@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,21 +25,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.common.PoseDeleteDialog
 import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.common.shareImageFile
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
+import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
+import com.aipose.camera.posematch.ui.models.badgeForCategory
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailActions
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailMatchBadge
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailSheet
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailTopBar
 import com.aipose.camera.posematch.ui.screens.captureDetail.models.PhotoDetailInfo
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureUi
-import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
-import com.aipose.camera.posematch.ui.models.badgeForCategory
 import com.aipose.camera.posematch.ui.theme.PoseNightBottom
 import com.aipose.camera.posematch.ui.theme.PosePhotoScrim
 import com.aipose.camera.posematch.ui.vm.CollectionsViewModel
@@ -60,6 +62,8 @@ fun CaptureDetailScreen(
     val context = LocalContext.current
     var isDeleteDialogVisible by remember { mutableStateOf(false) }
     val shareChooserTitle = stringResource(R.string.share_frame)
+
+    LaunchedEffect(captureId) { viewModel.trackEvent(AnalyticsEvent.CaptureDetail) }
 
     val capture = captureUi ?: return
 
@@ -96,7 +100,10 @@ fun CaptureDetailScreen(
                 infos = photoDetailInfos(capture),
             ) {
                 PhotoDetailActions(
-                    onShare = { context.shareImageFile(capture.capture.imagePath, shareChooserTitle) },
+                    onShare = {
+                        viewModel.trackEvent(AnalyticsEvent.CaptureShared)
+                        context.shareImageFile(capture.capture.imagePath, shareChooserTitle)
+                    },
                     onReshoot = {
                         val route = capture.capture.poseId?.let(NavRoute.CameraScreenRoute::routeFor)
                             ?: NavRoute.CameraScreenRoute.routeWithoutPose()

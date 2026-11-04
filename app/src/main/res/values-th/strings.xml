@@ -17,21 +17,18 @@
     <string name="pro_restore">กู้คืนการซื้อ</string>
     <string name="pro_terms">ข้อกำหนด</string>
     <string name="pro_privacy">ความเป็นส่วนตัว</string>
-    <string name="pro_title_highlight">ทุกอย่าง</string>
-    <string name="pro_benefit_poses">ปลดล็อกท่าโพสพรีเมียมทั้งหมด</string>
-    <string name="pro_benefit_no_ads">ไม่มีโฆษณาตลอดไป</string>
-    <string name="pro_benefit_updates">สนับสนุนการอัปเดตในอนาคต</string>
+    <string name="pro_title_highlight">ท่าโพสที่ดีที่สุด</string>
+    <string name="pro_benefit_poses">ท่าโพสพรีเมียมทั้งหมด</string>
+    <string name="pro_benefit_no_ads" formatted="false">ไม่มีโฆษณา 100%</string>
+    <string name="pro_benefit_updates">คำแนะนำกล้องแบบสด</string>
     <string name="pro_plan_lifetime">ตลอดชีพ</string>
     <string name="pro_plan_lifetime_note">จ่ายครั้งเดียว เป็นของคุณตลอดไป</string>
     <string name="pro_plan_yearly_note">เรียกเก็บปีละครั้ง</string>
-    <string name="pro_cta_lifetime">ปลดล็อกตลอดชีพ</string>
-    <string name="pro_cta_yearly">ปลดล็อกรายปี</string>
-    <string name="pro_footnote_lifetime">จ่ายครั้งเดียว · ไม่มีการสมัครสมาชิก</string>
+    <string name="pro_footnote_lifetime">%1$s ครั้งเดียว · ไม่มีการสมัครสมาชิก</string>
     <string name="pro_plan_yearly">รายปี</string>
     <string name="pro_best_value">คุ้มที่สุด</string>
     <string name="pro_store_unavailable">โหลดแพ็กเกจไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
     <string name="pro_retry">ลองอีกครั้ง</string>
-    <string name="pro_try_for_free">ลองใช้ฟรี</string>
     <string name="pro_auto_renewal_note">สมัครสมาชิกต่ออายุอัตโนมัติ ยกเลิกได้ทุกเมื่อ</string>
     <string name="pro_purchase_success">ซื้อสำเร็จ</string>
     <string name="pro_purchase_already_owned">คุณมีแผนนี้อยู่แล้ว</string>
@@ -49,8 +46,7 @@
     <plurals name="rate_us_premium_star">
         <item quantity="other">%1$d ดาว</item>
     </plurals>
-    <string name="pro_title">ปลดล็อกทุกอย่าง</string>
-    <string name="pro_subtitle">ได้ทุกท่าโพส ไม่มีโฆษณา — ตลอดไป</string>
+    <string name="pro_title">ท่าโพสที่ดีที่สุดของคุณเริ่มที่นี่</string>
     <plurals name="pro_trial_then_price">
         <item quantity="other">ฟรี %1$d วัน จากนั้น %2$s</item>
     </plurals>
@@ -58,7 +54,6 @@
     <string name="premium_feature_go_premium_title">อัปเกรดเป็น Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">ท่าโพสที่ล็อกอยู่</string>
-    <string name="premium_pose_title">ท่าโพสพรีเมียม</string>
     <string name="premium_pose_message">ดูโฆษณาสั้นๆ เพื่อปลดล็อกท่าโพสนี้ หรืออัปเกรดเป็น Premium เพื่อปลดล็อกทั้งหมด</string>
     <string name="premium_pose_watch_ad">ดูโฆษณาเพื่อปลดล็อก</string>
     <string name="nav_home">หน้าแรก</string>
@@ -85,8 +80,6 @@
     <string name="detail_captured">ถ่ายเมื่อ</string>
     <string name="detail_match_score">คะแนนความตรง</string>
     <string name="detail_category">หมวดหมู่</string>
-    <string name="camera_sim_title">โหมดจำลองสตูดิโอ</string>
-    <string name="camera_sim_hint">ย้ายการจัดแนวด้วยวงกลมที่ลากได้ด้านล่าง</string>
     <string name="action_reset">รีเซ็ต</string>
     <string name="tab_filters">ฟิลเตอร์</string>
     <string name="tab_adjust">ปรับแต่ง</string>
@@ -113,11 +106,7 @@
     <string name="crop_flip_horizontal">พลิกแนวนอน</string>
     <string name="crop_flip_vertical">พลิกแนวตั้ง</string>
     <string name="saved_title">บันทึกลงคอลเลกชันแล้ว</string>
-    <string name="saved_subtitle_best">%1$s · คะแนนดีที่สุดของคุณ</string>
-    <string name="saved_subtitle">%1$s · บันทึกลงแกลเลอรีแล้ว</string>
     <string name="saved_place_now">%1$s · เมื่อสักครู่</string>
-    <string name="saved_shoot_again">ถ่ายอีกครั้ง</string>
-    <string name="saved_view_collections">ดูในคอลเลกชัน</string>
     <string name="action_clear">ล้าง</string>
     <string name="imported_pose_title">ภาพอ้างอิงจากแกลเลอรี</string>
     <string name="action_back">กลับ</string>
@@ -165,14 +154,6 @@
     <string name="perm_open_settings">เปิดการตั้งค่า</string>
     <string name="capture_untitled">ภาพไม่มีชื่อ</string>
     <string name="home_hero_cta">เริ่มโพส</string>
-    <string name="home_action_trending">มาแรง</string>
-    <string name="home_action_couple">คู่รัก</string>
-    <string name="home_action_sunset">พระอาทิตย์ตก</string>
-    <string name="home_action_nature">ธรรมชาติ</string>
-    <string name="home_action_mirror">กระจก</string>
-    <string name="home_action_beach">ชายหาด</string>
-    <string name="home_action_cafe">คาเฟ่</string>
-    <string name="home_action_explore">สำรวจ</string>
     <string name="home_progress_title">ความคืบหน้าของคุณ</string>
     <string name="home_progress_view_all">ดูทั้งหมด</string>
     <string name="home_progress_avg_match">ความตรงเฉลี่ย</string>
@@ -209,15 +190,6 @@
     <string name="saved_empty_shots_sub">แตะหัวใจบนภาพเพื่อเก็บไว้ที่นี่</string>
     <string name="saved_empty_poses">ยังไม่มีท่าโพสที่กดหัวใจ</string>
     <string name="saved_empty_poses_sub">แตะหัวใจบนท่าโพสเพื่อเก็บไว้ที่นี่</string>
-    <string name="pose_detail_in_set">%1$d ในชุด</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="other">ลอง %1$d ครั้ง</item>
-    </plurals>
-    <string name="pose_detail_best_match">ความตรงดีที่สุดของคุณ</string>
-    <string name="pose_detail_best_match_sub">ทำให้ได้มากกว่านี้เพื่อปลดล็อกเหรียญไร้ที่ติ</string>
-    <string name="pose_detail_no_match">ยังไม่มีคะแนน</string>
-    <string name="pose_detail_no_match_sub">ทำท่านี้เพื่อบันทึกคะแนนแรกของคุณ</string>
-    <string name="pose_detail_cta">เริ่มโพส</string>
     <string name="settings_preferences">การกำหนดค่า</string>
     <string name="settings_about">เกี่ยวกับ</string>
     <string name="settings_capture_timer">ตั้งเวลาถ่าย</string>
@@ -316,4 +288,15 @@
     <string name="notification_action_not_interested">ไม่สนใจ</string>
     <string name="settings_pro_card_title">ปลดล็อก PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">ท่าโพสพรีเมียมทั้งหมด คำแนะนำสด และไม่มีโฆษณา</string>
+    <string name="pro_plan_weekly">รายสัปดาห์</string>
+    <string name="pro_plan_weekly_note">เรียกเก็บทุกสัปดาห์ · ยกเลิกได้ทุกเมื่อ</string>
+    <string name="pro_price_per_week">%1$s/สัปดาห์</string>
+    <string name="pro_save_percent">ประหยัด %1$d%%</string>
+    <string name="pro_renewal_note_weekly">ต่ออายุในราคา %1$s/สัปดาห์ ยกเลิกได้ทุกเมื่อใน Google Play</string>
+    <string name="pro_renewal_note_yearly">ต่ออายุในราคา %1$s/ปี ยกเลิกได้ทุกเมื่อใน Google Play</string>
+    <string name="pro_cta_continue">ดำเนินการต่อ</string>
+    <string name="pro_cta_access_free">เข้าใช้ฟรี</string>
+    <string name="pro_badge_one_time">จ่ายครั้งเดียว</string>
+    <string name="pro_price_per_year">%1$s/ปี</string>
+    <string name="home_poses_title">ท่าโพสยอดนิยม</string>
 </resources>

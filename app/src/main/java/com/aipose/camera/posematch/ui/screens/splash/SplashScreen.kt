@@ -104,6 +104,7 @@ fun SplashScreen(
 
         val showPremium = viewModel.showPremiumAfterSplash(isFirstSession)
         SplashAdLog.d("decision: showPremium=$showPremium")
+        val hasMissedAdRetry = isFirstSession || showPremium
         val finishSplash = {
             val nextStep =
                 if (isFirstSession) StartPremiumNextStep.Language else StartPremiumNextStep.Home
@@ -122,13 +123,13 @@ fun SplashScreen(
                 continueWhenShown = true,
                 onResult = { result ->
                     SplashAdLog.d("show result=$result wasShown=${result.wasShown}")
-                    missedSplashAd.onSplashAdResult(ads, result.wasShown, isFirstSession)
+                    missedSplashAd.onSplashAdResult(ads, result.wasShown, hasMissedAdRetry, isFirstSession)
                 },
                 onDone = finishSplash,
             )
         } else {
             SplashAdLog.d("MISSED: no splash ad available, navigating without ad")
-            missedSplashAd.onSplashAdResult(ads, wasShown = false, isFirstSession = isFirstSession)
+            missedSplashAd.onSplashAdResult(ads, wasShown = false, hasRetryScreen = hasMissedAdRetry, isFirstSession = isFirstSession)
             finishSplash()
         }
     }

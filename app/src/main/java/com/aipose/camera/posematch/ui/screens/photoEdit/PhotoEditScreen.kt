@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.EditorScreenBottom
 import com.aipose.camera.posematch.ads.SuccessScreenBottom
 import com.aipose.camera.posematch.ads.rememberPhotoSaveInterstitial
 import com.aipose.camera.posematch.ads.rememberScreenAds
@@ -31,6 +32,7 @@ import com.aipose.camera.posematch.ui.screens.photoEdit.components.PhotoEditWork
 import com.aipose.camera.posematch.ui.screens.photoEdit.models.PhotoEditTab
 import com.aipose.camera.posematch.ui.vm.PhotoEditViewModel
 import com.example.ads.AdPlacement
+import com.example.ads.compose.AdsSlot
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -121,6 +123,8 @@ fun PhotoEditScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            AdsSlot(placement = AdPlacement.EditorScreenBottom)
         }
     }
 }

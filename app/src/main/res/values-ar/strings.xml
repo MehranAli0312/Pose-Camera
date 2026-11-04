@@ -17,21 +17,18 @@
     <string name="pro_restore">استعادة الشراء</string>
     <string name="pro_terms">الشروط</string>
     <string name="pro_privacy">الخصوصية</string>
-    <string name="pro_title_highlight">كل شيء</string>
-    <string name="pro_benefit_poses">افتح كل الوضعيات المميزة</string>
-    <string name="pro_benefit_no_ads">بدون إعلانات، أبدًا</string>
-    <string name="pro_benefit_updates">ادعم التحديثات القادمة</string>
+    <string name="pro_title_highlight">أفضل وضعية</string>
+    <string name="pro_benefit_poses">كل الوضعيات المميزة</string>
+    <string name="pro_benefit_no_ads" formatted="false">خالٍ من الإعلانات 100%</string>
+    <string name="pro_benefit_updates">إرشادات الكاميرا المباشرة</string>
     <string name="pro_plan_lifetime">مدى الحياة</string>
     <string name="pro_plan_lifetime_note">دفعة واحدة، ملكك إلى الأبد</string>
     <string name="pro_plan_yearly_note">تُدفع مرة واحدة سنويًا</string>
-    <string name="pro_cta_lifetime">افتح مدى الحياة</string>
-    <string name="pro_cta_yearly">افتح الاشتراك السنوي</string>
-    <string name="pro_footnote_lifetime">دفعة واحدة · بدون اشتراك</string>
+    <string name="pro_footnote_lifetime">%1$s مرة واحدة · بدون اشتراك</string>
     <string name="pro_plan_yearly">سنوي</string>
     <string name="pro_best_value">أفضل قيمة</string>
     <string name="pro_store_unavailable">تعذّر تحميل الخطط. تحقق من اتصالك وحاول مرة أخرى.</string>
     <string name="pro_retry">حاول مرة أخرى</string>
-    <string name="pro_try_for_free">جرّب مجاناً</string>
     <string name="pro_auto_renewal_note">اشتراك يتجدد تلقائياً. يمكنك الإلغاء في أي وقت</string>
     <string name="pro_purchase_success">تم الشراء بنجاح</string>
     <string name="pro_purchase_already_owned">أنت تملك هذه الخطة بالفعل</string>
@@ -54,8 +51,7 @@
         <item quantity="many">%1$d نجمة</item>
         <item quantity="other">%1$d نجمة</item>
     </plurals>
-    <string name="pro_title">افتح كل شيء</string>
-    <string name="pro_subtitle">احصل على كل وضعية، بدون إعلانات — إلى الأبد.</string>
+    <string name="pro_title">أفضل وضعية لك تبدأ هنا</string>
     <plurals name="pro_trial_then_price">
         <item quantity="zero">%1$d يوم مجانًا، ثم %2$s</item>
         <item quantity="one">يوم واحد مجانًا، ثم %2$s</item>
@@ -68,7 +64,6 @@
     <string name="premium_feature_go_premium_title">اشترك في Premium</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">وضعية مقفلة</string>
-    <string name="premium_pose_title">وضعية مميزة</string>
     <string name="premium_pose_message">شاهد إعلانًا قصيرًا لفتح هذه الوضعية، أو اشترك في Premium لفتحها جميعًا.</string>
     <string name="premium_pose_watch_ad">شاهد إعلانًا للفتح</string>
     <string name="nav_home">الرئيسية</string>
@@ -95,8 +90,6 @@
     <string name="detail_captured">تاريخ الالتقاط</string>
     <string name="detail_match_score">نسبة التطابق</string>
     <string name="detail_category">الفئة</string>
-    <string name="camera_sim_title">وضع محاكاة الاستوديو</string>
-    <string name="camera_sim_hint">حرّك المحاذاة باستخدام الدوائر القابلة للسحب أدناه</string>
     <string name="action_reset">إعادة ضبط</string>
     <string name="tab_filters">الفلاتر</string>
     <string name="tab_adjust">ضبط</string>
@@ -123,11 +116,7 @@
     <string name="crop_flip_horizontal">قلب أفقي</string>
     <string name="crop_flip_vertical">قلب عمودي</string>
     <string name="saved_title">تم الحفظ في المجموعات</string>
-    <string name="saved_subtitle_best">%1$s · أفضل نتيجة لك حتى الآن</string>
-    <string name="saved_subtitle">%1$s · تم الحفظ في معرضك</string>
     <string name="saved_place_now">%1$s · الآن</string>
-    <string name="saved_shoot_again">التقط مرة أخرى</string>
-    <string name="saved_view_collections">عرض في المجموعات</string>
     <string name="action_clear">مسح</string>
     <string name="imported_pose_title">مرجع من المعرض</string>
     <string name="action_back">رجوع</string>
@@ -175,14 +164,6 @@
     <string name="perm_open_settings">افتح الإعدادات</string>
     <string name="capture_untitled">صورة بلا عنوان</string>
     <string name="home_hero_cta">ابدأ الوضعيات</string>
-    <string name="home_action_trending">الأكثر رواجًا</string>
-    <string name="home_action_couple">أزواج</string>
-    <string name="home_action_sunset">غروب</string>
-    <string name="home_action_nature">طبيعة</string>
-    <string name="home_action_mirror">مرآة</string>
-    <string name="home_action_beach">شاطئ</string>
-    <string name="home_action_cafe">مقهى</string>
-    <string name="home_action_explore">استكشاف</string>
     <string name="home_progress_title">تقدّمك</string>
     <string name="home_progress_view_all">عرض الكل</string>
     <string name="home_progress_avg_match">متوسط التطابق</string>
@@ -219,20 +200,6 @@
     <string name="saved_empty_shots_sub">اضغط على القلب في أي صورة للاحتفاظ بها هنا.</string>
     <string name="saved_empty_poses">لا توجد وضعيات مفضلة بعد</string>
     <string name="saved_empty_poses_sub">اضغط على القلب في أي وضعية للاحتفاظ بها هنا.</string>
-    <string name="pose_detail_in_set">%1$d في المجموعة</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="zero">%1$d محاولة</item>
-        <item quantity="one">محاولة واحدة</item>
-        <item quantity="two">محاولتان</item>
-        <item quantity="few">%1$d محاولات</item>
-        <item quantity="many">%1$d محاولة</item>
-        <item quantity="other">%1$d محاولة</item>
-    </plurals>
-    <string name="pose_detail_best_match">أفضل تطابق لك</string>
-    <string name="pose_detail_best_match_sub">تجاوزه لفتح شارة \"بلا أخطاء\"</string>
-    <string name="pose_detail_no_match">لا يوجد تطابق بعد</string>
-    <string name="pose_detail_no_match_sub">جرّب هذه الوضعية لتسجيل أول نتيجة لك</string>
-    <string name="pose_detail_cta">ابدأ الوضعية</string>
     <string name="settings_preferences">التفضيلات</string>
     <string name="settings_about">حول</string>
     <string name="settings_capture_timer">مؤقت الالتقاط</string>
@@ -356,4 +323,15 @@
     <string name="notification_action_not_interested">غير مهتم</string>
     <string name="settings_pro_card_title">افتح PoseAI Pro</string>
     <string name="settings_pro_card_subtitle">كل الوضعيات المميزة، إرشادات مباشرة وبدون إعلانات</string>
+    <string name="pro_plan_weekly">أسبوعي</string>
+    <string name="pro_plan_weekly_note">تُدفع أسبوعيًا · يمكنك الإلغاء في أي وقت</string>
+    <string name="pro_price_per_week">%1$s/أسبوع</string>
+    <string name="pro_save_percent">وفّر %1$d%%</string>
+    <string name="pro_renewal_note_weekly">يتجدد بسعر %1$s أسبوعيًا. يمكنك الإلغاء في أي وقت من Google Play.</string>
+    <string name="pro_renewal_note_yearly">يتجدد بسعر %1$s سنويًا. يمكنك الإلغاء في أي وقت من Google Play.</string>
+    <string name="pro_cta_continue">متابعة</string>
+    <string name="pro_cta_access_free">احصل على الوصول مجانًا</string>
+    <string name="pro_badge_one_time">دفعة واحدة</string>
+    <string name="pro_price_per_year">%1$s/سنة</string>
+    <string name="home_poses_title">الوضعيات الرائجة</string>
 </resources>

@@ -7,7 +7,7 @@ sealed interface ProPlansState {
     data object Loading : ProPlansState
 
     data class Content(
-        val plans: List<PremiumPlan>,
+        val options: List<ProPlanOption>,
         val selectedPlan: PremiumPlan,
         val recommendedPlan: PremiumPlan?,
         val isPurchasing: Boolean,

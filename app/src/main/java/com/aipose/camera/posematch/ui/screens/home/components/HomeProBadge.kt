@@ -44,7 +44,7 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import kotlinx.coroutines.delay
 
 private val BadgeHeight = 30.dp
-private val CrownSize = 17.dp
+private val CrownSize = 24.dp
 private val LabelSize = 12.5.sp
 
 private const val LETTER_DELAY_MS = 220L

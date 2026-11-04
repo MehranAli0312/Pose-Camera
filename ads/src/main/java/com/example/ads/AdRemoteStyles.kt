@@ -15,6 +15,8 @@ object AdRemoteStyles {
         1 -> AdSlotStyle.Banner(BannerStyle.ADAPTIVE)
         2 -> AdSlotStyle.Native(NativeAdDesign.SMALL)
         3 -> AdSlotStyle.Native(NativeAdDesign.MEDIUM)
+        4 -> AdSlotStyle.Banner(BannerStyle.COLLAPSIBLE_BOTTOM)
+        5 -> AdSlotStyle.Banner(BannerStyle.MEDIUM_RECTANGLE)
         else -> AdSlotStyle.Hidden
     }
 

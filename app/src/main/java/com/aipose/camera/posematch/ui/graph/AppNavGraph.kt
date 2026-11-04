@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navArgument
+import com.aipose.camera.posematch.ads.rememberMissedSplashAd
 import com.aipose.camera.posematch.ui.common.addScreenWithTransitions
 import com.aipose.camera.posematch.ui.screens.DashboardScreen
 import com.aipose.camera.posematch.ui.screens.language.LocalizeScreen
@@ -70,11 +71,14 @@ private fun addStartPremiumScreen(
         val nextStep = StartPremiumNextStep.entries.firstOrNull {
             it.name == backStackEntry.arguments?.getString(NavArgs.NEXT_STEP)
         } ?: StartPremiumNextStep.Home
+        val missedSplashAd = rememberMissedSplashAd()
         PremiumScreen(
             navController = navParentController,
             onClose = {
                 if (navParentController.acceptNavigationClick()) {
-                    continueAfterStartPremium(navParentController, nextStep)
+                    missedSplashAd.showThen {
+                        continueAfterStartPremium(navParentController, nextStep)
+                    }
                 }
             },
         )

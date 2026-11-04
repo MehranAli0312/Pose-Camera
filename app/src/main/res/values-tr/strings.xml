@@ -17,21 +17,18 @@
     <string name="pro_restore">Satın alımı geri yükle</string>
     <string name="pro_terms">Koşullar</string>
     <string name="pro_privacy">Gizlilik</string>
-    <string name="pro_title_highlight">Her şeyin</string>
-    <string name="pro_benefit_poses">Tüm premium pozların kilidini aç</string>
-    <string name="pro_benefit_no_ads">Asla reklam yok</string>
-    <string name="pro_benefit_updates">Gelecek güncellemeleri destekle</string>
+    <string name="pro_title_highlight">En iyi pozun</string>
+    <string name="pro_benefit_poses">Tüm premium pozlar</string>
+    <string name="pro_benefit_no_ads" formatted="false">%100 reklamsız</string>
+    <string name="pro_benefit_updates">Canlı kamera rehberleri</string>
     <string name="pro_plan_lifetime">Ömür boyu</string>
     <string name="pro_plan_lifetime_note">Tek seferlik ödeme, sonsuza dek sizin</string>
     <string name="pro_plan_yearly_note">Yılda bir kez faturalandırılır</string>
-    <string name="pro_cta_lifetime">Ömür boyu kilidini aç</string>
-    <string name="pro_cta_yearly">Yıllık kilidini aç</string>
-    <string name="pro_footnote_lifetime">Tek seferlik ödeme · Abonelik yok</string>
+    <string name="pro_footnote_lifetime">%1$s tek sefer · Abonelik yok</string>
     <string name="pro_plan_yearly">Yıllık</string>
     <string name="pro_best_value">EN İYİ FİYAT</string>
     <string name="pro_store_unavailable">Planlar yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="pro_retry">Tekrar Dene</string>
-    <string name="pro_try_for_free">Ücretsiz dene</string>
     <string name="pro_auto_renewal_note">Otomatik yenilenen abonelik. İstediğiniz zaman iptal edin</string>
     <string name="pro_purchase_success">Satın alma başarılı</string>
     <string name="pro_purchase_already_owned">Bu plana zaten sahipsiniz</string>
@@ -50,8 +47,7 @@
         <item quantity="one">%1$d yıldız</item>
         <item quantity="other">%1$d yıldız</item>
     </plurals>
-    <string name="pro_title">Her şeyin kilidini aç</string>
-    <string name="pro_subtitle">Tüm pozlar, reklamsız — sonsuza dek.</string>
+    <string name="pro_title">En iyi pozun burada başlıyor</string>
     <plurals name="pro_trial_then_price">
         <item quantity="one">%1$d gün ücretsiz, ardından %2$s</item>
         <item quantity="other">%1$d gün ücretsiz, ardından %2$s</item>
@@ -60,7 +56,6 @@
     <string name="premium_feature_go_premium_title">Premium\'a geç</string>
     <string name="pose_pro_badge">PRO</string>
     <string name="pose_locked">Kilitli poz</string>
-    <string name="premium_pose_title">Premium poz</string>
     <string name="premium_pose_message">Bu pozun kilidini açmak için kısa bir reklam izle ya da hepsinin kilidini açmak için Premium\'a geç.</string>
     <string name="premium_pose_watch_ad">Kilidi açmak için reklam izle</string>
     <string name="nav_home">Ana sayfa</string>
@@ -87,8 +82,6 @@
     <string name="detail_captured">Çekildi</string>
     <string name="detail_match_score">Eşleşme puanı</string>
     <string name="detail_category">Kategori</string>
-    <string name="camera_sim_title">Stüdyo simülasyon modu</string>
-    <string name="camera_sim_hint">Aşağıdaki sürüklenebilir dairelerle hizalamayı taşı</string>
     <string name="action_reset">Sıfırla</string>
     <string name="tab_filters">Filtreler</string>
     <string name="tab_adjust">Ayarla</string>
@@ -115,11 +108,7 @@
     <string name="crop_flip_horizontal">Yatay çevir</string>
     <string name="crop_flip_vertical">Dikey çevir</string>
     <string name="saved_title">Koleksiyonlara kaydedildi</string>
-    <string name="saved_subtitle_best">%1$s · şimdiye kadarki en iyi puanın</string>
-    <string name="saved_subtitle">%1$s · galerine kaydedildi</string>
     <string name="saved_place_now">%1$s · Az önce</string>
-    <string name="saved_shoot_again">Tekrar çek</string>
-    <string name="saved_view_collections">Koleksiyonlarda gör</string>
     <string name="action_clear">Temizle</string>
     <string name="imported_pose_title">Galeri referansı</string>
     <string name="action_back">Geri</string>
@@ -167,14 +156,6 @@
     <string name="perm_open_settings">Ayarları Aç</string>
     <string name="capture_untitled">Adsız fotoğraf</string>
     <string name="home_hero_cta">Poz vermeye başla</string>
-    <string name="home_action_trending">Trendler</string>
-    <string name="home_action_couple">Çift</string>
-    <string name="home_action_sunset">Gün batımı</string>
-    <string name="home_action_nature">Doğa</string>
-    <string name="home_action_mirror">Ayna</string>
-    <string name="home_action_beach">Plaj</string>
-    <string name="home_action_cafe">Kafe</string>
-    <string name="home_action_explore">Keşfet</string>
     <string name="home_progress_title">İlerlemen</string>
     <string name="home_progress_view_all">Tümünü gör</string>
     <string name="home_progress_avg_match">Ort. eşleşme</string>
@@ -211,16 +192,6 @@
     <string name="saved_empty_shots_sub">Burada tutmak için bir çekimdeki kalbe dokun.</string>
     <string name="saved_empty_poses">Henüz kalp verilen poz yok</string>
     <string name="saved_empty_poses_sub">Burada tutmak için bir pozdaki kalbe dokun.</string>
-    <string name="pose_detail_in_set">Sette %1$d</string>
-    <plurals name="pose_detail_tries">
-        <item quantity="one">%1$d deneme</item>
-        <item quantity="other">%1$d deneme</item>
-    </plurals>
-    <string name="pose_detail_best_match">En iyi eşleşmen</string>
-    <string name="pose_detail_best_match_sub">Kusursuz rozetini açmak için bunu geç</string>
-    <string name="pose_detail_no_match">Henüz eşleşme yok</string>
-    <string name="pose_detail_no_match_sub">İlk puanını almak için bu pozu ver</string>
-    <string name="pose_detail_cta">Poz vermeye başla</string>
     <string name="settings_preferences">TERCİHLER</string>
     <string name="settings_about">HAKKINDA</string>
     <string name="settings_capture_timer">Çekim zamanlayıcısı</string>
@@ -324,4 +295,15 @@
     <string name="notification_action_not_interested">İlgilenmiyorum</string>
     <string name="settings_pro_card_title">PoseAI Pro\'nun kilidini aç</string>
     <string name="settings_pro_card_subtitle">Tüm premium pozlar, canlı rehberler ve reklamsız</string>
+    <string name="pro_plan_weekly">Haftalık</string>
+    <string name="pro_plan_weekly_note">Haftalık faturalandırılır · İstediğiniz zaman iptal edin</string>
+    <string name="pro_price_per_week">%1$s/hafta</string>
+    <string name="pro_save_percent">%%%1$d TASARRUF</string>
+    <string name="pro_renewal_note_weekly">%1$s/hafta ücretle yenilenir. Google Play\'den istediğiniz zaman iptal edin.</string>
+    <string name="pro_renewal_note_yearly">%1$s/yıl ücretle yenilenir. Google Play\'den istediğiniz zaman iptal edin.</string>
+    <string name="pro_cta_continue">Devam et</string>
+    <string name="pro_cta_access_free">Ücretsiz eriş</string>
+    <string name="pro_badge_one_time">TEK SEFERLİK ÖDEME</string>
+    <string name="pro_price_per_year">%1$s/yıl</string>
+    <string name="home_poses_title">Trend Pozlar</string>
 </resources>

@@ -26,6 +26,7 @@ internal class FullScreenAdController(
     private val scope: CoroutineScope,
     private val gate: AdGate,
     private val state: AdsRuntimeState,
+    private val reporter: AdEventReporter,
     private val log: AdsLog,
 ) {
 
@@ -78,9 +79,11 @@ internal class FullScreenAdController(
             onDemandAds[key] = OnDemandAd(ad, SystemClock.elapsedRealtime())
             log.d("$format loaded on demand for ${placement.id}")
         }
+        reporter.loadResult(loaded = ad != null, format, placement)
         ad != null
     } catch (error: Throwable) {
         log.w("$format on-demand load failed for ${placement.id}", error)
+        reporter.loadResult(loaded = false, format, placement)
         false
     }
 
@@ -123,7 +126,7 @@ internal class FullScreenAdController(
 
         return try {
             val ad = onDemandAds.remove(key)?.ad ?: return AdResult.NotAvailable
-            present(ad, activity, format, onShown)
+            present(ad, activity, format, placement, onShown)
         } catch (error: Throwable) {
             log.w("Showing on-demand $format failed", error)
             AdResult.Failed(error.message ?: "unknown error")
@@ -183,6 +186,7 @@ internal class FullScreenAdController(
         ad: Any,
         activity: Activity,
         format: AdFormat,
+        placement: AdPlacement,
         onShown: (() -> Unit)? = null,
     ): AdResult {
         if (!withContext(Dispatchers.Main.immediate) { canPresentOn(activity) }) {
@@ -195,6 +199,7 @@ internal class FullScreenAdController(
                 state.markFullScreenVisible()
                 onShown?.invoke()
             },
+            onEvent = { type -> reporter.report(type, format, placement) },
         )
 
         when (ad) {
@@ -202,6 +207,7 @@ internal class FullScreenAdController(
                 ad.adEventCallback = object : InterstitialAdEventCallback {
                     override fun onAdShowedFullScreenContent() = presentation.onShown()
                     override fun onAdDismissedFullScreenContent() = presentation.onDismissed()
+                    override fun onAdClicked() = presentation.onClicked()
                     override fun onAdFailedToShowFullScreenContent(
                         fullScreenContentError: FullScreenContentError,
                     ) = presentation.onFailed(fullScreenContentError.message)
@@ -213,6 +219,7 @@ internal class FullScreenAdController(
                 ad.adEventCallback = object : RewardedAdEventCallback {
                     override fun onAdShowedFullScreenContent() = presentation.onShown()
                     override fun onAdDismissedFullScreenContent() = presentation.onDismissed()
+                    override fun onAdClicked() = presentation.onClicked()
                     override fun onAdFailedToShowFullScreenContent(
                         fullScreenContentError: FullScreenContentError,
                     ) = presentation.onFailed(fullScreenContentError.message)
@@ -226,6 +233,7 @@ internal class FullScreenAdController(
                 ad.adEventCallback = object : AppOpenAdEventCallback {
                     override fun onAdShowedFullScreenContent() = presentation.onShown()
                     override fun onAdDismissedFullScreenContent() = presentation.onDismissed()
+                    override fun onAdClicked() = presentation.onClicked()
                     override fun onAdFailedToShowFullScreenContent(
                         fullScreenContentError: FullScreenContentError,
                     ) = presentation.onFailed(fullScreenContentError.message)
