@@ -21,15 +21,29 @@ internal class AdEventReporter(
     fun loadResult(loaded: Boolean, format: AdFormat, placement: AdPlacement) =
         report(if (loaded) AdEventType.LOADED else AdEventType.LOAD_FAILED, format, placement)
 
-    fun bannerCallback(placement: AdPlacement): BannerAdEventCallback =
+    fun bannerCallback(
+        placement: AdPlacement,
+        onImpression: () -> Unit = {},
+    ): BannerAdEventCallback =
         object : BannerAdEventCallback {
-            override fun onAdImpression() = report(AdEventType.SHOWN, AdFormat.BANNER, placement)
+            override fun onAdImpression() {
+                onImpression()
+                report(AdEventType.SHOWN, AdFormat.BANNER, placement)
+            }
+
             override fun onAdClicked() = report(AdEventType.CLICKED, AdFormat.BANNER, placement)
         }
 
-    fun nativeCallback(placement: AdPlacement): NativeAdEventCallback =
+    fun nativeCallback(
+        placement: AdPlacement,
+        onImpression: () -> Unit = {},
+    ): NativeAdEventCallback =
         object : NativeAdEventCallback {
-            override fun onAdImpression() = report(AdEventType.SHOWN, AdFormat.NATIVE, placement)
+            override fun onAdImpression() {
+                onImpression()
+                report(AdEventType.SHOWN, AdFormat.NATIVE, placement)
+            }
+
             override fun onAdClicked() = report(AdEventType.CLICKED, AdFormat.NATIVE, placement)
         }
 }

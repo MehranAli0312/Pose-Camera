@@ -18,10 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.HomeScreenBottom
-import com.aipose.camera.posematch.ads.LanguageScreenBottom
+import com.aipose.camera.posematch.ads.LaunchFlowAds
 import com.aipose.camera.posematch.ads.MissedSplashAd
-import com.aipose.camera.posematch.ads.OnboardScreenBottom
 import com.aipose.camera.posematch.ads.SplashAdLog
 import com.aipose.camera.posematch.ads.SplashAdTiming
 import com.aipose.camera.posematch.ads.SplashFullscreen
@@ -31,13 +29,14 @@ import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
-import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
+import com.aipose.camera.posematch.ui.screens.launch.navigateLaunchFlow
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchSession
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchStep
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashAmbientBackground
 import com.aipose.camera.posematch.ui.screens.splash.components.SplashProgressBar
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
 import com.example.ads.AdPlacement
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.androidx.compose.koinViewModel
@@ -55,12 +54,14 @@ fun SplashScreen(
     val network: NetworkConnectivityChecker = koinInject()
     val remoteConfigStore: AdsRemoteConfigStore = koinInject()
     val missedSplashAd: MissedSplashAd = koinInject()
+    val launchFlowAds: LaunchFlowAds = koinInject()
 
     BackHandler(enabled = true) {}
 
     LaunchedEffect(Unit) { viewModel.trackScreen(AnalyticsEvent.Splash) }
 
     LaunchedEffect(Unit) {
+        remoteConfigStore.restore()
         val startedAt = SystemClock.elapsedRealtime()
         val maxWaitMs = remoteConfigStore.current.splashAdMaxWaitMs
         val waitLimitMs = maxWaitMs + SplashAdTiming.AD_LOAD_GRACE_MS
@@ -80,40 +81,32 @@ fun SplashScreen(
             )
         }
 
-        val isFirstSession = viewModel.getSplashStatus().first()
-        SplashAdLog.d("isFirstSession=$isFirstSession")
-
         val prepared = withTimeoutOrNull(waitLimitMs.milliseconds) {
             prepareSplashAd(ads, appFirebaseRemote, network)
         }
         if (prepared == null) SplashAdLog.d("prepare: TIMEOUT after ${waitLimitMs}ms")
+
+        val launchFlow = viewModel.launchFlow()
+        val isFirstSession = launchFlow.session == LaunchSession.First
+        SplashAdLog.d("isFirstSession=$isFirstSession")
 
         val elapsed = SystemClock.elapsedRealtime() - startedAt
         if (elapsed < SplashAdTiming.MIN_SPLASH_MS) {
             delay((SplashAdTiming.MIN_SPLASH_MS - elapsed).milliseconds)
         }
 
-        if (isFirstSession) ads.preload(AdPlacement.LanguageScreenBottom)
-        ads.preload(AdPlacement.HomeScreenBottom)
-        if (isFirstSession && remoteConfigStore.current.showOnboardingScreen) {
-            ads.preload(AdPlacement.OnboardScreenBottom)
+        if (isFirstSession && launchFlow.steps.none { step ->
+                step == LaunchStep.Language || step == LaunchStep.Onboarding
+            }
+        ) {
+            viewModel.writeSplashStatus()
         }
 
         creep.cancel()
         progress.animateTo(1f, tween(SplashAdTiming.PROGRESS_FINISH_MS))
 
-        val showPremium = viewModel.showPremiumAfterSplash(isFirstSession)
-        SplashAdLog.d("decision: showPremium=$showPremium")
-        val hasMissedAdRetry = isFirstSession || showPremium
-        val finishSplash = {
-            val nextStep =
-                if (isFirstSession) StartPremiumNextStep.Language else StartPremiumNextStep.Home
-            when {
-                showPremium -> goToStartPremium(navParentController, nextStep)
-                isFirstSession -> goToLanguage(navParentController)
-                else -> goToHome(navParentController)
-            }
-        }
+        val hasMissedAdRetry = launchFlow.steps.firstOrNull() != LaunchStep.Home
+        val finishSplash = { navParentController.navigateLaunchFlow(launchFlow, launchFlowAds) }
 
         val availableAtDecision = ads.isLoadedOnDemand(AdPlacement.SplashFullscreen)
         SplashAdLog.d("decision: availableAtDecision=$availableAtDecision")

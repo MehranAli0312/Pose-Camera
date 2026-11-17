@@ -8,7 +8,6 @@ import com.aipose.camera.posematch.ui.vm.CollectionsViewModel
 import com.aipose.camera.posematch.ui.vm.ProgressViewModel
 import com.aipose.camera.posematch.ui.vm.AchievementsViewModel
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
-import com.aipose.camera.posematch.ui.vm.SavedViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.PhotoEditViewModel
 import com.aipose.camera.posematch.ui.vm.PhotoSuccessViewModel
@@ -35,10 +34,9 @@ val viewModelModule = module {
             trackEventUseCase = get(),
         )
     }
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { SavedViewModel(androidContext(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
     viewModel { PoseAlbumViewModel(get(), get(), get(), get()) }
-    viewModel { CollectionsViewModel(androidContext(), get(), get(), get()) }
+    viewModel { CollectionsViewModel(androidContext(), get(), get(), get(), get(), get(), get()) }
     viewModel { CaptureAlbumViewModel(androidContext(), get(), get(), get()) }
     viewModel { PhotoEditViewModel(get(), get(), get(), get()) }
     viewModel { PhotoSuccessViewModel(get(), get(), get()) }

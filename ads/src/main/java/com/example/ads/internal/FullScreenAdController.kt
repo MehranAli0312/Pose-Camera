@@ -3,6 +3,7 @@ package com.example.ads.internal
 import android.app.Activity
 import android.os.SystemClock
 import com.example.ads.AdFormat
+import com.example.ads.AdEventType
 import com.example.ads.AdPlacement
 import com.example.ads.AdResult
 import com.google.android.libraries.ads.mobile.sdk.appopen.AppOpenAd
@@ -39,9 +40,11 @@ internal class FullScreenAdController(
     }
 
     suspend fun awaitOnDemand(format: AdFormat, placement: AdPlacement): Boolean {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return false
-        val key = key(format, adUnitId)
+        val key = key(format)
         if (freshOnDemandAd(key) != null) return true
+        onDemandLoads[key]?.let { inFlight -> return inFlight.await() }
+        if (!canShowNow(format)) return false
+        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return false
         return sharedOnDemandLoad(key, format, adUnitId, placement).await()
     }
 
@@ -88,18 +91,15 @@ internal class FullScreenAdController(
     }
 
     fun isLoadedOnDemand(format: AdFormat, placement: AdPlacement): Boolean {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return false
-        return freshOnDemandAd(key(format, adUnitId)) != null
+        return freshOnDemandAd(key(format)) != null
     }
 
     fun isLoadingOnDemand(format: AdFormat, placement: AdPlacement): Boolean {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return false
-        return onDemandLoads[key(format, adUnitId)]?.isActive == true
+        return onDemandLoads[key(format)]?.isActive == true
     }
 
     suspend fun awaitLoadInFlight(format: AdFormat, placement: AdPlacement): Boolean {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return false
-        val key = key(format, adUnitId)
+        val key = key(format)
         if (freshOnDemandAd(key) != null) return true
         val inFlight = onDemandLoads[key] ?: return false
         return inFlight.await()
@@ -113,10 +113,12 @@ internal class FullScreenAdController(
         placement: AdPlacement,
         onShown: (() -> Unit)? = null,
     ): AdResult {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return AdResult.NotEligible
-
-        val key = key(format, adUnitId)
+        val key = key(format)
         if (freshOnDemandAd(key) == null) return AdResult.NotAvailable
+
+        if (!withContext(Dispatchers.Main.immediate) { canPresentOn(activity) }) {
+            return AdResult.NotEligible
+        }
 
         if (format == AdFormat.INTERSTITIAL && !gate.passesInterstitialFrequency()) {
             return AdResult.NotEligible
@@ -143,11 +145,15 @@ internal class FullScreenAdController(
         loadTimeoutMs: Long? = null,
         onLoadStarted: (() -> Unit)? = null,
     ): AdResult {
-        val adUnitId = gate.resolveRequestableUnit(format, placement) ?: return AdResult.NotEligible
-        val key = key(format, adUnitId)
+        val key = key(format)
         if (freshOnDemandAd(key) == null) {
-            onLoadStarted?.invoke()
-            val load = sharedOnDemandLoad(key, format, adUnitId, placement)
+            val load = onDemandLoads[key] ?: run {
+                if (!canShowNow(format)) return AdResult.NotEligible
+                val adUnitId = gate.resolveRequestableUnit(format, placement)
+                    ?: return AdResult.NotEligible
+                onLoadStarted?.invoke()
+                sharedOnDemandLoad(key, format, adUnitId, placement)
+            }
             val loaded = if (loadTimeoutMs == null) {
                 load.await()
             } else {
@@ -199,7 +205,10 @@ internal class FullScreenAdController(
                 state.markFullScreenVisible()
                 onShown?.invoke()
             },
-            onEvent = { type -> reporter.report(type, format, placement) },
+            onEvent = { type ->
+                if (type == AdEventType.CLICKED) state.markAdClicked()
+                reporter.report(type, format, placement)
+            },
         )
 
         when (ad) {
@@ -260,7 +269,7 @@ internal class FullScreenAdController(
         return null
     }
 
-    private fun key(format: AdFormat, id: String) = "${format.name}:$id"
+    private fun key(format: AdFormat) = format.name
 
     private class OnDemandAd(val ad: Any, val loadedAt: Long)
 

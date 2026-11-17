@@ -34,6 +34,7 @@ internal class DefaultAdsManager(
     private val initializer: SdkInitializer,
     private val consentManager: ConsentManager,
     private val fullScreenAds: FullScreenAdController,
+    private val bannerAds: BannerAdController,
     private val nativeAds: NativeAdController,
     private val preparedSlots: PreparedSlotController,
     private val slotStyles: AdSlotStyleProvider,
@@ -95,9 +96,18 @@ internal class DefaultAdsManager(
     }
 
     override fun preloadFor(placements: List<AdPlacement>) {
-        placements
-            .filter { placement -> styleFor(placement) is AdSlotStyle.Native }
-            .forEach { placement -> scope.launch { nativeAds.preload(placement) } }
+        scope.launch {
+            isReady.first { it }
+            placements.forEach { placement ->
+                when (val style = styleFor(placement)) {
+                    is AdSlotStyle.Banner -> bannerAds.preload(placement, style.style)
+                    is AdSlotStyle.Native -> nativeAds.preload(placement)
+                    is AdSlotStyle.BannerWithNativeBackfill ->
+                        bannerAds.preload(placement, style.style)
+                    AdSlotStyle.Hidden -> Unit
+                }
+            }
+        }
     }
 
     override fun prepareSlot(placement: AdPlacement) {
@@ -187,6 +197,7 @@ internal class DefaultAdsManager(
 
     override fun destroy() {
         fullScreenAds.destroy()
+        bannerAds.destroy()
         nativeAds.destroy()
         preparedSlots.destroy()
     }

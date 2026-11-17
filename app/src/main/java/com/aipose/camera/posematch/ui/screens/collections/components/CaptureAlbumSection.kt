@@ -19,7 +19,6 @@ internal const val ALBUM_PREVIEW_SIZE = 3
 internal fun CaptureAlbumSection(
     album: CaptureAlbum,
     accent: AlbumAccent,
-    onShowAll: () -> Unit,
     onCaptureClick: (CaptureUi) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,7 +32,6 @@ internal fun CaptureAlbumSection(
             locationLabel = album.locationLabel,
             count = album.count,
             accent = accent,
-            onShowAll = onShowAll,
             modifier = Modifier.padding(horizontal = 6.dp),
         )
         Row(

@@ -63,6 +63,10 @@ data class AdsRemoteConfig(
     val photoSaveInterstitial: Boolean = false,
     @SerialName("inter_load_wait_sec")
     val interLoadWaitSeconds: Long = DEFAULT_INTER_LOAD_WAIT_SECONDS,
+    @SerialName("rewarded_load_wait_sec")
+    val rewardedLoadWaitSeconds: Long = DEFAULT_REWARDED_LOAD_WAIT_SECONDS,
+    @SerialName("rewarded_fallback_wait_sec")
+    val rewardedFallbackWaitSeconds: Long = DEFAULT_REWARDED_FALLBACK_WAIT_SECONDS,
     @SerialName("premium_feature_dialog")
     val premiumFeatureDialog: PremiumFeatureDialogMode = PremiumFeatureDialogMode.Off,
     @SerialName("premium_close_delay_sec")
@@ -71,6 +75,8 @@ data class AdsRemoteConfig(
     val premiumClosePosition: PremiumCloseButtonPosition = PremiumCloseButtonPosition.Right,
     @SerialName("show_onboarding_screen")
     val showOnboardingScreen: Boolean = true,
+    @SerialName("language_screen")
+    val languageScreen: LanguageScreenMode = LanguageScreenMode.Off,
     @SerialName("onboard_inter_ad_key")
     val onboardInterAd: Boolean = false,
     @SerialName("first_session_premium")
@@ -148,6 +154,14 @@ data class AdsRemoteConfig(
         get() = splashAdMaxWaitSeconds
             .coerceIn(MIN_AD_WAIT_SECONDS, MAX_SPLASH_AD_WAIT_SECONDS) * MILLIS_PER_SECOND
 
+    val rewardedLoadWaitMs: Long
+        get() = rewardedLoadWaitSeconds
+            .coerceIn(MIN_AD_WAIT_SECONDS, MAX_REWARDED_LOAD_WAIT_SECONDS) * MILLIS_PER_SECOND
+
+    val rewardedFallbackWaitMs: Long
+        get() = rewardedFallbackWaitSeconds
+            .coerceIn(MIN_AD_WAIT_SECONDS, MAX_REWARDED_FALLBACK_WAIT_SECONDS) * MILLIS_PER_SECOND
+
     fun toJson(): String = json.encodeToString(serializer(), this)
 
     companion object {
@@ -156,6 +170,8 @@ data class AdsRemoteConfig(
         const val DEFAULT_APP_OPEN_LOAD_TIMEOUT_SECONDS = 8L
         const val DEFAULT_SPLASH_AD_MAX_WAIT_SECONDS = 12L
         const val DEFAULT_INTER_LOAD_WAIT_SECONDS = 5L
+        const val DEFAULT_REWARDED_LOAD_WAIT_SECONDS = 10L
+        const val DEFAULT_REWARDED_FALLBACK_WAIT_SECONDS = 6L
         const val DEFAULT_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS = 0L
         private const val MAX_PREMIUM_CLOSE_DELAY_SECONDS = 30L
         private const val MAX_ONBOARDING_NATIVE_CLOSE_DELAY_SECONDS = 30L
@@ -163,6 +179,8 @@ data class AdsRemoteConfig(
         private const val MAX_APP_OPEN_LOAD_TIMEOUT_SECONDS = 20L
         private const val MAX_SPLASH_AD_WAIT_SECONDS = 30L
         private const val MAX_INTER_LOAD_WAIT_SECONDS = 15L
+        private const val MAX_REWARDED_LOAD_WAIT_SECONDS = 20L
+        private const val MAX_REWARDED_FALLBACK_WAIT_SECONDS = 15L
         private const val MILLIS_PER_SECOND = 1000L
 
         private val json = Json {

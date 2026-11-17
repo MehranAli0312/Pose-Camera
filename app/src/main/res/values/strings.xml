@@ -59,14 +59,13 @@
     <string name="pose_locked">Locked pose</string>
     <string name="premium_pose_message">Watch a short ad to unlock this pose, or go premium to unlock them all.</string>
     <string name="premium_pose_watch_ad">Watch ad to unlock</string>
-    <string name="nav_home">Home</string>
     <string name="nav_gallery">Collections</string>
     <string name="nav_settings">Settings</string>
     <string name="see_all">See all</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_share">Share</string>
     <string name="action_delete">Delete</string>
-    <string name="action_import">Import</string>
+    <string name="capture_send_to">Send to</string>
     <string name="action_save">Save</string>
     <string name="onboard_title_1">Pick a Pose</string>
     <string name="onboard_title_2">Match the Outline</string>
@@ -95,12 +94,9 @@
     <string name="camera_match_hint_frame">Step into the outline</string>
     <string name="camera_best_score">BEST %1$d%%</string>
     <string name="camera_overlay_opacity">OVERLAY OPACITY</string>
-    <string name="camera_gallery">Gallery</string>
     <string name="camera_shutter">Take photo</string>
-    <string name="camera_change_pose">Change pose</string>
     <string name="camera_flash_auto" translatable="false">A</string>
     <string name="camera_timer_badge" translatable="false">%1$d</string>
-    <string name="camera_no_pose">Free shot</string>
     <string name="edit_match_badge">%1$d%% MATCH</string>
     <string name="edit_look_chip" translatable="false">%1$s · %2$s</string>
     <string name="edit_intensity">INTENSITY</string>
@@ -118,7 +114,6 @@
     <string name="saved_title">Saved to Collections</string>
     <string name="saved_place_now">%1$s · Just now</string>
     <string name="action_clear">Clear</string>
-    <string name="imported_pose_title">Gallery Reference</string>
     <string name="action_back">Back</string>
     <string name="unknown_location">Unknown location</string>
     <string name="score_percent" translatable="false">%1$d%%</string>
@@ -159,7 +154,6 @@
     <string name="crop_four_by_five" translatable="false">4:5</string>
     <string name="crop_sixteen_by_nine" translatable="false">16:9</string>
     <string name="settings_retain_skeleton">Keep pose overlay after shot</string>
-    <string name="toast_reference_failed">Reference alignment loading failed</string>
     <string name="toast_capture_failed">Capture failed</string>
     <string name="perm_camera_title">Camera Permission Needed</string>
     <string name="perm_camera_desc">Allow camera access to take pictures and match your poses.</string>
@@ -169,17 +163,6 @@
     <string name="capture_untitled">Untitled frame</string>
     <string name="home_title_pose" translatable="false">Pose</string>
     <string name="home_title_ai" translatable="false">AI</string>
-    <string name="home_hero_cta">TRY POSE</string>
-    <string name="home_poses_title">Trending Poses</string>
-    <string name="home_progress_title">Your Progress</string>
-    <string name="home_progress_view_all">View All</string>
-    <string name="home_progress_avg_match">Avg Match</string>
-    <string name="home_progress_shots">Shots Taken</string>
-    <string name="home_progress_perfect">Perfect Shots</string>
-    <string name="home_progress_day_goal">Day Goal</string>
-    <string name="home_daily_title">Pose of the Moment</string>
-    <string name="nav_saved">Saved</string>
-    <string name="nav_capture">Open camera</string>
     <string name="onboard_next">Next</string>
     <string name="onboard_lets_go">Let\'s Go</string>
     <string name="onboard_pose_count_badge">%1$d POSES</string>
@@ -196,32 +179,19 @@
     <string name="onboard_match_badge">%1$d%% MATCH</string>
     <string name="onboard_filters_label">FILTERS</string>
     <string name="onboard_saved_label">Saved to Collections</string>
-    <string name="saved_tab_shots">Shots</string>
-    <string name="saved_tab_poses">Poses</string>
-    <string name="saved_pose_meta" translatable="false">%1$s · %2$s</string>
     <string name="saved_add">Save to favourites</string>
     <string name="saved_remove">Remove from favourites</string>
-    <string name="saved_sort_title">Sort saved</string>
     <string name="saved_sort_newest">Newest first</string>
     <string name="saved_sort_highest_match">Highest match</string>
     <string name="saved_sort_name">Name A–Z</string>
-    <string name="saved_empty_shots">No hearted shots yet</string>
-    <string name="saved_empty_shots_sub">Tap the heart on a shot to keep it here.</string>
     <string name="saved_empty_poses">No hearted poses yet</string>
     <string name="saved_empty_poses_sub">Tap the heart on a pose to keep it here.</string>
     <string name="settings_preferences">PREFERENCES</string>
     <string name="settings_about">ABOUT</string>
-    <string name="settings_capture_timer">Capture timer</string>
     <string name="settings_capture_timer_off">Off</string>
     <string name="settings_capture_timer_seconds">%1$d sec</string>
-    <string name="timer_sheet_subtitle">Give yourself time to get into the pose</string>
-    <string name="timer_sheet_hint">Shutter fires %1$ds after you tap</string>
-    <string name="timer_sheet_hint_off">Shutter fires the moment you tap</string>
-    <string name="timer_sheet_apply">Set timer</string>
     <string name="collections_search_hint">Search by place, pose or score</string>
     <string name="collections_stat_shots">SHOTS</string>
-    <string name="collections_stat_places">PLACES</string>
-    <string name="collections_stat_average">AVG MATCH</string>
     <string name="collections_filter_all">All</string>
     <string name="collections_filter_top_match">Top Match</string>
     <string name="collections_filter_recent">Recent</string>
@@ -317,7 +287,7 @@
     <string name="onboard_ad_swipe_to_continue">Swipe to continue</string>
     <string name="onboard_ad_previous_cd">Previous page</string>
     <string name="onboard_ad_next_cd">Next page</string>
-    <string name="settings_pro_card_title">Unlock PoseAI Pro</string>
+    <string name="settings_pro_card_title">Remove ads</string>
     <string name="settings_pro_card_subtitle">All premium poses, live guides &amp; no ads</string>
     <string name="pro_plan_weekly">Weekly</string>
     <string name="pro_plan_weekly_note">Billed weekly · Cancel anytime</string>

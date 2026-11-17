@@ -1,17 +1,15 @@
 package com.aipose.camera.posematch.ui.graph
 
 import android.net.Uri
-import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchFlow
 
 private object Routes {
 
     const val SPLASH_SCREEN = "SPLASH_SCREEN"
-    const val DASH_BOARD_SCREEN = "DASH_BOARD_SCREEN"
     const val LANGUAGE_SCREEN = "LANGUAGE_SCREEN"
     const val ONBOARD_SCREEN = "ONBOARD_SCREEN"
     const val HOME_SCREEN = "HOME_SCREEN"
     const val COLLECTIONS_SCREEN = "COLLECTIONS_SCREEN"
-    const val SAVED_SCREEN = "SAVED_SCREEN"
     const val SETTING_SCREEN = "SETTING_SCREEN"
     const val PRO_SCREEN = "UPGRADE_SCREEN"
     const val START_PREMIUM_SCREEN = "START_PREMIUM_SCREEN"
@@ -30,17 +28,24 @@ object NavArgs {
     const val CATEGORY = "category"
     const val LOCATION_LABEL = "locationLabel"
     const val CAPTURE_ID = "captureId"
-    const val NEXT_STEP = "nextStep"
+    const val LAUNCH_FLOW = "launchFlow"
 }
 
 sealed class NavRoute(val route: String) {
     data object SplashScreenRoute : NavRoute(Routes.SPLASH_SCREEN)
-    data object DashboardScreenRoute : NavRoute(Routes.DASH_BOARD_SCREEN)
-    data object LanguageScreenRoute : NavRoute(Routes.LANGUAGE_SCREEN)
-    data object OnboardScreenRoute : NavRoute(Routes.ONBOARD_SCREEN)
+    data object LanguageScreenRoute : NavRoute(Routes.LANGUAGE_SCREEN) {
+        val launchRoute: String = route + "/{" + NavArgs.LAUNCH_FLOW + "}"
+        fun routeFor(launchFlow: LaunchFlow): String =
+            route + "/" + Uri.encode(launchFlow.encode())
+    }
+    data object OnboardScreenRoute : NavRoute(
+        Routes.ONBOARD_SCREEN + "/{" + NavArgs.LAUNCH_FLOW + "}",
+    ) {
+        fun routeFor(launchFlow: LaunchFlow): String =
+            Routes.ONBOARD_SCREEN + "/" + Uri.encode(launchFlow.encode())
+    }
     data object HomeScreenRoute : NavRoute(Routes.HOME_SCREEN)
     data object CollectionsScreenRoute : NavRoute(Routes.COLLECTIONS_SCREEN)
-    data object SavedScreenRoute : NavRoute(Routes.SAVED_SCREEN)
     data object SettingScreenRoute : NavRoute(Routes.SETTING_SCREEN)
     data object ProScreenRoute : NavRoute(Routes.PRO_SCREEN)
     data object PhotoEditScreenRoute : NavRoute(Routes.PHOTO_EDIT_SCREEN)
@@ -48,9 +53,9 @@ sealed class NavRoute(val route: String) {
     data object AchievementsScreenRoute : NavRoute(Routes.ACHIEVEMENTS_SCREEN)
 
     data object StartPremiumScreenRoute :
-        NavRoute(Routes.START_PREMIUM_SCREEN + "/{" + NavArgs.NEXT_STEP + "}") {
-        fun routeFor(nextStep: StartPremiumNextStep): String =
-            Routes.START_PREMIUM_SCREEN + "/" + nextStep.name
+        NavRoute(Routes.START_PREMIUM_SCREEN + "/{" + NavArgs.LAUNCH_FLOW + "}") {
+        fun routeFor(launchFlow: LaunchFlow): String =
+            Routes.START_PREMIUM_SCREEN + "/" + Uri.encode(launchFlow.encode())
     }
 
     data object CameraScreenRoute :

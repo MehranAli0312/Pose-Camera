@@ -69,12 +69,6 @@ val PoseCyanBright = Color(0xFF22D3EE)
 val PoseVioletBright = Color(0xFFC084FC)
 val PoseFuchsiaLight = Color(0xFFE879F9)
 
-val PoseHeroTop = Color(0xFF1A1E46)
-val PoseHeroMid = Color(0xFF211C48)
-val PoseHeroBottom = Color(0xFF2C1B4A)
-val PoseHeroScrimStart = Color(0xFF201C48)
-val PoseHeroScrimMid = Color(0xFF231B49)
-
 val PoseDailyTop = Color(0xFF33205C)
 val PoseDailyMid = Color(0xFF4B2470)
 val PoseDailyBottom = Color(0xFF6E2A5E)
@@ -82,11 +76,6 @@ val PoseDailyTitle = Color(0xFFCFC2EE)
 
 val PoseGlowIndigo = Color(0xFF6366F1)
 val PoseGlowPurple = Color(0xFFA855F7)
-
-val PoseNavSurface = Color(0xFF0D1130)
-val PoseNavShadow = Color(0xFF05060F)
-val PoseNavActive = Color(0xFF818CF8)
-val PoseNavInactive = Color(0xFFA39B91)
 
 val PoseFilterPearlTop = Color(0xFFE7EAF6)
 val PoseFilterPearlBottom = Color(0xFF8E95BE)

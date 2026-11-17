@@ -14,4 +14,6 @@ class SplashStatusRepositoryImpl(
     override suspend fun writeSplashStatus() {
         dataStore.writeOnBoardStatus()
     }
+
+    override suspend fun recordReturningLaunch(): Int = dataStore.recordReturningLaunch()
 }

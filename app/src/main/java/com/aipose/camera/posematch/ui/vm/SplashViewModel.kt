@@ -4,15 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.usecase.SplashStatusUseCase
-import com.aipose.camera.posematch.domain.usecase.StartPremiumUseCase
 import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
+import com.aipose.camera.posematch.ui.screens.launch.LaunchFlowPlanner
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SplashViewModel(
     private val getSplashStatusUseCase: SplashStatusUseCase,
-    private val startPremiumUseCase: StartPremiumUseCase,
+    private val launchFlowPlanner: LaunchFlowPlanner,
     private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
+
+    private var cachedLaunchFlow: LaunchFlow? = null
 
     fun trackScreen(event: AnalyticsEvent) {
         viewModelScope.launch { trackEventUseCase.track(event) }
@@ -22,11 +26,16 @@ class SplashViewModel(
 
     suspend fun writeSplashStatus() = getSplashStatusUseCase.writeSplashStatus()
 
-    suspend fun showPremiumAfterSplash(isFirstSession: Boolean) =
-        startPremiumUseCase.showAfterSplash(isFirstSession)
-
-    suspend fun showPremiumAfterLanguage() = startPremiumUseCase.showAfterLanguage()
-
-    suspend fun showPremiumAfterOnboarding() = startPremiumUseCase.showAfterOnboarding()
+    suspend fun launchFlow(): LaunchFlow {
+        cachedLaunchFlow?.let { return it }
+        val isFirstSession = getSplashStatusUseCase.getSplashStatus().first()
+        val returningLaunchCount = if (isFirstSession) {
+            0
+        } else {
+            getSplashStatusUseCase.recordReturningLaunch()
+        }
+        return launchFlowPlanner.plan(isFirstSession, returningLaunchCount)
+            .also { flow -> cachedLaunchFlow = flow }
+    }
 
 }

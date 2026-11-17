@@ -51,7 +51,7 @@ internal class PreparedSlotController(
         val slot = slot(placement)
         val consumed = synchronized(slot) { slot.compareAndSet(shown, PreparedSlotAd.Empty) }
         if (!consumed) return
-        shown.release()
+        release(shown)
         if (!prepareNext) {
             log.d("Prepared slot ${placement.id} consumed, host is finishing")
             return
@@ -82,7 +82,7 @@ internal class PreparedSlotController(
             slot.value = PreparedSlotAd.Empty
             next to old
         }
-        previous.release()
+        release(previous)
         return generation
     }
 
@@ -105,14 +105,15 @@ internal class PreparedSlotController(
         style: BannerStyle,
         generation: Int,
     ): PreparedSlotAd? {
-        val adSize = banners.adSizeFor(style, 0)
+        val widthDp = banners.screenWidthDp()
+        val adSize = banners.adSizeFor(style, widthDp)
         if (!publish(placement, generation, PreparedSlotAd.Loading(adSize.height))) return null
-        val ad = banners.loadOnce(placement, style) ?: return null
+        val ad = banners.load(placement, style, widthDp) ?: return null
         return PreparedSlotAd.Banner(
             ad = ad,
             widthDp = adSize.width,
             heightDp = adSize.height,
-            loadedAt = SystemClock.elapsedRealtime(),
+            loadedAt = banners.loadedAt(ad) ?: SystemClock.elapsedRealtime(),
         )
     }
 
@@ -123,8 +124,12 @@ internal class PreparedSlotController(
     ): PreparedSlotAd? {
         val loading = PreparedSlotAd.Loading(NativeAdTemplateRegistry.placeholderHeightDp(design))
         if (!publish(placement, generation, loading)) return null
-        val ad = natives.loadOnce(placement) ?: return null
-        return PreparedSlotAd.Native(ad, design, SystemClock.elapsedRealtime())
+        val ad = natives.load(placement) ?: return null
+        return PreparedSlotAd.Native(
+            ad,
+            design,
+            natives.loadedAt(ad) ?: SystemClock.elapsedRealtime(),
+        )
     }
 
     private fun publish(placement: AdPlacement, generation: Int, value: PreparedSlotAd): Boolean {
@@ -134,7 +139,7 @@ internal class PreparedSlotController(
             if (current) slot.value = value
             current
         }
-        if (!accepted) value.release()
+        if (!accepted) release(value)
         return accepted
     }
 
@@ -150,10 +155,10 @@ internal class PreparedSlotController(
         return SystemClock.elapsedRealtime() - loadedAt < PREPARED_AD_TTL_MS
     }
 
-    private fun PreparedSlotAd.release() {
-        when (this) {
-            is PreparedSlotAd.Banner -> runCatching { ad.destroy() }
-            is PreparedSlotAd.Native -> runCatching { ad.destroy() }
+    private fun release(ad: PreparedSlotAd) {
+        when (ad) {
+            is PreparedSlotAd.Banner -> banners.recycle(ad.ad)
+            is PreparedSlotAd.Native -> natives.recycle(ad.ad)
             else -> Unit
         }
     }

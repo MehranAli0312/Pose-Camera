@@ -20,6 +20,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.aipose.camera.posematch.ads.LaunchFlowAds
+import com.aipose.camera.posematch.ads.AdSlotReleaseEffect
+import com.aipose.camera.posematch.ads.OnboardScreenBottom
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
 import com.aipose.camera.posematch.ads.rememberOnboardingNativeAd
 import com.aipose.camera.posematch.domain.models.AnalyticsEvent
@@ -32,19 +35,22 @@ import com.aipose.camera.posematch.ui.screens.onboard.data.onboardSteps
 import com.aipose.camera.posematch.ui.screens.onboard.models.OnboardPage
 import com.aipose.camera.posematch.ui.screens.onboard.models.onboardPages
 import com.aipose.camera.posematch.ui.screens.onboard.models.stepIndexAt
-import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
-import com.aipose.camera.posematch.ui.screens.splash.goToHome
-import com.aipose.camera.posematch.ui.screens.splash.goToStartPremium
+import com.aipose.camera.posematch.ui.screens.launch.navigateLaunchFlow
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchFlow
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
+import com.example.ads.AdPlacement
 import kotlin.math.abs
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun OnboardScreen(
     navController: NavHostController,
+    launchFlow: LaunchFlow,
     splashViewModel: SplashViewModel = koinViewModel(),
 ) {
+    AdSlotReleaseEffect(AdPlacement.OnboardScreenBottom)
     val steps = remember { onboardSteps }
     val nativeAd = rememberOnboardingNativeAd()
     val adPageIndex = nativeAd.pageIndex
@@ -52,6 +58,7 @@ fun OnboardScreen(
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val scope = rememberCoroutineScope()
     val missedSplashAd = rememberMissedSplashAd()
+    val launchFlowAds: LaunchFlowAds = koinInject()
     val currentPage = pagerState.currentPage
     val currentStepIndex = pages.stepIndexAt(currentPage)
     val currentStep = steps[currentStepIndex]
@@ -79,11 +86,7 @@ fun OnboardScreen(
             scope.launch {
                 splashViewModel.trackScreen(AnalyticsEvent.OnboardComplete)
                 splashViewModel.writeSplashStatus()
-                if (splashViewModel.showPremiumAfterOnboarding()) {
-                    goToStartPremium(navController, StartPremiumNextStep.Home)
-                } else {
-                    goToHome(navController)
-                }
+                navController.navigateLaunchFlow(launchFlow, launchFlowAds)
             }
         }
     }

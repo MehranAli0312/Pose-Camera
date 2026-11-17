@@ -8,15 +8,21 @@ import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.domain.models.Capture
 import com.aipose.camera.posematch.domain.models.PERFECT_MATCH_SCORE
+import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.domain.usecase.CaptureProgressUseCase
 import com.aipose.camera.posematch.domain.usecase.CaptureUseCase
+import com.aipose.camera.posematch.domain.usecase.FavoritePoseUseCase
+import com.aipose.camera.posematch.domain.usecase.PoseLibraryUseCase
+import com.aipose.camera.posematch.domain.usecase.PoseLockUseCase
 import com.aipose.camera.posematch.domain.usecase.TrackEventUseCase
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureAlbum
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureUi
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsFilter
-import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsSort
-import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsStats
 import com.aipose.camera.posematch.ui.screens.collections.models.CollectionsUiState
+import com.aipose.camera.posematch.ui.screens.collections.models.FavoritePose
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,14 +34,18 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+private data class CollectionsControls(
+    val query: String,
+    val filter: CollectionsFilter,
+)
 
 class CollectionsViewModel(
     private val context: Context,
     private val captureUseCase: CaptureUseCase,
     private val captureProgressUseCase: CaptureProgressUseCase,
+    private val favoritePoseUseCase: FavoritePoseUseCase,
+    private val poseLockUseCase: PoseLockUseCase,
+    poseLibraryUseCase: PoseLibraryUseCase,
     private val trackEventUseCase: TrackEventUseCase,
 ) : ViewModel() {
 
@@ -48,34 +58,61 @@ class CollectionsViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), null)
 
     private val _filter = MutableStateFlow(CollectionsFilter.All)
-    private val _sort = MutableStateFlow(CollectionsSort.Newest)
-    private val _isSortSheetVisible = MutableStateFlow(false)
+    private val _lockedPose = MutableStateFlow<Pose?>(null)
+    val lockedPose = _lockedPose.asStateFlow()
+
+    private val _unlockedPoseToOpen = MutableStateFlow<Int?>(null)
+    val unlockedPoseToOpen = _unlockedPoseToOpen.asStateFlow()
+
+    private val controls = combine(
+        _query,
+        _filter,
+    ) { query, filter ->
+        CollectionsControls(query, filter)
+    }
+
+    private val favoritePoses = combine(
+        poseLibraryUseCase.observePoses(),
+        poseLockUseCase.observeAccess(),
+        favoritePoseUseCase.observeFavorites(),
+    ) { poses, access, favorites ->
+        val lockedIds = access.lockedIdsIn(poses)
+        poses.mapNotNull { pose ->
+            favorites[pose.id]?.let { savedAt ->
+                FavoritePose(
+                    pose = pose,
+                    savedAtMillis = savedAt,
+                    isLocked = pose.id in lockedIds,
+                )
+            }
+        }
+    }
 
     val uiState: StateFlow<CollectionsUiState> = combine(
         captures,
-        _query,
-        _filter,
-        _sort,
-        _isSortSheetVisible,
-    ) { items, query, filter, sort, isSortSheetVisible ->
+        favoritePoses,
+        controls,
+    ) { items, favorites, controls ->
         if (items == null) return@combine CollectionsUiState.Loading
-        val domainCaptures = items.map { it.capture }
+        val domainCaptures = items.map { item -> item.capture }
         CollectionsUiState.Content(
-            totalCount = items.size,
-            stats = items.toStats(),
             albums = items
-                .filter { it.matches(query) && it.matches(filter) }
-                .sortedWith(sort.comparator())
+                .filter { item -> item.matches(controls.query) && item.matches(controls.filter) }
+                .sortedByDescending { item -> item.capture.capturedAtMillis }
                 .toAlbums(),
-            filter = filter,
-            sort = sort,
-            recentPerfectShots = captureProgressUseCase.perfectShotsWithinDays(domainCaptures, RECENT_DAYS),
-            isSortSheetVisible = isSortSheetVisible,
+            favoritePoses = favorites
+                .filter { favorite -> favorite.pose.matches(controls.query) }
+                .sortedByDescending { favorite -> favorite.savedAtMillis },
+            filter = controls.filter,
+            recentPerfectShots = captureProgressUseCase.perfectShotsWithinDays(
+                domainCaptures,
+                RECENT_DAYS,
+            ),
         )
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT),
-        CollectionsUiState.Loading
+        CollectionsUiState.Loading,
     )
 
     private val captureFlows = mutableMapOf<Long, StateFlow<CaptureUi?>>()
@@ -83,7 +120,7 @@ class CollectionsViewModel(
     fun captureFor(captureId: Long): StateFlow<CaptureUi?> =
         captureFlows.getOrPut(captureId) {
             captures
-                .map { items -> items?.firstOrNull { it.id == captureId } }
+                .map { items -> items?.firstOrNull { item -> item.id == captureId } }
                 .stateIn(viewModelScope, SharingStarted.WhileSubscribed(SUBSCRIPTION_TIMEOUT), null)
         }
 
@@ -99,39 +136,28 @@ class CollectionsViewModel(
         _filter.value = filter
     }
 
-    fun showSortSheet() {
-        _isSortSheetVisible.value = true
+    fun removeFavoritePose(favorite: FavoritePose) {
+        viewModelScope.launch { favoritePoseUseCase.setFavorite(favorite.pose.id, false) }
     }
 
-    fun dismissSortSheet() {
-        _isSortSheetVisible.value = false
+    fun showLockedPose(favorite: FavoritePose) {
+        _lockedPose.value = favorite.pose
     }
 
-    fun selectSort(sort: CollectionsSort) {
-        _sort.value = sort
-        _isSortSheetVisible.value = false
+    fun dismissLockedPose() {
+        _lockedPose.value = null
     }
 
-    private fun CaptureUi.matches(filter: CollectionsFilter): Boolean = when (filter) {
-        CollectionsFilter.All -> true
-        CollectionsFilter.TopMatch -> capture.matchScore >= PERFECT_MATCH_SCORE
-        CollectionsFilter.Recent -> captureProgressUseCase.isWithinDays(capture, RECENT_DAYS)
+    fun unlockAfterRewardedAd(pose: Pose) {
+        _lockedPose.value = null
+        viewModelScope.launch {
+            poseLockUseCase.unlockWithRewardedAd(pose.id)
+            _unlockedPoseToOpen.value = pose.id
+        }
     }
 
-    private fun CollectionsSort.comparator(): Comparator<CaptureUi> = when (this) {
-        CollectionsSort.Newest -> compareByDescending { it.capture.capturedAtMillis }
-        CollectionsSort.HighestMatch -> compareByDescending { it.capture.matchScore }
-        CollectionsSort.NameAsc -> compareBy(String.CASE_INSENSITIVE_ORDER) { it.titleLabel }
-    }
-
-    private fun List<CaptureUi>.toStats(): CollectionsStats = CollectionsStats(
-        shots = size,
-        places = map { it.locationLabel }.distinct().size,
-        averageMatch = if (isEmpty()) 0 else sumOf { it.capture.matchScore } / size,
-    )
-
-    fun toggleFavorite(capture: Capture) {
-        viewModelScope.launch { captureUseCase.toggleFavorite(capture) }
+    fun consumeUnlockedPose() {
+        _unlockedPoseToOpen.value = null
     }
 
     fun trackEvent(event: AnalyticsEvent) {
@@ -143,12 +169,28 @@ class CollectionsViewModel(
         trackEvent(AnalyticsEvent.CaptureDeleted)
     }
 
+    private fun CaptureUi.matches(filter: CollectionsFilter): Boolean = when (filter) {
+        CollectionsFilter.All -> true
+        CollectionsFilter.TopMatch -> capture.matchScore >= PERFECT_MATCH_SCORE
+        CollectionsFilter.Recent -> captureProgressUseCase.isWithinDays(capture, RECENT_DAYS)
+        CollectionsFilter.Favorite -> false
+    }
+
+    private fun Pose.matches(query: String): Boolean {
+        val normalized = query.trim()
+        if (normalized.isEmpty()) return true
+        return title.contains(normalized, ignoreCase = true) ||
+            description.contains(normalized, ignoreCase = true) ||
+            category.contains(normalized, ignoreCase = true) ||
+            tags.any { tag -> tag.contains(normalized, ignoreCase = true) }
+    }
+
     private fun Capture.toUi(): CaptureUi = CaptureUi(
         capture = this,
         formattedDate = format(LONG_DATE_PATTERN, capturedAtMillis),
         capturedLabel = capturedLabel(),
         locationLabel = location.name ?: context.getString(R.string.unknown_location),
-        titleLabel = title.ifBlank { context.getString(R.string.capture_untitled) }
+        titleLabel = title.ifBlank { context.getString(R.string.capture_untitled) },
     )
 
     private fun Capture.capturedLabel(): String {
@@ -157,14 +199,18 @@ class CollectionsViewModel(
         return when (captureProgressUseCase.daysSince(this)) {
             0 -> context.getString(R.string.detail_today, time)
             1 -> context.getString(R.string.detail_yesterday, time)
-            else -> context.getString(R.string.detail_date_time, DateFormat.getMediumDateFormat(context).format(date), time)
+            else -> context.getString(
+                R.string.detail_date_time,
+                DateFormat.getMediumDateFormat(context).format(date),
+                time,
+            )
         }
     }
 
     private fun format(pattern: String, millis: Long): String =
         SimpleDateFormat(pattern, Locale.getDefault()).format(Date(millis))
 
-    private fun List<CaptureUi>.toAlbums(): List<CaptureAlbum> = groupBy { it.locationLabel }
+    private fun List<CaptureUi>.toAlbums(): List<CaptureAlbum> = groupBy { item -> item.locationLabel }
         .map { (locationLabel, captures) -> CaptureAlbum(locationLabel, captures) }
 
     private companion object {

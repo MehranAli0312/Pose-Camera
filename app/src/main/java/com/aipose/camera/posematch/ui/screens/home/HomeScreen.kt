@@ -1,39 +1,59 @@
 package com.aipose.camera.posematch.ui.screens.home
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.aipose.camera.posematch.ads.HomeInlineNative
+import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.rememberHomeInlineNativeAd
 import com.aipose.camera.posematch.ads.rememberInnerInterstitial
-import com.aipose.camera.posematch.ui.common.InlineNativeAd
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
+import com.aipose.camera.posematch.ui.common.getActivity
 import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
+import com.aipose.camera.posematch.ui.screens.bottomSheet.ExitPopUp
 import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
-import com.aipose.camera.posematch.ui.screens.home.components.HomeCategoryPosesSection
 import com.aipose.camera.posematch.ui.screens.home.components.HomeHeader
-import com.aipose.camera.posematch.ui.screens.home.components.HomeHeroCard
-import com.aipose.camera.posematch.ui.screens.home.components.HomeProgressCard
-import com.aipose.camera.posematch.ui.screens.home.models.HomeHero
+import com.aipose.camera.posematch.ui.screens.home.components.HomePoseCategories
+import com.aipose.camera.posematch.ui.screens.home.components.homePoseGridItems
 import com.aipose.camera.posematch.ui.screens.home.models.HomeUiState
-import com.aipose.camera.posematch.ui.screens.home.models.HomeUnlockTarget
+import com.aipose.camera.posematch.ui.screens.poseAlbum.components.ExplorePosePlaceholderCard
+import com.aipose.camera.posematch.ui.screens.poseAlbum.models.adaptiveColumnCount
+import com.aipose.camera.posematch.ui.theme.LocalAppPalette
+import com.aipose.camera.posematch.ui.theme.poseTextStyle
 import com.aipose.camera.posematch.ui.vm.HomeViewModel
-import com.example.ads.AdPlacement
 import org.koin.androidx.compose.koinViewModel
+
+private val CardMinWidth = 150.dp
+private val PoseListSidePadding = 10.dp
+private val PoseItemPadding = 5.dp
 
 @Composable
 fun HomeScreen(
@@ -44,108 +64,106 @@ fun HomeScreen(
     val showProBadge by viewModel.showProBadge.collectAsStateWithLifecycle()
     val unlockedPoseToOpen by viewModel.unlockedPoseToOpen.collectAsStateWithLifecycle()
     val content = uiState as? HomeUiState.Content
-    val innerInterstitial = rememberInnerInterstitial()
     val homeNativeAd = rememberHomeInlineNativeAd()
+    val innerInterstitial = rememberInnerInterstitial()
+    val activity = getActivity()
+    val showExitDialog = rememberSaveable { mutableStateOf(false) }
 
-    fun openWithAd(route: String) {
+    fun openMainSection(route: String) {
         if (!navController.acceptNavigationClick()) return
         innerInterstitial.showThen { navController.navigate(route) }
     }
 
-    fun startHeroPosing(hero: HomeHero) {
-        viewModel.onHeroTapped()
-        if (hero.isLocked) {
-            viewModel.showLockedPose(hero.pose, HomeUnlockTarget.Camera)
-        } else {
-            navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(hero.pose.id))
-        }
-    }
-
-    fun openAlbum(category: String) {
-        openWithAd(NavRoute.PoseAlbumScreenRoute.routeFor(category))
-    }
+    BackHandler { showExitDialog.value = true }
 
     LaunchedEffect(unlockedPoseToOpen) {
-        val unlocked = unlockedPoseToOpen ?: return@LaunchedEffect
+        val poseId = unlockedPoseToOpen ?: return@LaunchedEffect
         viewModel.consumeUnlockedPose()
-        val route = when (unlocked.target) {
-            HomeUnlockTarget.Camera -> NavRoute.CameraScreenRoute.routeFor(unlocked.poseId)
-        }
-        navController.navigateOnClick(route)
+        navController.navigateOnClick(NavRoute.CameraScreenRoute.routeFor(poseId))
     }
 
     PoseGlowBackground {
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .adaptiveWidth()
-                .padding(horizontal = PoseScreenGutter),
+                .adaptiveWidth(),
         ) {
             HomeHeader(
                 showProBadge = showProBadge,
                 onProClick = { navController.navigateOnClick(NavRoute.ProScreenRoute.route) },
+                onSettingsClick = { openMainSection(NavRoute.SettingScreenRoute.route) },
+                onCollectionsClick = { openMainSection(NavRoute.CollectionsScreenRoute.route) },
                 modifier = Modifier
                     .safeTopSystemBarsPadding()
-                    .padding(),
+                    .padding(horizontal = PoseScreenGutter),
             )
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(bottom = 24.dp),
-            ) {
-                if (content == null) return@LazyColumn
-
-                content.hero?.let { hero ->
-                    item(key = HOME_HERO_KEY) {
-                        HomeHeroCard(
-                            hero = hero,
-                            onStartPosing = { startHeroPosing(hero) },
-                            modifier = Modifier.padding(top = 12.dp),
-                        )
-                    }
-                }
-
-                item(key = HOME_CATEGORY_POSES_KEY) {
-                    HomeCategoryPosesSection(
-                        categories = content.categories,
-                        selectedCategory = content.selectedCategory,
-                        poses = content.poses,
-                        savedPoseIds = content.savedPoseIds,
-                        lockedPoseIds = content.lockedPoseIds,
-                        onCategorySelect = viewModel::selectCategory,
-                        onPoseClick = { pose, isLocked ->
-                            if (isLocked) {
-                                viewModel.showLockedPose(pose, HomeUnlockTarget.Camera)
-                            } else {
-                                navController.navigateOnClick(
-                                    NavRoute.CameraScreenRoute.routeFor(pose.id)
+            if (content != null) {
+                HomePoseCategories(
+                    categories = content.categories,
+                    selectedCategory = content.selectedCategory,
+                    onCategorySelect = viewModel::selectCategory,
+                    modifier = Modifier.padding(horizontal = PoseScreenGutter),
+                )
+            }
+            BoxWithConstraints(modifier = Modifier.weight(1f)) {
+                val columns = adaptiveColumnCount(
+                    availableWidth = maxWidth - PoseListSidePadding * 2,
+                    minCellWidth = CardMinWidth,
+                    gap = 0.dp,
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(columns),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        start = PoseListSidePadding,
+                        end = PoseListSidePadding,
+                        top = 12.dp,
+                        bottom = 24.dp,
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(0.dp),
+                    verticalArrangement = Arrangement.spacedBy(0.dp),
+                ) {
+                    if (content == null) {
+                        items(PLACEHOLDER_CARD_COUNT, key = { index -> PLACEHOLDER_KEY + index }) {
+                            ExplorePosePlaceholderCard(modifier = Modifier.padding(PoseItemPadding))
+                        }
+                    } else {
+                        if (content.poses.isEmpty()) {
+                            item(key = EMPTY_KEY, span = { GridItemSpan(maxLineSpan) }) {
+                                Text(
+                                    text = stringResource(R.string.explore_empty),
+                                    style = poseTextStyle(
+                                        12.5.sp,
+                                        FontWeight.Normal,
+                                        LocalAppPalette.current.textMuted,
+                                    ),
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 48.dp),
                                 )
                             }
-                        },
-                        onToggleSaved = viewModel::toggleSaved,
-                        onSeeAllClick = {
-                            openAlbum(
-                                content.selectedCategory ?: NavRoute.PoseAlbumScreenRoute.ALL_CATEGORIES
+                        } else {
+                            homePoseGridItems(
+                                poses = content.poses,
+                                savedPoseIds = content.savedPoseIds,
+                                lockedPoseIds = content.lockedPoseIds,
+                                columns = columns,
+                                showNativeAd = homeNativeAd.isEnabled,
+                                itemPadding = PoseItemPadding,
+                                onPoseClick = { pose, isLocked ->
+                                    if (isLocked) {
+                                        viewModel.showLockedPose(pose)
+                                    } else {
+                                        navController.navigateOnClick(
+                                            NavRoute.CameraScreenRoute.routeFor(pose.id)
+                                        )
+                                    }
+                                },
+                                onToggleSaved = viewModel::toggleSaved,
                             )
-                        },
-                        modifier = Modifier.padding(top = 16.dp),
-                    )
-                }
-
-                if (homeNativeAd.isEnabled) {
-                    item(key = HOME_NATIVE_AD_KEY) {
-                        InlineNativeAd(
-                            placement = AdPlacement.HomeInlineNative,
-                            modifier = Modifier.padding(top = 16.dp),
-                        )
+                        }
                     }
-                }
-
-                item(key = HOME_PROGRESS_KEY) {
-                    HomeProgressCard(
-                        progress = content.progress,
-                        onViewAll = { openWithAd(NavRoute.ProgressScreenRoute.route) },
-                        modifier = Modifier.padding(top = 16.dp),
-                    )
                 }
             }
         }
@@ -154,9 +172,7 @@ fun HomeScreen(
     content?.lockedPose?.let { lockedPose ->
         PremiumFeatureBottomSheet(
             pose = lockedPose,
-            onRewardEarned = {
-                viewModel.unlockAfterRewardedAd(lockedPose, content.unlockTarget)
-            },
+            onRewardEarned = { viewModel.unlockAfterRewardedAd(lockedPose) },
             onGoPremiumClick = {
                 viewModel.dismissLockedPose()
                 navController.navigateOnClick(NavRoute.ProScreenRoute.route)
@@ -164,9 +180,13 @@ fun HomeScreen(
             onDismissRequest = viewModel::dismissLockedPose,
         )
     }
+
+    ExitPopUp(showExitDialog) {
+        showExitDialog.value = false
+        activity?.finishAffinity()
+    }
 }
 
-private const val HOME_HERO_KEY = "home_hero"
-private const val HOME_CATEGORY_POSES_KEY = "home_category_poses"
-private const val HOME_NATIVE_AD_KEY = "home_native_ad"
-private const val HOME_PROGRESS_KEY = "home_progress"
+private const val EMPTY_KEY = "home_empty"
+private const val PLACEHOLDER_KEY = "home_placeholder_"
+private const val PLACEHOLDER_CARD_COUNT = 6

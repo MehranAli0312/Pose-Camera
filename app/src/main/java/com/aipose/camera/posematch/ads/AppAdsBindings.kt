@@ -33,6 +33,9 @@ val appAdsModule = module {
     single { CommercialBreakAds(adsManager = get(), store = get(), coverState = get()) }
     single { InnerInterstitialAds(adsManager = get(), store = get(), commercialBreakAds = get()) }
     single { RewardedUnlockSession() }
+    single { RewardedUnlock(adsManager = get(), store = get()) }
+    single { LaunchFlowAds(adsManager = get()) }
+    single { com.aipose.camera.posematch.ui.screens.launch.LaunchFlowPlanner(get(), get()) }
     single {
         PhotoSaveInterstitialAds(
             adsManager = get(),
@@ -78,6 +81,7 @@ internal class AppAdSlotStyleProvider(
             AdPlacement.PhotoSaveInterstitial ->
                 store.current.photoSaveInterstitial.toInterstitialStyle()
             AdPlacement.PremiumRewarded -> FullscreenAdStyle.Rewarded
+            AdPlacement.RewardedFallbackInterstitial -> FullscreenAdStyle.Interstitial
             else -> FullscreenAdStyle.Hidden
         }
 

@@ -54,12 +54,6 @@ class AdsAppLifecycleObserver internal constructor(
         application.registerActivityLifecycleCallbacks(this)
     }
 
-    /**
-     * Call right before the app itself opens another app's screen (system settings, share sheet,
-     * store page, ...). Returning from that screen is part of the user's task, so the next
-     * app-open is skipped. The mark only counts if the app goes to background shortly after,
-     * so a launch that never leaves the app cannot swallow a later genuine return.
-     */
     fun onExternalScreenLaunched() {
         externalScreenLaunchedAt = SystemClock.elapsedRealtime()
         if (wentToBackground) skipNextAppOpen = true
@@ -84,11 +78,13 @@ class AdsAppLifecycleObserver internal constructor(
         ) {
             skipNextAppOpen = true
         }
+        if (state.adClickedWithin(AD_CLICK_RETURN_WINDOW_MS)) skipNextAppOpen = true
     }
 
     private fun showAppOpenOnResume() {
         if (appOpenJob?.isActive == true) return
         if (!appOpenEnabled() || !adsManager.isReady.value || adsManager.isPro.value) return
+        if (!adsManager.canShowFullScreenNow(appOpenPlacement)) return
         val activity = currentActivity ?: return
 
         appOpenJob = scope.launch(Dispatchers.Main.immediate) {
@@ -140,5 +136,6 @@ class AdsAppLifecycleObserver internal constructor(
     private companion object {
         const val NOT_LAUNCHED = -1L
         const val EXTERNAL_LAUNCH_WINDOW_MS = 10_000L
+        const val AD_CLICK_RETURN_WINDOW_MS = 10_000L
     }
 }

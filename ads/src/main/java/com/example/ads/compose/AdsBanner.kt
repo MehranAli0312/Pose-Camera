@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,18 +22,13 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.example.ads.AdPlacement
-import com.example.ads.bannerStyleOr
 import com.example.ads.AdsManager
 import com.example.ads.BannerStyle
+import com.example.ads.bannerStyleOr
 import com.example.ads.internal.AdRetryState
 import com.example.ads.internal.BannerAdController
-import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
-import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
-import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
-import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import org.koin.compose.koinInject
 
 @Composable
@@ -47,7 +43,6 @@ fun AdsBanner(
 ) {
     val adsManager: AdsManager = koinInject()
     val controller: BannerAdController = koinInject()
-
     val isPro by adsManager.isPro.collectAsState()
     val isReady by adsManager.isReady.collectAsState()
 
@@ -58,82 +53,48 @@ fun AdsBanner(
 
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val widthDp = maxWidth.value.toInt()
-
-        var request by remember(placement, resolvedStyle) { mutableStateOf<BannerAdRequest?>(null) }
-        var failed by remember(placement, resolvedStyle) { mutableStateOf(false) }
-        var loaded by remember(placement, resolvedStyle) { mutableStateOf(false) }
-        val retryState = remember(placement, resolvedStyle) { AdRetryState() }
-
-        AdRetryEffect(failed = failed, retryState = retryState) {
-            request = null
-            loaded = false
-            failed = false
-        }
-
-        LaunchedEffect(placement, resolvedStyle, widthDp, isReady, retryState.attempt) {
-            if (!isReady || widthDp <= 0) return@LaunchedEffect
-            if (request != null || failed) return@LaunchedEffect
-            val builtRequest = controller.buildRequest(placement, resolvedStyle, widthDp)
-            if (builtRequest == null) {
-                retryState.markFailed()
-                failed = true
-                onFailed()
-            } else {
-                request = builtRequest
-            }
-        }
-
-        val currentRequest = request
         val slotHeight = remember(resolvedStyle, widthDp) {
             controller.adSizeFor(resolvedStyle, widthDp).height.dp
         }
+        var bannerAd by remember(placement, resolvedStyle, widthDp) {
+            mutableStateOf<BannerAd?>(null)
+        }
+        var failed by remember(placement, resolvedStyle, widthDp) { mutableStateOf(false) }
+        val retryState = remember(placement, resolvedStyle, widthDp) { AdRetryState() }
 
-        when {
-            failed -> Unit
+        AdRetryEffect(failed = failed, retryState = retryState) { failed = false }
 
-            currentRequest != null -> Box(
-                modifier = Modifier
-                    .padding(top = topSpacing)
-                    .fillMaxWidth()
-                    .height(slotHeight)
-                    .background(slotColor),
-                contentAlignment = Alignment.Center,
-            ) {
-                key(currentRequest) {
-                    AndroidView(
-                        modifier = Modifier.fillMaxWidth(),
-                        factory = { context ->
-                            AdView(context).apply {
-                                loadAd(
-                                    currentRequest,
-                                    object : AdLoadCallback<BannerAd> {
-                                        override fun onAdLoaded(ad: BannerAd) {
-                                            controller.onLoaded(placement, ad)
-                                            loaded = true
-                                        }
+        LaunchedEffect(placement, resolvedStyle, widthDp, isReady, retryState.attempt) {
+            if (!isReady || widthDp <= 0 || bannerAd != null || failed) return@LaunchedEffect
+            bannerAd = controller.load(placement, resolvedStyle, widthDp)
+            if (bannerAd == null) {
+                retryState.markFailed()
+                failed = true
+                onFailed()
+            }
+        }
 
-                                        override fun onAdFailedToLoad(adError: LoadAdError) {
-                                            controller.onFailed(placement, adError.message)
-                                            retryState.markFailed()
-                                            failed = true
-                                            onFailed()
-                                        }
-                                    },
-                                )
-                            }
-                        },
-                        onRelease = { adView -> adView.destroy() },
-                    )
-                }
-                if (!loaded && showPlaceholderWhileLoading) {
-                    AdSlotPlaceholder(height = slotHeight)
+        bannerAd?.let { ad ->
+            key(ad) {
+                DisposableEffect(ad) { onDispose { controller.recycle(ad) } }
+                Box(
+                    modifier = Modifier
+                        .padding(top = topSpacing)
+                        .fillMaxWidth()
+                        .height(slotHeight)
+                        .background(slotColor),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    BannerAdView(ad = ad, modifier = Modifier.fillMaxWidth())
                 }
             }
-
-            showPlaceholderWhileLoading -> AdSlotPlaceholder(
-                height = slotHeight,
-                modifier = Modifier.padding(top = topSpacing),
-            )
+        } ?: run {
+            if (showPlaceholderWhileLoading && !failed) {
+                AdSlotPlaceholder(
+                    height = slotHeight,
+                    modifier = Modifier.padding(top = topSpacing),
+                )
+            } else Unit
         }
     }
 }

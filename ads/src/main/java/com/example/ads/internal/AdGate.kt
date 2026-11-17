@@ -31,6 +31,14 @@ internal class AdGate(
             log.d("$format blocked: offline")
             return null
         }
+        return resolveConfiguredUnit(format, placement)
+    }
+
+    fun resolveConfiguredUnit(format: AdFormat, placement: AdPlacement): String? {
+        if (isPro()) {
+            log.d("$format blocked: pro user")
+            return null
+        }
         val unitId = adUnits.adUnitId(format, placement)
         if (unitId == null) {
             log.d("$format blocked: no ad unit configured for ${placement.id}")

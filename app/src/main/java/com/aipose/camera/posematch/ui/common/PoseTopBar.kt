@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.aipose.camera.posematch.ui.theme.poseScreenTitleStyle
+import com.aipose.camera.posematch.ui.theme.poseTabTitleStyle
 
 private val TopBarMinHeight = 40.dp
 
@@ -23,7 +23,7 @@ fun PoseTopBar(
     title: String,
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
-    titleStyle: TextStyle = poseScreenTitleStyle(),
+    titleStyle: TextStyle = poseTabTitleStyle(),
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
@@ -34,7 +34,7 @@ fun PoseTopBar(
     ) {
         if (onBack != null) {
             PoseBackButton(onClick = onBack)
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(10.dp))
         }
         Text(
             text = title,

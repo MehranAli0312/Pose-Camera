@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -20,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.PoseGlowBackground
 import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
@@ -30,19 +27,14 @@ import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.models.CaptureTimer
-import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
+import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.models.allLanguageItems
-import com.aipose.camera.posematch.ui.screens.settings.components.SettingRow
-import com.aipose.camera.posematch.ui.screens.settings.components.SettingSectionLabel
-import com.aipose.camera.posematch.ui.screens.settings.components.SettingToggle
+import com.aipose.camera.posematch.ui.screens.settings.components.SettingsOptionsCard
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingsProCard
 import com.aipose.camera.posematch.ui.screens.settings.components.SettingsHeader
-import com.aipose.camera.posematch.ui.vm.CameraSettingsViewModel
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.SettingsViewModel
 import com.aipose.camera.posematch.util.PRIVACY_POLICY
-import com.aipose.camera.posematch.util.bidiIsolate
 import com.aipose.camera.posematch.util.shareApp
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
@@ -54,15 +46,10 @@ fun SettingScreen(
     navController: NavHostController,
     languageViewModel: LanguageViewModel = koinInject(),
     settingsViewModel: SettingsViewModel = koinViewModel(),
-    cameraSettingsViewModel: CameraSettingsViewModel = koinViewModel(),
 ) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
-    val progress by settingsViewModel.progress.collectAsStateWithLifecycle()
-    val keepPoseOverlay by cameraSettingsViewModel.keepPoseOverlay.collectAsStateWithLifecycle()
-    val captureTimer by cameraSettingsViewModel.captureTimer.collectAsStateWithLifecycle()
-    val showProCard by settingsViewModel.showProCard.collectAsStateWithLifecycle()
-    var isTimerSheetVisible by rememberSaveable { mutableStateOf(false) }
+    val showProCard = settingsViewModel.showProCard.collectAsStateWithLifecycle().value
     val isRateUsVisible = rememberSaveable { mutableStateOf(false) }
     val shareChooserTitle = stringResource(R.string.app_name)
     val languageName = allLanguageItems
@@ -76,7 +63,10 @@ fun SettingScreen(
                 .fillMaxHeight()
                 .adaptiveWidth(),
         ) {
-            SettingsHeader(modifier = Modifier.poseScreenPadding())
+            SettingsHeader(
+                onBack = navController::popBackStackOnClick,
+                modifier = Modifier.poseScreenPadding(),
+            )
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -95,51 +85,13 @@ fun SettingScreen(
                         modifier = Modifier.padding(top = 10.dp),
                     )
                 }
-                SettingSectionLabel(
-                    text = stringResource(R.string.settings_preferences),
-                    modifier = Modifier.padding(top = 20.dp),
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_globe,
-                    palette = GlossyBadgePalette.Violet,
-                    title = stringResource(R.string.settings_language),
-                    value = languageName,
-                    onClick = { navController.navigateOnClick(NavRoute.LanguageScreenRoute.route) },
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_overlay,
-                    palette = GlossyBadgePalette.Cyan,
-                    title = stringResource(R.string.settings_retain_skeleton),
-                    onClick = { cameraSettingsViewModel.setKeepPoseOverlay(!keepPoseOverlay) },
-                    trailing = {
-                        SettingToggle(
-                            checked = keepPoseOverlay,
-                            onCheckedChange = cameraSettingsViewModel::setKeepPoseOverlay,
-                        )
+                SettingsOptionsCard(
+                    languageName = languageName,
+                    onLanguageClick = {
+                        navController.navigateOnClick(NavRoute.LanguageScreenRoute.route)
                     },
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_timer,
-                    palette = GlossyBadgePalette.Amber,
-                    title = stringResource(R.string.settings_capture_timer),
-                    value = captureTimerLabel(captureTimer),
-                    onClick = { isTimerSheetVisible = true },
-                )
-                SettingSectionLabel(
-                    text = stringResource(R.string.settings_about),
-                    modifier = Modifier.padding(top = 20.dp),
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_rate_us,
-                    palette = GlossyBadgePalette.Amber,
-                    title = stringResource(R.string.settings_rate_us),
-                    onClick = { isRateUsVisible.value = true },
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_share_app,
-                    palette = GlossyBadgePalette.Emerald,
-                    title = stringResource(R.string.settings_share_app),
-                    onClick = {
+                    onRateUsClick = { isRateUsVisible.value = true },
+                    onShareClick = {
                         if (navController.acceptNavigationClick()) {
                             val sendIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = TEXT_MIME_TYPE
@@ -148,39 +100,16 @@ fun SettingScreen(
                             context.startActivity(Intent.createChooser(sendIntent, shareChooserTitle))
                         }
                     },
-                )
-                SettingRow(
-                    iconRes = R.drawable.ic_pose_shield,
-                    palette = GlossyBadgePalette.Blue,
-                    title = stringResource(R.string.settings_privacy_policy),
-                    onClick = {
+                    onPrivacyPolicyClick = {
                         if (PRIVACY_POLICY.isNotEmpty() && navController.acceptNavigationClick()) {
                             uriHandler.openUri(PRIVACY_POLICY)
                         }
                     },
+                    modifier = Modifier.padding(top = 10.dp),
                 )
             }
         }
     }
 
     RateUsDialog(visible = isRateUsVisible)
-
-    if (isTimerSheetVisible) {
-        CaptureTimerSheet(
-            selected = captureTimer,
-            onApply = { timer ->
-                cameraSettingsViewModel.setCaptureTimer(timer)
-                isTimerSheetVisible = false
-            },
-            onDismiss = { isTimerSheetVisible = false },
-        )
-    }
 }
-
-@Composable
-private fun captureTimerLabel(timer: CaptureTimer): String =
-    if (timer.isEnabled) {
-        stringResource(R.string.settings_capture_timer_seconds, timer.seconds).bidiIsolate()
-    } else {
-        stringResource(R.string.settings_capture_timer_off)
-    }

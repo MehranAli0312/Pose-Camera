@@ -47,6 +47,15 @@ class AppDataStore(private val context: Context) {
         }
     }
 
+    suspend fun recordReturningLaunch(): Int {
+        var updatedCount = 0
+        preferences.edit { stored ->
+            updatedCount = (stored[AppPreferencesKeys.RETURNING_LAUNCH_COUNT] ?: 0) + 1
+            stored[AppPreferencesKeys.RETURNING_LAUNCH_COUNT] = updatedCount
+        }
+        return updatedCount
+    }
+
     fun getLanguageCode() = preferences.data.map { stored ->
         stored[AppPreferencesKeys.LANGUAGE] ?: DEFAULT_LANGUAGE_CODE
     }

@@ -109,6 +109,7 @@ class CaptureAlbumViewModel(
         CollectionsFilter.All -> true
         CollectionsFilter.TopMatch -> matchScore >= PERFECT_MATCH_SCORE
         CollectionsFilter.Recent -> captureProgressUseCase.isWithinDays(this, RECENT_DAYS)
+        CollectionsFilter.Favorite -> false
     }
 
     private companion object {

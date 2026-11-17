@@ -20,6 +20,7 @@ class TrackEventUseCase(private val analyticsRepository: AnalyticsRepository) {
         val params = mapOf(
             AD_FORMAT_PARAM to event.format,
             AD_PLACEMENT_PARAM to event.placement,
+            AD_DETAIL_PARAM to event.detail,
             USER_FLOW_PARAM to analyticsRepository.userFlow().value,
         )
         analyticsRepository.logEvent(event.action.eventName, params)
@@ -38,6 +39,7 @@ class TrackEventUseCase(private val analyticsRepository: AnalyticsRepository) {
         const val USER_FLOW_PARAM = "user_flow"
         const val AD_FORMAT_PARAM = "ad_format"
         const val AD_PLACEMENT_PARAM = "ad_placement"
+        const val AD_DETAIL_PARAM = "ad_detail"
         const val PLAN_PARAM = "plan"
     }
 }

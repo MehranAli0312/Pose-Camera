@@ -1,149 +1,85 @@
 package com.aipose.camera.posematch.ui.screens.camera.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.PoseBackButton
-import com.aipose.camera.posematch.ui.common.bounceClick
+import com.aipose.camera.posematch.ui.models.CaptureTimer
+import com.aipose.camera.posematch.ui.screens.camera.models.CameraTool
 import com.aipose.camera.posematch.ui.screens.camera.models.FlashMode
 import com.aipose.camera.posematch.ui.theme.PoseAmber400
-import com.aipose.camera.posematch.ui.theme.PoseCardLabel
-import com.aipose.camera.posematch.ui.theme.poseTextStyle
-
-private val ButtonSize = 40.dp
-private val TitleHeight = 32.dp
-private val TitleMinWidth = 120.dp
-private val TitleMaxWidth = 200.dp
-private val TitleShape = RoundedCornerShape(16.dp)
-private val FlashGlyphSize = DpSize(18.dp, 18.dp)
-private val ChevronSize = DpSize(10.dp, 6.dp)
-private const val TITLE_BORDER_ALPHA = 0.18f
-private const val FLASH_BORDER_ALPHA = 0.5f
+import com.aipose.camera.posematch.ui.theme.PoseVioletPale
 
 @Composable
 internal fun CameraTopBar(
-    poseTitle: String,
     flashMode: FlashMode,
+    timer: CaptureTimer,
+    isTimerMenuVisible: Boolean,
+    isToolActive: (CameraTool) -> Boolean,
     onBack: () -> Unit,
-    onChangePose: () -> Unit,
+    onToolClick: (CameraTool) -> Unit,
+    onTimerSelect: (CaptureTimer) -> Unit,
+    onTimerMenuDismiss: () -> Unit,
+    onToggleFacing: () -> Unit,
     onToggleFlash: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+            .padding(start = 20.dp, end = 12.dp, top = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier.size(ButtonSize),
+            modifier = Modifier.size(CameraTopBarButtonSize),
             contentAlignment = Alignment.CenterStart,
         ) {
             PoseBackButton(onClick = onBack)
         }
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            PoseTitleChip(title = poseTitle, onClick = onChangePose)
+        Spacer(modifier = Modifier.weight(1f))
+        CameraTool.entries.forEach { tool ->
+            Box {
+                val isActive = isToolActive(tool)
+                CameraTopBarButton(
+                    iconRes = tool.iconRes,
+                    tint = if (isActive) PoseVioletPale else Color.White,
+                    contentDescription = stringResource(tool.labelRes),
+                    onClick = { onToolClick(tool) },
+                    badgeText = if (tool == CameraTool.Timer) timerBadge(timer) else null,
+                )
+                if (tool == CameraTool.Timer && isTimerMenuVisible) {
+                    CaptureTimerMenu(
+                        selected = timer,
+                        onSelect = onTimerSelect,
+                        onDismiss = onTimerMenuDismiss,
+                    )
+                }
+            }
         }
-        FlashButton(flashMode = flashMode, onClick = onToggleFlash)
-    }
-}
-
-@Composable
-private fun PoseTitleChip(
-    title: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .widthIn(min = TitleMinWidth, max = TitleMaxWidth)
-            .height(TitleHeight)
-            .cameraGlass(
-                shape = TitleShape,
-                borderColor = Color.White.copy(alpha = TITLE_BORDER_ALPHA),
-            )
-            .bounceClick(onClick = onClick)
-            .padding(horizontal = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-    ) {
-        Text(
-            text = title,
-            style = poseTextStyle(12.sp, FontWeight.Bold, Color.White),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f, fill = false),
+        CameraTopBarButton(
+            iconRes = R.drawable.ic_camera_flip,
+            tint = Color.White,
+            contentDescription = stringResource(R.string.camera_switch),
+            onClick = onToggleFacing,
         )
-        Image(
-            painter = painterResource(R.drawable.ic_pose_chevron_down),
-            contentDescription = stringResource(R.string.camera_change_pose),
-            colorFilter = ColorFilter.tint(PoseCardLabel),
-            modifier = Modifier.size(ChevronSize),
-        )
-    }
-}
-
-@Composable
-private fun FlashButton(
-    flashMode: FlashMode,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val isOn = flashMode != FlashMode.Off
-    Box(
-        modifier = modifier
-            .size(ButtonSize)
-            .cameraGlass(
-                shape = CircleShape,
-                borderColor = if (isOn) {
-                    PoseAmber400.copy(alpha = FLASH_BORDER_ALPHA)
-                } else {
-                    Color.White.copy(alpha = CAMERA_GLASS_BORDER_ALPHA)
-                },
-            )
-            .bounceClick(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Image(
-            painter = painterResource(if (isOn) R.drawable.ic_camera_flash else R.drawable.ic_camera_flash_off),
+        CameraTopBarButton(
+            iconRes = if (flashMode != FlashMode.Off) R.drawable.ic_camera_flash else R.drawable.ic_camera_flash_off,
+            tint = if (flashMode != FlashMode.Off) PoseAmber400 else Color.White,
             contentDescription = stringResource(R.string.camera_flash),
-            colorFilter = ColorFilter.tint(if (isOn) PoseAmber400 else Color.White),
-            modifier = Modifier.size(FlashGlyphSize),
+            onClick = onToggleFlash,
+            badgeText = if (flashMode == FlashMode.Auto) stringResource(R.string.camera_flash_auto) else null,
         )
-        if (flashMode == FlashMode.Auto) {
-            Text(
-                text = stringResource(R.string.camera_flash_auto),
-                style = poseTextStyle(7.sp, FontWeight.Bold, PoseAmber400),
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 7.dp, bottom = 5.dp),
-            )
-        }
     }
 }

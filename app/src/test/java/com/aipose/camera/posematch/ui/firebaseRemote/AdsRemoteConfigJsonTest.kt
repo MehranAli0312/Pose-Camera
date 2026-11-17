@@ -54,6 +54,7 @@ class AdsRemoteConfigJsonTest {
               "premium_close_position": 1,
               "first_session_premium": 3,
               "returning_session_premium": 1,
+              "language_screen": 2,
               "app_update": {"version_code": 42, "force_update": true}
             }
             """,
@@ -65,6 +66,7 @@ class AdsRemoteConfigJsonTest {
         assertEquals(PremiumCloseButtonPosition.Left, config?.premiumClosePosition)
         assertEquals(FirstSessionPremium.AfterOnboarding, config?.firstSessionPremium)
         assertEquals(ReturningSessionPremium.AfterSplash, config?.returningSessionPremium)
+        assertEquals(LanguageScreenMode.SecondSession, config?.languageScreen)
         assertEquals(AppUpdateRemoteConfig(versionCode = 42L, forceUpdate = true), config?.appUpdate)
     }
 
@@ -158,6 +160,7 @@ class AdsRemoteConfigJsonTest {
           "onboard_inter_ad_key": false,
           "first_session_premium": 0,
           "returning_session_premium": 0,
+          "language_screen": 0,
           "local_notifications_enabled": true,
           "splash_interstitial": false,
           "splash_ad_max_wait_sec": 12,
@@ -168,6 +171,8 @@ class AdsRemoteConfigJsonTest {
           "inner_interstitial_splash_fallback": true,
           "photo_save_interstitial": false,
           "inter_load_wait_sec": 5,
+          "rewarded_load_wait_sec": 10,
+          "rewarded_fallback_wait_sec": 6,
           "home_screen_bottom_ad": 0,
           "home_screen_bottom_ad_type": 4,
           "language_screen_bottom_ad": 0,

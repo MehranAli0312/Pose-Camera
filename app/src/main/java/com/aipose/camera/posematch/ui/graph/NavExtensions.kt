@@ -3,7 +3,6 @@ package com.aipose.camera.posematch.ui.graph
 import android.os.SystemClock
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 
 private const val NAVIGATION_CLICK_INTERVAL_MS = 400L
@@ -26,14 +25,10 @@ fun NavController.popBackStackOnClick() {
     if (acceptNavigationClick()) popBackStack()
 }
 
-fun NavController.navigateToTab(route: String) {
+fun NavController.navigateFromHome(route: String) {
     if (!acceptNavigationClick()) return
-    navigateToTabNow(route)
-}
-
-fun NavController.navigateToTabNow(route: String) {
     navigate(route) {
-        popUpTo(graph.findStartDestination().id)
+        popUpTo(NavRoute.HomeScreenRoute.route)
         launchSingleTop = true
     }
 }

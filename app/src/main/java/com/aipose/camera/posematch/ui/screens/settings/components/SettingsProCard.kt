@@ -2,7 +2,6 @@ package com.aipose.camera.posematch.ui.screens.settings.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,9 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.click
+import com.aipose.camera.posematch.ui.common.pulseScale
 import com.aipose.camera.posematch.ui.theme.PosePremiumGold
 import com.aipose.camera.posematch.ui.theme.PoseProCardEnd
-import com.aipose.camera.posematch.ui.theme.PoseProCardInk
 import com.aipose.camera.posematch.ui.theme.PoseProCardStart
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
@@ -51,11 +50,9 @@ private val GlowInsetTop = 8.dp
 private val SparkleSize = 14.dp
 private val SparkleInsetEnd = 92.dp
 private val SparkleInsetTop = 26.dp
-private val PillCrownSize = 14.dp
-private val ArrowButtonSize = 46.dp
-private val ArrowIconSize = 20.dp
+private val CrownButtonSize = 46.dp
+private val CrownIconSize = 24.dp
 private val SubtitleSparkleSize = 10.dp
-private val PillLabelSize = 12.sp
 private val TitleSize = 18.sp
 private val SubtitleSize = 12.5.sp
 
@@ -63,6 +60,8 @@ private const val CARD_BORDER_ALPHA = 0.08f
 private const val GLOW_ALPHA = 0.1f
 private const val SPARKLE_ALPHA = 0.9f
 private const val SUBTITLE_ALPHA = 0.8f
+private const val CROWN_MAX_SCALE = 1.22f
+private const val CROWN_PULSE_DURATION_MS = 450
 
 @Composable
 internal fun SettingsProCard(
@@ -93,8 +92,6 @@ internal fun SettingsProCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                ProPill()
-                Spacer(modifier = Modifier.height(14.dp))
                 Text(
                     text = stringResource(R.string.settings_pro_card_title),
                     style = poseTextStyle(TitleSize, FontWeight.Bold, Color.White),
@@ -105,32 +102,8 @@ internal fun SettingsProCard(
                 ProCardSubtitle()
             }
             Spacer(modifier = Modifier.width(14.dp))
-            ProArrowButton()
+            ProCrownButton()
         }
-    }
-}
-
-@Composable
-private fun ProPill() {
-    Row(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(Color.White)
-            .padding(horizontal = 12.dp, vertical = 5.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_pro_glyph_crown),
-            contentDescription = null,
-            tint = PosePremiumGold,
-            modifier = Modifier.size(PillCrownSize),
-        )
-        Text(
-            text = stringResource(R.string.pose_pro_badge),
-            style = poseTextStyle(PillLabelSize, FontWeight.Bold, PoseProCardInk),
-            maxLines = 1,
-        )
     }
 }
 
@@ -155,19 +128,25 @@ private fun ProCardSubtitle() {
 }
 
 @Composable
-private fun ProArrowButton() {
+private fun ProCrownButton() {
     Box(
         modifier = Modifier
-            .size(ArrowButtonSize)
+            .size(CrownButtonSize)
             .clip(CircleShape)
             .background(Color.White),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            painter = painterResource(R.drawable.ic_pose_arrow_end),
+            painter = painterResource(R.drawable.ic_pro_glyph_crown),
             contentDescription = null,
             tint = PoseProCardEnd,
-            modifier = Modifier.size(ArrowIconSize),
+            modifier = Modifier
+                .size(CrownIconSize)
+                .pulseScale(
+                    enabled = true,
+                    maxScale = CROWN_MAX_SCALE,
+                    durationMillis = CROWN_PULSE_DURATION_MS,
+                ),
         )
     }
 }

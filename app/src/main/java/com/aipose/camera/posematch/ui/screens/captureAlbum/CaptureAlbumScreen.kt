@@ -146,6 +146,7 @@ fun CaptureAlbumScreen(
     if (content?.isSortSheetVisible == true) {
         CollectionsSortSheet(
             selected = content.sort,
+            filter = content.filter,
             onSelect = viewModel::selectSort,
             onDismiss = viewModel::dismissSortSheet,
         )

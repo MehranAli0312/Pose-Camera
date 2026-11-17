@@ -2,15 +2,12 @@ package com.aipose.camera.posematch.ui.screens.pro.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -24,8 +21,6 @@ import com.aipose.camera.posematch.ui.firebaseRemote.PremiumCloseButtonPosition
 
 private val CloseButtonSize = 30.dp
 private val CloseGlyphSize = 16.dp
-private const val CLOSE_SURFACE_ALPHA = 0.08f
-private const val CLOSE_BORDER_ALPHA = 0.12f
 
 @Composable
 internal fun ProTopBar(
@@ -60,8 +55,6 @@ private fun ProCloseButton(onClose: () -> Unit) {
     Box(
         modifier = Modifier
             .size(CloseButtonSize)
-            .background(onBackground.copy(alpha = CLOSE_SURFACE_ALPHA), CircleShape)
-            .border(1.dp, onBackground.copy(alpha = CLOSE_BORDER_ALPHA), CircleShape)
             .bounceClick(onClick = onClose),
         contentAlignment = Alignment.Center,
     ) {

@@ -20,6 +20,7 @@ class AppAdEventListener(private val trackEventUseCase: TrackEventUseCase) : AdE
             action = event.type.toAnalyticsAction(),
             format = event.format.name.lowercase(),
             placement = event.placement.id,
+            detail = event.detail,
         )
         scope.launch { trackEventUseCase.trackAd(analyticsEvent) }
     }

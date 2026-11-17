@@ -57,7 +57,6 @@ class PoseCameraViewModel(
         observePoses()
         observePoseOverlayPreference()
         observeTimerPreference()
-        observeGalleryCount()
         viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.Camera) }
     }
 
@@ -86,7 +85,7 @@ class PoseCameraViewModel(
 
     private fun showLockedPose(pose: Pose) {
         _uiState.update { state ->
-            state.copy(lockedPose = pose, isPosePickerVisible = false)
+            state.copy(lockedPose = pose)
         }
     }
 
@@ -102,14 +101,10 @@ class PoseCameraViewModel(
 
     fun selectPose(pose: Pose) {
         viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseSelected) }
-        if (_uiState.value.selectedPose?.id == pose.id) {
-            hidePosePicker()
-            return
-        }
+        if (_uiState.value.selectedPose?.id == pose.id) return
         _uiState.update { state ->
             state.copy(
                 selectedPose = pose,
-                isPosePickerVisible = false,
                 bestScore = 0,
                 overlay = state.overlay.withGestures(
                     scale = OVERLAY_RESET_SCALE,
@@ -126,38 +121,10 @@ class PoseCameraViewModel(
         observeBestScore(pose.id)
     }
 
-    fun showPosePicker() {
-        _uiState.update { state -> state.copy(isPosePickerVisible = true) }
-    }
-
-    fun hidePosePicker() {
-        _uiState.update { state -> state.copy(isPosePickerVisible = false) }
-    }
-
-    fun importPose(title: String, sourceUri: String) {
-        if (_uiState.value.isImporting) return
-        viewModelScope.launch { trackEventUseCase.track(AnalyticsEvent.PoseImported) }
-        _uiState.update { state -> state.copy(isImporting = true) }
-        viewModelScope.launch {
-            val imported = poseLibraryUseCase.importPose(title, sourceUri)
-            _uiState.update { state ->
-                state.copy(isImporting = false, isImportFailed = imported == null)
-            }
-            if (imported != null) {
-                requestedPoseId = imported.id
-                selectPose(imported)
-            }
-        }
-    }
-
-    fun onImportFailureHandled() {
-        _uiState.update { state -> state.copy(isImportFailed = false) }
-    }
-
     fun onToolClicked(tool: CameraTool) {
         when (tool) {
             CameraTool.Grid -> toggleGrid()
-            CameraTool.Timer -> showTimerSheet()
+            CameraTool.Timer -> showTimerMenu()
         }
     }
 
@@ -179,16 +146,16 @@ class PoseCameraViewModel(
         _uiState.update { state -> state.copy(cameraFacing = state.cameraFacing.toggled()) }
     }
 
-    fun showTimerSheet() {
-        _uiState.update { state -> state.copy(isTimerSheetVisible = true) }
+    fun showTimerMenu() {
+        _uiState.update { state -> state.copy(isTimerMenuVisible = true) }
     }
 
-    fun hideTimerSheet() {
-        _uiState.update { state -> state.copy(isTimerSheetVisible = false) }
+    fun hideTimerMenu() {
+        _uiState.update { state -> state.copy(isTimerMenuVisible = false) }
     }
 
     fun setTimer(timer: CaptureTimer) {
-        _uiState.update { state -> state.copy(timer = timer, isTimerSheetVisible = false) }
+        _uiState.update { state -> state.copy(timer = timer, isTimerMenuVisible = false) }
         viewModelScope.launch { cameraSettingsUseCase.setCaptureTimerSeconds(timer.seconds) }
     }
 
@@ -305,14 +272,6 @@ class PoseCameraViewModel(
         viewModelScope.launch {
             cameraSettingsUseCase.getKeepPoseOverlay().collect { keepOverlay ->
                 _uiState.update { state -> state.copy(isPoseOverlayEnabled = keepOverlay) }
-            }
-        }
-    }
-
-    private fun observeGalleryCount() {
-        viewModelScope.launch {
-            captureUseCase.observeCaptureCount().collect { count ->
-                _uiState.update { state -> state.copy(galleryCount = count) }
             }
         }
     }

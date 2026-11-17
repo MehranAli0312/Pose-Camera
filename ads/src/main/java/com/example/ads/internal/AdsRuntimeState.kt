@@ -27,6 +27,9 @@ internal class AdsRuntimeState {
     @Volatile
     private var lastFullScreenShownAt = 0L
 
+    @Volatile
+    private var lastAdClickedAt = 0L
+
     fun setSdkInitialized(value: Boolean) {
         _sdkInitialized.value = value
     }
@@ -53,6 +56,13 @@ internal class AdsRuntimeState {
         lastFullScreenShownAt = SystemClock.elapsedRealtime()
         fullScreenLock.set(false)
     }
+
+    fun markAdClicked() {
+        lastAdClickedAt = SystemClock.elapsedRealtime()
+    }
+
+    fun adClickedWithin(windowMs: Long): Boolean =
+        lastAdClickedAt != 0L && SystemClock.elapsedRealtime() - lastAdClickedAt <= windowMs
 
     fun enoughTimeSinceLastFullScreenAd(minIntervalMs: Long): Boolean {
         if (minIntervalMs <= 0L) return true

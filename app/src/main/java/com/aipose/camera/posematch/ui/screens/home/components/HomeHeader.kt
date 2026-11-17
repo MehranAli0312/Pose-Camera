@@ -15,8 +15,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.aipose.camera.posematch.R
+import com.aipose.camera.posematch.ui.common.PoseRaisedIconButton
 import com.aipose.camera.posematch.ui.theme.PoseTabTitleSize
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
@@ -25,6 +27,8 @@ import com.aipose.camera.posematch.ui.theme.poseTextStyle
 internal fun HomeHeader(
     showProBadge: Boolean,
     onProClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    onCollectionsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -33,10 +37,18 @@ internal fun HomeHeader(
             .padding(end = 2.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-
+        PoseRaisedIconButton(
+            iconRes = R.drawable.ic_pose_menu,
+            contentDescription = stringResource(R.string.nav_settings),
+            glyphSize = DpSize(20.dp, 20.dp),
+            onClick = onSettingsClick,
+        )
+        Spacer(modifier = Modifier.width(10.dp))
         val titleStyle = poseTextStyle(PoseTabTitleSize, FontWeight.Bold, Color.White)
         Text(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 12.dp),
             text = buildAnnotatedString {
                 append(stringResource(R.string.home_title_pose))
                 withStyle(titleStyle.toSpanStyle().copy(color = PoseVioletLight)) {
@@ -46,6 +58,10 @@ internal fun HomeHeader(
             style = titleStyle,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+        )
+
+        HomeMemoriesButton(
+            onClick = onCollectionsClick,
         )
 
         if (showProBadge) {

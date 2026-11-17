@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.Dp
 import com.aipose.camera.posematch.ads.OnboardScreenBottom
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.example.ads.AdPlacement
-import com.example.ads.compose.AdsSlot
+import com.example.ads.compose.AdsPreparedSlot
 
 @Composable
 internal fun OnboardBottomAd(
@@ -23,8 +23,9 @@ internal fun OnboardBottomAd(
             .fillMaxWidth()
             .onSizeChanged { size -> onHeightChanged(with(density) { size.height.toDp() }) },
     ) {
-        AdsSlot(
+        AdsPreparedSlot(
             placement = AdPlacement.OnboardScreenBottom,
+            keepUntilReleased = true,
             modifier = Modifier.safeBottomSystemBarsPadding(),
         )
     }

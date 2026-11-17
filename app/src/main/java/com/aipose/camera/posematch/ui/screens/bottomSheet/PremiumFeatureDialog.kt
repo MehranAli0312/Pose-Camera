@@ -26,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
-import com.aipose.camera.posematch.ads.PremiumRewarded
 import com.aipose.camera.posematch.ads.rememberScreenAds
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.ImmersiveDialogWindowEffect
@@ -37,7 +36,6 @@ import com.aipose.camera.posematch.ui.screens.bottomSheet.components.WatchAdToUn
 import com.aipose.camera.posematch.ui.theme.PosePremiumSheet
 import com.aipose.camera.posematch.ui.theme.PoseSheetShape
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
-import com.example.ads.AdPlacement
 
 private val MessageSize = 14.sp
 private const val MESSAGE_ALPHA = 0.7f
@@ -58,13 +56,11 @@ fun PremiumFeatureBottomSheet(
         confirmValueChange = { !isAdLoading },
     )
 
-    LaunchedEffect(Unit) { ads.loadOnDemand(AdPlacement.PremiumRewarded) }
-
     LaunchedEffect(isAdLoading) {
         if (!isAdLoading) return@LaunchedEffect
-        ads.rewarded(AdPlacement.PremiumRewarded) { result ->
+        ads.rewarded { unlocked ->
             isAdLoading = false
-            if (result.wasRewarded) onRewardEarned()
+            if (unlocked) onRewardEarned()
         }
     }
 

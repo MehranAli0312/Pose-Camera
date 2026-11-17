@@ -45,25 +45,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.LanguageScreenBottom
-import com.aipose.camera.posematch.ads.OnboardingNativeAdPreloadEffect
+import com.aipose.camera.posematch.ads.LaunchFlowAds
 import com.aipose.camera.posematch.ads.rememberMissedSplashAd
 import com.aipose.camera.posematch.domain.models.AnalyticsEvent
 import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
 import com.example.ads.AdPlacement
 import com.example.ads.compose.AdsSlot
 import com.aipose.camera.posematch.ui.common.PoseScreenGutter
-import com.aipose.camera.posematch.ui.common.AppBar
-import com.aipose.camera.posematch.ui.common.PoseBackButton
+import com.aipose.camera.posematch.ui.common.PoseTopBar
 import com.aipose.camera.posematch.ui.common.bounceClick
+import com.aipose.camera.posematch.ui.common.poseScreenPadding
 import com.aipose.camera.posematch.ui.graph.acceptNavigationClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
 import com.aipose.camera.posematch.ui.models.allLanguageItems
 import com.aipose.camera.posematch.ui.models.resolveDefaultLanguageCode
 import com.aipose.camera.posematch.ui.screens.language.components.LanguageItemCard
-import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
-import com.aipose.camera.posematch.ui.screens.pro.models.StartPremiumNextStep
-import com.aipose.camera.posematch.ui.screens.splash.goToOnboardOrNext
-import com.aipose.camera.posematch.ui.screens.splash.goToStartPremium
+import com.aipose.camera.posematch.ui.screens.launch.navigateLaunchFlow
+import com.aipose.camera.posematch.ui.screens.launch.models.LaunchFlow
 import com.aipose.camera.posematch.ui.theme.BrandGradient
 import com.aipose.camera.posematch.ui.vm.LanguageViewModel
 import com.aipose.camera.posematch.ui.vm.SplashViewModel
@@ -74,16 +72,15 @@ import org.koin.compose.koinInject
 @Composable
 fun LocalizeScreen(
     navController: NavHostController,
+    launchFlow: LaunchFlow? = null,
     isFirstSession: Boolean = false,
     languageViewModel: LanguageViewModel = koinInject(),
     splashViewModel: SplashViewModel = koinViewModel(),
-    remoteConfigStore: AdsRemoteConfigStore = koinInject(),
 ) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
     val missedSplashAd = rememberMissedSplashAd()
-
-    OnboardingNativeAdPreloadEffect(isFirstSession)
+    val launchFlowAds: LaunchFlowAds = koinInject()
 
     LaunchedEffect(isFirstSession) {
         if (isFirstSession) splashViewModel.trackScreen(AnalyticsEvent.Language)
@@ -133,30 +130,14 @@ fun LocalizeScreen(
     }
 
     val applyAndNavigate: () -> Unit = {
-        if (isFirstSession) {
+        if (launchFlow != null) {
             missedSplashAd.showThen(continueWhenShown = false) {
                 coroutineScope.launch {
-                    val showOnboarding = remoteConfigStore.current.showOnboardingScreen
-                    if (!showOnboarding) missedSplashAd.clear()
-                    splashViewModel.writeSplashStatus()
+                    if (isFirstSession) splashViewModel.writeSplashStatus()
                     splashViewModel.trackScreen(AnalyticsEvent.LanguageSelected)
                     languageViewModel.changeLanguage(selectedLanguage)
                     languageViewModel.applyLanguage(selectedLanguage)
-                    if (splashViewModel.showPremiumAfterLanguage()) {
-                        goToStartPremium(
-                            navController = navController,
-                            nextStep = if (showOnboarding) {
-                                StartPremiumNextStep.Onboard
-                            } else {
-                                StartPremiumNextStep.Home
-                            },
-                        )
-                    } else {
-                        goToOnboardOrNext(
-                            navController = navController,
-                            showOnboarding = showOnboarding,
-                        )
-                    }
+                    navController.navigateLaunchFlow(launchFlow, launchFlowAds)
                 }
             }
         } else {
@@ -174,49 +155,47 @@ fun LocalizeScreen(
 
     Scaffold(
         topBar = {
-            AppBar(
-                text = stringResource(R.string.settings_language),
-                navItem = if (isFirstSession) {
+            PoseTopBar(
+                title = stringResource(R.string.settings_language),
+                onBack = if (isFirstSession) {
                     null
                 } else {
-                    {
-                        PoseBackButton(onClick = navController::popBackStackOnClick)
-                    }
+                    navController::popBackStackOnClick
                 },
-                menuItems = {
-                    Row(
-                        modifier = Modifier
-                            .bounceClick {
-                                if (navController.acceptNavigationClick()) {
-                                    applyAndNavigate()
-                                }
+                modifier = Modifier.poseScreenPadding(),
+            ) {
+                Row(
+                    modifier = Modifier
+                        .bounceClick {
+                            if (navController.acceptNavigationClick()) {
+                                applyAndNavigate()
                             }
-                            .clip(RoundedCornerShape(50))
-                            .background(brush = BrandGradient.brush, shape = RoundedCornerShape(50))
-                            .padding(horizontal = 12.dp, vertical = 7.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                        Text(
-                            text = stringResource(R.string.done),
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color.White,
-                                fontSize = 12.sp,
-                            ),
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_forward),
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(20.dp)
-                                .offset(x = arrowNudge.dp),
-                        )
-                    }
-                },
-            )
+                        }
+                        .clip(RoundedCornerShape(50))
+                        .background(brush = BrandGradient.brush, shape = RoundedCornerShape(50))
+                        .padding(horizontal = 12.dp, vertical = 7.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        text = stringResource(R.string.done),
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            fontSize = 12.sp,
+                        ),
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.ic_arrow_forward),
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .offset(x = arrowNudge.dp),
+                    )
+                }
+            }
         },
         bottomBar = {
             AdsSlot(

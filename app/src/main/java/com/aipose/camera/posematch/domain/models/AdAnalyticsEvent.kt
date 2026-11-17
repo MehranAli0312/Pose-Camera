@@ -4,4 +4,5 @@ data class AdAnalyticsEvent(
     val action: AdAnalyticsAction,
     val format: String,
     val placement: String,
+    val detail: String,
 )

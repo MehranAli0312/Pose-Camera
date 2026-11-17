@@ -42,5 +42,6 @@ fun poseTabTitleStyle(
     color: Color = MaterialTheme.colorScheme.onSurface,
 ): TextStyle = poseScreenTitleStyle(color).copy(
     fontSize = PoseTabTitleSize,
+    fontWeight = FontWeight.Bold,
     lineHeight = PoseTabTitleSize * LINE_HEIGHT_RATIO,
 )

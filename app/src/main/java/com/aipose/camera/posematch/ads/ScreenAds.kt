@@ -18,10 +18,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-private const val REWARDED_LOAD_TIMEOUT_MS = 15_000L
-
 class ScreenAds internal constructor(
     private val adsManager: AdsManager,
+    private val rewardedUnlock: RewardedUnlock,
     private val activity: ComponentActivity?,
 ) {
 
@@ -62,24 +61,15 @@ class ScreenAds internal constructor(
         adsManager.releaseSlot(placement)
     }
 
-    fun rewarded(placement: AdPlacement, onFinished: (AdResult) -> Unit) {
+    fun rewarded(onFinished: (Boolean) -> Unit) {
         val activity = activity
         if (activity == null) {
-            onFinished(AdResult.NotAvailable)
+            onFinished(false)
             return
         }
         activity.lifecycleScope.launch {
-            val result = runCatching { showRewarded(activity, placement) }
-                .getOrElse { error -> AdResult.Failed(error.message.orEmpty()) }
-            onFinished(result)
+            onFinished(runCatching { rewardedUnlock.show(activity) }.getOrDefault(false))
         }
-    }
-
-    private suspend fun showRewarded(activity: ComponentActivity, placement: AdPlacement): AdResult {
-        if (!adsManager.awaitOnDemand(placement, REWARDED_LOAD_TIMEOUT_MS)) {
-            return AdResult.NotAvailable
-        }
-        return adsManager.showOnDemand(activity, placement)
     }
 
     fun fullscreen(
@@ -114,10 +104,11 @@ class ScreenAds internal constructor(
 @Composable
 fun rememberScreenAds(): ScreenAds {
     val adsManager: AdsManager = koinInject()
+    val rewardedUnlock: RewardedUnlock = koinInject()
     val context = LocalContext.current
 
-    return remember(adsManager, context) {
-        ScreenAds(adsManager, context.findComponentActivity())
+    return remember(adsManager, rewardedUnlock, context) {
+        ScreenAds(adsManager, rewardedUnlock, context.findComponentActivity())
     }
 }
 

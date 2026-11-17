@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 
 internal object AppPreferencesKeys {
     val IS_ON_SPLASH_FIRST_RUN = booleanPreferencesKey("IS_ON_SPLASH_FIRST_RUN")
+    val RETURNING_LAUNCH_COUNT = intPreferencesKey("RETURNING_LAUNCH_COUNT")
     val LANGUAGE = stringPreferencesKey("Language")
     val RATE_US_SUBMITTED = booleanPreferencesKey("RATE_US_SUBMITTED")
     val RATE_US_PROMPT_COUNT = intPreferencesKey("RATE_US_PROMPT_COUNT")

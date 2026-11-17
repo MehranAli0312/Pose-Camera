@@ -32,7 +32,10 @@ class CommercialBreakAds(
         onResult: (AdResult) -> Unit,
         onContinue: () -> Unit,
     ) {
-        if (!isRunning.compareAndSet(false, true)) return
+        if (!isRunning.compareAndSet(false, true)) {
+            onContinue()
+            return
+        }
         activity.lifecycleScope.launch {
             val continued = AtomicBoolean(false)
             fun continueOnce() {

@@ -3,95 +3,63 @@ package com.aipose.camera.posematch.ui.screens.captureDetail.components
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ui.common.bounceClick
-import com.aipose.camera.posematch.ui.common.poseRaisedSurface
-import com.aipose.camera.posematch.ui.theme.PoseRose
-import com.aipose.camera.posematch.ui.theme.PoseRoseLight
-import com.aipose.camera.posematch.ui.theme.PoseTextBright
-import com.aipose.camera.posematch.ui.theme.PoseVioletPale
-import com.aipose.camera.posematch.ui.theme.Violet
+import com.aipose.camera.posematch.ui.common.safeBottomSystemBarsPadding
+import com.aipose.camera.posematch.ui.theme.PoseSky
+import com.aipose.camera.posematch.ui.theme.SurfaceBarDark
 import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val ButtonCorner = 20.dp
-private val ButtonShape = RoundedCornerShape(ButtonCorner)
-private val ButtonMinHeight = 52.dp
-private val ShareGlyphSize = DpSize(17.dp, 18.dp)
-private val CameraGlyphSize = DpSize(18.dp, 18.dp)
-private val TrashGlyphSize = DpSize(16.dp, 18.dp)
-private const val SHARE_BORDER_ALPHA = 0.1f
-private const val RESHOOT_FILL_ALPHA = 0.16f
-private const val RESHOOT_BORDER_ALPHA = 0.45f
-private const val DELETE_FILL_ALPHA = 0.14f
-private const val DELETE_BORDER_ALPHA = 0.4f
-private const val SHARE_WEIGHT = 104f
-private const val RESHOOT_WEIGHT = 118f
-private const val DELETE_WEIGHT = 104f
+private val ButtonHeight = 48.dp
+private val IconSize = 20.dp
 
 @Composable
 internal fun PhotoDetailActions(
-    onShare: () -> Unit,
-    onReshoot: () -> Unit,
+    onSend: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Color.Black)
+            .safeBottomSystemBarsPadding()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         ActionButton(
-            iconRes = R.drawable.ic_saved_share,
-            glyphSize = ShareGlyphSize,
-            label = stringResource(R.string.action_share),
-            contentColor = Color.White,
-            iconTint = PoseTextBright,
-            onClick = onShare,
-            modifier = Modifier
-                .weight(SHARE_WEIGHT)
-                .poseRaisedSurface(ButtonShape, borderAlpha = SHARE_BORDER_ALPHA),
-        )
-        ActionButton(
-            iconRes = R.drawable.ic_shoot_again,
-            glyphSize = CameraGlyphSize,
-            label = stringResource(R.string.detail_reshoot),
-            contentColor = PoseVioletPale,
-            iconTint = PoseVioletPale,
-            onClick = onReshoot,
-            modifier = Modifier
-                .weight(RESHOOT_WEIGHT)
-                .tintedSurface(Violet, RESHOOT_FILL_ALPHA, RESHOOT_BORDER_ALPHA),
-        )
-        ActionButton(
             iconRes = R.drawable.ic_trash,
-            glyphSize = TrashGlyphSize,
             label = stringResource(R.string.action_delete),
-            contentColor = PoseRoseLight,
-            iconTint = PoseRoseLight,
+            backgroundColor = SurfaceBarDark,
             onClick = onDelete,
-            modifier = Modifier
-                .weight(DELETE_WEIGHT)
-                .tintedSurface(PoseRose, DELETE_FILL_ALPHA, DELETE_BORDER_ALPHA),
+            modifier = Modifier.weight(1f),
+        )
+        ActionButton(
+            iconRes = R.drawable.ic_pose_arrow_end,
+            label = stringResource(R.string.capture_send_to),
+            backgroundColor = PoseSky,
+            onClick = onSend,
+            modifier = Modifier.weight(1f),
         )
     }
 }
@@ -99,36 +67,32 @@ internal fun PhotoDetailActions(
 @Composable
 private fun ActionButton(
     @DrawableRes iconRes: Int,
-    glyphSize: DpSize,
     label: String,
-    contentColor: Color,
-    iconTint: Color,
+    backgroundColor: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
-            .heightIn(min = ButtonMinHeight)
+            .height(ButtonHeight)
+            .clip(CircleShape)
+            .background(backgroundColor)
             .bounceClick(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
     ) {
         Image(
             painter = painterResource(iconRes),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(iconTint),
-            modifier = Modifier.size(glyphSize),
+            colorFilter = ColorFilter.tint(Color.White),
+            modifier = Modifier.size(IconSize),
         )
         Text(
             text = label,
-            style = poseTextStyle(11.5.sp, FontWeight.Bold, contentColor),
+            style = poseTextStyle(13.sp, FontWeight.Bold, Color.White),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
     }
 }
-
-private fun Modifier.tintedSurface(color: Color, fillAlpha: Float, borderAlpha: Float): Modifier = this
-    .background(color.copy(alpha = fillAlpha), ButtonShape)
-    .border(1.dp, color.copy(alpha = borderAlpha), ButtonShape)

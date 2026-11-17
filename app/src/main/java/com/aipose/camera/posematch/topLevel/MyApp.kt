@@ -9,7 +9,6 @@ import com.aipose.camera.posematch.ads.ProStatusForegroundObserver
 import com.aipose.camera.posematch.ads.ProStatusRefresher
 import com.aipose.camera.posematch.ads.ProStatusStore
 import com.aipose.camera.posematch.ads.appAdsModule
-import com.aipose.camera.posematch.ads.loadSplashAdOnSdkReady
 import com.aipose.camera.posematch.ads.registerAppOpenAds
 import com.aipose.camera.posematch.data.notification.PushNotificationDataSource
 import com.aipose.camera.posematch.di.localModule
@@ -56,12 +55,6 @@ class MyApp : Application() {
             val adsManager = koin.get<AdsManager>()
 
             adsManager.initialize()
-
-            loadSplashAdOnSdkReady(
-                adsManager = adsManager,
-                remoteConfigStore = koin.get(),
-                scope = applicationScope,
-            )
 
             registerAppOpenAds(
                 application = this,

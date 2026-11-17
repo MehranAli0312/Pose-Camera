@@ -2,12 +2,9 @@ package com.aipose.camera.posematch.ui.screens.captureDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,26 +28,15 @@ import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.adaptiveWidth
 import com.aipose.camera.posematch.ui.common.safeTopSystemBarsPadding
 import com.aipose.camera.posematch.ui.common.shareImageFile
-import com.aipose.camera.posematch.ui.graph.NavRoute
-import com.aipose.camera.posematch.ui.graph.navigateOnClick
 import com.aipose.camera.posematch.ui.graph.popBackStackOnClick
-import com.aipose.camera.posematch.ui.models.GlossyBadgePalette
-import com.aipose.camera.posematch.ui.models.badgeForCategory
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailActions
-import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailMatchBadge
-import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailSheet
 import com.aipose.camera.posematch.ui.screens.captureDetail.components.PhotoDetailTopBar
-import com.aipose.camera.posematch.ui.screens.captureDetail.models.PhotoDetailInfo
 import com.aipose.camera.posematch.ui.screens.collections.models.CaptureUi
 import com.aipose.camera.posematch.ui.theme.PoseNightBottom
-import com.aipose.camera.posematch.ui.theme.PosePhotoScrim
 import com.aipose.camera.posematch.ui.vm.CollectionsViewModel
-import com.aipose.camera.posematch.util.bidiIsolate
 import org.koin.androidx.compose.koinViewModel
 
-private const val PHOTO_HEIGHT_FRACTION = 560f / 844f
 private val TopScrimHeight = 170.dp
-private val BottomScrimHeight = 200.dp
 
 @Composable
 fun CaptureDetailScreen(
@@ -75,44 +61,22 @@ fun CaptureDetailScreen(
         PhotoBackdrop(captureUi = capture)
 
         PhotoDetailTopBar(
-            isFavorite = capture.capture.isFavorite,
             onBack = navController::popBackStackOnClick,
-            onToggleFavorite = { viewModel.toggleFavorite(capture.capture) },
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .safeTopSystemBarsPadding(),
         )
 
-        Column(
+        PhotoDetailActions(
+            onSend = {
+                viewModel.trackEvent(AnalyticsEvent.CaptureShared)
+                context.shareImageFile(capture.capture.imagePath, shareChooserTitle)
+            },
+            onDelete = { isDeleteDialogVisible = true },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .adaptiveWidth(),
-        ) {
-            if (capture.capture.poseId != null && capture.capture.matchScore > 0) {
-                PhotoDetailMatchBadge(
-                    score = capture.capture.matchScore,
-                    modifier = Modifier.padding(start = 24.dp, bottom = 38.dp),
-                )
-            }
-            PhotoDetailSheet(
-                title = capture.titleLabel,
-                subtitle = stringResource(R.string.detail_saved_in, capture.locationLabel),
-                infos = photoDetailInfos(capture),
-            ) {
-                PhotoDetailActions(
-                    onShare = {
-                        viewModel.trackEvent(AnalyticsEvent.CaptureShared)
-                        context.shareImageFile(capture.capture.imagePath, shareChooserTitle)
-                    },
-                    onReshoot = {
-                        val route = capture.capture.poseId?.let(NavRoute.CameraScreenRoute::routeFor)
-                            ?: NavRoute.CameraScreenRoute.routeWithoutPose()
-                        navController.navigateOnClick(route)
-                    },
-                    onDelete = { isDeleteDialogVisible = true },
-                )
-            }
-        }
+        )
     }
 
     if (isDeleteDialogVisible) {
@@ -132,9 +96,7 @@ fun CaptureDetailScreen(
 @Composable
 private fun PhotoBackdrop(captureUi: CaptureUi) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(PHOTO_HEIGHT_FRACTION)
+        modifier = Modifier.fillMaxSize()
     ) {
         PoseImage(
             imagePath = captureUi.capture.imagePath,
@@ -149,48 +111,5 @@ private fun PhotoBackdrop(captureUi: CaptureUi) {
                 .height(TopScrimHeight)
                 .background(Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.6f), Color.Transparent)))
         )
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(BottomScrimHeight)
-                .background(Brush.verticalGradient(listOf(Color.Transparent, PosePhotoScrim.copy(alpha = 0.92f))))
-        )
     }
-}
-
-@Composable
-private fun photoDetailInfos(captureUi: CaptureUi): List<PhotoDetailInfo> {
-    val capture = captureUi.capture
-    val categoryBadge = badgeForCategory(capture.category)
-    return listOf(
-        PhotoDetailInfo(
-            iconRes = R.drawable.ic_pose_target,
-            palette = GlossyBadgePalette.Emerald,
-            glyphSize = 28.dp,
-            label = stringResource(R.string.detail_match_score),
-            value = stringResource(R.string.score_percent, capture.matchScore).bidiIsolate(),
-        ),
-        PhotoDetailInfo(
-            iconRes = categoryBadge.iconRes,
-            palette = categoryBadge.palette,
-            glyphSize = 28.dp,
-            label = stringResource(R.string.detail_category),
-            value = capture.category.ifBlank { stringResource(R.string.camera_no_pose) },
-        ),
-        PhotoDetailInfo(
-            iconRes = R.drawable.ic_saved_pin,
-            palette = GlossyBadgePalette.Cyan,
-            glyphSize = 14.dp,
-            label = stringResource(R.string.detail_location),
-            value = captureUi.locationLabel,
-        ),
-        PhotoDetailInfo(
-            iconRes = R.drawable.ic_camera_timer,
-            palette = GlossyBadgePalette.Amber,
-            glyphSize = 13.dp,
-            label = stringResource(R.string.detail_captured),
-            value = captureUi.capturedLabel,
-        ),
-    )
 }

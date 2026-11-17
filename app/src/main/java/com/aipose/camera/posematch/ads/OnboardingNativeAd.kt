@@ -1,7 +1,6 @@
 package com.aipose.camera.posematch.ads
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +43,6 @@ class OnboardingNativeAd internal constructor(
     private fun insertionIndex(preferredIndex: Int, currentPage: Int, lastStepIndex: Int): Int? =
         maxOf(preferredIndex, currentPage + 1).takeIf { it <= lastStepIndex }
 
-    fun release() = ads.releaseSlot(AdPlacement.OnboardingFullScreenNative)
 }
 
 @Composable
@@ -61,7 +59,7 @@ fun rememberOnboardingNativeAd(): OnboardingNativeAd {
         ),
     ) { OnboardingNativeAd(ads, store, initialPageIndex = null) }
 
-    DisposableEffect(nativeAd) { onDispose { nativeAd.release() } }
+    AdSlotReleaseEffect(AdPlacement.OnboardingFullScreenNative)
 
     return nativeAd
 }

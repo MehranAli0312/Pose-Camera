@@ -27,7 +27,7 @@ import com.aipose.camera.posematch.ui.common.PoseGlows
 import com.aipose.camera.posematch.ui.common.RateUsPrompt
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.firebaseRemote.PremiumCloseButtonPosition
-import com.aipose.camera.posematch.ui.graph.navigateToTab
+import com.aipose.camera.posematch.ui.graph.navigateFromHome
 import com.aipose.camera.posematch.ui.screens.pro.components.ProTopBar
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessActions
 import com.aipose.camera.posematch.ui.screens.photoSuccess.components.PhotoSuccessHeader
@@ -65,7 +65,7 @@ fun PhotoSuccessScreen(
             ProTopBar(
                 closeSecondsRemaining = 0,
                 closePosition = PremiumCloseButtonPosition.Right,
-                onClose = { navController.navigateToTab(NavRoute.HomeScreenRoute.route) },
+                onClose = { navController.navigateFromHome(NavRoute.HomeScreenRoute.route) },
                 modifier = Modifier.adaptiveWidth(),
             )
             Column(
@@ -90,7 +90,7 @@ fun PhotoSuccessScreen(
                         context.shareImageFile(capture.imagePath, shareChooserTitle)
                     },
                     onViewCollections = {
-                        navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
+                        navController.navigateFromHome(NavRoute.CollectionsScreenRoute.route)
                     },
                 )
                 Spacer(modifier = Modifier.height(16.dp))

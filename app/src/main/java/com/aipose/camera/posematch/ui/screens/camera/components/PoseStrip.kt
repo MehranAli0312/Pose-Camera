@@ -3,61 +3,39 @@ package com.aipose.camera.posematch.ui.screens.camera.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.domain.models.Pose
 import com.aipose.camera.posematch.ui.common.PoseImage
 import com.aipose.camera.posematch.ui.common.bounceClick
 import com.aipose.camera.posematch.ui.theme.PosePremiumGold
-import com.aipose.camera.posematch.ui.theme.PoseTextLavender
 import com.aipose.camera.posematch.ui.theme.PoseVioletLight
-import com.aipose.camera.posematch.ui.theme.PoseVioletPale
-import com.aipose.camera.posematch.ui.theme.poseTextStyle
 
-private val ItemCorner = 16.dp
-private val ItemShape = RoundedCornerShape(ItemCorner)
-private val DashStroke = 1.dp
-private val DashLength = 4.dp
+private val ItemShape = RoundedCornerShape(12.dp)
+private val ItemSpacing = 2.dp
 private val ItemWidth = 56.dp
 private val ItemHeight = 72.dp
 private val BadgeSize = 18.dp
 private val BadgeGlyphSize = 9.dp
 private val LockGlyphSize = 10.dp
-private val ImportGlyphSize = 20.dp
-private const val IMPORT_FILL_ALPHA = 0.1f
-private const val IMPORT_BORDER_ALPHA = 0.24f
 private const val BORDER_ALPHA = 0.14f
 private const val LOCK_FILL_ALPHA = 0.6f
 
@@ -67,70 +45,22 @@ internal fun PoseStrip(
     selectedPoseId: Int?,
     lockedPoseIds: Set<Int>,
     onPoseSelected: (Pose) -> Unit,
-    onImport: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 36.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        item(key = IMPORT_ITEM_KEY) {
-            ImportTile(onClick = onImport)
-        }
         items(poses, key = { pose -> pose.id }) { pose ->
             PoseStripItem(
                 pose = pose,
                 isSelected = pose.id == selectedPoseId,
                 isLocked = pose.id in lockedPoseIds,
                 onClick = { onPoseSelected(pose) },
+                modifier = Modifier.padding(horizontal = ItemSpacing),
             )
         }
-    }
-}
-
-@Composable
-private fun ImportTile(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .size(width = ItemWidth, height = ItemHeight)
-            .clip(ItemShape)
-            .background(Color.White.copy(alpha = IMPORT_FILL_ALPHA))
-            .drawBehind {
-                val inset = DashStroke.toPx() / 2f
-                drawRoundRect(
-                    color = Color.White.copy(alpha = IMPORT_BORDER_ALPHA),
-                    topLeft = Offset(inset, inset),
-                    size = Size(size.width - inset * 2f, size.height - inset * 2f),
-                    cornerRadius = CornerRadius(ItemCorner.toPx()),
-                    style = Stroke(
-                        width = DashStroke.toPx(),
-                        pathEffect = PathEffect.dashPathEffect(
-                            floatArrayOf(DashLength.toPx(), DashLength.toPx()),
-                        ),
-                    ),
-                )
-            }
-            .bounceClick(onClick = onClick),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            painter = painterResource(R.drawable.ic_plus),
-            contentDescription = null,
-            colorFilter = ColorFilter.tint(PoseVioletPale),
-            modifier = Modifier.size(ImportGlyphSize),
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(R.string.action_import),
-            style = poseTextStyle(8.5.sp, FontWeight.Bold, PoseTextLavender),
-            maxLines = 1,
-        )
     }
 }
 
@@ -204,5 +134,3 @@ private fun PoseStripLockBadge(modifier: Modifier = Modifier) {
         )
     }
 }
-
-private const val IMPORT_ITEM_KEY = "pose_strip_import"

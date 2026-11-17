@@ -1,9 +1,5 @@
 package com.example.ads.compose
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
-import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.example.ads.AdPlacement
 import com.example.ads.AdsManager
 import com.example.ads.compose.nativead.NativeAdTemplateRegistry
@@ -92,28 +87,15 @@ private fun ConsumeWhenHidden(
 
 @Composable
 private fun PreparedBanner(banner: PreparedSlotAd.Banner, modifier: Modifier) {
-    val context = LocalContext.current
-    val activity = remember(context) { context.findActivity() } ?: return
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(AdSlotDefaults.colors.container),
         contentAlignment = Alignment.Center,
     ) {
-        AndroidView(
+        BannerAdView(
+            ad = banner.ad,
             modifier = Modifier.size(banner.widthDp.dp, banner.heightDp.dp),
-            factory = {
-                val view = banner.ad.getView(activity)
-                (view.parent as? ViewGroup)?.removeView(view)
-                view
-            },
-            onRelease = { view -> (view.parent as? ViewGroup)?.removeView(view) },
         )
     }
-}
-
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
 }

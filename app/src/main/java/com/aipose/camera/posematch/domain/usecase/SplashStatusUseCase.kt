@@ -13,4 +13,6 @@ class SplashStatusUseCase(private val splashStatusRepository: SplashStatusReposi
         splashStatusRepository.writeSplashStatus()
     }
 
+    suspend fun recordReturningLaunch(): Int = splashStatusRepository.recordReturningLaunch()
+
 }

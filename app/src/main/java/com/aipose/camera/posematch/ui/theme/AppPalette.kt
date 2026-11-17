@@ -16,10 +16,6 @@ data class AppPalette(
     val glass: Color,
     val textMuted: Color,
     val textFaint: Color,
-    val navSurface: Color,
-    val navShadow: Color,
-    val navActive: Color,
-    val navInactive: Color
 )
 
 internal val StudioDarkPalette = AppPalette(
@@ -33,10 +29,6 @@ internal val StudioDarkPalette = AppPalette(
     glass = StudioGlassDark,
     textMuted = PoseTextMuted,
     textFaint = PoseTextFaint,
-    navSurface = PoseNavSurface,
-    navShadow = PoseNavShadow,
-    navActive = PoseNavActive,
-    navInactive = PoseNavInactive
 )
 
 val LocalAppPalette = staticCompositionLocalOf { StudioDarkPalette }

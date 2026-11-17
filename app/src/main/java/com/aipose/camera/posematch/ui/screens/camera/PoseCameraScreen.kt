@@ -36,22 +36,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.aipose.camera.posematch.R
 import com.aipose.camera.posematch.ads.CameraScreenBottom
-import com.aipose.camera.posematch.ui.common.CaptureTimerSheet
 import com.aipose.camera.posematch.ui.common.rememberCameraPermissionState
 import com.aipose.camera.posematch.ui.common.rememberHapticPulse
-import com.aipose.camera.posematch.ui.common.rememberPosePicker
 import com.aipose.camera.posematch.ui.graph.NavRoute
 import com.aipose.camera.posematch.ui.graph.navigateOnClick
-import com.aipose.camera.posematch.ui.graph.navigateToTab
 import com.aipose.camera.posematch.ui.screens.bottomSheet.PremiumFeatureBottomSheet
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraGridOverlay
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraMatchCard
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraPermissionCard
-import com.aipose.camera.posematch.ui.screens.camera.components.CameraPosePickerSheet
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraPreviewSurface
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraScrims
-import com.aipose.camera.posematch.ui.screens.camera.components.CameraShutterBar
-import com.aipose.camera.posematch.ui.screens.camera.components.CameraToolRail
+import com.aipose.camera.posematch.ui.screens.camera.components.CameraShutterButton
 import com.aipose.camera.posematch.ui.screens.camera.components.CameraTopBar
 import com.aipose.camera.posematch.ui.screens.camera.components.CaptureCountdown
 import com.aipose.camera.posematch.ui.screens.camera.components.GreatMatchBanner
@@ -82,10 +77,7 @@ fun PoseCameraScreen(
     val pulse = rememberHapticPulse()
     val context = LocalContext.current
     val captureFailedMessage = stringResource(R.string.toast_capture_failed)
-    val importFailedMessage = stringResource(R.string.toast_reference_failed)
-    val importTitle = stringResource(R.string.imported_pose_title)
     var surfaceSize by remember { mutableStateOf(IntSize.Zero) }
-    val posePicker = rememberPosePicker { pickedUri -> viewModel.importPose(importTitle, pickedUri) }
 
     LaunchedEffect(poseId) {
         if (poseId != null) viewModel.onPoseRequested(poseId)
@@ -97,13 +89,6 @@ fun PoseCameraScreen(
 
     LaunchedEffect(uiState.isGreatMatchVisible) {
         if (uiState.isGreatMatchVisible) pulse(GREAT_MATCH_PULSE_MILLIS)
-    }
-
-    LaunchedEffect(uiState.isImportFailed) {
-        if (uiState.isImportFailed) {
-            viewModel.onImportFailureHandled()
-            context.showToast(importFailedMessage)
-        }
     }
 
     LaunchedEffect(uiState.capturedPath) {
@@ -185,10 +170,15 @@ fun PoseCameraScreen(
                 .padding(bottom = 10.dp),
         ) {
             CameraTopBar(
-                poseTitle = uiState.selectedPose?.title ?: stringResource(R.string.camera_no_pose),
                 flashMode = uiState.flashMode,
+                timer = uiState.timer,
+                isTimerMenuVisible = uiState.isTimerMenuVisible,
+                isToolActive = uiState::isToolActive,
                 onBack = { navController.popBackStack() },
-                onChangePose = viewModel::showPosePicker,
+                onToolClick = viewModel::onToolClicked,
+                onTimerSelect = viewModel::setTimer,
+                onTimerMenuDismiss = viewModel::hideTimerMenu,
+                onToggleFacing = viewModel::toggleCameraFacing,
                 onToggleFlash = viewModel::toggleFlashMode,
             )
             if (uiState.selectedPose != null) {
@@ -199,20 +189,12 @@ fun PoseCameraScreen(
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp),
                 )
             }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(vertical = 12.dp),
-                contentAlignment = Alignment.CenterEnd,
-            ) {
-                CameraToolRail(
-                    timer = uiState.timer,
-                    isToolActive = uiState::isToolActive,
-                    onToolClick = viewModel::onToolClicked,
-                    modifier = Modifier.padding(end = 20.dp),
-                )
-            }
+            Spacer(modifier = Modifier.weight(1f))
+            CameraShutterButton(
+                onClick = viewModel::onShutterClicked,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             if (uiState.selectedPose != null && uiState.isPoseOverlayEnabled) {
                 OverlayOpacitySlider(
                     opacity = uiState.overlay.opacity,
@@ -226,18 +208,8 @@ fun PoseCameraScreen(
                 selectedPoseId = uiState.selectedPose?.id,
                 lockedPoseIds = uiState.lockedPoseIds,
                 onPoseSelected = viewModel::onPoseTapped,
-                onImport = posePicker,
             )
-            Spacer(modifier = Modifier.height(26.dp))
-            CameraShutterBar(
-                galleryCount = uiState.galleryCount,
-                matchScore = uiState.match.score,
-                onGalleryClick = {
-                    navController.navigateToTab(NavRoute.CollectionsScreenRoute.route)
-                },
-                onShutterClick = viewModel::onShutterClicked,
-                onToggleFacing = viewModel::toggleCameraFacing,
-            )
+            Spacer(modifier = Modifier.height(12.dp))
             AdsSlot(placement = AdPlacement.CameraScreenBottom)
         }
 
@@ -260,16 +232,6 @@ fun PoseCameraScreen(
         }
     }
 
-    if (uiState.isPosePickerVisible) {
-        CameraPosePickerSheet(
-            poses = uiState.poses,
-            selectedPoseId = uiState.selectedPose?.id,
-            lockedPoseIds = uiState.lockedPoseIds,
-            onPoseSelected = viewModel::onPoseTapped,
-            onDismiss = viewModel::hidePosePicker,
-        )
-    }
-
     uiState.lockedPose?.let { pose ->
         PremiumFeatureBottomSheet(
             pose = pose,
@@ -279,14 +241,6 @@ fun PoseCameraScreen(
                 navController.navigateOnClick(NavRoute.ProScreenRoute.route)
             },
             onDismissRequest = viewModel::dismissLockedPose,
-        )
-    }
-
-    if (uiState.isTimerSheetVisible) {
-        CaptureTimerSheet(
-            selected = uiState.timer,
-            onApply = viewModel::setTimer,
-            onDismiss = viewModel::hideTimerSheet,
         )
     }
 }

@@ -17,10 +17,12 @@ import com.aipose.camera.posematch.data.local.NetworkConnectivityChecker
 import com.aipose.camera.posematch.data.notification.NotificationLaunchStore
 import com.aipose.camera.posematch.data.notification.clearNotificationTarget
 import com.aipose.camera.posematch.data.notification.notificationTarget
+import com.aipose.camera.posematch.ads.loadSplashAdOnSdkReady
 import com.aipose.camera.posematch.domain.usecase.EngagementNotificationUseCase
 import com.aipose.camera.posematch.ui.common.AppSystemBars
 import com.aipose.camera.posematch.ui.common.LocalAppSystemBars
 import com.aipose.camera.posematch.ui.firebaseRemote.AppFirebaseRemote
+import com.aipose.camera.posematch.ui.firebaseRemote.AdsRemoteConfigStore
 import com.aipose.camera.posematch.ui.screens.MainScreen
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private val adsManager: AdsManager by inject()
     private val adsLifecycleObserver: AdsAppLifecycleObserver by inject()
     private val appFirebaseRemote: AppFirebaseRemote by inject()
+    private val adsRemoteConfigStore: AdsRemoteConfigStore by inject()
     private val networkConnectivityChecker: NetworkConnectivityChecker by inject()
     private val notificationLaunchStore: NotificationLaunchStore by inject()
     private val engagementNotificationUseCase: EngagementNotificationUseCase by inject()
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
         enableEdgeToEdge()
         systemBars.applyImmersiveBehavior()
-        startAdsForFirstActivity()
+        startAdsForFirstActivity(savedInstanceState == null)
         observeAppUpdateConfig()
 
         goToNext()
@@ -86,9 +89,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun startAdsForFirstActivity() {
+    private fun startAdsForFirstActivity(isFreshStart: Boolean) {
         lifecycleScope.launch {
             runCatching { adsManager.requestConsent(this@MainActivity) }
+        }
+
+        if (isFreshStart) {
+            loadSplashAdOnSdkReady(
+                adsManager = adsManager,
+                remoteConfigStore = adsRemoteConfigStore,
+                scope = lifecycleScope,
+            )
         }
 
         lifecycleScope.launch {

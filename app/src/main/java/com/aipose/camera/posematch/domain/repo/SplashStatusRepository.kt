@@ -6,5 +6,6 @@ interface SplashStatusRepository {
 
     suspend fun getSplashStatus(): Flow<Boolean>
     suspend fun writeSplashStatus()
+    suspend fun recordReturningLaunch(): Int
 
 }

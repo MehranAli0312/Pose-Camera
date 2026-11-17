@@ -16,12 +16,12 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.ads.AdPlacement
-import com.example.ads.nativeDesignOr
 import com.example.ads.AdsManager
 import com.example.ads.NativeAdDesign
 import com.example.ads.compose.nativead.NativeAdTemplateRegistry
 import com.example.ads.internal.AdRetryState
 import com.example.ads.internal.NativeAdController
+import com.example.ads.nativeDesignOr
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import org.koin.compose.koinInject
 
@@ -35,39 +35,30 @@ fun AdsNative(
 ) {
     val adsManager: AdsManager = koinInject()
     val controller: NativeAdController = koinInject()
-
     val isPro by adsManager.isPro.collectAsState()
     val isReady by adsManager.isReady.collectAsState()
-    val isPreview = LocalInspectionMode.current
 
-    if (isPro || isPreview) return
+    if (isPro || LocalInspectionMode.current) return
 
     val resolvedDesign = adsManager.styleFor(placement).nativeDesignOr(design) ?: return
-
     var nativeAd by remember(placement, resolvedDesign) { mutableStateOf<NativeAd?>(null) }
     var loadFailed by remember(placement, resolvedDesign) { mutableStateOf(false) }
     val retryState = remember(placement, resolvedDesign) { AdRetryState() }
 
-    AdRetryEffect(failed = loadFailed, retryState = retryState) {
-        loadFailed = false
-    }
+    AdRetryEffect(failed = loadFailed, retryState = retryState) { loadFailed = false }
 
     LaunchedEffect(placement, resolvedDesign, isReady, retryState.attempt) {
-        if (!isReady) return@LaunchedEffect
-        if (nativeAd != null || loadFailed) return@LaunchedEffect
-        val loadedAd = controller.load(placement)
-        if (loadedAd == null) {
+        if (!isReady || nativeAd != null || loadFailed) return@LaunchedEffect
+        nativeAd = controller.load(placement)
+        if (nativeAd == null) {
             retryState.markFailed()
             loadFailed = true
-        } else {
-            nativeAd = loadedAd
         }
     }
 
-    val ad = nativeAd
-    if (ad != null) {
+    nativeAd?.let { ad ->
         key(ad) {
-            DisposableEffect(ad) { onDispose { ad.destroy() } }
+            DisposableEffect(ad) { onDispose { controller.recycle(ad) } }
             NativeAdTemplateRegistry.Render(
                 design = resolvedDesign,
                 nativeAd = ad,
@@ -77,10 +68,12 @@ fun AdsNative(
                     .fillMaxWidth(),
             )
         }
-    } else if (showPlaceholderWhileLoading && !loadFailed) {
-        AdSlotPlaceholder(
-            height = NativeAdTemplateRegistry.placeholderHeightDp(resolvedDesign).dp,
-            modifier = modifier.padding(top = topSpacing),
-        )
+    } ?: run {
+        if (showPlaceholderWhileLoading && !loadFailed) {
+            AdSlotPlaceholder(
+                height = NativeAdTemplateRegistry.placeholderHeightDp(resolvedDesign).dp,
+                modifier = modifier.padding(top = topSpacing),
+            )
+        } else Unit
     }
 }

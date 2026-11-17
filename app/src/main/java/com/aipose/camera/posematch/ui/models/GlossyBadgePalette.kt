@@ -26,7 +26,6 @@ import com.aipose.camera.posematch.ui.theme.PoseIndigoLight
 import com.aipose.camera.posematch.ui.theme.PoseIndigoShadow
 import com.aipose.camera.posematch.ui.theme.PoseMagenta
 import com.aipose.camera.posematch.ui.theme.PoseMagentaShadow
-import com.aipose.camera.posematch.ui.theme.PoseNavActive
 import com.aipose.camera.posematch.ui.theme.PoseOrangeDeep
 import com.aipose.camera.posematch.ui.theme.PoseOrangeLight
 import com.aipose.camera.posematch.ui.theme.PoseOrangeShadow
@@ -69,6 +68,5 @@ data class GlossyBadgePalette(
         val Brand = GlossyBadgePalette(PoseVioletLight, IndigoColor, PoseIndigoDeep, PoseIndigoShadow)
         val HeroCta = GlossyBadgePalette(IndigoColor, VioletColor, PoseMagenta, PoseVioletShadow)
         val Capture = GlossyBadgePalette(PoseVioletLight, VioletColor, PosePinkBright, PoseMagentaShadow)
-        val NavCapture = GlossyBadgePalette(PoseNavActive, VioletColor, PosePinkBright, PoseVioletShadow)
     }
 }
